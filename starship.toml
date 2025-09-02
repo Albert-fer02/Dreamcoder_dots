@@ -1,0 +1,276 @@
+# =====================================================
+# 🚀 ELITE STARSHIP CONFIGURATION
+# =====================================================
+# Advanced prompt configuration for maximum productivity
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[╭─ ](bold blue)$os$username$hostname$directory$git_branch$git_status$git_metrics$nodejs$bun$rust$python$docker_context$aws$gcloud$kubernetes$terraform$package$cmd_duration$status
+[╰─](bold blue)$character
+"""
+
+add_newline = true
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vicmd_symbol = "[❮](bold yellow)"
+
+[os]
+format = "[$symbol ]($style)"
+style = "bold blue"
+disabled = false
+
+[os.symbols]
+Arch = "🏛️"
+Ubuntu = "🎯"
+Debian = "🌀"
+Fedora = "🎩"
+Macos = "🍎"
+Windows = "🪟"
+
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style)[@](bold blue)"
+disabled = false
+show_always = false
+
+[hostname]
+ssh_only = false
+format = "[$hostname]($style)[: ](bold blue)"
+style = "bold green"
+disabled = false
+
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+read_only = " 🔒"
+style = "bold cyan"
+format = "[$path]($style)[$read_only]($read_only_style)"
+home_symbol = "~"
+
+[directory.substitutions]
+"Documents" = "📄"
+"Downloads" = "📥"
+"Music" = "🎵"
+"Pictures" = "📸"
+"Projects" = "💼"
+"Desktop" = "🖥️"
+
+[git_branch]
+symbol = "🌱 "
+style = "bold purple"
+format = "[$symbol$branch]($style)"
+truncation_length = 20
+truncation_symbol = "…"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold red"
+conflicted = "⚔️ "
+ahead = "🏎️ 💨×${count}"
+behind = "🐌×${count}"
+diverged = "🔱 🏎️ 💨×${ahead_count} 🐌×${behind_count}"
+up_to_date = "✅"
+untracked = "🛤️ ×${count}"
+stashed = "📦"
+modified = "📝×${count}"
+staged = "🗃️ ×${count}"
+renamed = "📛×${count}"
+deleted = "🗑️ ×${count}"
+
+[git_metrics]
+added_style = "bold blue"
+deleted_style = "bold red"
+only_nonzero_diffs = true
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+disabled = false
+
+[nodejs]
+format = "[$symbol($version )]($style)"
+version_format = "v${raw}"
+symbol = "⬢ "
+style = "bold green"
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+[bun]
+format = "[$symbol($version )]($style)"
+version_format = "v${raw}"
+symbol = "🍞 "
+style = "bold yellow"
+detect_files = ["bun.lockb", "bunfig.toml"]
+
+[rust]
+format = "[$symbol($version )]($style)"
+version_format = "v${raw}"
+symbol = "🦀 "
+style = "bold red"
+detect_files = ["Cargo.toml"]
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = "🐍 "
+style = "bold yellow"
+pyenv_version_name = false
+detect_extensions = ["py"]
+detect_files = [".python-version", "Pipfile", "__init__.py", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
+
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = "🐳 "
+style = "blue bold"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+[aws]
+format = '[$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
+symbol = "☁️ "
+style = "bold blue"
+disabled = false
+
+[gcloud]
+format = '[$symbol$account(@$domain)(\($region\))]($style) '
+symbol = "☁️ "
+style = "bold blue"
+
+[kubernetes]
+format = '[$symbol$context( \($namespace\))]($style) '
+symbol = "⎈ "
+style = "cyan bold"
+disabled = false
+
+[terraform]
+format = "[$symbol$workspace]($style) "
+symbol = "💠 "
+style = "bold purple"
+
+[package]
+format = "[$symbol$version]($style) "
+symbol = "📦 "
+style = "208"
+display_private = false
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration]($style)"
+style = "bold yellow"
+show_milliseconds = false
+show_notifications = false
+
+[status]
+style = "bg:blue"
+symbol = "🔴"
+success_symbol = "🟢"
+not_executable_symbol = "🚫"
+not_found_symbol = "🔍"
+sigint_symbol = "🧱"
+signal_symbol = "⚡"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+[memory_usage]
+disabled = false
+threshold = 70
+symbol = "🧠"
+style = "bold dimmed red"
+format = "$symbol [${ram}( | ${swap})]($style) "
+
+[time]
+disabled = false
+format = '🕐[\[ $time \]]($style) '
+time_format = "%T"
+utc_time_offset = "local"
+time_range = "10:00:00-14:00:00"
+
+[battery]
+full_symbol = "🔋"
+charging_symbol = "🔌"
+discharging_symbol = "⚡"
+unknown_symbol = "❓"
+empty_symbol = "❗"
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+
+[[battery.display]]
+threshold = 60
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 100
+style = "bold green"
+
+[jobs]
+symbol = "⚙️"
+style = "bold red"
+number_threshold = 1
+symbol_threshold = 1
+format = "[$symbol$number]($style) "
+
+[shlvl]
+disabled = false
+format = "$shlvl level(s) down"
+threshold = 3
+
+[shell]
+fish_indicator = "🐠"
+powershell_indicator = "🔷"
+bash_indicator = "🐚"
+zsh_indicator = "⚡"
+disabled = false
+
+# Security tools detection
+[custom.nuclei]
+command = "nuclei -version 2>/dev/null | head -1"
+when = """ command -v nuclei """
+symbol = "💥 "
+style = "bold red"
+format = "[$symbol]($style)"
+
+[custom.subfinder]
+command = "subfinder -version 2>/dev/null | head -1"
+when = """ command -v subfinder """
+symbol = "🔍 "
+style = "bold blue"
+format = "[$symbol]($style)"
+
+[custom.httpx]
+command = "httpx -version 2>/dev/null | head -1"
+when = """ command -v httpx """
+symbol = "🌐 "
+style = "bold green"
+format = "[$symbol]($style)"
+
+# Development environment detection
+[custom.project_type]
+command = '''
+if [[ -f package.json ]]; then
+    if grep -q "react" package.json; then echo "⚛️ "
+    elif grep -q "vue" package.json; then echo "💚 "
+    elif grep -q "svelte" package.json; then echo "🧡 "
+    elif grep -q "next" package.json; then echo "🔺 "
+    elif grep -q "nuxt" package.json; then echo "💚 "
+    else echo "📦 "; fi
+elif [[ -f Cargo.toml ]]; then echo "🦀 "
+elif [[ -f requirements.txt ]] || [[ -f pyproject.toml ]]; then echo "🐍 "
+elif [[ -f go.mod ]]; then echo "🐹 "
+elif [[ -f pom.xml ]]; then echo "☕ "
+fi
+'''
+when = true
+style = "bold white"
+format = "[$output]($style)"
+
+# Network status
+[custom.vpn]
+command = "pgrep -x openvpn &>/dev/null && echo 'VPN' || echo ''"
+when = true
+symbol = "🔐 "
+style = "bold green"
+format = "[$symbol$output]($style)"
