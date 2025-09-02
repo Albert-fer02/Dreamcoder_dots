@@ -25,10 +25,10 @@ _safe_path_add "$HOME/.bun/bin"
 eval "$(starship init zsh)"
 
 # =====================================================
-# 🧠 MCFLY - NEURAL COMMAND HISTORY
+# 🧠 MCFLY - NEURAL COMMAND HISTORY (LAZY LOAD)
 # =====================================================
 # Machine learning powered history with context awareness
-if command -v mcfly &>/dev/null; then
+if [[ -o interactive ]] && command -v mcfly &>/dev/null; then
     eval "$(mcfly init zsh)"
     export MCFLY_KEY_SCHEME=vim
     export MCFLY_FUZZY=2
@@ -43,14 +43,37 @@ plugins=(
     git
     vi-mode
     history-substring-search
-    you-should-use
-    zsh-completions
-    fast-syntax-highlighting
-    auto-notify
+    zsh-autosuggestions
+    zsh-syntax-highlighting
 )
 
 # Initialize Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
+
+# =====================================================
+# 🔧 CUSTOM PLUGINS CONFIGURATION
+# =====================================================
+# Load custom plugins that are not in the main plugins directory
+
+# ZSH Completions - Load only if needed
+if [[ -d "$ZSH/custom/plugins/zsh-completions" ]]; then
+    fpath=($ZSH/custom/plugins/zsh-completions/src $fpath)
+fi
+
+# Fast Syntax Highlighting - Load asynchronously
+if [[ -f "$ZSH/custom/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ]]; then
+    source "$ZSH/custom/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" &!
+fi
+
+# You Should Use - Load only in interactive mode
+if [[ -o interactive ]] && [[ -f "$ZSH/custom/plugins/you-should-use/you-should-use.plugin.zsh" ]]; then
+    source "$ZSH/custom/plugins/you-should-use/you-should-use.plugin.zsh"
+fi
+
+# Auto Notify - Load only in interactive mode
+if [[ -o interactive ]] && [[ -f "$ZSH/custom/plugins/auto-notify/auto-notify.plugin.zsh" ]]; then
+    source "$ZSH/custom/plugins/auto-notify/auto-notify.plugin.zsh"
+fi
 
 # =====================================================
 # ⚡ VI-MODE ADVANCED CONFIGURATION
@@ -100,10 +123,10 @@ setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
 # =====================================================
-# 🔍 FZF ELITE CONFIGURATION
+# 🔍 FZF ELITE CONFIGURATION (LAZY LOAD)
 # =====================================================
 _setup_fzf() {
-    if command -v fzf &>/dev/null; then
+    if [[ -o interactive ]] && command -v fzf &>/dev/null; then
         source <(fzf --zsh)
         
         # Elite FZF configuration
@@ -111,45 +134,48 @@ _setup_fzf() {
         export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
         export FZF_ALT_C_COMMAND='fd --type d . --strip-cwd-prefix --hidden --follow --exclude .git'
         
-        # Ultra-modern theme
+        # Optimized FZF configuration for speed
         export FZF_DEFAULT_OPTS="
             --height=60%
             --layout=reverse
             --border=rounded
             --preview-window=right:50%:wrap
+            --preview='([[ -d {} ]] && eza --tree --color=always {} | head -100) || (bat --color=always --style=plain --line-range :200 {} 2>/dev/null || cat {} 2>/dev/null)'
             --bind=ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down
-            --bind=ctrl-f:preview-page-down,ctrl-b:preview-page-up
             --color=bg+:#1e1e2e,bg:#11111b,spinner:#f5e0dc,hl:#f38ba8
             --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc
             --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8"
         
-        export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
-        export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+        export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=plain --line-range :200 {} 2>/dev/null || cat {} 2>/dev/null'"
+        export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -100'"
     fi
 }
 _setup_fzf
 
 # =====================================================
-# 🧭 ZOXIDE - SMART DIRECTORY JUMPING
+# 🧭 ZOXIDE - SMART DIRECTORY JUMPING (LAZY LOAD)
 # =====================================================
-if command -v zoxide &>/dev/null; then
+if [[ -o interactive ]] && command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh --cmd cd)"
     alias z='__zoxide_z'
     alias zi='__zoxide_zi'
 fi
 
 # =====================================================
-# 🚀 MODERN NODE.JS ENVIRONMENT
+# 🚀 MODERN NODE.JS ENVIRONMENT (LAZY LOADING)
 # =====================================================
-# FNM - Ultra-fast Node version manager
-if command -v fnm &>/dev/null; then
-    eval "$(fnm env --use-on-cd)"
-fi
-
-# BUN - The fastest JavaScript runtime
-if command -v bun &>/dev/null; then
-    # BUN completions
-    [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# FNM - Ultra-fast Node version manager (lazy load)
+if [[ -o interactive ]]; then
+    # Load FNM if available
+    if [[ -d "$HOME/.local/share/fnm" ]]; then
+        export PATH="$HOME/.local/share/fnm:$PATH"
+        eval "$(fnm env --use-on-cd)" 2>/dev/null
+    fi
+    
+    # BUN - The fastest JavaScript runtime (lazy load)
+    if command -v bun &>/dev/null; then
+        [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+    fi
 fi
 
 # =====================================================
@@ -414,7 +440,6 @@ fi
 # =====================================================
 # Show system info only in interactive terminals
 if [[ $(tty) == *"pts"* ]] && [[ $- == *i* ]]; then
-    # Optional: Show fastfetch
     command -v fastfetch &>/dev/null && fastfetch
 fi
 
@@ -432,3 +457,4 @@ if [[ -n ${ZDOTDIR:-${HOME}}/.zcompdump(#qN.mh+24) ]]; then
 else
     compinit -C
 fi
+

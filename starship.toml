@@ -6,85 +6,87 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[╭─ ](bold blue)$os$username$hostname$directory$git_branch$git_status$git_metrics$nodejs$bun$rust$python$docker_context$aws$gcloud$kubernetes$terraform$package$cmd_duration$status
-[╰─](bold blue)$character
+[╭─](bold #B8A8E8)$os$username$hostname$directory$git_branch$git_status$git_metrics$nodejs$bun$rust$python$docker_context$aws$gcloud$kubernetes$terraform$package$cmd_duration$status
+[╰─](bold #B8A8E8)$character
 """
 
 add_newline = true
 command_timeout = 1000
 
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vicmd_symbol = "[❮](bold yellow)"
+success_symbol = "[❯](bold #9BD4C0)"
+error_symbol = "[❯](bold #E6B798)"
+vicmd_symbol = "[❮](bold #E0C180)"
 
 [os]
 format = "[$symbol ]($style)"
-style = "bold blue"
+style = "bold #7fb3d4"
 disabled = false
 
 [os.symbols]
-Arch = "🏛️"
-Ubuntu = "🎯"
-Debian = "🌀"
-Fedora = "🎩"
-Macos = "🍎"
-Windows = "🪟"
+Arch = "󰣇"
+Ubuntu = "󰕈"
+Debian = "󰣚"
+Fedora = "󰣛"
+Macos = "󰀵"
+Windows = "󰍲"
+
+
 
 [username]
-style_user = "bold yellow"
-style_root = "bold red"
-format = "[$user]($style)[@](bold blue)"
+style_user = "bold #D49A7A"
+style_root = "bold #E6B798"
+format = "[$user]($style)[@](bold #7fb3d4)"
 disabled = false
-show_always = false
+show_always = true
 
 [hostname]
 ssh_only = false
-format = "[$hostname]($style)[: ](bold blue)"
-style = "bold green"
+format = "[$hostname]($style)"
+style = "bold #7FB3A8"
 disabled = false
 
 [directory]
 truncation_length = 4
 truncation_symbol = "…/"
 read_only = " 🔒"
-style = "bold cyan"
+style = "bold #4da6b8"
 format = "[$path]($style)[$read_only]($read_only_style)"
 home_symbol = "~"
 
 [directory.substitutions]
-"Documents" = "📄"
-"Downloads" = "📥"
-"Music" = "🎵"
-"Pictures" = "📸"
-"Projects" = "💼"
-"Desktop" = "🖥️"
+"Documents" = "󰈙"
+"Downloads" = "󰇚"
+"Music" = "󰝚"
+"Pictures" = "󰋩"
+"Projects" = "󰲋"
+"Desktop" = "󰖯"
 
 [git_branch]
-symbol = "🌱 "
-style = "bold purple"
+symbol = "󰘬 "
+style = "bold #C5A5D4"
 format = "[$symbol$branch]($style)"
 truncation_length = 20
 truncation_symbol = "…"
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold red"
-conflicted = "⚔️ "
-ahead = "🏎️ 💨×${count}"
-behind = "🐌×${count}"
-diverged = "🔱 🏎️ 💨×${ahead_count} 🐌×${behind_count}"
-up_to_date = "✅"
-untracked = "🛤️ ×${count}"
-stashed = "📦"
-modified = "📝×${count}"
-staged = "🗃️ ×${count}"
-renamed = "📛×${count}"
-deleted = "🗑️ ×${count}"
+style = "bold #E6B798"
+conflicted = "󰞇 "
+ahead = "󰜴 ×${count}"
+behind = "󰜳 ×${count}"
+diverged = "󰜵 󰜴×${ahead_count} 󰜳×${behind_count}"
+up_to_date = "󰄬"
+untracked = "󰐕 ×${count}"
+stashed = "󰆉"
+modified = "󰏫 ×${count}"
+staged = "󰆐 ×${count}"
+renamed = "󰑕 ×${count}"
+deleted = "󰆴 ×${count}"
 
 [git_metrics]
-added_style = "bold blue"
-deleted_style = "bold red"
+added_style = "bold #9BD4C0"
+deleted_style = "bold #E6B798"
 only_nonzero_diffs = true
 format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 disabled = false
@@ -92,83 +94,83 @@ disabled = false
 [nodejs]
 format = "[$symbol($version )]($style)"
 version_format = "v${raw}"
-symbol = "⬢ "
-style = "bold green"
+symbol = "󰎙 "
+style = "bold #7FB3A8"
 detect_files = ["package.json", ".node-version", ".nvmrc"]
 detect_folders = ["node_modules"]
 
 [bun]
 format = "[$symbol($version )]($style)"
 version_format = "v${raw}"
-symbol = "🍞 "
-style = "bold yellow"
+symbol = "󰡨 "
+style = "bold #D49A7A"
 detect_files = ["bun.lockb", "bunfig.toml"]
 
 [rust]
 format = "[$symbol($version )]($style)"
 version_format = "v${raw}"
-symbol = "🦀 "
-style = "bold red"
+symbol = "󰞄 "
+style = "bold #E6B798"
 detect_files = ["Cargo.toml"]
 
 [python]
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-symbol = "🐍 "
-style = "bold yellow"
+symbol = "󰌠 "
+style = "bold #E0C180"
 pyenv_version_name = false
 detect_extensions = ["py"]
 detect_files = [".python-version", "Pipfile", "__init__.py", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
 
 [docker_context]
 format = "[$symbol$context]($style) "
-symbol = "🐳 "
-style = "blue bold"
+symbol = "󰡨 "
+style = "bold #7fb3d4"
 only_with_files = true
 detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
 
 [aws]
 format = '[$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
-symbol = "☁️ "
-style = "bold blue"
+symbol = "󰻞 "
+style = "bold #7fb3d4"
 disabled = false
 
 [gcloud]
 format = '[$symbol$account(@$domain)(\($region\))]($style) '
-symbol = "☁️ "
-style = "bold blue"
+symbol = "󰻞 "
+style = "bold #7fb3d4"
 
 [kubernetes]
 format = '[$symbol$context( \($namespace\))]($style) '
-symbol = "⎈ "
-style = "cyan bold"
+symbol = "󰠳 "
+style = "bold #4da6b8"
 disabled = false
 
 [terraform]
 format = "[$symbol$workspace]($style) "
-symbol = "💠 "
-style = "bold purple"
+symbol = "󰻞 "
+style = "bold #C5A5D4"
 
 [package]
 format = "[$symbol$version]($style) "
-symbol = "📦 "
-style = "208"
+symbol = "󰏗 "
+style = "bold #E0C180"
 display_private = false
 
 [cmd_duration]
 min_time = 2000
 format = "took [$duration]($style)"
-style = "bold yellow"
+style = "bold #E0C180"
 show_milliseconds = false
 show_notifications = false
 
 [status]
-style = "bg:blue"
-symbol = "🔴"
-success_symbol = "🟢"
-not_executable_symbol = "🚫"
-not_found_symbol = "🔍"
-sigint_symbol = "🧱"
-signal_symbol = "⚡"
+style = "bg:#7fb3d4"
+symbol = "󰅚"
+success_symbol = "󰄬"
+not_executable_symbol = "󰅚"
+not_found_symbol = "󰍉"
+sigint_symbol = "󰅚"
+signal_symbol = "󰅚"
 format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = false
@@ -176,23 +178,23 @@ disabled = false
 [memory_usage]
 disabled = false
 threshold = 70
-symbol = "🧠"
+symbol = "󰍛"
 style = "bold dimmed red"
 format = "$symbol [${ram}( | ${swap})]($style) "
 
 [time]
 disabled = false
-format = '🕐[\[ $time \]]($style) '
+format = '󰥔[\[ $time \]]($style) '
 time_format = "%T"
 utc_time_offset = "local"
 time_range = "10:00:00-14:00:00"
 
 [battery]
-full_symbol = "🔋"
-charging_symbol = "🔌"
-discharging_symbol = "⚡"
-unknown_symbol = "❓"
-empty_symbol = "❗"
+full_symbol = "󰁹"
+charging_symbol = "󰂄"
+discharging_symbol = "󰂃"
+unknown_symbol = "󰂑"
+empty_symbol = "󰂎"
 
 [[battery.display]]
 threshold = 30
@@ -207,7 +209,7 @@ threshold = 100
 style = "bold green"
 
 [jobs]
-symbol = "⚙️"
+symbol = "󰧑"
 style = "bold red"
 number_threshold = 1
 symbol_threshold = 1
@@ -219,31 +221,31 @@ format = "$shlvl level(s) down"
 threshold = 3
 
 [shell]
-fish_indicator = "🐠"
-powershell_indicator = "🔷"
-bash_indicator = "🐚"
-zsh_indicator = "⚡"
+fish_indicator = "󰈺"
+powershell_indicator = "󰈺"
+bash_indicator = "󰞀"
+zsh_indicator = "󰺧"
 disabled = false
 
 # Security tools detection
 [custom.nuclei]
 command = "nuclei -version 2>/dev/null | head -1"
 when = """ command -v nuclei """
-symbol = "💥 "
+symbol = "󰅚 "
 style = "bold red"
 format = "[$symbol]($style)"
 
 [custom.subfinder]
 command = "subfinder -version 2>/dev/null | head -1"
 when = """ command -v subfinder """
-symbol = "🔍 "
+symbol = "󰍉 "
 style = "bold blue"
 format = "[$symbol]($style)"
 
 [custom.httpx]
 command = "httpx -version 2>/dev/null | head -1"
 when = """ command -v httpx """
-symbol = "🌐 "
+symbol = "󰖟 "
 style = "bold green"
 format = "[$symbol]($style)"
 
@@ -251,16 +253,16 @@ format = "[$symbol]($style)"
 [custom.project_type]
 command = '''
 if [[ -f package.json ]]; then
-    if grep -q "react" package.json; then echo "⚛️ "
-    elif grep -q "vue" package.json; then echo "💚 "
-    elif grep -q "svelte" package.json; then echo "🧡 "
-    elif grep -q "next" package.json; then echo "🔺 "
-    elif grep -q "nuxt" package.json; then echo "💚 "
-    else echo "📦 "; fi
-elif [[ -f Cargo.toml ]]; then echo "🦀 "
-elif [[ -f requirements.txt ]] || [[ -f pyproject.toml ]]; then echo "🐍 "
-elif [[ -f go.mod ]]; then echo "🐹 "
-elif [[ -f pom.xml ]]; then echo "☕ "
+    if grep -q "react" package.json; then echo "󰜶 "
+    elif grep -q "vue" package.json; then echo "󰡄 "
+    elif grep -q "svelte" package.json; then echo "󰎙 "
+    elif grep -q "next" package.json; then echo "󰅧 "
+    elif grep -q "nuxt" package.json; then echo "󰡄 "
+    else echo "󰏗 "; fi
+elif [[ -f Cargo.toml ]]; then echo "󰞄 "
+elif [[ -f requirements.txt ]] || [[ -f pyproject.toml ]]; then echo "󰌠 "
+elif [[ -f go.mod ]]; then echo "󰟓 "
+elif [[ -f pom.xml ]]; then echo "󰬷 "
 fi
 '''
 when = true
@@ -271,6 +273,6 @@ format = "[$output]($style)"
 [custom.vpn]
 command = "pgrep -x openvpn &>/dev/null && echo 'VPN' || echo ''"
 when = true
-symbol = "🔐 "
+symbol = "󰖘 "
 style = "bold green"
 format = "[$symbol$output]($style)"

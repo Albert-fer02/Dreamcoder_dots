@@ -79,25 +79,25 @@ install_config() {
     # Crear respaldo
     create_backup "$dest_path" "$description"
     
-    # Copiar configuración
+    # Crear enlace simbólico
     if [[ -d "$source_path" ]]; then
-        # Es un directorio - copiar contenido (incluye dotfiles)
-        if cp -r "$source_path"/. "$dest_dir/" 2>/dev/null; then
-            print_success "$description instalada (directorio)"
-            log_info "Configuración de directorio instalada exitosamente: $config_name"
+        # Es un directorio - crear enlace simbólico al directorio
+        if ln -sf "$source_path" "$dest_path" 2>/dev/null; then
+            print_success "$description enlazada (directorio)"
+            log_info "Configuración de directorio enlazada exitosamente: $config_name"
         else
-            print_error "Error copiando directorio: $source_path"
-            log_error "Error copiando directorio de configuración: $source_path"
+            print_error "Error creando enlace de directorio: $source_path"
+            log_error "Error creando enlace de directorio de configuración: $source_path"
             return 1
         fi
     else
-        # Es un archivo - copiar directamente
-        if cp "$source_path" "$dest_path" 2>/dev/null; then
-            print_success "$description instalada (archivo)"
-            log_info "Configuración de archivo instalada exitosamente: $config_name"
+        # Es un archivo - crear enlace simbólico al archivo
+        if ln -sf "$source_path" "$dest_path" 2>/dev/null; then
+            print_success "$description enlazada (archivo)"
+            log_info "Configuración de archivo enlazada exitosamente: $config_name"
         else
-            print_error "Error copiando archivo: $source_path"
-            log_error "Error copiando archivo de configuración: $source_path"
+            print_error "Error creando enlace de archivo: $source_path"
+            log_error "Error creando enlace de archivo de configuración: $source_path"
             return 1
         fi
     fi
@@ -158,10 +158,16 @@ list_available_configs() {
     
     for config in "${!CONFIGS[@]}"; do
         IFS='|' read -r source dest desc category <<< "${CONFIGS[$config]}"
+        # Expandir ~ a la ruta completa del home
+        dest="${dest/#\~/$HOME}"
         
         local status="❌ No instalado"
         if [[ -f "$dest" || -d "$dest" ]]; then
-            status="✅ Instalado"
+            if [[ -L "$dest" ]]; then
+                status="🔗 Enlazado"
+            else
+                status="✅ Instalado"
+            fi
         fi
         
         echo -e "${CYAN}│${NC} ${BOLD}$config${NC} - $desc"
@@ -197,9 +203,15 @@ check_config_status() {
     fi
     
     IFS='|' read -r source dest desc category <<< "${CONFIGS[$config]}"
+    # Expandir ~ a la ruta completa del home
+    dest="${dest/#\~/$HOME}"
     
     if [[ -f "$dest" || -d "$dest" ]]; then
-        echo "installed"
+        if [[ -L "$dest" ]]; then
+            echo "linked"
+        else
+            echo "installed"
+        fi
         return 0
     else
         echo "not_installed"
