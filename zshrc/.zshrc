@@ -414,15 +414,10 @@ fi
 # =====================================================
 # Show system info only in interactive terminals
 if [[ $(tty) == *"pts"* ]] && [[ $- == *i* ]]; then
-    echo "🚀 Elite Terminal Ready!"
-    echo "💻 Frontend: bun, fnm, modern toolchain"
-    echo "🔴 Red Team: nuclei, subfinder, httpx, gobuster"
-    echo "⚡ AI: McFly neural history, Starship prompt"
-    echo ""
-    
     # Optional: Show fastfetch
     command -v fastfetch &>/dev/null && fastfetch
 fi
+
 
 # =====================================================
 # 🧹 CLEANUP & OPTIMIZATION

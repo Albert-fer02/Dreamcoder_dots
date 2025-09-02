@@ -276,13 +276,13 @@ main() {
         exit 1
     fi
     
-    # Validar distribución
+    # Cargar módulos
+    load_modules
+    
+    # Validar distribución (después de cargar módulos)
     if ! validate_distro_support; then
         exit 1
     fi
-    
-    # Cargar módulos
-    load_modules
     
     # Ejecutar interfaz principal
     main_loop
@@ -316,11 +316,33 @@ if [[ $# -gt 0 ]]; then
             ;;
         "--install-all")
             load_modules
-            local distro=$(detect_distro)
-            local all_configs=("${!CONFIGS[@]}")
-            local all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+            distro=$(detect_distro)
+            all_configs=("${!CONFIGS[@]}")
+            all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+            set +e
             install_selected_configs "${all_configs[@]}"
+            post_install_tasks "${all_configs[@]}"
             install_tools "$distro" "${all_tools[@]}"
+            set -e
+            exit 0
+            ;;
+        "--configs")
+            load_modules
+            all_configs=("${!CONFIGS[@]}")
+            set +e
+            install_selected_configs "${all_configs[@]}"
+            post_install_tasks "${all_configs[@]}"
+            set -e
+            exit 0
+            ;;
+        "--tools")
+            load_modules
+            distro=$(detect_distro)
+            all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+            set +e
+            install_tools "$distro" "${all_tools[@]}"
+            setup_tool_paths
+            set -e
             exit 0
             ;;
         "--info")

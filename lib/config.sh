@@ -49,6 +49,9 @@ install_config() {
     local dest_path="$3"
     local description="$4"
     
+    # Expandir ~ a la ruta completa del home
+    dest_path="${dest_path/#\~/$HOME}"
+    
     if [[ ! -f "$source_path" && ! -d "$source_path" ]]; then
         print_warning "Configuración no encontrada: $source_path"
         log_warn "Archivo/directorio de configuración no encontrado: $source_path"
@@ -58,8 +61,15 @@ install_config() {
     print_substep "Instalando $description"
     log_info "Instalando configuración: $config_name ($source_path -> $dest_path)"
     
-    # Crear directorio destino
-    local dest_dir=$(dirname "$dest_path")
+    # Preparar directorio destino
+    local dest_dir
+    if [[ -d "$source_path" ]]; then
+        # Para directorios, el destino es la carpeta completa
+        dest_dir="$dest_path"
+    else
+        # Para archivos, usar el directorio contenedor
+        dest_dir=$(dirname "$dest_path")
+    fi
     if ! mkdir -p "$dest_dir" 2>/dev/null; then
         print_error "No se pudo crear directorio: $dest_dir"
         log_error "Error creando directorio destino: $dest_dir"
@@ -71,8 +81,8 @@ install_config() {
     
     # Copiar configuración
     if [[ -d "$source_path" ]]; then
-        # Es un directorio - copiar contenido
-        if cp -r "$source_path"/* "$dest_dir/" 2>/dev/null; then
+        # Es un directorio - copiar contenido (incluye dotfiles)
+        if cp -r "$source_path"/. "$dest_dir/" 2>/dev/null; then
             print_success "$description instalada (directorio)"
             log_info "Configuración de directorio instalada exitosamente: $config_name"
         else
