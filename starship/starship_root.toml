@@ -1,0 +1,241 @@
+# =====================================================
+# 🔴 STARSHIP ROOT CONFIG - SECURITY FOCUSED
+# =====================================================
+# Ultra-visible configuration for root user
+# Designed to make it OBVIOUS you're operating as root
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[🔥](bold red) $username$hostname$directory$git_branch$git_status$cmd_duration$jobs$status
+$character"""
+
+# Add a blank line between shell prompts
+add_newline = false
+
+# =====================================================
+# 🎯 PROMPT CHARACTER - DANGEROUS RED
+# =====================================================
+[character]
+success_symbol = "[❯](bold red)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold red)"
+vimcmd_replace_one_symbol = "[❯](bold red)"
+vimcmd_replace_symbol = "[❯](bold red)"
+vimcmd_visual_symbol = "[❯](bold red)"
+
+# =====================================================
+# 🏠 HOSTNAME - ALWAYS VISIBLE FOR ROOT
+# =====================================================
+[hostname]
+ssh_only = false
+format = "[$hostname](bold yellow)"
+style = "bold yellow"
+disabled = false
+
+# =====================================================
+# 📁 DIRECTORY - CRITICAL PATH AWARENESS
+# =====================================================
+[directory]
+style = "bold cyan"
+read_only = " 🔒"
+read_only_style = "bold red"
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = "~"
+format = " [$path]($style)[$read_only]($read_only_style)"
+
+# Special formatting for critical directories
+[directory.substitutions]
+"/etc" = "⚙️ /etc"
+"/var/log" = "📄 /var/log"
+"/usr/share" = "📦 /usr/share"
+"/opt" = "🔧 /opt"
+"/tmp" = "🗑️ /tmp"
+
+# =====================================================
+# 🌿 GIT - MINIMAL FOR ROOT OPERATIONS
+# =====================================================
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = " [$symbol$branch]($style)"
+
+[git_status]
+style = "bold red"
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+conflicted = "🏳"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = "🗃"
+renamed = "👅"
+deleted = "🗑"
+
+# =====================================================
+# ⏱️ COMMAND DURATION - PERFORMANCE MONITORING
+# =====================================================
+[cmd_duration]
+min_time = 2000
+style = "bold yellow"
+format = " [$duration]($style)"
+
+# =====================================================
+# 🔧 STATUS - ERROR VISIBILITY
+# =====================================================
+[status]
+style = "bold red"
+symbol = "✗"
+success_symbol = ""
+not_executable_symbol = "⚠️"
+not_found_symbol = "❌"
+sigint_symbol = "🛑"
+signal_symbol = "⚡"
+format = ' [$symbol$maybe_int]($style)'
+map_symbol = true
+disabled = false
+
+# =====================================================
+# 💼 JOBS - BACKGROUND PROCESS AWARENESS
+# =====================================================
+[jobs]
+symbol = " "
+style = "bold blue"
+number_threshold = 1
+symbol_threshold = 1
+format = " [$symbol$number]($style)"
+
+# =====================================================
+# 🚫 DISABLED MODULES (Not relevant for root)
+# =====================================================
+[aws]
+disabled = true
+
+[azure]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[golang]
+disabled = true
+
+[helm]
+disabled = true
+
+[java]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[lua]
+disabled = true
+
+[nim]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[package]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+disabled = true
+
+[red]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[scala]
+disabled = true
+
+[swift]
+disabled = true
+
+[terraform]
+disabled = true
+
+[vagrant]
+disabled = true
+
+[vlang]
+disabled = true
+
+[zig]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[time]
+disabled = true
+
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style)[@](bold yellow)"
+disabled = false
+show_always = true
+
+[battery]
+disabled = true

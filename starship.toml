@@ -33,7 +33,7 @@ Windows = "󰍲"
 [username]
 style_user = "bold #A8DADC"
 style_root = "bold #FF6B6B"
-format = "[$user]($style)[/](bold #6A9BD1)"
+format = "[$user]($style) "
 disabled = false
 show_always = true
 
