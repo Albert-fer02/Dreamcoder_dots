@@ -79,6 +79,7 @@ install_config() {
     # Crear respaldo
     create_backup "$dest_path" "$description"
     
+
     # Crear enlace simbólico
     if [[ -d "$source_path" ]]; then
         # Es un directorio - crear enlace simbólico al directorio
