@@ -12,13 +12,17 @@ cd Dreamcoder_dots
 
 ## Características
 
-- **ZSH** con Oh-My-Zsh y plugins optimizados
+- **ZSH** con Oh-My-Zsh y plugins optimizados + integración FZF mejorada
+- **Bash** configuración alternativa para compatibilidad
 - **Kitty** terminal con temas personalizados
-- **Starship** prompt moderno
-- **Fastfetch** información del sistema
-- **Herramientas CLI** modernas (eza, bat, fzf, zoxide, mcfly)
-- **Sistema de respaldos** automático
-- **Instalación modular** por categorías
+- **Starship** prompt moderno con configuraciones separadas
+- **PowerLevel10k** tema premium personalizado (p10k_dreamcoder)
+- **Fastfetch** información del sistema con imágenes
+- **Nano** editor mejorado con syntax highlighting
+- **Herramientas CLI** modernas (eza, bat, fzf, zoxide, dust, duf, procs, bottom)
+- **Sistema de respaldos** automático con gestión completa
+- **Instalación modular** por categorías con soporte multi-distro
+- **Arquitectura modular** con sistema de módulos independientes
 
 ## Uso
 
@@ -37,22 +41,27 @@ cd Dreamcoder_dots
 ## Configuraciones
 
 ### Shell
-- **ZSH** - Configuración optimizada para desarrollo
+- **ZSH** - Configuración optimizada para desarrollo con integración FZF
 - **ZSH Root** - Configuración segura para administrador
+- **Bash** - Configuración alternativa compatible
 
 ### Terminal
 - **Kitty** - Terminal moderno con GPU
-- **Fastfetch** - Información del sistema visual
+- **Fastfetch** - Información del sistema visual con imágenes
 
 ### Prompt
 - **Starship** - Prompt moderno y rápido
+- **PowerLevel10k** - Tema premium personalizado (p10k_dreamcoder)
 - **Starship Root** - Prompt con advertencias de seguridad
 
-### Herramientas
-- **Core**: git, curl, wget, build tools
-- **CLI Modernas**: eza, bat, fd, ripgrep, fzf, zoxide, mcfly
-- **Node.js**: Bun, FNM
-- **Desarrollo**: Docker, Python tools
+### Editores
+- **Nano** - Editor mejorado con syntax highlighting
+
+### Herramientas por Categoría
+- **Core**: git, curl, wget, build tools (soporte multi-distro)
+- **CLI Modernas**: eza, bat, fd, ripgrep, fzf, zoxide, dust, duf, procs, bottom, hyperfine, tokei
+- **Terminal**: kitty, fastfetch
+- **Desarrollo**: Docker, Docker Compose, Python tools
 
 ## Estructura
 
@@ -60,11 +69,22 @@ cd Dreamcoder_dots
 Dreamcoder_dots/
 ├── dreamcoder-setup.sh    # Script principal
 ├── lib/                   # Módulos del sistema
+│   ├── core.sh           # Sistema principal y logging
+│   ├── distro.sh         # Detección de distribuciones
+│   ├── backup.sh         # Sistema de respaldos
+│   ├── config.sh         # Gestión de configuraciones
+│   ├── tools.sh          # Instalación de herramientas
+│   └── ui.sh             # Interfaz de usuario
 ├── config/                # Archivos de configuración
+│   ├── configs.conf      # Definición de dotfiles
+│   └── tools.conf        # Herramientas por categoría
 ├── zshrc/                 # Configuraciones ZSH
-├── starship/              # Configuraciones Starship
+├── bashrc/                # Configuraciones Bash
 ├── kitty/                 # Configuraciones Kitty
-└── fastfetch/             # Configuraciones Fastfetch
+├── fastfetch/             # Configuraciones Fastfetch
+├── nano/                  # Configuraciones Nano
+├── starship.toml          # Configuración Starship
+└── p10k_dreamcoder.zsh    # Tema PowerLevel10k personalizado
 ```
 
 ## Dependencias
@@ -81,7 +101,12 @@ sudo apt install zsh git curl wget build-essential
 
 ### Red Hat/Fedora
 ```bash
-sudo dnf install zsh git curl wget gcc gcc-c++
+sudo dnf install zsh git curl wget gcc gcc-c++ make
+```
+
+### Alpine Linux
+```bash
+sudo apk add zsh git curl wget build-base
 ```
 
 ## Optimizaciones
@@ -90,6 +115,9 @@ sudo dnf install zsh git curl wget gcc gcc-c++
 - **Lazy loading**: Herramientas se cargan solo cuando es necesario
 - **Carga asíncrona**: Plugins pesados en background
 - **Configuraciones optimizadas**: Sin duplicaciones
+- **Sistema modular**: Módulos independientes para fácil mantenimiento
+- **Soporte multi-distro**: Detección automática de distribución
+- **Gestión de respaldos**: Sistema completo de backup y restauración
 
 ## Resolución de Problemas
 
