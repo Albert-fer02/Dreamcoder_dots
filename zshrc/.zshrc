@@ -1,215 +1,466 @@
 # =====================================================
-# 🚀 DREAMCODER ZSHRC - CONFIGURACIÓN OPTIMIZADA
+# 🚀 OPTIMIZED ZSHRC CONFIGURATION
 # =====================================================
-# Configuración de ZSH optimizada para desarrollo y productividad
-# Optimizada para Arch Linux con herramientas modernas
+# Fixed: FZF conflicts, PATH pollution, alias safety, lazy loading
+# Performance optimized for Arch Linux
 
 export EDITOR=nvim
 export ZSH="$HOME/.oh-my-zsh"
 
 # =====================================================
-# 🎯 PATH OPTIMIZADO
+# 📁 PATH CONFIGURATION (Guards against duplication)
 # =====================================================
-# PATH base del sistema
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-# Función para agregar rutas de forma segura
 _safe_path_add() {
-    [[ ":$PATH:" != *":$1:"* ]] && [[ -d "$1" ]] && export PATH="$PATH:$1"
+    [[ ":$PATH:" != *":$1:"* ]] && export PATH="$PATH:$1"
 }
 
-# Agregar rutas de herramientas modernas (si existen)
-_safe_path_add "$HOME/.local/bin"
 _safe_path_add "$HOME/.cargo/bin"
+_safe_path_add "$HOME/.local/bin"
 _safe_path_add "$HOME/go/bin"
 _safe_path_add "$HOME/.bun/bin"
 _safe_path_add "$HOME/.fnm"
 
-# =====================================================
-# 🌟 PROMPT MODERNO
-# =====================================================
-# Starship prompt (si está disponible)
-if command -v starship &>/dev/null; then
-    export STARSHIP_CONFIG="$HOME/.config/starship.toml"
-eval "$(starship init zsh)"
-else
-    # Fallback: prompt moderno para usuario
-    PROMPT='%F{blue}󰣇%f %F{cyan}%n@%m%f %F{yellow}%~%f %F{green}✓%f
-%F{blue}❯%f '
-fi
+# Project directories
+export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
 
 # =====================================================
-# 📊 HISTORIAL OPTIMIZADO
+# 🎨 OH-MY-ZSH CONFIGURATION
 # =====================================================
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=10000
-SAVEHIST=10000
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Opciones de historial
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_NO_FUNCTIONS
-setopt HIST_REDUCE_BLANKS
-setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-
-# =====================================================
-# 🎯 PLUGINS OPTIMIZADOS
-# =====================================================
+# Let Oh-My-Zsh handle these plugins instead of manual loading
 plugins=(
     git
-    vi-mode
-    history-substring-search
     zsh-autosuggestions
     zsh-syntax-highlighting
+    history-substring-search
 )
 
-# Inicializar Oh-My-Zsh
-if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
-    source "$ZSH/oh-my-zsh.sh"
+# Initialize Oh-My-Zsh
+source $ZSH/oh-my-zsh.sh
+
+# =====================================================
+# 📊 HISTORY CONFIGURATION
+# =====================================================
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+# Essential history options
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+
+# Directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+
+# =====================================================
+# 🔧 PLUGIN CONFIGURATION (Manual overrides)
+# =====================================================
+
+# zsh-autosuggestions customization
+if [[ -n "${ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE}" ]]; then
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6c6c6c'
+    ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 fi
 
 # =====================================================
-# ⚡ HERRAMIENTAS MODERNAS (LAZY LOADING)
+# 🔍 FZF CONFIGURACIÓN PRO (con bat + fallback inteligente)
+# =====================================================
+_setup_fzf() {
+    local fzf_config="${ARCH_DREAM_ROOT:-$HOME/.config/arch-dream}/modules/core/zsh/plugins/fzf.zsh"
+
+    # 1️⃣ Cargar config personalizada o fallback al sistema
+    if [[ -f "$fzf_config" ]]; then
+        source "$fzf_config"
+    elif command -v fzf &>/dev/null; then
+        # Cargar scripts de fzf del sistema
+        source <(fzf --zsh 2>/dev/null)
+        [[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+        [[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+    else
+        echo "⚠️  FZF no está instalado. Instálalo con: sudo pacman -S fzf" >&2
+        return
+    fi
+
+    # 2️⃣ Detectar preview tool (bat > less > cat)
+    local preview_cmd
+    if command -v bat &>/dev/null; then
+        preview_cmd="bat --style=numbers --color=always --paging=never --line-range :2000"
+    elif command -v less &>/dev/null; then
+        preview_cmd="less"
+    else
+        preview_cmd="cat"
+    fi
+
+    # 3️⃣ Preview inteligente (no mostrar binarios)
+    # Corrige error: $FZF_DEFAULT_OPTS: unknown option: binario:
+    # El error ocurre si la preview contiene comillas simples mal escapadas o sintaxis inválida.
+    # Usar comillas dobles para la preview y escapar correctamente.
+    local smart_preview='[[ $(file --mime {} 2>/dev/null) =~ text ]] && '"$preview_cmd"' {} || echo Archivo\ binario:\ {}'
+
+    # 4️⃣ Configuración avanzada de FZF
+    # Evitar sobrescribir FZF_DEFAULT_OPTS
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+        --height=90% \
+        --layout=reverse \
+        --border=rounded \
+        --preview=\"$smart_preview\" \
+        --preview-window=right:50%:wrap \
+        --color=fg:#cdd6f4,bg:#1e1e2e,hl:#f38ba8 \
+        --color=fg+:#ffffff,bg+:#313244,hl+:#fab387 \
+        --color=info:#89b4fa,prompt:#cba6f7,pointer:#f38ba8,marker:#f9e2af,spinner:#f38ba8,header:#94e2d5"
+
+    # 5️⃣ Keybindings mejorados
+    bindkey '^T' fzf-file-widget       # Ctrl+T → buscar archivos
+    bindkey '^R' fzf-history-widget    # Ctrl+R → buscar en historial
+    bindkey '^F' fzf-cd-widget         # Ctrl+F → fuzzy cd
+}
+
+# Ejecutar setup automáticamente
+_setup_fzf
+
+
+# =====================================================
+# 🧭 MODERN NAVIGATION TOOLS (Lazy loaded)
 # =====================================================
 
-# FZF para búsqueda rápida (solo si está disponible)
-if [[ -o interactive ]] && command -v fzf &>/dev/null; then
-    source <(fzf --zsh) 2>/dev/null
+# Zoxide lazy loading
+_zoxide_init() {
+    unalias cd 2>/dev/null
+    eval "$(zoxide init zsh --cmd cd)"
+    alias z='__zoxide_z'
+    unfunction _zoxide_init
+    cd "$@"
+}
+command -v zoxide &>/dev/null && alias cd='_zoxide_init'
+
+# Atuin lazy loading
+_atuin_init() {
+    eval "$(atuin init zsh --disable-up-arrow)"
+    bindkey '^r' _atuin_search_widget
+    unfunction _atuin_init
+    _atuin_search_widget
+}
+command -v atuin &>/dev/null && bindkey '^r' _atuin_init
+
+# =====================================================
+# 🛠️ UTILITY FUNCTIONS
+# =====================================================
+
+# Create directory and enter
+mkcd() {
+    [[ -z "$1" ]] && { echo "Usage: mkcd <directory>"; return 1; }
+    mkdir -p "$1" && cd "$1" || return
+}
+
+# Universal extract
+extract() {
+    [[ ! -f "$1" ]] && { echo "❌ '$1' is not a valid file"; return 1; }
+    case "$1" in
+        *.tar.bz2)   tar xjf "$1"    ;;
+        *.tar.gz)    tar xzf "$1"    ;;
+        *.tar.xz)    tar xJf "$1"    ;;
+        *.bz2)       bunzip2 "$1"    ;;
+        *.rar)       unrar e "$1"    ;;
+        *.gz)        gunzip "$1"     ;;
+        *.tar)       tar xf "$1"     ;;
+        *.tbz2)      tar xjf "$1"    ;;
+        *.tgz)       tar xzf "$1"    ;;
+        *.zip)       unzip "$1"      ;;
+        *.Z)         uncompress "$1" ;;
+        *.7z)        7z x "$1"       ;;
+        *.xz)        unxz "$1"       ;;
+        *)           echo "⚠️ Unsupported format: '$1'" ;;
+    esac
+}
+
+# Smart file search (uses fd if available, fallback to find)
+find_file() {
+    local filename="$1"
+    local search_dir="${2:-.}"
     
-    # Configuración optimizada de FZF
-    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-    export FZF_DEFAULT_OPTS="
-        --height=40%
-        --layout=reverse
-        --border=rounded
-        --preview='head -200 {} 2>/dev/null'
-        --color=bg+:#1e1e2e,bg:#11111b,spinner:#f5e0dc,hl:#f38ba8"
-fi
-
-# Herramientas modernas (solo si están disponibles)
-if command -v bat &>/dev/null; then
-    alias cat='bat --style=plain --paging=never'
-fi
+    [[ -z "$filename" ]] && { echo "Usage: find_file <name> [directory]"; return 1; }
+    
+    if command -v fd >/dev/null 2>&1; then
+        fd "$filename" "$search_dir" --type f 2>/dev/null
+    else
+        command find "$search_dir" -name "*$filename*" -type f 2>/dev/null | head -20
+    fi
+}
 
 # =====================================================
-# ⚡ VI-MODE
-# =====================================================
-bindkey -v
-export KEYTIMEOUT=1
-
-# =====================================================
-# 🔧 ALIASES MODERNOS
+# 🎯 SAFE ALIASES (Non-destructive)
 # =====================================================
 
-# Operaciones de archivos con confirmación
-alias rm='rm -i'
-alias cp='cp -i'  
-alias mv='mv -i'
-
-# Herramientas modernas de listado (si están disponibles)
-if command -v eza &>/dev/null; then
-    alias ls='eza --icons --group-directories-first'
-    alias ll='eza -l --icons --group-directories-first --git'
-    alias la='eza -la --icons --group-directories-first --git'
-    alias lt='eza --tree --icons --level=2'
-else
-    # Fallback a ls tradicional
-    alias ll='ls -la --color=auto'
-    alias la='ls -la --color=auto'
-    alias ls='ls --color=auto'
-fi
-
-# Herramientas de sistema modernas
-if command -v procs &>/dev/null; then
-    alias ps='procs --tree'
-fi
-
-if command -v duf &>/dev/null; then
-    alias df='duf'
-fi
-
-if command -v dust &>/dev/null; then
-    alias du='dust'
-fi
-
-if command -v btm &>/dev/null; then
-    alias htop='btm --basic'
-    alias top='btm --basic'
-fi
-
-# Búsqueda moderna
-if command -v rg &>/dev/null; then
-    alias grep='rg'
-else
-    alias grep='grep --color=auto'
-fi
-
-if command -v fd &>/dev/null; then
-    alias find='fd'
-fi
-
-# Navegación rápida
+# Navigation
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 alias -- -='cd -'
 
-# Utilidades generales
+# File operations with enhanced safety
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -I --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chown='chown --preserve-root'
+alias mkdir='mkdir -pv'
+
+# Backup importantes antes de operaciones peligrosas
+bkp() {
+    [[ -z "$1" ]] && { echo "Usage: bkp <file/directory>"; return 1; }
+    cp -r "$1" "$1.bkp.$(date +%Y%m%d_%H%M%S)"
+    echo "✅ Backup created: $1.bkp.$(date +%Y%m%d_%H%M%S)"
+}
+
+# Modern ls alternatives (fallback chain)
+if command -v eza &>/dev/null; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -l --icons --group-directories-first'
+    alias la='eza -la --icons --group-directories-first'
+    alias tree='eza --tree --icons'
+elif command -v exa &>/dev/null; then
+    alias ls='exa --icons --group-directories-first'
+    alias ll='exa -l --icons --group-directories-first'
+    alias la='exa -la --icons --group-directories-first'
+    alias tree='exa --tree --icons'
+else
+    alias ll='ls -l --color=auto'
+    alias la='ls -la --color=auto'
+fi
+
+# =====================================================
+# 🔧 MODERN TOOL ALIASES (Safe alternatives)
+# =====================================================
+
+# Better alternatives with fallbacks
+command -v bat &>/dev/null && alias cat='bat --style=auto --paging=never'
+
+if command -v btop &>/dev/null; then
+    alias htop='btop'
+    alias top='btop'
+elif command -v htop &>/dev/null; then
+    alias top='htop'
+fi
+
+# Safe modern alternatives (preserve original command names)
+command -v rg &>/dev/null && alias rg='rg --smart-case'
+command -v fd &>/dev/null && alias fdfind='fd --hidden --follow'
+
+# =====================================================
+# 🐙 GIT ESSENTIALS
+# =====================================================
+alias g='git'
+alias gs='git status -s'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+alias gb='git branch'
+alias glog='git log --oneline -10'
+
+# =====================================================
+# 🐳 DOCKER ESSENTIALS
+# =====================================================
+if command -v docker &>/dev/null; then
+    alias d='docker'
+    alias dc='docker-compose'
+    alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+    alias di='docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"'
+    alias dclean='docker system prune -af'
+    alias dlogs='docker logs -f'
+fi
+
+# =====================================================
+# 📦 PACKAGE MANAGERS MODERNOS
+# =====================================================
+command -v pnpm &>/dev/null && alias pn='pnpm'
+command -v yarn &>/dev/null && alias y='yarn'
+command -v bun &>/dev/null && alias b='bun'
+
+# =====================================================
+# 💻 SYSTEM UTILITIES
+# =====================================================
 alias c='clear'
-alias h='history | tail -20'
+alias h='history'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias myip='curl -s ifconfig.me'
+alias localip="ip route get 1.1.1.1 2>/dev/null | awk '{print \$7}' | head -1"
 alias reload='source ~/.zshrc && echo "🔄 ZSH reloaded!"'
 alias now='date "+%Y-%m-%d %H:%M:%S"'
 
-# =====================================================
-# 🚀 HERRAMIENTAS DE DESARROLLO (LAZY LOADING)
-# =====================================================
+# Herramientas de red y sistema
+alias ports='ss -tuln | grep LISTEN'
+alias listening='lsof -i -P -n | grep LISTEN'
+alias connections='ss -tuln'
+alias netstat='ss -tuln'
 
-# Node.js tools (solo si están disponibles)
-if command -v fnm &>/dev/null; then
-    eval "$(fnm env --use-on-cd)"
+# =====================================================
+# 🔧 DEVELOPMENT ENHANCED
+# =====================================================
+alias py='python3'
+alias serve='python3 -m http.server'
+alias serve-php='php -S localhost:8000'
+
+# Node.js aliases mejorados
+if command -v npm &>/dev/null; then
+    alias ni='npm install'
+    alias nr='npm run'
+    alias nrs='npm run start'
+    alias nrd='npm run dev'
+    alias nrb='npm run build'
+    alias nrt='npm run test'
+    alias npu='npm update'
 fi
 
-if command -v bun &>/dev/null; then
-    # Bun ya está en PATH, no necesita inicialización adicional
-    :
-fi
+# Git aliases potenciados
+alias gaa='git add -A'
+alias gcam='git commit -am'
+alias gpsup='git push --set-upstream origin $(git branch --show-current)'
+alias gpull='git pull origin $(git branch --show-current)'
+alias gstash='git stash push -m'
+alias gpop='git stash pop'
+alias gclean='git clean -fd'
+alias greset='git reset --hard HEAD'
 
-# Navegación inteligente (solo en modo interactivo)
-if [[ -o interactive ]] && command -v zoxide &>/dev/null; then
-    eval "$(zoxide init zsh)"
-fi
+# =====================================================
+# 🖥️ WINDOW MANAGER & SYSTEM SPECIFIC
+# =====================================================
+alias Qtile='startx'
+alias ascii='~/.config/ml4w/scripts/figlet.sh'
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
-# Historial inteligente (solo en modo interactivo)
-if [[ -o interactive ]] && command -v mcfly &>/dev/null; then
-    eval "$(mcfly init zsh)"
+# Display resolution (Qtile specific)
+alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
+alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
+alias setkb='setxkbmap de;echo "Keyboard set back to de."'
+
+# =====================================================
+# 🚀 POWERLEVEL10K PROMPT - DREAMCODER TOKYO NIGHT FUSION
+# =====================================================
+# Usar configuración DreamCoder personalizada si existe, sino fallback a la original
+if [[ -f ~/.p10k_dreamcoder.zsh ]]; then
+    source ~/.p10k_dreamcoder.zsh
+elif [[ -f ~/.p10k.zsh ]]; then
+    source ~/.p10k.zsh
 fi
 
 # =====================================================
-# 🧹 COMPLETIONES OPTIMIZADAS
+# 🎉 AUTOSTART
 # =====================================================
-autoload -Uz compinit
-
-# Optimizar carga de completiones
-if [[ -n ${ZDOTDIR:-${HOME}}/.zcompdump(#qN.mh+24) ]]; then
-    compinit
-else
-    compinit -C
-fi
-
-# Limpiar función temporal
-unfunction _safe_path_add 2>/dev/null
+# Show fastfetch only in terminal sessions (not in scripts)
+[[ $(tty) == *"pts"* ]] && fastfetch
 
 # =====================================================
-# 🎨 FASTFETCH AUTOMÁTICO
+# 🚀 PRODUCTIVITY FUNCTIONS
 # =====================================================
-# Mostrar información del sistema al iniciar (solo en terminales interactivas)
-if [[ -o interactive ]] && [[ $(tty) == *"pts"* ]]; then
-    if command -v fastfetch &>/dev/null; then
-        # Usar configuración personalizada si existe
-        if [[ -f "$HOME/.config/fastfetch/config.jsonc" ]]; then
-            fastfetch --config "$HOME/.config/fastfetch/config.jsonc" 2>/dev/null || fastfetch --config none
-        else
-            fastfetch --config none --structure "Title:Separator:OS:Kernel:Uptime:Memory:Disk"
-        fi
+
+# Workspace inteligente para proyectos
+projects() {
+    local project_dir="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
+    if [[ -d "$project_dir" ]]; then
+        cd "$project_dir" && ls -la
+    else
+        echo "📁 Projects directory not found: $project_dir"
+        echo "💡 Set PROJECTS_DIR environment variable"
     fi
-fi
+}
+
+# Función cd inteligente con auto-detección
+smart_cd() {
+    builtin cd "$@" || return
+    
+    # Auto-activar entornos virtuales Python
+    if [[ -f "./venv/bin/activate" ]]; then
+        echo "🐍 Activating Python virtual environment"
+        source ./venv/bin/activate
+    elif [[ -f "./.venv/bin/activate" ]]; then
+        echo "🐍 Activating Python virtual environment"
+        source ./.venv/bin/activate
+    fi
+    
+    # Detectar proyectos Node.js
+    if [[ -f "package.json" && ! -d "node_modules" ]]; then
+        echo "📦 Node.js project detected. Run: npm install"
+    fi
+    
+    # Detectar proyectos Rust
+    if [[ -f "Cargo.toml" && ! -d "target" ]]; then
+        echo "🦀 Rust project detected. Run: cargo build"
+    fi
+    
+    # Detectar repositorios Git
+    if [[ -d ".git" ]]; then
+        git status -s 2>/dev/null | head -5
+    fi
+}
+
+# Alias para usar smart_cd como cd
+alias cd='smart_cd'
+
+# Función para crear proyectos rápidos
+newproject() {
+    [[ -z "$1" ]] && { echo "Usage: newproject <project-name> [type]"; return 1; }
+    
+    local project_name="$1"
+    local project_type="${2:-basic}"
+    local project_dir="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}/$project_name"
+    
+    mkdir -p "$project_dir"
+    cd "$project_dir"
+    
+    case "$project_type" in
+        "node"|"js")
+            npm init -y
+            echo "node_modules/" > .gitignore
+            echo "📦 Node.js project created"
+            ;;
+        "python"|"py")
+            python3 -m venv venv
+            echo "venv/" > .gitignore
+            echo "__pycache__/" >> .gitignore
+            echo "*.pyc" >> .gitignore
+            echo "🐍 Python project created"
+            ;;
+        "rust")
+            cargo init
+            echo "🦀 Rust project created"
+            ;;
+        *)
+            git init
+            touch README.md
+            echo "📁 Basic project created"
+            ;;
+    esac
+    
+    git init 2>/dev/null
+    echo "✅ Project '$project_name' created at: $project_dir"
+}
+
+# Función para limpiar archivos temporales
+cleantemp() {
+    echo "🧹 Cleaning temporary files..."
+    find . -name ".DS_Store" -delete 2>/dev/null
+    find . -name "Thumbs.db" -delete 2>/dev/null
+    find . -name "*.tmp" -delete 2>/dev/null
+    find . -name "*~" -delete 2>/dev/null
+    echo "✅ Temporary files cleaned"
+}
+
+# =====================================================
+# 🧹 CLEANUP FUNCTIONS
+# =====================================================
+unfunction _safe_path_add _setup_fzf 2>/dev/null

@@ -89,9 +89,12 @@ alias setkb='setxkbmap de;echo "Keyboard set back to de."'
 POSH=agnoster
 
 # -----------------------------------------------------
-# Prompt
+# Prompt - Starship (same as ZSH)
 # -----------------------------------------------------
-eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/zen.toml)"
+eval "$(starship init bash)"
+
+# Old Oh-My-Posh config (disabled)
+# eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/zen.toml)"
 # eval "$(oh-my-posh init bash --config $HOME/.config/ohmyposh/EDM115-newline.omp.json)"
 
 # -----------------------------------------------------
