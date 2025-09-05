@@ -2,6 +2,8 @@
 
 Configuraciones optimizadas para un entorno de desarrollo Linux moderno y productivo.
 
+![Dreamcoder](Dreamcoder.jpg)
+
 ## Instalación
 
 ```bash
