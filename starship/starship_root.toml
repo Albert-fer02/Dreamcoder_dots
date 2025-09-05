@@ -7,7 +7,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[🔥](bold red) $username$hostname$directory$git_branch$git_status$cmd_duration$jobs$status
+[⚡](bold red) $os$username$hostname$directory$git_branch$git_status$git_metrics$nodejs$bun$rust$python$golang$java$docker_context$package$jobs$cmd_duration$status
 $character"""
 
 # Add a blank line between shell prompts
@@ -110,6 +110,92 @@ format = " [$symbol$number]($style)"
 # =====================================================
 # 🚫 DISABLED MODULES (Not relevant for root)
 # =====================================================
+[os]
+format = "[$symbol ]($style)"
+style = "bold #FF6B6B"
+disabled = false
+
+[os.symbols]
+Arch = "󰣇"
+Ubuntu = "󰕈"
+Debian = "󰣚"
+Fedora = "󰣛"
+Macos = "󰀵"
+Windows = "󰍲"
+
+[git_metrics]
+added_style = "bold #50C7E3"
+deleted_style = "bold #FF6B6B"
+only_nonzero_diffs = true
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+disabled = false
+
+[nodejs]
+format = " [$symbol$version]($style)"
+version_format = "${raw}"
+symbol = " "
+style = "bold #50C7E3"
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+disabled = false
+
+[bun]
+format = " [$symbol$version]($style)"
+version_format = "${raw}"
+symbol = " "
+style = "bold #FFD93D"
+detect_files = ["bun.lockb", "bunfig.toml"]
+disabled = false
+
+[rust]
+format = " [$symbol$version]($style)"
+version_format = "${raw}"
+symbol = " "
+style = "bold #FF6B6B"
+detect_files = ["Cargo.toml"]
+disabled = false
+
+[python]
+format = ' [${symbol}${version}(\($virtualenv\))]($style)'
+symbol = " "
+style = "bold #FFD93D"
+pyenv_version_name = false
+detect_extensions = ["py"]
+detect_files = [".python-version", "Pipfile", "__init__.py", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
+disabled = false
+
+[golang]
+format = " [$symbol$version]($style)"
+symbol = " "
+style = "bold #50C7E3"
+detect_files = ["go.mod", "go.sum", "glide.yaml", "Gopkg.yml", "Gopkg.lock", ".go-version"]
+detect_folders = ["Godeps"]
+detect_extensions = ["go"]
+disabled = false
+
+[java]
+format = " [$symbol$version]($style)"
+symbol = " "
+style = "bold #FFD93D"
+detect_extensions = ["java", "class", "jar", "gradle", "clj", "cljc"]
+detect_files = ["pom.xml", "build.gradle.kts", "build.sbt", ".java-version", ".deps.edn", "project.clj", "build.boot"]
+disabled = false
+
+[docker_context]
+format = " [$symbol$context]($style)"
+symbol = " "
+style = "bold #6A9BD1"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+disabled = false
+
+[package]
+format = " [$symbol$version]($style)"
+symbol = " "
+style = "bold #FFD93D"
+display_private = false
+disabled = false
+
 [aws]
 disabled = true
 
@@ -128,9 +214,6 @@ disabled = true
 [deno]
 disabled = true
 
-[docker_context]
-disabled = true
-
 [dotnet]
 disabled = true
 
@@ -146,13 +229,7 @@ disabled = true
 [gcloud]
 disabled = true
 
-[golang]
-disabled = true
-
 [helm]
-disabled = true
-
-[java]
 disabled = true
 
 [julia]
@@ -170,13 +247,7 @@ disabled = true
 [nim]
 disabled = true
 
-[nodejs]
-disabled = true
-
 [ocaml]
-disabled = true
-
-[package]
 disabled = true
 
 [perl]
@@ -191,16 +262,10 @@ disabled = true
 [purescript]
 disabled = true
 
-[python]
-disabled = true
-
 [red]
 disabled = true
 
 [ruby]
-disabled = true
-
-[rust]
 disabled = true
 
 [scala]
