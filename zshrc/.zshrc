@@ -464,3 +464,8 @@ cleantemp() {
 # 🧹 CLEANUP FUNCTIONS
 # =====================================================
 unfunction _safe_path_add _setup_fzf 2>/dev/null
+# Apply Dreamcoder P10k config after OMZ init
+if typeset -f prompt_powerlevel10k_setup >/dev/null; then
+  [[ -f ~/.p10k_dreamcoder.zsh ]] && source ~/.p10k_dreamcoder.zsh
+  prompt_powerlevel10k_setup
+fi

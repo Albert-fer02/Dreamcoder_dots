@@ -1,8 +1,10 @@
+#!/bin/zsh
 # =====================================================
-# 🎨 POWERLEVEL10K DREAMCODER PREMIUM - LUXURY BACKGROUNDS
+# 🚀 POWERLEVEL10K DREAMCODER SENIOR - TOKYO NIGHT MASTERY
 # =====================================================
-# Diseño premium con backgrounds sofisticados y username elegante
-# Estilo luxury con gradientes sutiles y separadores perfectos
+# Diseño profesional senior-level con estructura correcta
+# Elementos contextuales inteligentes + Performance extremo
+# Compatible con instant prompt + Separadores avanzados
 # =====================================================
 
 # Temporarily change options.
@@ -15,212 +17,221 @@
 () {
   emulate -L zsh -o extended_glob
 
-  # Unset all configuration options.
+  # Unset all configuration options. This allows you to apply configuration changes without
+  # restarting zsh. Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
   unset -m '(POWERLEVEL9K_*|DEFAULT_USER)~POWERLEVEL9K_GITSTATUS_DIR'
 
   # Zsh >= 5.1 is required.
   [[ $ZSH_VERSION == (5.<1->*|<6->.*) ]] || return
 
   # =====================================================
-  # 🎯 PREMIUM PROMPT ELEMENTS - LUXURY DESIGN
+  # 🌈 PALETA VIBRANTE - COLORES VIVOS Y BRILLANTES
   # =====================================================
+  # Inspirada en: Dracula + Material Design + Neon themes
+  # Colores saturados y vibrantes para máximo impacto visual
+  # Perfecto para fondos transparentes y terminales oscuros
   
-  # Left prompt - premium segments with beautiful backgrounds
+  # Colores principales ultra vibrantes
+  local blue='#79a7ff'            # Azul eléctrico brillante
+  local blue_silver='#87ceeb'     # Azul plata elegante para usuario
+  local silver='#c0c0c0'          # Plata pura brillante
+  local green='#a3d977'           # Verde lima vibrante
+  local red='#ff5f87'             # Rojo coral intenso
+  local yellow='#ffcb6b'          # Amarillo dorado brillante
+  local purple='#d197ff'          # Púrpura neón intenso
+  local cyan='#7fdbff'            # Cyan aqua brillante
+  local orange='#ffb86c'          # Naranja mandarina vibrante
+  
+  # Texto con alta saturación
+  local text_primary='#f8f8f2'    # Blanco puro para máximo contraste
+  local text_secondary='#bd93f9'  # Púrpura claro vibrante
+  local text_emphasis='#ffffff'   # Blanco absoluto
+  local text_muted='#6272a4'     # Azul grisáceo pero vibrante
+  
+  local transparent=none
+
+  # =====================================================
+  # ⚡ INSTANT PROMPT & PERFORMANCE
+  # =====================================================
+  typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
+  typeset -g POWERLEVEL9K_DISABLE_RPROMPT=false
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=always
+
+  # =====================================================
+  # 🎯 PROMPT STRUCTURE - SENIOR DESIGN
+  # =====================================================
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-    user                    # Username with luxury styling
-    dir                     # Directory with gradient background
-    vcs                     # Git with premium contrast
+    os_icon
+    user
+    dir
+    vcs
+    # Contextual elements (only when relevant)
+    virtualenv
+    pyenv
+    nodeenv
+    docker_context
   )
 
-  # Right prompt - clean luxury
-  typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+  typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+    status
+    background_jobs
+    command_execution_time
+  )
 
   # =====================================================
-  # 🎨 LUXURY BACKGROUND SYSTEM - PREMIUM DESIGN
+  # 🏗️ PROMPT FLOW & TYPOGRAPHY
   # =====================================================
-
-  # Perfect typography setup
   typeset -g POWERLEVEL9K_MODE=nerdfont-v3
   typeset -g POWERLEVEL9K_ICON_PADDING=moderate
-
-  # Elegant spacing with luxury feel
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-  typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=false
-  
-  # Premium prefix - sophisticated diamond
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%F{#7aa2f7}◆%f '    
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%F{#7aa2f7}◆%f '
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{#7aa2f7}◆%f '
+  typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+  typeset -g POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
 
-# =====================================================
-# 👤 USERNAME - PREMIUM LUXURY STYLING (Optimized)
-# =====================================================
-
-# --- 🎨 Background Styling ---
-# Fondo con sensación elegante y moderna.
-# Uso de colores inspirados en Catppuccin Mocha, con gradientes suaves.
-typeset -g POWERLEVEL9K_USER_DEFAULT_BACKGROUND='#1e1e2e'   # Base oscura lujosa
-typeset -g POWERLEVEL9K_USER_ROOT_BACKGROUND='#f38ba8'      # Rojo premium para root (alerta visual)
-
-# --- ✨ Foreground Styling ---
-# Colores del texto para contrastar perfectamente con los fondos.
-typeset -g POWERLEVEL9K_USER_DEFAULT_FOREGROUND='#cdd6f4'   # Texto elegante en tonos claros
-typeset -g POWERLEVEL9K_USER_ROOT_FOREGROUND='#1e1e2e'      # Texto oscuro sobre fondo rojo
-
-# --- 🌐 Icon & Template ---
-# Ícono distintivo + nombre, con espaciado elegante.
-typeset -g POWERLEVEL9K_USER_ICON='󰀉 '                      # Ícono de usuario (Nerd Font)
-typeset -g POWERLEVEL9K_USER_TEMPLATE='%B%n%b'               # Nombre en negrita para elegancia
-
-# --- ⚙️ Behavior ---
-# Mostrar siempre el usuario, incluso si es el actual.
-typeset -g POWERLEVEL9K_ALWAYS_SHOW_USER=true
-
-# --- 🧪 Extra Polish: Dynamic Gradient Effect ---
-# Simula un degradado para el background usando diferentes colores
-# cuando el prompt está en root vs usuario normal.
-typeset -g POWERLEVEL9K_USER_BACKGROUND_COLOR=232            # Color base oscuro
-typeset -g POWERLEVEL9K_USER_BACKGROUND_GRADIENT=true
-
+  # Two-line design with contextual arrow
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
+  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX=''
+  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{$blue}❯%f "
 
   # =====================================================
-  # 🏠 DIRECTORY - LUXURY GRADIENT BACKGROUND
+  # 🔸 SEPARATORS - MINIMALISTA TRANSPARENTE
   # =====================================================
-  
-  # Premium directory backgrounds - sophisticated gradients
-  typeset -g POWERLEVEL9K_DIR_HOME_BACKGROUND='#181825'             # Deep charcoal - luxury
-  typeset -g POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='#181825'   # Consistent luxury
-  typeset -g POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='#181825'          # Unified premium
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_BACKGROUND='#181825'        # Elegant consistency
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_BACKGROUND='#181825'           # Premium dark
-  
-  # Your perfect colors maintained - maximum contrast on luxury background
-  typeset -g POWERLEVEL9K_DIR_HOME_FOREGROUND='#7aa2f7'             # Vibrant blue - perfect contrast
-  typeset -g POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='#89b4fa'   # Lighter blue - hierarchy
-  typeset -g POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='#74c7ec'          # Cyan - beautiful
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND='#a6adc8'        # Light gray - subtle
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND='#b4befe'           # Purple accent - luxury
-  
-  # Special states with premium backgrounds
-  typeset -g POWERLEVEL9K_DIR_NOT_WRITABLE_BACKGROUND='#181825'
-  typeset -g POWERLEVEL9K_DIR_NOT_WRITABLE_FOREGROUND='#f38ba8'     # Warning red
-  typeset -g POWERLEVEL9K_DIR_WRITABLE_BACKGROUND='#181825'
-  typeset -g POWERLEVEL9K_DIR_WRITABLE_FOREGROUND='#7aa2f7'         # Primary blue
+  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=' '
+  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=' '
+  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=' '
+  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=' '
 
-  # Perfect truncation maintained
-  typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_with_folder_marker
-  typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER='(.git|.svn|.hg|node_modules|.venv|venv)'
+  # =====================================================
+  # 💻 OS ICON - ARCH LINUX TRANSPARENTE
+  # =====================================================
+  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND="$blue"
+  typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='󰣇'
+
+  # =====================================================
+  # 👤 USER - NOMBRE EN AZUL PLATA ELEGANTE
+  # =====================================================
+  typeset -g POWERLEVEL9K_USER_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_USER_DEFAULT_FOREGROUND="$blue_silver"
+  typeset -g POWERLEVEL9K_USER_ROOT_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_USER_ROOT_FOREGROUND="$red"
+  typeset -g POWERLEVEL9K_USER_SUDO_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_USER_SUDO_FOREGROUND="$orange"
+  typeset -g POWERLEVEL9K_ALWAYS_SHOW_USER=true
+  typeset -g POWERLEVEL9K_USER_TEMPLATE='%n'
+
+  # =====================================================
+  # 📁 DIRECTORY - TRANSPARENTE Y LEGIBLE
+  # =====================================================
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="$text_primary"
+  typeset -g POWERLEVEL9K_DIR_HOME_FOREGROUND="$cyan"
+  typeset -g POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="$text_primary"
+  typeset -g POWERLEVEL9K_DIR_NOT_WRITABLE_FOREGROUND="$red"
+
+  # Smart truncation strategy
+  typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_with_package_name
   typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-  typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=50
+  typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=60
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER='…'
 
-  # Clean directory icons - typography luxury
-  typeset -g POWERLEVEL9K_HOME_ICON=''                             
-  typeset -g POWERLEVEL9K_HOME_SUB_ICON=''                         
-  typeset -g POWERLEVEL9K_FOLDER_ICON=''                           
-  typeset -g POWERLEVEL9K_ETC_ICON=''                              
+  # Context-aware modern icons
+  typeset -g POWERLEVEL9K_DIR_ETC_ICON=''
+  typeset -g POWERLEVEL9K_DIR_HOME_ICON=''
+  typeset -g POWERLEVEL9K_DIR_HOME_SUBFOLDER_ICON=''
+  typeset -g POWERLEVEL9K_DIR_DEFAULT_ICON=''
+  typeset -g POWERLEVEL9K_DIR_NOT_WRITABLE_ICON=''
 
   # =====================================================
-  # 🌿 GIT - PREMIUM CONTRAST BACKGROUND
+  # 🌿 GIT - TRANSPARENTE CON COLORES CONTEXTUALES
   # =====================================================
-  
-  # Git with premium darker background for perfect separation
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND='#0d1117'           # GitHub dark - premium
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='#0d1117'        # Consistent premium
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='#0d1117'       # Dark elegance
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND='#0d1117'      # Unified luxury
-  
-  # Your beautiful git colors - perfect on dark premium background
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND='#a6e3a1'          # Fresh green - premium contrast
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='#f9e2af'       # Warm amber - luxury
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='#fab387'      # Orange - attention
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND='#f38ba8'     # Soft red - elegant warning
-  
-  # Premium git styling
-  typeset -g POWERLEVEL9K_VCS_GIT_ICON=''                          # Clean - no noise
-  typeset -g POWERLEVEL9K_VCS_GIT_GITHUB_ICON=''                  # Minimal luxury
-  typeset -g POWERLEVEL9K_VCS_GIT_GITLAB_ICON=''                  # Pure elegance
-  
-  # Beautiful branch styling maintained
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='󰘬 '                   # Subtle branch - premium
-  typeset -g POWERLEVEL9K_VCS_TAG_ICON='󰓹 '                      # Elegant tag
-  
-  # Clean counters - luxury simplicity
-  typeset -g POWERLEVEL9K_VCS_COMMITS_AHEAD_MAX_NUM=3
-  typeset -g POWERLEVEL9K_VCS_COMMITS_BEHIND_MAX_NUM=3
-  
-  # Premium status indicators - perfect typography
-  typeset -g POWERLEVEL9K_VCS_STAGED_ICON='●'                      # Solid dot - premium
-  typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON='○'                    # Hollow dot - contrast
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='◌'                   # Minimal circle - elegant
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_ICON='◆'                  # Diamond - luxury attention
-  typeset -g POWERLEVEL9K_VCS_STASH_ICON='⚹'                       # Elegant stash - premium
-  
-  # Beautiful prefix - luxury integration
-  typeset -g POWERLEVEL9K_VCS_PREFIX='%F{#6c7086}on%f '           # Muted "on" - sophisticated
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND="$green"
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND="$yellow"
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND="$blue"
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_FOREGROUND="$red"
+  typeset -g POWERLEVEL9K_VCS_STAGED_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_STAGED_FOREGROUND="$cyan"
+  typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VCS_LOADING_FOREGROUND="$text_secondary"
 
-  # Ahead/behind with premium backgrounds
-  typeset -g POWERLEVEL9K_VCS_COMMITS_AHEAD_FOREGROUND='#89b4fa'   # Blue - ahead
-  typeset -g POWERLEVEL9K_VCS_COMMITS_BEHIND_FOREGROUND='#cba6f7'  # Purple - behind
+  # Professional Git icons
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='󰘬 '
+  typeset -g POWERLEVEL9K_VCS_GIT_ICON=''
+  typeset -g POWERLEVEL9K_VCS_STAGED_ICON=''
+  typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON=''
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_ICON=''
+  typeset -g POWERLEVEL9K_VCS_STASH_ICON='󰏗'
+  typeset -g POWERLEVEL9K_VCS_COMMITS_AHEAD_ICON=''
+  typeset -g POWERLEVEL9K_VCS_COMMITS_BEHIND_ICON=''
 
   # =====================================================
-  # 🎨 LUXURY SEPARATORS - PREMIUM POWERLINE
+  # 🐍 DEVELOPMENT ENVIRONMENTS - CONTEXTUAL
   # =====================================================
-  
-  # Premium powerline separators - luxury connections
-  typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=''               # Perfect powerline arrow
-  typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''              # Elegant right arrow
-  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='│'           # Vertical line - premium
-  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='│'
 
-  # Premium separator colors - beautiful luxury transitions
-  # User to Directory transition
-  typeset -g POWERLEVEL9K_USER_DEFAULT_SEGMENT_SEPARATOR_FOREGROUND='#181825'  # Dir bg color
-  typeset -g POWERLEVEL9K_USER_ROOT_SEGMENT_SEPARATOR_FOREGROUND='#181825'
-  
-  # Directory to Git transition  
-  typeset -g POWERLEVEL9K_DIR_HOME_SEGMENT_SEPARATOR_FOREGROUND='#0d1117'      # Git bg color
-  typeset -g POWERLEVEL9K_DIR_HOME_SUBFOLDER_SEGMENT_SEPARATOR_FOREGROUND='#0d1117'
-  typeset -g POWERLEVEL9K_DIR_DEFAULT_SEGMENT_SEPARATOR_FOREGROUND='#0d1117'
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_SEGMENT_SEPARATOR_FOREGROUND='#0d1117'
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_SEGMENT_SEPARATOR_FOREGROUND='#0d1117'
+  # Python - solo con archivos .py o venv
+  typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND="$green"
+  typeset -g POWERLEVEL9K_PYENV_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_PYENV_FOREGROUND="$yellow"
+  typeset -g POWERLEVEL9K_PYENV_ICON=''
 
-  # Perfect spacing - luxury breathing room
-  typeset -g POWERLEVEL9K_WHITESPACE_BETWEEN_LEFT_SEGMENTS=''      # Separators handle spacing
-  typeset -g POWERLEVEL9K_WHITESPACE_BETWEEN_RIGHT_SEGMENTS=''
+  # Node.js - solo con package.json
+  typeset -g POWERLEVEL9K_NODEENV_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_NODEENV_FOREGROUND="$green"
+  typeset -g POWERLEVEL9K_NODEENV_ICON=''
+
+  # Docker - solo con Dockerfile/docker-compose
+  typeset -g POWERLEVEL9K_DOCKER_CONTEXT_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_DOCKER_CONTEXT_FOREGROUND="$blue"
+  typeset -g POWERLEVEL9K_DOCKER_CONTEXT_ICON=''
 
   # =====================================================
-  # ⚡ PREMIUM PERFORMANCE
+  # ✔️ STATUS & SYSTEM INFO - RIGHT PROMPT
   # =====================================================
-  
-  # Optimized for luxury smoothness
+
+  # Status with contextual colors (only errors)
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND="$green"
+  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND="$red"
+  typeset -g POWERLEVEL9K_STATUS_OK_ICON=''
+  typeset -g POWERLEVEL9K_STATUS_ERROR_ICON=''
+  typeset -g POWERLEVEL9K_STATUS_OK=false  # Solo mostrar en errores
+
+  # Background jobs (contextual)
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND="$orange"
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_ICON=''
+
+  # Command execution time (>2s only)
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$transparent"
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="$purple"
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='%d s'
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_ICON=''
+
+  # =====================================================
+  # ⚡ PERFORMANCE OPTIMIZATIONS
+  # =====================================================
+
+  # Git optimizations for large repos
   typeset -g POWERLEVEL9K_VCS_MAX_INDEX_SIZE_DIRTY=4096
-  typeset -g POWERLEVEL9K_VCS_STAGED_MAX_NUM=3              
-  typeset -g POWERLEVEL9K_VCS_UNSTAGED_MAX_NUM=3
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_MAX_NUM=3
-  
-  # Premium performance
-  typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
-  typeset -g POWERLEVEL9K_DISABLE_RPROMPT=true              
+  typeset -g POWERLEVEL9K_VCS_STAGED_MAX_NUM=10
+  typeset -g POWERLEVEL9K_VCS_UNSTAGED_MAX_NUM=10
 
-  # =====================================================
-  # ✨ LUXURY POLISH - PREMIUM ENDINGS  
-  # =====================================================
-  
-  # Premium prompt ending - luxury finish
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR=' '
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_BACKGROUND=''
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND=''
-  
-  # Luxury endings - perfect finish
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX=''
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX=''
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX=''
-  
-  # Premium prompt character (invisible for clean luxury)
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='transparent'
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND='transparent'
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR,VIINS,VICMD,VIVIS,VIOWR}_CONTENT_EXPANSION=''
+  # Battery optimization (only show when critical)
+  typeset -g POWERLEVEL9K_BATTERY_VERBOSE=false
+  typeset -g POWERLEVEL9K_BATTERY_LOW_THRESHOLD=20
+
+  # Disable time realtime updates
+  typeset -g POWERLEVEL9K_EXPERIMENTAL_TIME_REALTIME=false
+
+  # RPROMPT optimizations
+  typeset -g POWERLEVEL9K_DISABLE_RPROMPT_AFTER_COMMAND=true
 
 }
 
