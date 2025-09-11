@@ -7,7 +7,7 @@ Configuraciones optimizadas para un entorno de desarrollo Linux moderno y produc
 ## Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/Dreamcoder_dots.git
+git clone https://github.com/Albert-fer02/Dreamcoder_dots.git
 cd Dreamcoder_dots
 ./dreamcoder-setup.sh
 ```
@@ -18,7 +18,9 @@ cd Dreamcoder_dots
 - **Bash** configuración alternativa para compatibilidad
 - **Kitty** terminal con temas personalizados
 - **Starship** prompt moderno con configuraciones separadas
-- **PowerLevel10k** tema premium personalizado (p10k_dreamcoder)
+- **PowerLevel10k** tema premium personalizado con diseño transparente ultra vibrante
+- **Prompt Senior-Level** estructura profesional con instant prompt y transient
+- **Paleta Vibrante** inspirada en Dracula/Material Design para máximo impacto visual
 - **Fastfetch** información del sistema con imágenes
 - **Nano** editor mejorado con syntax highlighting
 - **Herramientas CLI** modernas (eza, bat, fzf, zoxide, dust, duf, procs, bottom)
@@ -53,7 +55,14 @@ cd Dreamcoder_dots
 
 ### Prompt
 - **Starship** - Prompt moderno y rápido
-- **PowerLevel10k** - Tema premium personalizado (p10k_dreamcoder)
+- **PowerLevel10k Transparente** - Tema premium con diseño transparente ultra vibrante
+  - 🌈 Paleta inspirada en Dracula + Material Design + Neon themes
+  - 👤 Usuario en azul plata elegante (#87ceeb)
+  - 💎 Background 100% transparente para integración perfecta
+  - ⚡ Iconos modernos Nerd Font v3 (󰣇  󰉋 󰘬 etc.)
+  - 🎯 Elementos contextuales inteligentes (Python, Node, Docker)
+  - 🚀 Performance optimizado con instant prompt y transient
+  - 📐 Two-line design con arrow contextual azul/rojo
 - **Starship Root** - Prompt con advertencias de seguridad
 
 ### Editores
@@ -86,7 +95,7 @@ Dreamcoder_dots/
 ├── fastfetch/             # Configuraciones Fastfetch
 ├── nano/                  # Configuraciones Nano
 ├── starship.toml          # Configuración Starship
-└── p10k_dreamcoder.zsh    # Tema PowerLevel10k personalizado
+└── p10k_dreamcoder.zsh    # Tema PowerLevel10k transparente vibrante
 ```
 
 ## Dependencias
@@ -120,6 +129,44 @@ sudo apk add zsh git curl wget build-base
 - **Sistema modular**: Módulos independientes para fácil mantenimiento
 - **Soporte multi-distro**: Detección automática de distribución
 - **Gestión de respaldos**: Sistema completo de backup y restauración
+- **Prompt Ultra Optimizado**: Instant prompt + transient + estructura senior-level
+- **Colores Vibrantes**: Máximo impacto visual con legibilidad perfecta
+
+## PowerLevel10k Transparente - Características Técnicas
+
+### 🎨 Diseño Visual
+- **Background Transparente**: Se integra perfectamente con cualquier terminal/wallpaper
+- **Paleta Ultra Vibrante**: Colores saturados inspirados en temas modernos
+- **Separadores Minimalistas**: Espacios simples para máxima limpieza
+- **Iconos Modernos**: Nerd Font v3 con iconos vectoriales profesionales
+
+### ⚡ Performance Senior-Level
+- **Instant Prompt**: Arranque ultrarrápido con verbose mode
+- **Transient Prompt**: Historial limpio con `always` mode
+- **Elementos Contextuales**: Solo aparecen cuando son relevantes
+- **Git Optimizado**: Para repositorios grandes con límites configurados
+
+### 🎯 Elementos del Prompt
+```
+󰣇 dreamcoder08 ~/Documentos/PROYECTOS ✨ main ❯
+↑    ↑           ↑                    ↑   ↑   ↑
+│    │           │                    │   │   └─ Arrow contextual
+│    │           │                    │   └─────── Git branch
+│    │           │                    └─────────── Git status
+│    │           └──────────────────────────────── Directory path
+│    └────────────────────────────────────────── Usuario (azul plata)
+└─────────────────────────────────────────────── OS Icon (Arch)
+```
+
+### 🌈 Paleta de Colores
+- **Azul Eléctrico**: `#79a7ff` - OS icon, Git untracked, Docker
+- **Azul Plata**: `#87ceeb` - Nombre de usuario elegante
+- **Verde Lima**: `#a3d977` - Git clean, Python, Node.js
+- **Amarillo Dorado**: `#ffcb6b` - Git modified, Python env
+- **Rojo Coral**: `#ff5f87` - Git conflicts, errores, root user
+- **Púrpura Neón**: `#d197ff` - Execution time, home directory
+- **Cyan Brillante**: `#7fdbff` - Git staged, home folder
+- **Naranja Mandarina**: `#ffb86c` - Background jobs, sudo user
 
 ## Resolución de Problemas
 
@@ -130,6 +177,9 @@ zsh -c "time (source ~/.zshrc >/dev/null 2>&1)"
 
 # Recargar configuración
 source ~/.zshrc
+
+# Aplicar prompt transparente
+source ~/Documentos/PROYECTOS/Dreamcoder_dots/p10k_dreamcoder.zsh
 ```
 
 ### Herramientas no encontradas
@@ -163,4 +213,4 @@ MIT License - Ver [LICENSE](LICENSE) para más detalles.
 
 **¿Te gusta el proyecto?** ⭐ ¡Dale una estrella!
 
-**¿Problemas o sugerencias?** 💬 Abre un [issue](https://github.com/tu-usuario/Dreamcoder_dots/issues)
+**¿Problemas o sugerencias?** 💬 Abre un [issue](https://github.com/Albert-fer02/Dreamcoder_dots/issues)
