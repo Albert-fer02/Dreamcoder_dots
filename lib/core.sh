@@ -324,7 +324,7 @@ sanitize_path() {
     fi
 
     # Remover otros caracteres peligrosos
-    if [[ "$path" =~ [\;\|\&\$\`\<\>\(\)\[\]\{\}\*\?] ]]; then
+    if [[ "$path" =~ [';|$`<>(){}[]*?&'] ]]; then
         log_error "Ruta contiene caracteres peligrosos: $path"
         return 1
     fi
@@ -351,7 +351,7 @@ validate_user_input() {
     fi
 
     # Verificar caracteres peligrosos
-    if [[ "$input" =~ [\;\|\&\$\`\<\>\(\)\[\]\{\}] ]]; then
+    if [[ "$input" =~ [';|$`<>(){}[]*?&'] ]]; then
         log_error "Entrada contiene caracteres peligrosos"
         return 1
     fi

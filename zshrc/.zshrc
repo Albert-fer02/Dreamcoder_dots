@@ -348,15 +348,6 @@ alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
 alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
 alias setkb='setxkbmap de;echo "Keyboard set back to de."'
 
-# =====================================================
-# 🚀 POWERLEVEL10K PROMPT - DREAMCODER TOKYO NIGHT FUSION
-# =====================================================
-# Usar configuración DreamCoder personalizada si existe, sino fallback a la original
-if [[ -f ~/.p10k_dreamcoder.zsh ]]; then
-    source ~/.p10k_dreamcoder.zsh
-elif [[ -f ~/.p10k.zsh ]]; then
-    source ~/.p10k.zsh
-fi
 
 # =====================================================
 # 🎉 AUTOSTART
@@ -464,11 +455,18 @@ cleantemp() {
 # 🧹 CLEANUP FUNCTIONS
 # =====================================================
 unfunction _safe_path_add _setup_fzf 2>/dev/null
-# Apply Dreamcoder P10k config after OMZ init
+# 🚀 POWERLEVEL10K PROMPT - DREAMCODER TOKYO NIGHT FUSION
+# =====================================================
+# Ensure Powerlevel10k is properly initialized first
 if typeset -f prompt_powerlevel10k_setup >/dev/null; then
-  [[ -f ~/.p10k_dreamcoder.zsh ]] && source ~/.p10k_dreamcoder.zsh
   prompt_powerlevel10k_setup
 fi
+
+# Cargar configuración personalizada de Dreamcoder (tema senior transparente)
+[[ -f ~/.p10k_dreamcoder.zsh ]] && source ~/.p10k_dreamcoder.zsh
+
+# Fallback a configuración base si no existe la personalizada
+[[ ! -f ~/.p10k_dreamcoder.zsh && -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # pnpm
 export PNPM_HOME="/home/dreamcoder08/.local/share/pnpm"
