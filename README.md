@@ -45,10 +45,38 @@ cd Dreamcoder_dots
 
 ### Línea de Comandos
 ```bash
-./dreamcoder-setup.sh --install-all    # Instalar todo
-./dreamcoder-setup.sh --update         # Actualizar sistema
-./dreamcoder-setup.sh --info           # Ver estado
+./dreamcoder-setup.sh --install-all       # Instalar todo
+./dreamcoder-setup.sh --update            # Actualizar sistema
+./dreamcoder-setup.sh --info              # Ver estado
+./dreamcoder-setup.sh --diagnose-sudo     # Diagnosticar problemas con sudo
 ```
+
+### 🔧 Solución de Problemas con Sudo
+
+Si experimentas problemas con la entrada de contraseña:
+
+```bash
+# Diagnosticar problemas con sudo
+./dreamcoder-setup.sh --diagnose-sudo
+
+# Ejecutar test de corrección
+chmod +x test_sudo_fix.sh && ./test_sudo_fix.sh
+```
+
+**Problemas comunes y soluciones:**
+
+1. **Secuencias de escape ANSI** (`^[[A^[[A^[[A`]):
+   - ✅ **Solucionado**: Eliminado timeout problemático
+   - ✅ **Mejorado**: Mejor manejo de entrada de contraseña
+
+2. **Contraseña no aceptada**:
+   - Verifica que tu usuario esté en el grupo `sudo`
+   - Ejecuta: `sudo usermod -aG sudo $USER`
+   - Reinicia la sesión después de agregar al grupo
+
+3. **Problemas en entorno gráfico**:
+   - Intenta ejecutar en una terminal sin interfaz gráfica
+   - O usa: `sudo -A` si tienes un askpass configurado
 
 ## Configuraciones
 

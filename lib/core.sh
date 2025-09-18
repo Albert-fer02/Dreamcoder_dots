@@ -103,22 +103,45 @@ validate_sudo_access() {
 
     # Verificar si podemos usar sudo sin contraseña
     if sudo -n true 2>/dev/null; then
-        print_info "Privilegios sudo disponibles"
+        print_info "Privilegios sudo disponibles (sin contraseña)"
         return 0
     fi
 
     # Solicitar validación manual de sudo
     print_warning "Se requieren privilegios de administrador"
-    print_info "Por favor, ejecuta: sudo -v"
-    print_info "O proporciona tu contraseña cuando se solicite"
+    print_info "Ingresa tu contraseña cuando se solicite"
+    print_info "Presiona Ctrl+C para cancelar"
 
-    # Intentar validar sudo con timeout
-    if timeout 30 sudo -v 2>/dev/null; then
-        print_success "Privilegios sudo confirmados"
+    # Intentar validar sudo sin timeout problemático
+    echo -e "\n${YELLOW}Verificando acceso sudo...${NC}"
+    echo -e "${BLUE}Ingresa tu contraseña de sudo cuando se solicite:${NC}"
+
+    # Usar un enfoque más seguro para la validación
+    if sudo -v 2>&1; then
+        print_success "Privilegios sudo confirmados correctamente"
         return 0
     else
-        print_error "No se pudieron obtener privilegios sudo"
-        print_info "Asegúrate de tener permisos de administrador"
+        local exit_code=$?
+        echo ""  # Nueva línea después de la entrada de contraseña
+
+        case $exit_code in
+            1)
+                print_error "Contraseña incorrecta o acceso denegado"
+                print_info "Verifica que tu contraseña sea correcta"
+                ;;
+            130)
+                print_warning "Operación cancelada por el usuario (Ctrl+C)"
+                ;;
+            *)
+                print_error "Error al validar sudo (código: $exit_code)"
+                print_info "Posibles causas:"
+                print_info "  • Usuario no está en el grupo sudo"
+                print_info "  • Configuración de sudoers incorrecta"
+                print_info "  • Problemas con el entorno gráfico"
+                ;;
+        esac
+
+        print_info "Para diagnosticar el problema, ejecuta: ./dreamcoder-setup.sh --diagnose-sudo"
         return 1
     fi
 }
@@ -188,6 +211,46 @@ check_dependencies() {
     if [[ ${#missing_deps[@]} -gt 0 ]]; then
         handle_error "Dependencias faltantes: ${missing_deps[*]}"
     fi
+}
+
+# Función de diagnóstico para problemas con sudo
+diagnose_sudo_issues() {
+    print_step "DIAGNÓSTICO DE SUDO"
+
+    # Verificar si sudo está instalado
+    if ! command_exists sudo; then
+        print_error "sudo no está instalado"
+        print_info "Instala sudo con: apt install sudo  # Debian/Ubuntu"
+        print_info "Instala sudo con: dnf install sudo  # Fedora/RHEL"
+        print_info "Instala sudo con: pacman -S sudo     # Arch Linux"
+        return 1
+    fi
+
+    # Verificar si el usuario está en el grupo sudo
+    if groups | grep -q sudo; then
+        print_success "Usuario pertenece al grupo sudo"
+    else
+        print_warning "Usuario NO pertenece al grupo sudo"
+        print_info "Agrega tu usuario al grupo sudo:"
+        print_info "  sudo usermod -aG sudo $USER"
+        print_info "  Luego reinicia la sesión"
+    fi
+
+    # Verificar configuración de sudoers
+    if sudo -l 2>/dev/null | grep -q "may run"; then
+        print_success "Configuración de sudo parece correcta"
+    else
+        print_warning "Problemas con la configuración de sudo"
+        print_info "Verifica /etc/sudoers o ejecuta: sudo visudo"
+    fi
+
+    # Verificar si estamos en un entorno gráfico problemático
+    if [[ -n "$DISPLAY" ]] && ! sudo -A true 2>/dev/null; then
+        print_warning "Posible problema con entorno gráfico"
+        print_info "Intenta ejecutar en una terminal sin interfaz gráfica"
+    fi
+
+    return 0
 }
 
 # Configurar trap para limpieza

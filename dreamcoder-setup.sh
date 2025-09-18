@@ -331,13 +331,14 @@ if [[ $# -gt 0 ]]; then
             echo "Uso: $0 [opciones]"
             echo
             echo "Opciones:"
-            echo "  -h, --help      Mostrar esta ayuda"
-            echo "  --update        Actualizar sistema sin interfaz"
-            echo "  --install-all   Instalar todo automáticamente"
-            echo "  --info          Mostrar información del sistema"
-            echo "  --configs       Instalar solo configuraciones"
-            echo "  --tools         Instalar solo herramientas"
-            echo "  --verify        Verificar instalación"
+            echo "  -h, --help          Mostrar esta ayuda"
+            echo "  --update            Actualizar sistema sin interfaz"
+            echo "  --install-all       Instalar todo automáticamente"
+            echo "  --info              Mostrar información del sistema"
+            echo "  --configs           Instalar solo configuraciones"
+            echo "  --tools             Instalar solo herramientas"
+            echo "  --verify            Verificar instalación"
+            echo "  --diagnose-sudo     Diagnosticar problemas con sudo"
             echo
             exit 0
             ;;
@@ -385,6 +386,11 @@ if [[ $# -gt 0 ]]; then
         "--verify")
             load_modules
             verify_tools_installation
+            exit 0
+            ;;
+        "--diagnose-sudo")
+            load_modules
+            diagnose_sudo_issues
             exit 0
             ;;
         *)
