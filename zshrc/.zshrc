@@ -469,3 +469,11 @@ if typeset -f prompt_powerlevel10k_setup >/dev/null; then
   [[ -f ~/.p10k_dreamcoder.zsh ]] && source ~/.p10k_dreamcoder.zsh
   prompt_powerlevel10k_setup
 fi
+
+# pnpm
+export PNPM_HOME="/home/dreamcoder08/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

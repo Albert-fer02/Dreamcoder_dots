@@ -14,6 +14,14 @@ cd Dreamcoder_dots
 
 ## Características
 
+- **🔒 Seguridad Mejorada**: Validación de entrada, sanitización de rutas, manejo seguro de sudo
+- **⚡ Performance Optimizada**: Sistema de cache, lazy loading, operaciones asíncronas
+- **🧩 Arquitectura Modular**: Módulos independientes con bajo acoplamiento
+- **🛡️ Manejo de Errores**: Validación comprehensiva y recuperación de errores
+- **📊 Testing Framework**: Suite completa de pruebas para validación
+- **🔧 Mantenibilidad**: Código refactorizado, documentación mejorada, mejores prácticas
+
+### Configuraciones Incluidas
 - **ZSH** con Oh-My-Zsh y plugins optimizados + integración FZF mejorada
 - **Bash** configuración alternativa para compatibilidad
 - **Kitty** terminal con temas personalizados
@@ -74,28 +82,49 @@ cd Dreamcoder_dots
 - **Terminal**: kitty, fastfetch
 - **Desarrollo**: Docker, Docker Compose, Python tools
 
-## Estructura
+## Testing
+
+### Ejecutar Tests
+```bash
+# Ejecutar suite completa de pruebas
+./test/test_framework.sh
+
+# Ejecutar pruebas específicas
+./test/test_framework.sh --security    # Solo pruebas de seguridad
+./test/test_framework.sh --performance # Solo pruebas de performance
+```
+
+### Cobertura de Tests
+- ✅ **Seguridad**: Validación de entrada, sanitización de rutas, manejo de sudo
+- ✅ **Funcionalidad**: Carga de módulos, detección de distribución
+- ✅ **Performance**: Sistema de cache, operaciones optimizadas
+- ✅ **Configuración**: Validación de archivos de configuración
+
+## Estructura del Proyecto
 
 ```
 Dreamcoder_dots/
-├── dreamcoder-setup.sh    # Script principal
-├── lib/                   # Módulos del sistema
-│   ├── core.sh           # Sistema principal y logging
-│   ├── distro.sh         # Detección de distribuciones
-│   ├── backup.sh         # Sistema de respaldos
-│   ├── config.sh         # Gestión de configuraciones
-│   ├── tools.sh          # Instalación de herramientas
-│   └── ui.sh             # Interfaz de usuario
-├── config/                # Archivos de configuración
-│   ├── configs.conf      # Definición de dotfiles
-│   └── tools.conf        # Herramientas por categoría
-├── zshrc/                 # Configuraciones ZSH
-├── bashrc/                # Configuraciones Bash
-├── kitty/                 # Configuraciones Kitty
-├── fastfetch/             # Configuraciones Fastfetch
-├── nano/                  # Configuraciones Nano
-├── starship.toml          # Configuración Starship
-└── p10k_dreamcoder.zsh    # Tema PowerLevel10k transparente vibrante
+├── dreamcoder-setup.sh        # Script principal mejorado
+├── SECURITY.md                # Guías de seguridad y hardening
+├── test/                      # Framework de testing
+│   └── test_framework.sh      # Suite completa de pruebas
+├── lib/                       # Módulos del sistema (mejorados)
+│   ├── core.sh               # Sistema principal con validaciones
+│   ├── distro.sh             # Detección de distribuciones
+│   ├── backup.sh             # Sistema de respaldos
+│   ├── config.sh             # Gestión de configuraciones segura
+│   ├── tools.sh              # Instalación de herramientas
+│   └── ui.sh                 # Interfaz de usuario con validaciones
+├── config/                    # Archivos de configuración
+│   ├── configs.conf          # Definición de dotfiles
+│   └── tools.conf            # Herramientas por categoría
+├── zshrc/                     # Configuraciones ZSH
+├── bashrc/                    # Configuraciones Bash
+├── kitty/                     # Configuraciones Kitty
+├── fastfetch/                 # Configuraciones Fastfetch
+├── nano/                      # Configuraciones Nano
+├── starship.toml              # Configuración Starship
+└── p10k_dreamcoder.zsh        # Tema PowerLevel10k transparente vibrante
 ```
 
 ## Dependencias
@@ -120,9 +149,46 @@ sudo dnf install zsh git curl wget gcc gcc-c++ make
 sudo apk add zsh git curl wget build-base
 ```
 
+## Mejoras Implementadas
+
+### 🔒 Seguridad Mejorada
+- **Validación de entrada**: Sanitización completa de todas las entradas de usuario
+- **Prevención de path traversal**: Detección y bloqueo de ataques de directorio transversal
+- **Manejo seguro de sudo**: Validación apropiada de privilegios con timeout
+- **Protección contra command injection**: Uso de arrays para argumentos de comandos
+- **Validación de URLs**: Verificación segura de URLs antes de descargar
+
+### ⚡ Performance Optimizada
+- **Sistema de cache**: Cache inteligente para operaciones costosas (detección de distro)
+- **Lazy loading**: Módulos se cargan solo cuando son necesarios
+- **Operaciones asíncronas**: Procesamiento en background para tareas no críticas
+- **Optimización de bucles**: Reducción de operaciones redundantes
+- **Gestión de memoria**: Limpieza automática de cache antiguo
+
+### 🧩 Arquitectura Modular Mejorada
+- **Funciones refactorizadas**: Descomposición de funciones monolíticas
+- **Separación de responsabilidades**: Cada módulo tiene un propósito claro
+- **Interfaz consistente**: Patrones uniformes de manejo de errores
+- **Configuración externa**: Archivos de configuración separados del código
+- **Extensibilidad**: Fácil adición de nuevas funcionalidades
+
+### 🛡️ Manejo de Errores Robusto
+- **Validación comprehensiva**: Verificación de precondiciones
+- **Recuperación de errores**: Continuación de operaciones cuando es posible
+- **Logging mejorado**: Seguimiento detallado de eventos y errores
+- **Mensajes informativos**: Retroalimentación clara al usuario
+- **Limpieza automática**: Recursos liberados correctamente en caso de error
+
+### 📊 Testing Framework
+- **Pruebas de seguridad**: Validación de vulnerabilidades conocidas
+- **Pruebas de funcionalidad**: Verificación de operaciones críticas
+- **Pruebas de performance**: Medición de mejoras de velocidad
+- **Cobertura automática**: Ejecución de todas las pruebas con un comando
+- **Reportes detallados**: Resultados claros y accionables
+
 ## Optimizaciones
 
-- **Carga rápida**: 0.1 segundos
+- **Carga rápida**: 0.1 segundos (mejorado con cache)
 - **Lazy loading**: Herramientas se cargan solo cuando es necesario
 - **Carga asíncrona**: Plugins pesados en background
 - **Configuraciones optimizadas**: Sin duplicaciones

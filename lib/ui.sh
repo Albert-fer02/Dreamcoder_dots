@@ -71,32 +71,39 @@ show_backup_menu() {
 # ================================
 select_configs() {
     local selected=()
-    
+
     echo -e "${CYAN}┌─ SELECCIONAR CONFIGURACIONES ───────────────────────────────┐${NC}"
     echo -e "${CYAN}│${NC} Selecciona las configuraciones que deseas instalar:      ${CYAN}│${NC}"
     echo -e "${CYAN}└──────────────────────────────────────────────────────────────┘${NC}"
     echo
-    
+
     for config in "${!CONFIGS[@]}"; do
         IFS='|' read -r source dest desc category <<< "${CONFIGS[$config]}"
-        
+
         local status="❌"
         if [[ -f "$dest" || -d "$dest" ]]; then
             status="✅"
         fi
-        
+
         echo -n "$status ¿Instalar $desc? [y/N]: "
         read -r response
+
+        # Validar entrada de usuario
+        if ! validate_user_input "$response" 1; then
+            print_warning "Entrada inválida, omitiendo configuración: $desc"
+            continue
+        fi
+
         if [[ $response =~ ^[Yy]$ ]]; then
             selected+=("$config")
         fi
     done
-    
+
     if [[ ${#selected[@]} -eq 0 ]]; then
         print_warning "No se seleccionaron configuraciones"
         return 1
     fi
-    
+
     printf '%s\n' "${selected[@]}"
 }
 

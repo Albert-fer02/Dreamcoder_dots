@@ -44,14 +44,21 @@ install_tools() {
     if [[ " ${selected_categories[*]} " =~ " modern " ]]; then
         print_substep "Instalando herramientas CLI modernas"
         local modern_packages=($(get_modern_cli_packages "$distro"))
-        
+
         if [[ ${#modern_packages[@]} -gt 0 ]]; then
-            install_packages "$distro" "${modern_packages[@]}" || true
+            if ! install_packages "$distro" "${modern_packages[@]}"; then
+                print_warning "Algunos paquetes CLI modernos fallaron, continuando..."
+                log_warn "Instalación parcial de herramientas CLI modernas"
+                ((total_failed++))
+            fi
         fi
-        
+
         # Instalar herramientas adicionales via scripts
-        install_modern_cli_extras "$distro"
-        ((total_installed++))
+        if install_modern_cli_extras "$distro"; then
+            ((total_installed++))
+        else
+            ((total_failed++))
+        fi
     fi
     
     # Terminal tools

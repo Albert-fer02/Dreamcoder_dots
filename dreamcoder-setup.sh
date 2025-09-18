@@ -44,54 +44,82 @@ handle_config_management() {
     while true; do
         show_banner
         show_config_menu
-        
-        echo -n "Selecciona una opción [0-4]: "
-        read -r choice
-        
+
+        local choice
+        if ! read_and_validate_choice "Selecciona una opción [0-4]: " choice 0 4; then
+            continue
+        fi
+
         case $choice in
-            1)  # Ver configuraciones disponibles
-                list_available_configs
-                wait_for_keypress
-                ;;
-            2)  # Instalar configuraciones (selectivo)
-                echo
-                if configs=($(select_configs)); then
-                    install_selected_configs "${configs[@]}"
-                    post_install_tasks "${configs[@]}"
-                    echo -e "\n${GREEN}✅ Configuraciones instaladas exitosamente${NC}"
-                fi
-                wait_for_keypress
-                ;;
-            3)  # Instalar por categoría
-                echo
-                if categories=($(select_config_categories)); then
-                    local all_configs=()
-                    for category in "${categories[@]}"; do
-                        local category_configs=($(get_configs_by_category "$category"))
-                        all_configs+=("${category_configs[@]}")
-                    done
-                    
-                    if [[ ${#all_configs[@]} -gt 0 ]]; then
-                        install_selected_configs "${all_configs[@]}"
-                        post_install_tasks "${all_configs[@]}"
-                        echo -e "\n${GREEN}✅ Configuraciones de categoría instaladas${NC}"
-                    fi
-                fi
-                wait_for_keypress
-                ;;
-            4)  # Ver estado de configuraciones
-                list_available_configs
-                wait_for_keypress
-                ;;
-            0)  # Volver
-                break
-                ;;
-            *)
-                print_error "Opción inválida"
-                sleep 1
-                ;;
+            1) handle_config_list ;;
+            2) handle_config_selective_install ;;
+            3) handle_config_category_install ;;
+            4) handle_config_status ;;
+            0) break ;;
+            *) print_error "Opción inválida"; sleep 1 ;;
         esac
     done
+}
+
+# Función auxiliar para leer y validar opciones del menú
+read_and_validate_choice() {
+    local prompt="$1"
+    local -n choice_ref="$2"
+    local min_val="$3"
+    local max_val="$4"
+
+    echo -n "$prompt"
+    read -r choice_ref
+
+    if ! validate_user_input "$choice_ref" 2; then
+        print_error "Entrada inválida"
+        return 1
+    fi
+
+    if ! validate_number "$choice_ref" "$min_val" "$max_val"; then
+        print_error "Opción fuera de rango"
+        return 1
+    fi
+
+    return 0
+}
+
+handle_config_list() {
+    list_available_configs
+    wait_for_keypress
+}
+
+handle_config_selective_install() {
+    echo
+    if configs=($(select_configs)); then
+        install_selected_configs "${configs[@]}"
+        post_install_tasks "${configs[@]}"
+        echo -e "\n${GREEN}✅ Configuraciones instaladas exitosamente${NC}"
+    fi
+    wait_for_keypress
+}
+
+handle_config_category_install() {
+    echo
+    if categories=($(select_config_categories)); then
+        local all_configs=()
+        for category in "${categories[@]}"; do
+            local category_configs=($(get_configs_by_category "$category"))
+            all_configs+=("${category_configs[@]}")
+        done
+
+        if [[ ${#all_configs[@]} -gt 0 ]]; then
+            install_selected_configs "${all_configs[@]}"
+            post_install_tasks "${all_configs[@]}"
+            echo -e "\n${GREEN}✅ Configuraciones de categoría instaladas${NC}"
+        fi
+    fi
+    wait_for_keypress
+}
+
+handle_config_status() {
+    list_available_configs
+    wait_for_keypress
 }
 
 handle_backup_management() {
@@ -197,73 +225,76 @@ main_loop() {
     while true; do
         show_banner
         show_main_menu
-        
-        echo -n "Selecciona una opción [0-7]: "
-        read -r choice
-        
+
+        local choice
+        if ! read_and_validate_choice "Selecciona una opción [0-7]: " choice 0 7; then
+            continue
+        fi
+
         case $choice in
-            1)  # Gestionar configuraciones
-                handle_config_management
-                ;;
-            2)  # Gestionar herramientas
-                echo
-                local distro=$(detect_distro)
-                if tools=($(select_tools)); then
-                    install_tools "$distro" "${tools[@]}"
-                    setup_tool_paths
-                    echo -e "\n${GREEN}✅ Herramientas instaladas exitosamente${NC}"
-                fi
-                wait_for_keypress
-                ;;
-            3)  # Instalación completa
-                if confirm_action "Esto instalará TODAS las configuraciones y herramientas"; then
-                    local distro=$(detect_distro)
-                    
-                    # Instalar todas las configuraciones
-                    local all_configs=("${!CONFIGS[@]}")
-                    install_selected_configs "${all_configs[@]}"
-                    post_install_tasks "${all_configs[@]}"
-                    
-                    # Instalar todas las herramientas
-                    local all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
-                    install_tools "$distro" "${all_tools[@]}"
-                    setup_tool_paths
-                    
-                    echo -e "\n${GREEN}🎉 ¡Instalación completa finalizada!${NC}"
-                fi
-                wait_for_keypress
-                ;;
-            4)  # Actualizar sistema
-                if confirm_action "Esto actualizará el sistema y todas las herramientas"; then
-                    local distro=$(detect_distro)
-                    update_tools "$distro"
-                    echo -e "\n${GREEN}✅ Sistema actualizado${NC}"
-                fi
-                wait_for_keypress
-                ;;
-            5)  # Gestionar respaldos
-                handle_backup_management
-                ;;
-            6)  # Información del sistema
-                show_system_info
-                echo
-                verify_tools_installation
-                wait_for_keypress
-                ;;
-            7)  # Configuración avanzada
-                handle_advanced_config
-                ;;
-            0)  # Salir
-                echo -e "\n${GREEN}¡Gracias por usar Dreamcoder Setup! 🚀${NC}\n"
-                log_info "Sesión finalizada por el usuario"
-                exit 0
-                ;;
-            *)  # Opción inválida
-                print_error "Opción inválida. Intenta de nuevo."
-                sleep 1
-                ;;
+            1) handle_config_management ;;
+            2) handle_tool_management ;;
+            3) handle_full_installation ;;
+            4) handle_system_update ;;
+            5) handle_backup_management ;;
+            6) handle_system_info ;;
+            7) handle_advanced_config ;;
+            0) handle_exit ;;
+            *) print_error "Opción inválida. Intenta de nuevo."; sleep 1 ;;
         esac
     done
+}
+
+handle_tool_management() {
+    echo
+    local distro=$(get_cached_distro)
+    if tools=($(select_tools)); then
+        install_tools "$distro" "${tools[@]}"
+        setup_tool_paths
+        echo -e "\n${GREEN}✅ Herramientas instaladas exitosamente${NC}"
+    fi
+    wait_for_keypress
+}
+
+handle_full_installation() {
+    if confirm_action "Esto instalará TODAS las configuraciones y herramientas"; then
+        local distro=$(get_cached_distro)
+
+        # Instalar todas las configuraciones
+        local all_configs=("${!CONFIGS[@]}")
+        install_selected_configs "${all_configs[@]}"
+        post_install_tasks "${all_configs[@]}"
+
+        # Instalar todas las herramientas
+        local all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+        install_tools "$distro" "${all_tools[@]}"
+        setup_tool_paths
+
+        echo -e "\n${GREEN}🎉 ¡Instalación completa finalizada!${NC}"
+    fi
+    wait_for_keypress
+}
+
+handle_system_update() {
+    if confirm_action "Esto actualizará el sistema y todas las herramientas"; then
+        local distro=$(get_cached_distro)
+        update_tools "$distro"
+        echo -e "\n${GREEN}✅ Sistema actualizado${NC}"
+    fi
+    wait_for_keypress
+}
+
+handle_system_info() {
+    show_system_info
+    echo
+    verify_tools_installation
+    wait_for_keypress
+}
+
+handle_exit() {
+    echo -e "\n${GREEN}¡Gracias por usar Dreamcoder Setup! 🚀${NC}\n"
+    log_info "Sesión finalizada por el usuario"
+    exit 0
 }
 
 # ================================
@@ -275,15 +306,16 @@ main() {
         print_error "Faltan prerrequisitos del sistema"
         exit 1
     fi
-    
+
     # Cargar módulos
     load_modules
-    
-    # Validar distribución (después de cargar módulos)
-    if ! validate_distro_support; then
+
+    # Validar distribución usando cache (después de cargar módulos)
+    local distro=$(get_cached_distro)
+    if ! validate_distro_support "$distro"; then
         exit 1
     fi
-    
+
     # Ejecutar interfaz principal
     main_loop
 }
@@ -315,36 +347,36 @@ if [[ $# -gt 0 ]]; then
             exit 0
             ;;
         "--install-all")
-            load_modules
-            distro=$(detect_distro)
-            all_configs=("${!CONFIGS[@]}")
-            all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
-            set +e
-            install_selected_configs "${all_configs[@]}"
-            post_install_tasks "${all_configs[@]}"
-            install_tools "$distro" "${all_tools[@]}"
-            set -e
-            exit 0
-            ;;
-        "--configs")
-            load_modules
-            all_configs=("${!CONFIGS[@]}")
-            set +e
-            install_selected_configs "${all_configs[@]}"
-            post_install_tasks "${all_configs[@]}"
-            set -e
-            exit 0
-            ;;
-        "--tools")
-            load_modules
-            distro=$(detect_distro)
-            all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
-            set +e
-            install_tools "$distro" "${all_tools[@]}"
-            setup_tool_paths
-            set -e
-            exit 0
-            ;;
+             load_modules
+             local distro=$(get_cached_distro)
+             local all_configs=("${!CONFIGS[@]}")
+             local all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+             set +e
+             install_selected_configs "${all_configs[@]}"
+             post_install_tasks "${all_configs[@]}"
+             install_tools "$distro" "${all_tools[@]}"
+             set -e
+             exit 0
+             ;;
+         "--configs")
+             load_modules
+             local all_configs=("${!CONFIGS[@]}")
+             set +e
+             install_selected_configs "${all_configs[@]}"
+             post_install_tasks "${all_configs[@]}"
+             set -e
+             exit 0
+             ;;
+         "--tools")
+             load_modules
+             local distro=$(get_cached_distro)
+             local all_tools=("core" "modern" "terminal" "starship" "zsh" "nodejs")
+             set +e
+             install_tools "$distro" "${all_tools[@]}"
+             setup_tool_paths
+             set -e
+             exit 0
+             ;;
         "--info")
             load_modules
             show_system_info

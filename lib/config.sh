@@ -50,10 +50,30 @@ install_config() {
     local source_path="$2"
     local dest_path="$3"
     local description="$4"
-    
-    # Expandir ~ a la ruta completa del home
-    dest_path="${dest_path/#\~/$HOME}"
-    
+
+    # Validar y sanitizar rutas
+    source_path=$(sanitize_path "$source_path") || {
+        print_error "Ruta fuente inválida: $2"
+        return 1
+    }
+
+    dest_path=$(sanitize_path "$dest_path") || {
+        print_error "Ruta destino inválida: $3"
+        return 1
+    }
+
+    # Expandir ~ a la ruta completa del home de forma segura
+    if [[ "$dest_path" == \~* ]]; then
+        dest_path="${dest_path/#\~/$HOME}"
+    fi
+
+    # Verificar que las rutas no contengan caracteres peligrosos después de expansión
+    if [[ "$dest_path" =~ \.\. || "$source_path" =~ \.\. ]]; then
+        print_error "Rutas contienen secuencias peligrosas (..)"
+        log_error "Intento de path traversal detectado: $source_path -> $dest_path"
+        return 1
+    fi
+
     if [[ ! -f "$source_path" && ! -d "$source_path" ]]; then
         print_warning "Configuración no encontrada: $source_path"
         log_warn "Archivo/directorio de configuración no encontrado: $source_path"
