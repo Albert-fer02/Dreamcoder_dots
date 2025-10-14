@@ -1,0 +1,117 @@
+# ~/.nanorc - 
+# Configuración avanzada para máxima ergonomía visual y productividad
+# Tema: Catppuccin Mocha - Colores suaves para sesiones largas de programación
+
+# --- Sección 1: Comportamiento Fundamental ---
+set autoindent          # Indentar nuevas líneas al mismo nivel que la anterior
+set backup              # Crear archivos de respaldo (~/.nano/backups/nombrearchivo~)
+set backupdir "~/.nano/backups" # Directorio para los respaldos
+set cutfromcursor       # Cortar (^K) desde el cursor hasta el fin de línea
+set historylog          # Guardar y restaurar historial de búsqueda/reemplazo
+set locking             # Usar archivos .lock para evitar conflictos
+set multibuffer         # Permitir múltiples archivos (M-< y M-> para cambiar)
+set positionlog         # Recordar posición del cursor al reabrir archivos
+set rawsequences        # Interpretar secuencias de teclado meta directamente
+set smarthome           # Tecla Home inteligente (primer carácter no blanco)
+set tabsize 4           # Tamaño de tabulación
+set tabstospaces        # Convertir tabs a espacios
+set unix                # Usar finales de línea Unix (LF)
+set wordbounds          # Detección inteligente de límites de palabra
+set zap                 # Meta+Backspace borra palabra a la izquierda
+set mouse               # Soporte completo de ratón
+set softwrap            # Ajuste suave de líneas largas (mejor legibilidad)
+set atblanks            # Navegación inteligente en columnas
+set trimblanks          # Eliminar espacios finales al guardar
+
+# --- Sección 2: Interfaz Visual Mejorada ---
+set constantshow        # Información constante de posición
+set linenumbers         # Números de línea
+set indicator           # Barra indicadora de posición
+set minibar             # Línea de información minimalista
+set nonewlines          # No añadir línea final automáticamente
+set whitespace "•·"     # Espacios finales como • y tabs como · (más suaves)
+set matchbrackets "(<[{)>]}" # Resaltado de brackets coincidentes
+set guidestripe 80      # Línea guía en columna 80 (buenas prácticas de código)
+set scrollercolor cyan  # Color del indicador de scroll
+
+# --- Sección 3: Tema Catppuccin Mocha ---
+# Paleta Catppuccin Mocha (colores hex convertidos a nombres de nano)
+# Base: #1e1e2e, Surface: #313244, Overlay: #6c7086
+# Text: #cdd6f4, Subtext: #bac2de, Blue: #89b4fa, Green: #a6e3a1
+# Yellow: #f9e2af, Red: #f38ba8, Pink: #f5c2e7, Mauve: #cba6f7
+
+# Interfaz principal
+set titlecolor bold,brightblue,black      # Barra de título - Azul Catppuccin
+set statuscolor bold,brightgreen,black    # Barra de estado - Verde Catppuccin
+set promptcolor brightwhite,black         # Prompts y minibar - Texto claro
+set numbercolor brightmagenta             # Números de línea - Mauve suave
+set selectedcolor black,brightcyan        # Texto seleccionado - Contraste óptimo
+set errorcolor bold,brightred,black       # Errores - Rojo Catppuccin
+set keycolor brightgreen                  # Atajos de teclado - Verde brillante
+set functioncolor brightblue              # Nombres de funciones - Azul brillante
+
+# Elementos de búsqueda y navegación
+set spotlightcolor black,brightyellow     # Resaltado de búsqueda - Amarillo Catppuccin
+set stripecolor ,brightblack              # Línea guía vertical - Sutil
+set scrollercolor brightcyan              # Indicador de scroll - Cyan suave
+
+# Colores adicionales para mejor ergonomía
+# set regioncolor black,brightwhite         # NO SOPORTADO EN NANO
+# set currentcolor black,brightyellow       # NO SOPORTADO EN NANO
+
+# --- Sección 4: Resaltado de Sintaxis Completo ---
+# Incluir todas las sintaxis disponibles del sistema
+include "/usr/share/nano/*.nanorc"
+
+# --- Sección 5: Funciones de Productividad ---
+set speller "aspell -x -c"  # Corrector ortográfico
+
+# --- Sección 6: Atajos Personalizados Mejorados ---
+# F5: Ejecutar archivo según extensión (Python, Node.js, Bash, etc.)
+bind F5 "^T^Xclear && echo '=== Ejecutando % ===' && if [[ \"%\" =~ \\.py$ ]]; then python3 \"%\"; elif [[ \"%\" =~ \\.js$ ]]; then node \"%\"; elif [[ \"%\" =~ \\.sh$ ]]; then bash \"%\"; elif [[ \"%\" =~ \\.rs$ ]]; then rustc \"%\" -o /tmp/nano_temp && /tmp/nano_temp; else echo \"Tipo de archivo no soportado para ejecución\"; fi; echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# F6: Git diff del archivo actual
+bind F6 "^T^Xclear && echo '=== Git Diff para % ===' && cd \"$(dirname \"%\")\" && git diff --color=always \"%\" | head -50; echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# F7: Git add y status
+bind F7 "^T^Xclear && echo '=== Git Add y Status ===' && cd \"$(dirname \"%\")\" && git add \"%\" && git status --short; echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# F8: Mostrar información del archivo
+bind F8 "^T^Xclear && echo '=== Información del Archivo ===' && ls -la \"%\" && echo && file \"%\" && echo && wc -l \"%\" && echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# F9: Buscar TODO/FIXME/NOTE en el archivo
+bind F9 "^T^Xclear && echo '=== Comentarios de Desarrollo ===' && grep -n -E '(TODO|FIXME|NOTE|BUG|HACK)' \"%\" 2>/dev/null || echo 'No se encontraron comentarios de desarrollo'; echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# F10: Mostrar estructura básica del código (funciones, clases)
+bind F10 "^T^Xclear && echo '=== Estructura del Código ===' && if [[ \"%\" =~ \\.py$ ]]; then grep -n '^\\s*\\(def\\|class\\)' \"%\"; elif [[ \"%\" =~ \\.js$ ]]; then grep -n '^\\s*\\(function\\|class\\|const.*=>\\)' \"%\"; elif [[ \"%\" =~ \\.(c|cpp|h)$ ]]; then grep -n '^\\s*\\(int\\|void\\|char\\|float\\|double\\).*(' \"%\"; else echo 'Análisis de estructura no disponible para este tipo de archivo'; fi; echo; read -p 'Presiona Enter para continuar...' dummy^M" main
+
+# Ctrl+Shift+D: Duplicar línea actual
+bind ^D "{end}{enter}{up}{dup}" main
+
+# --- Sección 7: Configuraciones Avanzadas de Ergonomía ---
+# Configuración para mejor experiencia visual
+set wordchars "_"               # Considerar guiones bajos como parte de palabras
+set punct "!.?"                # Caracteres de puntuación para navegación de palabras
+set brackets "\"')>]}"         # Caracteres de cierre para matchbrackets
+
+# --- Sección 8: Configuraciones de Respaldo y Seguridad ---
+# set tempfile                   # NO SOPORTADO EN NANO
+set quickblank                 # Limpiar barra de estado rápidamente
+
+# --- Fin de Configuración ---
+
+# INSTRUCCIONES DE INSTALACIÓN:
+# 1. Crear directorio de backups: mkdir -p ~/.nano/backups
+# 2. Instalar dependencias opcionales:
+#    - aspell (corrector): sudo pacman -S aspell aspell-es aspell-en
+#    - git (para funciones F6-F7): sudo pacman -S git
+# 3. Para soporte completo de sintaxis: sudo pacman -S nano
+#
+# ATAJOS RÁPIDOS PERSONALIZADOS:
+# F5  - Ejecutar archivo actual
+# F6  - Git diff del archivo
+# F7  - Git add + status
+# F8  - Información del archivo
+# F9  - Buscar TODO/FIXME/etc
+# F10 - Mostrar estructura del código
+# Ctrl+D - Duplicar línea
