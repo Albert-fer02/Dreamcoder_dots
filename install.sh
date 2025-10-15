@@ -163,6 +163,13 @@ install_dotfiles() {
         cp "$DOTFILES_DIR/p10k_dreamcoder.zsh" "$HOME/.p10k_dreamcoder.zsh"
         log_success "Tema Dreamcoder p10k configurado"
     }
+
+    # Starship configuration
+    [[ -f "$DOTFILES_DIR/starship.toml" ]] && {
+        mkdir -p "$HOME/.config"
+        cp "$DOTFILES_DIR/starship.toml" "$HOME/.config/"
+        log_success "Starship configurado"
+    }
 }
 
 setup_zsh() {
