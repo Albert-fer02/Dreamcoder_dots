@@ -66,7 +66,9 @@ sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-auto
 - **Fastfetch** - Información del sistema visual con imágenes
 
 ### Prompt
-- **Starship** - Prompt moderno y rápido
+- **Starship** - Prompt moderno y rápido con **2 temas disponibles:**
+  - 🌌 **DreamCoder Verse** (NUEVO) - Tech-Noir cinematográfico con neones cuánticos
+  - ⚡ **Elite** - Profesional enfocado en productividad
 - **PowerLevel10k Transparente** - Tema premium con diseño transparente ultra vibrante
   - 🌈 Paleta inspirada en Dracula + Material Design + Neon themes
   - 👤 Usuario en azul plata elegante (#87ceeb)
@@ -253,6 +255,20 @@ cat data.json | jq '.[] | .id'          # Procesar array
 curl api.com/data | jq '.'              # Formatear JSON
 ```
 
+### Starship Themes - Cambio Rápido
+```bash
+# 🌌 Activar DreamCoder Verse (Tech-Noir cinematográfico)
+cp starship-dreamcoder-verse.toml ~/.config/starship.toml
+source ~/.zshrc
+
+# ⚡ Activar Elite (Productividad profesional)
+cp starship.toml ~/.config/starship.toml
+source ~/.zshrc
+
+# 📖 Ver guía completa de temas
+cat STARSHIP_THEMES.md
+```
+
 ## Verificación de Instalación
 
 Después de instalar, verifica que todo funcione correctamente:
@@ -416,22 +432,25 @@ Ver análisis completo en [ANALISIS_VM.md](ANALISIS_VM.md)
 
 ```
 Dreamcoder_dots/
-├── install.sh              # Script de instalación principal
-├── verify.sh              # Script de verificación standalone ⭐ NUEVO
-├── ANALISIS_VM.md         # Análisis de portabilidad detallado ⭐ NUEVO
-├── VM_TESTING.md          # Guía de testing en VMs ⭐ NUEVO
-├── README.md              # Esta documentación
-├── CLAUDE.md              # Instrucciones para Claude Code
-├── SECURITY.md            # Política de seguridad
-├── .p10k.zsh              # Config PowerLevel10k base
-├── p10k_dreamcoder.zsh    # Tema PowerLevel10k custom
-├── starship.toml          # Config Starship
-├── zshrc/.zshrc           # ZSH configuration mejorada ⭐
-├── bashrc/.bashrc         # Bash configuration mejorada ⭐
-├── tmux/.tmux.conf        # Tmux configuration ⭐ NUEVO
-├── kitty/kitty.conf       # Kitty config (portable) ⭐
-├── nano/.nanorc           # Nano config
-└── fastfetch/             # Fastfetch config
+├── install.sh                      # Script de instalación principal
+├── verify.sh                       # Script de verificación standalone ⭐ NUEVO
+├── ANALISIS_VM.md                  # Análisis de portabilidad detallado ⭐ NUEVO
+├── VM_TESTING.md                   # Guía de testing en VMs ⭐ NUEVO
+├── CHANGELOG.md                    # Historial de versiones ⭐ NUEVO
+├── STARSHIP_THEMES.md              # Guía de temas Starship ⭐ NUEVO
+├── README.md                       # Esta documentación
+├── CLAUDE.md                       # Instrucciones para Claude Code
+├── SECURITY.md                     # Política de seguridad
+├── .p10k.zsh                       # Config PowerLevel10k base
+├── p10k_dreamcoder.zsh             # Tema PowerLevel10k custom
+├── starship.toml                   # Starship Elite theme
+├── starship-dreamcoder-verse.toml  # Starship DreamCoder Verse theme ⭐ NUEVO
+├── zshrc/.zshrc                    # ZSH configuration mejorada ⭐
+├── bashrc/.bashrc                  # Bash configuration mejorada ⭐
+├── tmux/.tmux.conf                 # Tmux configuration ⭐ NUEVO
+├── kitty/kitty.conf                # Kitty config (portable) ⭐
+├── nano/.nanorc                    # Nano config
+└── fastfetch/                      # Fastfetch config
 ```
 
 ## Contribuciones
