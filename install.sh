@@ -30,7 +30,7 @@ check_arch_linux() {
 check_sudo() {
     if ! sudo -n true 2>/dev/null; then
         log_warning "Se requieren privilegios de administrador"
-        log_info "Ejecuta: sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting"
+        log_info "Ejecuta: sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop"
         log_info "Luego ejecuta nuevamente: ./install.sh --skip-packages"
         exit 1
     fi
@@ -38,12 +38,21 @@ check_sudo() {
 
 install_packages() {
     local packages=(
+        # Shell y herramientas base
         zsh git curl wget
+        # Terminal y display
         kitty fastfetch nano
+        # Prompt
         starship zsh-autosuggestions zsh-syntax-highlighting
+        # Herramientas CLI modernas
+        fzf bat eza fd ripgrep zoxide
+        # Productividad y desarrollo
+        tmux github-cli jq stow pass
+        # Monitoreo de sistema
+        btop
     )
 
-    log_info "Instalando paquetes esenciales..."
+    log_info "Instalando paquetes esenciales y herramientas CLI modernas..."
 
     if sudo pacman -S --needed --noconfirm "${packages[@]}"; then
         log_success "Paquetes instalados correctamente"
@@ -75,6 +84,7 @@ backup_existing() {
         "$HOME/.config/kitty"
         "$HOME/.config/fastfetch"
         "$HOME/.nanorc"
+        "$HOME/.tmux.conf"
     )
 
     local backup_needed=false
@@ -101,6 +111,7 @@ remove_broken_symlinks() {
         "$HOME/.zshrc"
         "$HOME/.bashrc"
         "$HOME/.nanorc"
+        "$HOME/.tmux.conf"
         "$HOME/.config/kitty"
         "$HOME/.config/fastfetch"
         "$HOME/.p10k.zsh"
@@ -150,6 +161,12 @@ install_dotfiles() {
     [[ -f "$DOTFILES_DIR/nano/.nanorc" ]] && {
         cp "$DOTFILES_DIR/nano/.nanorc" "$HOME/"
         log_success "Nano configurado"
+    }
+
+    # Tmux
+    [[ -f "$DOTFILES_DIR/tmux/.tmux.conf" ]] && {
+        cp "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/"
+        log_success "Tmux configurado"
     }
 
     # Powerlevel10k configuration

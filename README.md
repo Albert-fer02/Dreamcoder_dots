@@ -22,6 +22,7 @@ cd Dreamcoder_dots
 - **ZSH** con Oh-My-Zsh y plugins esenciales (autosuggestions, syntax-highlighting)
 - **Bash** configuración alternativa para compatibilidad
 - **Kitty** terminal con tema personalizado
+- **Tmux** multiplexor con tema Tokyo Night y atajos optimizados
 - **Starship** prompt moderno y rápido
 - **PowerLevel10k** tema premium transparente con paleta vibrante
 - **Fastfetch** información del sistema con imagen personalizada
@@ -45,7 +46,7 @@ cd Dreamcoder_dots
 ### Si no tienes permisos sudo
 ```bash
 # Instala manualmente los paquetes:
-sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting
+sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop
 
 # Luego instala solo las configuraciones:
 ./install.sh --skip-packages
@@ -60,6 +61,7 @@ sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-auto
 
 ### Terminal
 - **Kitty** - Terminal moderno con GPU
+- **Tmux** - Multiplexor con tema Tokyo Night, prefijo Ctrl+a, y navegación optimizada
 - **Fastfetch** - Información del sistema visual con imágenes
 
 ### Prompt
@@ -83,6 +85,12 @@ sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-auto
 - **Editor**: nano con syntax highlighting
 - **Prompt**: starship
 - **ZSH Plugins**: zsh-autosuggestions, zsh-syntax-highlighting
+- **Navegación Moderna**: zoxide (navegación inteligente), fzf (fuzzy finder)
+- **Búsqueda y Archivos**: ripgrep (búsqueda rápida), fd (find moderno)
+- **Visualización**: bat (cat mejorado), eza (ls moderno)
+- **Productividad**: tmux (multiplexor), github-cli (gestión GitHub), jq (procesador JSON)
+- **Gestión**: stow (dotfiles manager), pass (gestor de contraseñas)
+- **Monitoreo**: btop (monitor de sistema visual)
 
 ## Estructura del Proyecto
 
@@ -100,6 +108,8 @@ Dreamcoder_dots/
 ├── kitty/                     # Configuraciones Kitty
 │   ├── kitty.conf
 │   └── colors-dreamcoder.conf
+├── tmux/                      # Configuraciones Tmux
+│   └── .tmux.conf
 ├── fastfetch/                 # Configuraciones Fastfetch
 └── nano/                      # Configuraciones Nano
     └── .nanorc
@@ -109,8 +119,30 @@ Dreamcoder_dots/
 
 ### Arch Linux (Único sistema soportado)
 ```bash
-sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting
+sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop
 ```
+
+## Herramientas CLI Modernas Incluidas
+
+### 🧭 Navegación y Búsqueda
+- **Zoxide** - Navegación inteligente por directorios (reemplazo de `cd`)
+- **FZF** - Búsqueda difusa interactiva (Ctrl+T archivos, Ctrl+R historial)
+- **Ripgrep (rg)** - Búsqueda ultrarrápida en archivos (mejor que grep)
+- **fd** - Búsqueda de archivos moderna (reemplazo de `find`)
+
+### 📊 Visualización
+- **Bat** - `cat` con syntax highlighting y paginación
+- **Eza** - `ls` moderno con iconos y colores
+- **Btop** - Monitor de sistema visual e interactivo
+
+### 🛠️ Productividad
+- **Tmux** - Multiplexor de terminal con sesiones persistentes
+- **GitHub CLI (gh)** - Gestión de GitHub desde terminal
+- **JQ** - Procesador JSON para scripts y depuración
+
+### 🔐 Gestión
+- **GNU Stow** - Administrador de dotfiles con symlinks
+- **Pass** - Gestor de contraseñas cifradas con GPG
 
 ## Optimizaciones
 
@@ -120,6 +152,7 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 - **Configuraciones limpias**: Sin duplicaciones ni complejidad
 - **Prompt optimizado**: PowerLevel10k con instant prompt
 - **Colores vibrantes**: Paleta transparente para máximo impacto visual
+- **Herramientas modernas**: CLI tools configuradas y listas para usar
 
 ## PowerLevel10k Transparente - Características Técnicas
 
@@ -156,6 +189,68 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 - **Púrpura Neón**: `#d197ff` - Execution time, home directory
 - **Cyan Brillante**: `#7fdbff` - Git staged, home folder
 - **Naranja Mandarina**: `#ffb86c` - Background jobs, sudo user
+
+## Guía Rápida de Herramientas
+
+### Tmux - Cheat Sheet
+```bash
+# Iniciar tmux
+tmux
+
+# Atajos principales (Prefijo: Ctrl+a)
+Ctrl+a |        # Split vertical
+Ctrl+a -        # Split horizontal
+Alt+Arrows      # Navegar entre paneles (sin prefijo)
+Shift+Arrows    # Navegar entre ventanas
+Ctrl+Arrows     # Redimensionar paneles
+Ctrl+a c        # Nueva ventana
+Ctrl+a d        # Detach sesión
+Ctrl+a z        # Zoom pane
+Ctrl+a r        # Recargar configuración
+Ctrl+a S        # Sincronizar paneles
+
+# Gestión de sesiones
+tmux ls                    # Listar sesiones
+tmux attach -t nombre      # Reconectar a sesión
+tmux new -s nombre         # Nueva sesión con nombre
+tmux kill-session -t nombre # Eliminar sesión
+```
+
+### FZF - Búsqueda Interactiva
+```bash
+Ctrl+T          # Buscar archivos
+Ctrl+R          # Buscar en historial
+Ctrl+F          # Fuzzy cd
+```
+
+### Zoxide - Navegación Inteligente
+```bash
+cd directorio   # Navega y recuerda
+z directorio    # Salta a directorio frecuente
+z part          # Búsqueda difusa de directorios
+```
+
+### Ripgrep - Búsqueda Rápida
+```bash
+rg "patrón"                 # Buscar en archivos
+rg "patrón" -t js           # Solo archivos .js
+rg "patrón" --hidden        # Incluir archivos ocultos
+```
+
+### GitHub CLI
+```bash
+gh repo create              # Crear repositorio
+gh pr create                # Crear pull request
+gh issue list               # Listar issues
+gh pr status                # Estado de PRs
+```
+
+### JQ - Procesador JSON
+```bash
+echo '{"name":"test"}' | jq '.name'     # Extraer campo
+cat data.json | jq '.[] | .id'          # Procesar array
+curl api.com/data | jq '.'              # Formatear JSON
+```
 
 ## Resolución de Problemas
 

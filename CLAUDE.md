@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Dreamcoder Dotfiles is a minimalist Arch Linux development environment configuration system. It provides automated installation of shell configurations (ZSH/Bash), modern CLI tools, terminal themes, and development utilities with a simple, direct approach.
+Dreamcoder Dotfiles is a minimalist Arch Linux development environment configuration system. It provides automated installation of shell configurations (ZSH/Bash), modern CLI tools (zoxide, fzf, ripgrep, fd, tmux, github-cli, jq, stow, pass, bat, eza, btop), terminal themes, and development utilities with a simple, direct approach.
 
 ## Key Commands
 
@@ -62,6 +62,7 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 - Arch Linux focused with pacman
 - Essential packages: zsh, git, curl, wget, kitty, fastfetch, nano, starship
 - ZSH plugins: autosuggestions, syntax-highlighting
+- Modern CLI tools: fzf, bat, eza, fd, ripgrep, zoxide, tmux, github-cli, jq, stow, pass, btop
 
 ### Configuration Management
 - Direct file copying (no complex symlink systems)
@@ -99,6 +100,7 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 ├── zshrc/.zshrc        # ZSH configuration
 ├── bashrc/.bashrc      # Bash configuration
 ├── kitty/              # Kitty terminal config
+├── tmux/.tmux.conf     # Tmux multiplexor config
 ├── fastfetch/          # System info config
 ├── nano/.nanorc        # Nano editor config
 ├── .p10k.zsh           # PowerLevel10k config
