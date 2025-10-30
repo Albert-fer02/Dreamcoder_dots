@@ -43,12 +43,11 @@ scan_timeout = 30
 # ⚡ CHARACTER (Productive Cursor)
 # =====================================================
 [character]
-success_symbol = "[❯](bold #83d3e3)"     # Cyan claro (kitty selection)
-error_symbol = "[❯](bold #D49A7A)"       # Terracota suave (kitty color1)
-vicmd_symbol = "[❮](bold #E0C180)"       # Dorado suave (kitty color3)
-vimcmd_symbol = "[❮](bold #C5A5D4)"      # Lila suave (kitty color5)
-vimcmd_visual_symbol = "[V](bold #7fb3d4)" # Azul suave (kitty color4)
-vimcmd_replace_symbol = "[R](bold #D49A7A)"
+success_symbol = "[❯](bold #83d3e3)"       # Cyan claro (kitty selection)
+error_symbol = "[❯](bold #D49A7A)"         # Terracota suave (kitty color1)
+vimcmd_symbol = "[❮](bold #C5A5D4)"        # Lila suave (vim normal mode)
+vimcmd_visual_symbol = "[V](bold #7fb3d4)" # Azul suave (vim visual mode)
+vimcmd_replace_symbol = "[R](bold #D49A7A)" # Terracota (vim replace mode)
 
 # =====================================================
 # 🖥️ OS INDICATOR (Clean Identity)
