@@ -6,6 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Dreamcoder Dotfiles is a minimalist Arch Linux development environment configuration system. It provides automated installation of shell configurations (ZSH/Bash), modern CLI tools (zoxide, fzf, ripgrep, fd, tmux, github-cli, jq, stow, pass, bat, eza, btop), terminal themes, and development utilities with a simple, direct approach.
 
+**Version:** 3.1.0 - Enhanced portability and VM testing support
+**Key Features:** 100% portable, automatic fallbacks, hardware detection, verification tools
+
 ## Key Commands
 
 ### Primary Installation Script (PREFERRED)
@@ -18,6 +21,9 @@ Dreamcoder Dotfiles is a minimalist Arch Linux development environment configura
 
 # Update from GitHub
 ./install.sh update
+
+# Verify installation (NEW in v3.1.0)
+./verify.sh
 
 # Show help
 ./install.sh help
@@ -109,3 +115,25 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 
 ## PowerLevel10k Configuration
 Custom theme with transparent background and vibrant colors optimized for development work.
+
+## Portability Features (v3.1.0)
+
+### Critical Improvements
+- **Editor Fallback:** Automatic nvim → vim → nano fallback
+- **No Hardcoded Paths:** All paths use $HOME variable
+- **Language Detection:** PROJECTS_DIR adapts to system language (Documents/Documentos)
+- **Conditional Aliases:** Hardware-specific aliases only activate when hardware exists
+- **Git Verification:** Ensures git is available before cloning
+- **Nano Backups:** Automatically creates backup directory
+
+### Testing & Verification
+- **verify.sh:** Standalone verification script (348 lines)
+- **ANALISIS_VM.md:** Complete portability analysis (13 issues identified and fixed)
+- **VM_TESTING.md:** Step-by-step VM testing guide
+
+### Compatibility
+- ✅ Works on any Arch Linux installation
+- ✅ Any username (no hardcoded usernames)
+- ✅ Any language (EN/ES auto-detection)
+- ✅ Any hardware configuration
+- ✅ With or without optional dependencies
