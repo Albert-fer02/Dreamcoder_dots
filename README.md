@@ -266,7 +266,7 @@ cp starship.toml ~/.config/starship.toml
 source ~/.zshrc
 
 # 📖 Ver guía completa de temas
-cat STARSHIP_THEMES.md
+cat docs/STARSHIP_THEMES.md
 ```
 
 ## Verificación de Instalación
@@ -294,7 +294,7 @@ Este script verificará:
 
 Para probar en una VM limpia de Arch Linux, consulta la guía completa:
 
-📖 **[VM_TESTING.md](VM_TESTING.md)** - Guía paso a paso para testing en VMs
+📖 **[VM_TESTING.md](docs/VM_TESTING.md)** - Guía paso a paso para testing en VMs
 
 Incluye:
 - Instalación base de Arch Linux
@@ -318,7 +318,7 @@ Este proyecto está diseñado para ser **100% portable** en cualquier instalaci�
 
 Para ver el análisis completo de portabilidad y correcciones aplicadas:
 
-📋 **[ANALISIS_VM.md](ANALISIS_VM.md)** - Análisis exhaustivo con Context-7
+📋 **[ANALISIS_VM.md](docs/ANALISIS_VM.md)** - Análisis exhaustivo con Context-7
 
 ## Resolución de Problemas
 
@@ -426,7 +426,7 @@ ls ~/.oh-my-zsh/custom/themes/
 - ✅ Script de verificación standalone (verify.sh)
 - ✅ Guía completa de testing en VMs
 
-Ver análisis completo en [ANALISIS_VM.md](ANALISIS_VM.md)
+Ver análisis completo en [ANALISIS_VM.md](docs/ANALISIS_VM.md)
 
 ## Archivos del Proyecto
 
@@ -434,10 +434,11 @@ Ver análisis completo en [ANALISIS_VM.md](ANALISIS_VM.md)
 Dreamcoder_dots/
 ├── install.sh                      # Script de instalación principal
 ├── verify.sh                       # Script de verificación standalone ⭐ NUEVO
-├── ANALISIS_VM.md                  # Análisis de portabilidad detallado ⭐ NUEVO
-├── VM_TESTING.md                   # Guía de testing en VMs ⭐ NUEVO
-├── CHANGELOG.md                    # Historial de versiones ⭐ NUEVO
-├── STARSHIP_THEMES.md              # Guía de temas Starship ⭐ NUEVO
+├── docs/
+│   ├── ANALISIS_VM.md              # Análisis de portabilidad detallado ⭐ NUEVO
+│   ├── VM_TESTING.md               # Guía de testing en VMs ⭐ NUEVO
+│   ├── CHANGELOG.md                # Historial de versiones ⭐ NUEVO
+│   └── STARSHIP_THEMES.md          # Guía de temas Starship ⭐ NUEVO
 ├── README.md                       # Esta documentación
 ├── CLAUDE.md                       # Instrucciones para Claude Code
 ├── SECURITY.md                     # Política de seguridad

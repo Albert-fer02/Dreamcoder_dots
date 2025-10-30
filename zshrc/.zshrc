@@ -374,7 +374,29 @@ fi
 # 🎉 AUTOSTART
 # =====================================================
 # Show fastfetch only in terminal sessions (not in scripts)
-[[ $(tty) == *"pts"* ]] && fastfetch
+# Muestra fastfetch con un logo aleatorio solo en sesiones de terminal interactivas.
+# Esto evita que se ejecute en scripts o sesiones no interactivas.
+if [[ -o INTERACTIVE && $(tty) == *"/dev/pts/"* ]]; then
+    # Directorio donde se encuentran las imágenes (ruta de producción)
+    IMAGE_DIR="$HOME/.config/fastfetch/dreamcoder"
+
+    # Verificar si el directorio de imágenes existe
+    if [ -d "$IMAGE_DIR" ]; then
+        # Seleccionar una imagen aleatoria (jpg o png) de forma eficiente
+        RANDOM_IMAGE=$(find "$IMAGE_DIR" -type f \( -name "*.jpg" -o -name "*.png" \) | shuf -n 1)
+
+        # Ejecutar fastfetch con la imagen aleatoria si se encontró una
+        if [ -n "$RANDOM_IMAGE" ]; then
+            fastfetch --logo "$RANDOM_IMAGE"
+        else
+            # Si no hay imágenes, ejecutar fastfetch sin logo
+            fastfetch
+        fi
+    else
+        # Si el directorio no existe, ejecutar fastfetch sin logo
+        fastfetch
+    fi
+fi
 
 # =====================================================
 # 🚀 PRODUCTIVITY FUNCTIONS

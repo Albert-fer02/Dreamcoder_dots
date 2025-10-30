@@ -104,7 +104,12 @@ backup_existing() {
 
         for file in "${files_to_backup[@]}"; do
             if [[ -e "$file" ]]; then
-                cp -r "$file" "$BACKUP_DIR/" 2>/dev/null || true
+                if cp -r "$file" "$BACKUP_DIR/"; then
+                    log_info "Respaldo creado para $file"
+                else
+                    log_error "Error creando respaldo para $file"
+                    exit 1
+                fi
             fi
         done
 
@@ -137,56 +142,120 @@ install_dotfiles() {
 
     # ZSH
     [[ -f "$DOTFILES_DIR/zshrc/.zshrc" ]] && {
-        cp "$DOTFILES_DIR/zshrc/.zshrc" "$HOME/"
-        log_success "ZSH configurado"
+        if [[ ! -f "$HOME/.zshrc" ]] || ! cmp -s "$DOTFILES_DIR/zshrc/.zshrc" "$HOME/.zshrc"; then
+            if cp "$DOTFILES_DIR/zshrc/.zshrc" "$HOME/"; then
+                log_success "ZSH configurado"
+            else
+                log_error "Error copiando .zshrc"
+                exit 1
+            fi
+        else
+            log_info "ZSH ya está actualizado"
+        fi
     }
 
     # Bash
     [[ -f "$DOTFILES_DIR/bashrc/.bashrc" ]] && {
-        cp "$DOTFILES_DIR/bashrc/.bashrc" "$HOME/"
-        log_success "Bash configurado"
+        if [[ ! -f "$HOME/.bashrc" ]] || ! cmp -s "$DOTFILES_DIR/bashrc/.bashrc" "$HOME/.bashrc"; then
+            if cp "$DOTFILES_DIR/bashrc/.bashrc" "$HOME/"; then
+                log_success "Bash configurado"
+            else
+                log_error "Error copiando .bashrc"
+                exit 1
+            fi
+        else
+            log_info "Bash ya está actualizado"
+        fi
     }
 
     # Kitty
     [[ -d "$DOTFILES_DIR/kitty" ]] && {
         mkdir -p "$HOME/.config"
-        [[ -e "$HOME/.config/kitty" ]] && rm -rf "$HOME/.config/kitty"
-        cp -r "$DOTFILES_DIR/kitty" "$HOME/.config/"
-        log_success "Kitty configurado"
+        if [[ ! -d "$HOME/.config/kitty" ]] || ! diff -r "$DOTFILES_DIR/kitty" "$HOME/.config/kitty" >/dev/null 2>&1; then
+            [[ -e "$HOME/.config/kitty" ]] && rm -rf "$HOME/.config/kitty"
+            if cp -r "$DOTFILES_DIR/kitty" "$HOME/.config/"; then
+                log_success "Kitty configurado"
+            else
+                log_error "Error copiando kitty"
+                exit 1
+            fi
+        else
+            log_info "Kitty ya está actualizado"
+        fi
     }
 
     # Fastfetch
     [[ -d "$DOTFILES_DIR/fastfetch" ]] && {
         mkdir -p "$HOME/.config"
-        [[ -e "$HOME/.config/fastfetch" ]] && rm -rf "$HOME/.config/fastfetch"
-        cp -r "$DOTFILES_DIR/fastfetch" "$HOME/.config/"
-        log_success "Fastfetch configurado"
+        if [[ ! -d "$HOME/.config/fastfetch" ]] || ! diff -r "$DOTFILES_DIR/fastfetch" "$HOME/.config/fastfetch" >/dev/null 2>&1; then
+            [[ -e "$HOME/.config/fastfetch" ]] && rm -rf "$HOME/.config/fastfetch"
+            if cp -r "$DOTFILES_DIR/fastfetch" "$HOME/.config/"; then
+                log_success "Fastfetch configurado"
+            else
+                log_error "Error copiando fastfetch"
+                exit 1
+            fi
+        else
+            log_info "Fastfetch ya está actualizado"
+        fi
     }
 
     # Nano
     [[ -f "$DOTFILES_DIR/nano/.nanorc" ]] && {
-        cp "$DOTFILES_DIR/nano/.nanorc" "$HOME/"
-        # Crear directorio de backups de nano
-        mkdir -p "$HOME/.nano/backups"
-        log_success "Nano configurado"
+        if [[ ! -f "$HOME/.nanorc" ]] || ! cmp -s "$DOTFILES_DIR/nano/.nanorc" "$HOME/.nanorc"; then
+            if cp "$DOTFILES_DIR/nano/.nanorc" "$HOME/"; then
+                # Crear directorio de backups de nano
+                mkdir -p "$HOME/.nano/backups"
+                log_success "Nano configurado"
+            else
+                log_error "Error copiando .nanorc"
+                exit 1
+            fi
+        else
+            log_info "Nano ya está actualizado"
+        fi
     }
 
     # Tmux
     [[ -f "$DOTFILES_DIR/tmux/.tmux.conf" ]] && {
-        cp "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/"
-        log_success "Tmux configurado"
+        if [[ ! -f "$HOME/.tmux.conf" ]] || ! cmp -s "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"; then
+            if cp "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/"; then
+                log_success "Tmux configurado"
+            else
+                log_error "Error copiando .tmux.conf"
+                exit 1
+            fi
+        else
+            log_info "Tmux ya está actualizado"
+        fi
     }
 
     # Powerlevel10k configuration
     [[ -f "$DOTFILES_DIR/.p10k.zsh" ]] && {
-        cp "$DOTFILES_DIR/.p10k.zsh" "$HOME/"
-        log_success "Powerlevel10k configurado"
+        if [[ ! -f "$HOME/.p10k.zsh" ]] || ! cmp -s "$DOTFILES_DIR/.p10k.zsh" "$HOME/.p10k.zsh"; then
+            if cp "$DOTFILES_DIR/.p10k.zsh" "$HOME/"; then
+                log_success "Powerlevel10k configurado"
+            else
+                log_error "Error copiando .p10k.zsh"
+                exit 1
+            fi
+        else
+            log_info "Powerlevel10k ya está actualizado"
+        fi
     }
 
     # Dreamcoder p10k theme
     [[ -f "$DOTFILES_DIR/p10k_dreamcoder.zsh" ]] && {
-        cp "$DOTFILES_DIR/p10k_dreamcoder.zsh" "$HOME/.p10k_dreamcoder.zsh"
-        log_success "Tema Dreamcoder p10k configurado"
+        if [[ ! -f "$HOME/.p10k_dreamcoder.zsh" ]] || ! cmp -s "$DOTFILES_DIR/p10k_dreamcoder.zsh" "$HOME/.p10k_dreamcoder.zsh"; then
+            if cp "$DOTFILES_DIR/p10k_dreamcoder.zsh" "$HOME/.p10k_dreamcoder.zsh"; then
+                log_success "Tema Dreamcoder p10k configurado"
+            else
+                log_error "Error copiando p10k_dreamcoder.zsh"
+                exit 1
+            fi
+        else
+            log_info "Tema Dreamcoder p10k ya está actualizado"
+        fi
     }
 
     # Starship configuration
@@ -194,8 +263,16 @@ install_dotfiles() {
         mkdir -p "$HOME/.config"
         # Remover symlink roto si existe
         [[ -L "$HOME/.config/starship.toml" && ! -e "$HOME/.config/starship.toml" ]] && rm "$HOME/.config/starship.toml"
-        cp "$DOTFILES_DIR/starship.toml" "$HOME/.config/"
-        log_success "Starship configurado"
+        if [[ ! -f "$HOME/.config/starship.toml" ]] || ! cmp -s "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"; then
+            if cp "$DOTFILES_DIR/starship.toml" "$HOME/.config/"; then
+                log_success "Starship configurado"
+            else
+                log_error "Error copiando starship.toml"
+                exit 1
+            fi
+        else
+            log_info "Starship ya está actualizado"
+        fi
     }
 }
 
@@ -219,10 +296,16 @@ self_update() {
         cd "$SCRIPT_DIR"
         git fetch origin
         local_commit=$(git rev-parse HEAD)
-        remote_commit=$(git rev-parse origin/main)
+        default_branch=$(git remote show origin | grep "HEAD branch" | cut -d: -f2 | xargs)
+
+        if [[ -z "$default_branch" ]]; then
+            default_branch="main"
+        fi
+
+        remote_commit=$(git rev-parse "origin/$default_branch")
 
         if [[ "$local_commit" != "$remote_commit" ]]; then
-            git pull origin main
+            git pull origin "$default_branch"
             log_success "Dotfiles actualizados"
             log_info "Ejecuta './install.sh' para aplicar cambios"
         else
@@ -242,8 +325,16 @@ show_banner() {
     echo -e "${NC}"
 }
 
+check_root() {
+    if [[ $EUID -eq 0 ]]; then
+        log_error "No ejecutar este script como root"
+        exit 1
+    fi
+}
+
 main() {
     show_banner
+    check_root
 
     case "${1:-install}" in
         "install")
