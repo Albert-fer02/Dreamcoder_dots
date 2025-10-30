@@ -192,6 +192,8 @@ install_dotfiles() {
     # Starship configuration
     [[ -f "$DOTFILES_DIR/starship.toml" ]] && {
         mkdir -p "$HOME/.config"
+        # Remover symlink roto si existe
+        [[ -L "$HOME/.config/starship.toml" && ! -e "$HOME/.config/starship.toml" ]] && rm "$HOME/.config/starship.toml"
         cp "$DOTFILES_DIR/starship.toml" "$HOME/.config/"
         log_success "Starship configurado"
     }
