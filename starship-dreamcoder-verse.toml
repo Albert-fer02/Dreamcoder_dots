@@ -1,0 +1,489 @@
+# =====================================================
+# 🌌 DREAMCODER VERSE STARSHIP PROMPT
+# =====================================================
+# Cinematic Tech-Noir meets Quantum Minimalism
+# AI consciousness | Neural architecture | Epic volumetric lighting
+#
+# Aesthetic: Cyber-Monolith × Architectural Futurism
+# Palette: Dark silver, neon cyan, plasma purple, quantum gold
+# =====================================================
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# =====================================================
+# 🎬 CINEMATIC PROMPT FORMAT
+# =====================================================
+# Layout: Engraved runes style with holographic separators
+format = """
+[╭─](bold #2D3748)\
+$os\
+[▸](bold #00D9FF)\
+$username\
+[◊](bold #7C3AED)\
+$directory\
+[◈](bold #00D9FF)\
+$git_branch\
+$git_status\
+$git_metrics\
+[▸](bold #7C3AED)\
+$nodejs\
+$bun\
+$rust\
+$python\
+$golang\
+$java\
+$docker_context\
+$kubernetes\
+[◊](bold #00D9FF)\
+$cmd_duration\
+$jobs\
+$status\
+$line_break\
+[╰─](bold #2D3748)\
+$character"""
+
+add_newline = true
+command_timeout = 500
+scan_timeout = 30
+
+# =====================================================
+# ⚡ QUANTUM CHARACTER (Neural Cursor)
+# =====================================================
+[character]
+success_symbol = "[◢](bold #00FFD9)"
+error_symbol = "[◢](bold #FF0080)"
+vicmd_symbol = "[◣](bold #FFD700)"
+vimcmd_symbol = "[◣](bold #7C3AED)"
+vimcmd_visual_symbol = "[◤](bold #00D9FF)"
+vimcmd_replace_symbol = "[◥](bold #FF0080)"
+
+# =====================================================
+# 🎭 OS MONOLITH (Engraved Identity)
+# =====================================================
+[os]
+format = "[$symbol](bold $style)"
+style = "#4FD1C5"  # Quantum cyan
+disabled = false
+
+[os.symbols]
+Arch = " 󰣇 "
+Ubuntu = " 󰕈 "
+Debian = " 󰣚 "
+Fedora = " 󰣛 "
+Macos = " 󰀵 "
+Windows = " 󰍲 "
+Linux = " 󰌽 "
+
+# =====================================================
+# 👤 NEURAL USERNAME (AI Consciousness)
+# =====================================================
+[username]
+style_user = "bold #A0D9E8"      # Liquid silver-cyan
+style_root = "bold #FF0080"      # Neon pink danger
+format = "[$user](italic $style)"
+disabled = false
+show_always = true
+
+# =====================================================
+# 📂 PARAMETRIC DIRECTORY (Zaha Hadid Curves)
+# =====================================================
+[directory]
+truncation_length = 4
+truncation_symbol = "⋯/"
+read_only = " 󰌾"
+style = "bold #00D9FF"           # Holographic cyan
+format = "[$path](italic $style)[$read_only](bold #FF0080)"
+home_symbol = "~"
+fish_style_pwd_dir_length = 2
+use_logical_path = true
+repo_root_style = "bold #7C3AED" # Plasma purple for git roots
+
+[directory.substitutions]
+"Documents" = "󰈙 docs"
+"Documentos" = "󰈙 docs"
+"Downloads" = "󰇚 down"
+"Music" = "󰝚 music"
+"Pictures" = "󰋩 pics"
+"Projects" = "󰲋 proj"
+"PROYECTOS" = "󰲋 proj"
+"Desktop" = "󰖯 desk"
+".config" = " cfg"
+"node_modules" = " nm"
+
+# =====================================================
+# 🌿 GIT NEURAL BRANCH (Quantum Versioning)
+# =====================================================
+[git_branch]
+symbol = ""
+style = "bold #A78BFA"           # Soft plasma purple
+format = "[$symbol $branch](italic $style)"
+truncation_length = 20
+truncation_symbol = "…"
+always_show_remote = false
+
+# =====================================================
+# 📊 GIT STATUS (Holographic Overlay)
+# =====================================================
+[git_status]
+format = '([\[$all_status$ahead_behind\]](bold $style) )'
+style = "#FFD700"                # Quantum gold
+conflicted = "⚡"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = "✓"
+untracked = "?${count}"
+stashed = "󰆓${count}"
+modified = "~${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✗${count}"
+
+# =====================================================
+# 📈 GIT METRICS (Energy Field Data)
+# =====================================================
+[git_metrics]
+added_style = "bold #4FD1C5"     # Quantum cyan
+deleted_style = "bold #FC8181"   # Soft red glow
+only_nonzero_diffs = true
+format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+disabled = false
+ignore_submodules = true
+
+# =====================================================
+# 🟢 NODE.JS (Emerald Runtime)
+# =====================================================
+[nodejs]
+format = "[$symbol$version](bold $style)"
+version_format = "v${raw}"
+symbol = " "
+style = "#48BB78"                # Matrix green
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+# =====================================================
+# 🟡 BUN (Quantum Gold Runtime)
+# =====================================================
+[bun]
+format = "[$symbol$version](bold $style)"
+version_format = "v${raw}"
+symbol = " "
+style = "#FFD700"                # Quantum gold
+detect_files = ["bun.lockb", "bunfig.toml"]
+
+# =====================================================
+# 🦀 RUST (Oxidized Metal)
+# =====================================================
+[rust]
+format = "[$symbol$version](bold $style)"
+version_format = "v${raw}"
+symbol = " "
+style = "#FF6B6B"                # Rust orange-red
+detect_files = ["Cargo.toml", "Cargo.lock"]
+
+# =====================================================
+# 🐍 PYTHON (Neural Network Yellow)
+# =====================================================
+[python]
+format = '[${symbol}${version}($virtualenv)](bold $style)'
+symbol = " "
+style = "#FFD93D"                # Neural yellow
+pyenv_version_name = false
+detect_extensions = ["py"]
+detect_files = [".python-version", "Pipfile", "pyproject.toml", "requirements.txt"]
+
+# =====================================================
+# 🐹 GOLANG (Cyan Gopher)
+# =====================================================
+[golang]
+format = "[$symbol$version](bold $style)"
+symbol = " "
+style = "#00ADD8"                # Go cyan
+detect_files = ["go.mod", "go.sum"]
+detect_folders = ["Godeps"]
+detect_extensions = ["go"]
+
+# =====================================================
+# ☕ JAVA (Volcanic Red)
+# =====================================================
+[java]
+format = "[$symbol$version](bold $style)"
+symbol = " "
+style = "#ED8936"                # Java orange
+detect_extensions = ["java", "class", "jar"]
+detect_files = ["pom.xml", "build.gradle.kts"]
+
+# =====================================================
+# 🐳 DOCKER (Ocean Blue Container)
+# =====================================================
+[docker_context]
+format = "[$symbol$context](bold $style)"
+symbol = " "
+style = "#2496ED"                # Docker blue
+only_with_files = true
+detect_files = ["docker-compose.yml", "Dockerfile"]
+
+# =====================================================
+# ☸️ KUBERNETES (Cluster Purple)
+# =====================================================
+[kubernetes]
+format = '[$symbol$context(\($namespace\))](bold $style)'
+symbol = "󱃾 "
+style = "#326CE5"                # K8s blue
+disabled = false
+detect_files = ["k8s", "kustomization.yaml"]
+detect_folders = [".kube"]
+
+[kubernetes.context_aliases]
+"dev.local.cluster.k8s" = "dev"
+".*/openshift-cluster/.*" = "openshift"
+
+# =====================================================
+# ⏱️ CMD DURATION (Temporal Metrics)
+# =====================================================
+[cmd_duration]
+min_time = 2000
+format = "[󱑍 $duration](italic bold $style)"
+style = "#A0AEC0"                # Metallic silver
+show_milliseconds = false
+show_notifications = false
+
+# =====================================================
+# 🔴 STATUS (Error Hologram)
+# =====================================================
+[status]
+style = "bold #FF0080"           # Neon pink error
+symbol = "◢✗"
+success_symbol = "◢✓"
+not_executable_symbol = "◢⛔"
+not_found_symbol = "◢?"
+sigint_symbol = "◢⚠"
+signal_symbol = "◢⚡"
+format = '[$symbol $common_meaning$signal_name$maybe_int](bold $style)'
+map_symbol = true
+disabled = false
+pipestatus = true
+pipestatus_separator = "│"
+pipestatus_format = '[◢ $pipestatus](bold #FF0080) => [$symbol$common_meaning$signal_name$maybe_int](bold $style)'
+
+# =====================================================
+# 💼 BACKGROUND JOBS (Parallel Universes)
+# =====================================================
+[jobs]
+symbol = "󰜎 "
+style = "bold #FC8181"           # Soft red
+number_threshold = 1
+symbol_threshold = 1
+format = "[$symbol$number](bold $style)"
+
+# =====================================================
+# 📦 PACKAGE VERSION (Dependency Matrix)
+# =====================================================
+[package]
+format = "[$symbol$version](bold dimmed $style)"
+symbol = " "
+style = "#A78BFA"                # Plasma purple
+display_private = false
+disabled = false
+
+# =====================================================
+# 🔋 BATTERY (Energy Core - Optional)
+# =====================================================
+[battery]
+full_symbol = "󰁹"
+charging_symbol = "󰂄"
+discharging_symbol = "󰂃"
+unknown_symbol = "󰂑"
+empty_symbol = "󰂎"
+disabled = true  # Enable if on laptop
+
+[[battery.display]]
+threshold = 20
+style = "bold #FF0080"
+discharging_symbol = "󰂃"
+
+[[battery.display]]
+threshold = 50
+style = "bold #FFD700"
+discharging_symbol = "󰁿"
+
+[[battery.display]]
+threshold = 100
+style = "bold #4FD1C5"
+discharging_symbol = "󰁹"
+
+# =====================================================
+# 🕐 TIME (Temporal Coordinates - Optional)
+# =====================================================
+[time]
+disabled = true  # Enable if you want time display
+format = '[󰥔 $time](bold dimmed #718096)'
+time_format = "%H:%M"
+utc_time_offset = "local"
+
+# =====================================================
+# 🧠 MEMORY USAGE (Neural Load - Optional)
+# =====================================================
+[memory_usage]
+disabled = true  # Enable for system monitoring
+threshold = 75
+symbol = "󰍛 "
+style = "bold dimmed #FC8181"
+format = "$symbol[$ram( | $swap)]($style)"
+
+# =====================================================
+# 🛡️ SHELL INDICATOR (Runtime Environment)
+# =====================================================
+[shell]
+fish_indicator = "󰈺 fish"
+powershell_indicator = "󰨊 pwsh"
+bash_indicator = "󰞀 bash"
+zsh_indicator = "󰰷 zsh"
+disabled = true  # Usually not needed
+
+# =====================================================
+# 🎨 CUSTOM MODULES (DreamCoder Extensions)
+# =====================================================
+
+# Cosmic Separator (optional visual enhancement)
+[custom.separator]
+disabled = true
+when = true
+command = "echo ''"
+format = "[◊](bold #2D3748)"
+style = "#2D3748"
+
+# AI Mode Indicator (if you use AI assistants in terminal)
+[custom.ai_mode]
+disabled = true
+detect_files = [".ai", ".cursor", ".claude"]
+command = "echo '🧠'"
+when = '[ -f .ai ] || [ -f .cursor ] || [ -f .claude ]'
+format = "[$output](bold #A78BFA)"
+style = "#A78BFA"
+
+# Security Tools Detection (for cybersec work)
+[custom.security]
+disabled = true
+detect_files = ["nuclei", "subfinder", "httpx"]
+command = "echo '🛡️'"
+when = 'command -v nuclei >/dev/null 2>&1'
+format = "[$output](bold #4FD1C5)"
+
+# =====================================================
+# 🎯 PERFORMANCE OPTIMIZATIONS
+# =====================================================
+# Disabled modules for maximum speed:
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[terraform]
+disabled = true
+
+[vagrant]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[haskell]
+disabled = true
+
+[helm]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[lua]
+disabled = true
+
+[nim]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
+
+[rlang]
+disabled = true
+
+[ruby]
+disabled = true
+
+[scala]
+disabled = true
+
+[swift]
+disabled = true
+
+[zig]
+disabled = true
+
+# =====================================================
+# 📝 NOTES & USAGE
+# =====================================================
+#
+# To activate this theme:
+# 1. cp starship-dreamcoder-verse.toml ~/.config/starship.toml
+# 2. source ~/.zshrc
+#
+# Color Palette (DreamCoder Verse):
+# - Quantum Cyan: #00D9FF, #4FD1C5 (primary accent)
+# - Plasma Purple: #7C3AED, #A78BFA (git, packages)
+# - Quantum Gold: #FFD700 (warnings, status)
+# - Neon Pink: #FF0080 (errors, danger)
+# - Matrix Green: #48BB78 (success, node)
+# - Liquid Silver: #A0D9E8, #A0AEC0 (text, duration)
+# - Dark Monolith: #2D3748 (structure, borders)
+#
+# Symbols Philosophy:
+# ◢ ◣ ◤ ◥ - Quantum arrows (dynamic direction)
+# ▸ ◊ ◈ - Holographic separators (depth layers)
+# ╭─ ╰─ - Monolith structure (terminal altar)
+# ⚡ 󰆓 ~ + - Energy field indicators
+#
+# =====================================================
+# 🌌 "Code is poetry written in light and logic"
+# =====================================================
