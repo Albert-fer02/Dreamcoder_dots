@@ -4,14 +4,23 @@
 # Fixed: FZF conflicts, PATH pollution, alias safety, lazy loading
 # Performance optimized for Arch Linux
 
-export EDITOR=nvim
+# Editor con fallback inteligente (nvim > vim > nano)
+if command -v nvim &>/dev/null; then
+    export EDITOR=nvim
+elif command -v vim &>/dev/null; then
+    export EDITOR=vim
+else
+    export EDITOR=nano
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 
 # =====================================================
 # 📁 PATH CONFIGURATION (Guards against duplication)
 # =====================================================
 _safe_path_add() {
-    [[ ":$PATH:" != *":$1:"* ]] && export PATH="$PATH:$1"
+    # Solo agregar si el directorio existe y no está ya en PATH
+    [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]] && export PATH="$PATH:$1"
 }
 
 _safe_path_add "$HOME/.cargo/bin"
@@ -20,8 +29,14 @@ _safe_path_add "$HOME/go/bin"
 _safe_path_add "$HOME/.bun/bin"
 _safe_path_add "$HOME/.fnm"
 
-# Project directories
-export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
+# Project directories - Detección automática de idioma del sistema
+if [[ -d "$HOME/Documents" ]]; then
+    export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Documents/Projects}"
+elif [[ -d "$HOME/Documentos" ]]; then
+    export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
+else
+    export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/projects}"
+fi
 
 # =====================================================
 # 🎨 OH-MY-ZSH CONFIGURATION
@@ -340,13 +355,19 @@ alias greset='git reset --hard HEAD'
 # 🖥️ WINDOW MANAGER & SYSTEM SPECIFIC
 # =====================================================
 alias Qtile='startx'
-alias ascii='~/.config/ml4w/scripts/figlet.sh'
 alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
-# Display resolution (Qtile specific)
-alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
-alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
-alias setkb='setxkbmap de;echo "Keyboard set back to de."'
+# Aliases opcionales - Solo si las dependencias existen
+[[ -f ~/.config/ml4w/scripts/figlet.sh ]] && alias ascii='~/.config/ml4w/scripts/figlet.sh'
+
+# Display resolution - Solo si DisplayPort-0 existe
+if command -v xrandr &>/dev/null && xrandr 2>/dev/null | grep -q "DisplayPort-0 connected"; then
+    alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
+    alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
+fi
+
+# Keyboard layout - Descomentar si usas teclado alemán
+# alias setkb='setxkbmap de;echo "Keyboard set back to de."'
 
 
 # =====================================================
@@ -468,8 +489,8 @@ fi
 # Fallback a configuración base si no existe la personalizada
 [[ ! -f ~/.p10k_dreamcoder.zsh && -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# pnpm
-export PNPM_HOME="/home/dreamcoder08/.local/share/pnpm"
+# pnpm - Portable para cualquier usuario
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

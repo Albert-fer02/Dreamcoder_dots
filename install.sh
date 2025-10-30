@@ -63,6 +63,12 @@ install_packages() {
 }
 
 setup_oh_my_zsh() {
+    # Verificar que git esté disponible
+    if ! command -v git &>/dev/null; then
+        log_error "Git no está instalado. Ejecuta primero sin --skip-packages"
+        exit 1
+    fi
+
     if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
         log_info "Instalando Oh-My-Zsh..."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -160,6 +166,8 @@ install_dotfiles() {
     # Nano
     [[ -f "$DOTFILES_DIR/nano/.nanorc" ]] && {
         cp "$DOTFILES_DIR/nano/.nanorc" "$HOME/"
+        # Crear directorio de backups de nano
+        mkdir -p "$HOME/.nano/backups"
         log_success "Nano configurado"
     }
 
@@ -192,8 +200,13 @@ install_dotfiles() {
 setup_zsh() {
     if [[ "$SHELL" != */zsh ]]; then
         log_info "Cambiando shell por defecto a ZSH..."
-        chsh -s /usr/bin/zsh
-        log_success "Shell cambiado a ZSH"
+        if chsh -s /usr/bin/zsh 2>/dev/null; then
+            log_success "Shell cambiado a ZSH"
+        else
+            log_warning "No se pudo cambiar shell automáticamente"
+            log_info "Ejecuta manualmente: chsh -s /usr/bin/zsh"
+            log_info "O reinicia la sesión y el shell cambiará automáticamente"
+        fi
     fi
 }
 

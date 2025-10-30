@@ -41,6 +41,7 @@ cd Dreamcoder_dots
 ./install.sh --skip-packages    # Solo configuraciones (sin sudo)
 ./install.sh update             # Actualizar desde GitHub
 ./install.sh help               # Mostrar ayuda
+./verify.sh                     # Verificar instalación (NO reinstala)
 ```
 
 ### Si no tienes permisos sudo
@@ -252,7 +253,63 @@ cat data.json | jq '.[] | .id'          # Procesar array
 curl api.com/data | jq '.'              # Formatear JSON
 ```
 
+## Verificación de Instalación
+
+Después de instalar, verifica que todo funcione correctamente:
+
+```bash
+./verify.sh
+```
+
+Este script verificará:
+- ✅ Paquetes instalados correctamente
+- ✅ Archivos de configuración presentes
+- ✅ Directorios necesarios creados
+- ✅ Herramientas CLI funcionales
+- ✅ Problemas de portabilidad
+
+### Resultado Esperado
+```
+✅ INSTALACIÓN PERFECTA
+   Todos los componentes verificados exitosamente
+```
+
+## Testing en Máquinas Virtuales
+
+Para probar en una VM limpia de Arch Linux, consulta la guía completa:
+
+📖 **[VM_TESTING.md](VM_TESTING.md)** - Guía paso a paso para testing en VMs
+
+Incluye:
+- Instalación base de Arch Linux
+- Procedimientos de testing
+- Checklist de validación
+- Solución de problemas comunes
+- Automatización de tests
+
+## Portabilidad
+
+Este proyecto está diseñado para ser **100% portable** en cualquier instalación de Arch Linux:
+
+✅ **Sin usernames hardcoded** - Usa `$HOME` en todos los paths
+✅ **Detección automática de idioma** - Projects directory se adapta (Documents/Documentos)
+✅ **Editor con fallback** - nvim → vim → nano automático
+✅ **Aliases condicionales** - Solo se activan si las dependencias existen
+✅ **Verificación de hardware** - Aliases de display solo si el hardware existe
+✅ **Backups automáticos** - Respaldo antes de sobrescribir configuraciones
+
+### Análisis de Portabilidad
+
+Para ver el análisis completo de portabilidad y correcciones aplicadas:
+
+📋 **[ANALISIS_VM.md](ANALISIS_VM.md)** - Análisis exhaustivo con Context-7
+
 ## Resolución de Problemas
+
+### Verificar instalación
+```bash
+./verify.sh                     # Script de verificación completo
+```
 
 ### Terminal lenta
 ```bash
@@ -277,6 +334,105 @@ echo $PATH
 
 ### Restaurar configuración
 Los respaldos se crean automáticamente en `~/.config/dreamcoder-backup-TIMESTAMP/`
+
+### Problemas comunes en VMs
+
+**Editor no encontrado:**
+```bash
+# Verificar editor configurado
+echo $EDITOR
+which $EDITOR
+
+# El proyecto usa fallback automático: nvim → vim → nano
+# Si todos fallan, instala uno:
+sudo pacman -S neovim  # o vim o nano
+```
+
+**Shell no cambió:**
+```bash
+# Cambiar manualmente
+chsh -s /usr/bin/zsh
+# Cerrar sesión y volver a entrar
+```
+
+**Herramientas no funcionan:**
+```bash
+# Verificar qué falta
+./verify.sh
+
+# Reinstalar paquetes faltantes
+./install.sh  # O instalar manualmente los que falten
+```
+
+**Kitty muestra warnings:**
+```bash
+# Verificar que ml4w esté comentado
+grep "ml4w" ~/.config/kitty/kitty.conf
+# Debería estar comentado (#)
+```
+
+### Logs y Debugging
+
+```bash
+# Ver log de instalación
+cat install.log
+
+# Probar configuración de ZSH
+zsh -c "source ~/.zshrc && echo OK"
+
+# Verificar PATH
+echo $PATH | tr ':' '\n'
+
+# Verificar plugins de ZSH
+ls ~/.oh-my-zsh/custom/plugins/
+ls ~/.oh-my-zsh/custom/themes/
+```
+
+## Mejoras de Portabilidad (v3.1.0)
+
+### Correcciones Aplicadas
+
+**Críticas:**
+- ✅ Editor con fallback automático (nvim → vim → nano)
+- ✅ Eliminado username hardcoded en PNPM_HOME
+- ✅ Dependencia ml4w comentada en kitty.conf
+- ✅ Aliases específicos de hardware condicionales
+- ✅ Paths corregidos (sin ~, con $HOME)
+
+**Altas:**
+- ✅ Directorio de backups de nano se crea automáticamente
+- ✅ Verificación de git antes de clonar repositorios
+- ✅ chsh con manejo de errores elegante
+
+**Medias:**
+- ✅ _safe_path_add verifica existencia de directorios
+- ✅ Detección automática de idioma para PROJECTS_DIR
+- ✅ Script de verificación standalone (verify.sh)
+- ✅ Guía completa de testing en VMs
+
+Ver análisis completo en [ANALISIS_VM.md](ANALISIS_VM.md)
+
+## Archivos del Proyecto
+
+```
+Dreamcoder_dots/
+├── install.sh              # Script de instalación principal
+├── verify.sh              # Script de verificación standalone ⭐ NUEVO
+├── ANALISIS_VM.md         # Análisis de portabilidad detallado ⭐ NUEVO
+├── VM_TESTING.md          # Guía de testing en VMs ⭐ NUEVO
+├── README.md              # Esta documentación
+├── CLAUDE.md              # Instrucciones para Claude Code
+├── SECURITY.md            # Política de seguridad
+├── .p10k.zsh              # Config PowerLevel10k base
+├── p10k_dreamcoder.zsh    # Tema PowerLevel10k custom
+├── starship.toml          # Config Starship
+├── zshrc/.zshrc           # ZSH configuration mejorada ⭐
+├── bashrc/.bashrc         # Bash configuration mejorada ⭐
+├── tmux/.tmux.conf        # Tmux configuration ⭐ NUEVO
+├── kitty/kitty.conf       # Kitty config (portable) ⭐
+├── nano/.nanorc           # Nano config
+└── fastfetch/             # Fastfetch config
+```
 
 ## Contribuciones
 
