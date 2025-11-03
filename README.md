@@ -1,5 +1,7 @@
 # Dreamcoder Dotfiles
 
+<img src="dreamcoder.webp" />
+
 Configuraciones optimizadas para un entorno de desarrollo Linux moderno y productivo.
 
 ## Instalación
@@ -19,23 +21,29 @@ cd Dreamcoder_dots
 - **📦 Herramientas Esenciales**: Solo las herramientas realmente necesarias
 
 ### Configuraciones Incluidas
+
 - **ZSH** con Oh-My-Zsh y plugins esenciales (autosuggestions, syntax-highlighting)
 - **Bash** configuración alternativa para compatibilidad
 - **Kitty** terminal con tema personalizado
 - **Tmux** multiplexor con tema Tokyo Night y atajos optimizados
-- **Starship** prompt moderno y rápido
-- **PowerLevel10k** tema premium transparente con paleta vibrante
+- **Starship v2.0** prompt cinematográfico con estética neon cyber (Concept 2)
+  - Paleta: Neon Cyan (#00e5ff) + Gold (#ffd166) + Pink (#ff6b9f)
+  - Right prompt con tiempo y batería
+  - Optimizado para máximo rendimiento
+- **PowerLevel10k** tema premium transparente con paleta vibrante (alternativa)
 - **Fastfetch** información del sistema con imagen personalizada
 - **Nano** editor con syntax highlighting mejorado
 
 ## Uso
 
 ### Instalación Completa (Recomendado)
+
 ```bash
 ./install.sh
 ```
 
 ### Opciones Disponibles
+
 ```bash
 ./install.sh                    # Instalación completa (por defecto)
 ./install.sh --skip-packages    # Solo configuraciones (sin sudo)
@@ -45,6 +53,7 @@ cd Dreamcoder_dots
 ```
 
 ### Si no tienes permisos sudo
+
 ```bash
 # Instala manualmente los paquetes:
 sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop
@@ -56,16 +65,19 @@ sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-auto
 ## Configuraciones
 
 ### Shell
+
 - **ZSH** - Configuración optimizada para desarrollo con integración FZF
 - **ZSH Root** - Configuración segura para administrador
 - **Bash** - Configuración alternativa compatible
 
 ### Terminal
+
 - **Kitty** - Terminal moderno con GPU
 - **Tmux** - Multiplexor con tema Tokyo Night, prefijo Ctrl+a, y navegación optimizada
 - **Fastfetch** - Información del sistema visual con imágenes
 
 ### Prompt
+
 - **Starship** - Prompt moderno y rápido con **2 temas disponibles:**
   - 🌌 **DreamCoder Verse** (NUEVO) - Tech-Noir cinematográfico con neones cuánticos
   - ⚡ **Elite** - Profesional enfocado en productividad
@@ -73,16 +85,18 @@ sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-auto
   - 🌈 Paleta inspirada en Dracula + Material Design + Neon themes
   - 👤 Usuario en azul plata elegante (#87ceeb)
   - 💎 Background 100% transparente para integración perfecta
-  - ⚡ Iconos modernos Nerd Font v3 (󰣇  󰉋 󰘬 etc.)
+  - ⚡ Iconos modernos Nerd Font v3 (󰣇 󰉋 󰘬 etc.)
   - 🎯 Elementos contextuales inteligentes (Python, Node, Docker)
   - 🚀 Performance optimizado con instant prompt y transient
   - 📐 Two-line design con arrow contextual azul/rojo
 - **Starship Root** - Prompt con advertencias de seguridad
 
 ### Editores
+
 - **Nano** - Editor mejorado con syntax highlighting
 
 ### Paquetes Instalados
+
 - **Esenciales**: zsh, git, curl, wget
 - **Terminal**: kitty, fastfetch
 - **Editor**: nano con syntax highlighting
@@ -121,6 +135,7 @@ Dreamcoder_dots/
 ## Dependencias
 
 ### Arch Linux (Único sistema soportado)
+
 ```bash
 sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop
 ```
@@ -128,22 +143,26 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 ## Herramientas CLI Modernas Incluidas
 
 ### 🧭 Navegación y Búsqueda
+
 - **Zoxide** - Navegación inteligente por directorios (reemplazo de `cd`)
 - **FZF** - Búsqueda difusa interactiva (Ctrl+T archivos, Ctrl+R historial)
 - **Ripgrep (rg)** - Búsqueda ultrarrápida en archivos (mejor que grep)
 - **fd** - Búsqueda de archivos moderna (reemplazo de `find`)
 
 ### 📊 Visualización
+
 - **Bat** - `cat` con syntax highlighting y paginación
 - **Eza** - `ls` moderno con iconos y colores
 - **Btop** - Monitor de sistema visual e interactivo
 
 ### 🛠️ Productividad
+
 - **Tmux** - Multiplexor de terminal con sesiones persistentes
 - **GitHub CLI (gh)** - Gestión de GitHub desde terminal
 - **JQ** - Procesador JSON para scripts y depuración
 
 ### 🔐 Gestión
+
 - **GNU Stow** - Administrador de dotfiles con symlinks
 - **Pass** - Gestor de contraseñas cifradas con GPG
 
@@ -160,18 +179,21 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 ## PowerLevel10k Transparente - Características Técnicas
 
 ### 🎨 Diseño Visual
+
 - **Background Transparente**: Se integra perfectamente con cualquier terminal/wallpaper
 - **Paleta Ultra Vibrante**: Colores saturados inspirados en temas modernos
 - **Separadores Minimalistas**: Espacios simples para máxima limpieza
 - **Iconos Modernos**: Nerd Font v3 con iconos vectoriales profesionales
 
 ### ⚡ Performance Senior-Level
+
 - **Instant Prompt**: Arranque ultrarrápido con verbose mode
 - **Transient Prompt**: Historial limpio con `always` mode
 - **Elementos Contextuales**: Solo aparecen cuando son relevantes
 - **Git Optimizado**: Para repositorios grandes con límites configurados
 
 ### 🎯 Elementos del Prompt
+
 ```
 󰣇 dreamcoder08 ~/Documentos/PROYECTOS ✨ main ❯
 ↑    ↑           ↑                    ↑   ↑   ↑
@@ -184,6 +206,7 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 ```
 
 ### 🌈 Paleta de Colores
+
 - **Azul Eléctrico**: `#79a7ff` - OS icon, Git untracked, Docker
 - **Azul Plata**: `#87ceeb` - Nombre de usuario elegante
 - **Verde Lima**: `#a3d977` - Git clean, Python, Node.js
@@ -196,6 +219,7 @@ sudo pacman -S zsh git curl wget kitty fastfetch nano starship zsh-autosuggestio
 ## Guía Rápida de Herramientas
 
 ### Tmux - Cheat Sheet
+
 ```bash
 # Iniciar tmux
 tmux
@@ -220,6 +244,7 @@ tmux kill-session -t nombre # Eliminar sesión
 ```
 
 ### FZF - Búsqueda Interactiva
+
 ```bash
 Ctrl+T          # Buscar archivos
 Ctrl+R          # Buscar en historial
@@ -227,6 +252,7 @@ Ctrl+F          # Fuzzy cd
 ```
 
 ### Zoxide - Navegación Inteligente
+
 ```bash
 cd directorio   # Navega y recuerda
 z directorio    # Salta a directorio frecuente
@@ -234,6 +260,7 @@ z part          # Búsqueda difusa de directorios
 ```
 
 ### Ripgrep - Búsqueda Rápida
+
 ```bash
 rg "patrón"                 # Buscar en archivos
 rg "patrón" -t js           # Solo archivos .js
@@ -241,6 +268,7 @@ rg "patrón" --hidden        # Incluir archivos ocultos
 ```
 
 ### GitHub CLI
+
 ```bash
 gh repo create              # Crear repositorio
 gh pr create                # Crear pull request
@@ -249,6 +277,7 @@ gh pr status                # Estado de PRs
 ```
 
 ### JQ - Procesador JSON
+
 ```bash
 echo '{"name":"test"}' | jq '.name'     # Extraer campo
 cat data.json | jq '.[] | .id'          # Procesar array
@@ -256,6 +285,7 @@ curl api.com/data | jq '.'              # Formatear JSON
 ```
 
 ### Starship Themes - Cambio Rápido
+
 ```bash
 # 🌌 Activar DreamCoder Verse (Tech-Noir cinematográfico)
 cp starship-dreamcoder-verse.toml ~/.config/starship.toml
@@ -278,6 +308,7 @@ Después de instalar, verifica que todo funcione correctamente:
 ```
 
 Este script verificará:
+
 - ✅ Paquetes instalados correctamente
 - ✅ Archivos de configuración presentes
 - ✅ Directorios necesarios creados
@@ -285,6 +316,7 @@ Este script verificará:
 - ✅ Problemas de portabilidad
 
 ### Resultado Esperado
+
 ```
 ✅ INSTALACIÓN PERFECTA
    Todos los componentes verificados exitosamente
@@ -297,6 +329,7 @@ Para probar en una VM limpia de Arch Linux, consulta la guía completa:
 📖 **[VM_TESTING.md](docs/VM_TESTING.md)** - Guía paso a paso para testing en VMs
 
 Incluye:
+
 - Instalación base de Arch Linux
 - Procedimientos de testing
 - Checklist de validación
@@ -323,11 +356,13 @@ Para ver el análisis completo de portabilidad y correcciones aplicadas:
 ## Resolución de Problemas
 
 ### Verificar instalación
+
 ```bash
 ./verify.sh                     # Script de verificación completo
 ```
 
 ### Terminal lenta
+
 ```bash
 # Verificar tiempo de carga
 zsh -c "time (source ~/.zshrc >/dev/null 2>&1)"
@@ -340,6 +375,7 @@ source ~/Documentos/PROYECTOS/Dreamcoder_dots/p10k_dreamcoder.zsh
 ```
 
 ### Herramientas no encontradas
+
 ```bash
 # Recargar shell
 source ~/.zshrc
@@ -349,11 +385,13 @@ echo $PATH
 ```
 
 ### Restaurar configuración
+
 Los respaldos se crean automáticamente en `~/.config/dreamcoder-backup-TIMESTAMP/`
 
 ### Problemas comunes en VMs
 
 **Editor no encontrado:**
+
 ```bash
 # Verificar editor configurado
 echo $EDITOR
@@ -365,6 +403,7 @@ sudo pacman -S neovim  # o vim o nano
 ```
 
 **Shell no cambió:**
+
 ```bash
 # Cambiar manualmente
 chsh -s /usr/bin/zsh
@@ -372,6 +411,7 @@ chsh -s /usr/bin/zsh
 ```
 
 **Herramientas no funcionan:**
+
 ```bash
 # Verificar qué falta
 ./verify.sh
@@ -381,6 +421,7 @@ chsh -s /usr/bin/zsh
 ```
 
 **Kitty muestra warnings:**
+
 ```bash
 # Verificar que ml4w esté comentado
 grep "ml4w" ~/.config/kitty/kitty.conf
@@ -409,6 +450,7 @@ ls ~/.oh-my-zsh/custom/themes/
 ### Correcciones Aplicadas
 
 **Críticas:**
+
 - ✅ Editor con fallback automático (nvim → vim → nano)
 - ✅ Eliminado username hardcoded en PNPM_HOME
 - ✅ Dependencia ml4w comentada en kitty.conf
@@ -416,12 +458,14 @@ ls ~/.oh-my-zsh/custom/themes/
 - ✅ Paths corregidos (sin ~, con $HOME)
 
 **Altas:**
+
 - ✅ Directorio de backups de nano se crea automáticamente
 - ✅ Verificación de git antes de clonar repositorios
 - ✅ chsh con manejo de errores elegante
 
 **Medias:**
-- ✅ _safe_path_add verifica existencia de directorios
+
+- ✅ \_safe_path_add verifica existencia de directorios
 - ✅ Detección automática de idioma para PROJECTS_DIR
 - ✅ Script de verificación standalone (verify.sh)
 - ✅ Guía completa de testing en VMs

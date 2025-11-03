@@ -125,14 +125,24 @@ remove_broken_symlinks() {
         "$HOME/.tmux.conf"
         "$HOME/.config/kitty"
         "$HOME/.config/fastfetch"
+        "$HOME/.config/starship.toml"
         "$HOME/.p10k.zsh"
         "$HOME/.p10k_dreamcoder.zsh"
     )
 
     for file in "${files[@]}"; do
+        # Remover symlinks rotos
         if [[ -L "$file" && ! -e "$file" ]]; then
             log_info "Removiendo symlink roto: $file"
             rm "$file"
+        fi
+        # Remover symlinks que apuntan a otros dotfiles (para reemplazar con DreamCoder)
+        if [[ -L "$file" ]] && [[ -e "$file" ]]; then
+            local target=$(readlink "$file")
+            if [[ "$target" != *"Dreamcoder_dots"* ]]; then
+                log_info "Removiendo symlink externo: $file -> $target"
+                rm "$file"
+            fi
         fi
     done
 }
@@ -258,14 +268,17 @@ install_dotfiles() {
         fi
     }
 
-    # Starship configuration
+    # Starship configuration (DreamCoder v2.0)
     [[ -f "$DOTFILES_DIR/starship.toml" ]] && {
         mkdir -p "$HOME/.config"
-        # Remover symlink roto si existe
-        [[ -L "$HOME/.config/starship.toml" && ! -e "$HOME/.config/starship.toml" ]] && rm "$HOME/.config/starship.toml"
+        # Remover symlink externo o roto
+        if [[ -L "$HOME/.config/starship.toml" ]]; then
+            log_info "Removiendo symlink existente de starship.toml"
+            rm "$HOME/.config/starship.toml"
+        fi
         if [[ ! -f "$HOME/.config/starship.toml" ]] || ! cmp -s "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"; then
             if cp "$DOTFILES_DIR/starship.toml" "$HOME/.config/"; then
-                log_success "Starship configurado"
+                log_success "Starship v2.0 configurado (Neon Cyber)"
             else
                 log_error "Error copiando starship.toml"
                 exit 1

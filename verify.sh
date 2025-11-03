@@ -43,15 +43,36 @@ verify_packages() {
     log_info "Verificando paquetes esenciales..."
     local errors=0
 
+    # Mapeo de paquetes a sus comandos reales
+    # Formato: "nombre_paquete:comando_real"
     local essential_packages=(
-        zsh git curl wget
-        kitty fastfetch nano starship
-        fzf bat eza fd ripgrep zoxide
-        tmux github-cli jq stow pass btop
+        "zsh:zsh"
+        "git:git"
+        "curl:curl"
+        "wget:wget"
+        "kitty:kitty"
+        "fastfetch:fastfetch"
+        "nano:nano"
+        "starship:starship"
+        "fzf:fzf"
+        "bat:bat"
+        "eza:eza"
+        "fd:fd"
+        "ripgrep:rg"
+        "zoxide:zoxide"
+        "tmux:tmux"
+        "github-cli:gh"
+        "jq:jq"
+        "stow:stow"
+        "pass:pass"
+        "btop:btop"
     )
 
-    for pkg in "${essential_packages[@]}"; do
-        if command -v "$pkg" &>/dev/null; then
+    for entry in "${essential_packages[@]}"; do
+        local pkg="${entry%%:*}"
+        local cmd="${entry##*:}"
+
+        if command -v "$cmd" &>/dev/null; then
             log_success "Paquete instalado: $pkg"
         else
             log_error "Paquete faltante: $pkg"

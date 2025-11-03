@@ -1,49 +1,86 @@
 # =====================================================
-# 🚀 ELITE STARSHIP CONFIGURATION
+# 🌌 DREAMCODER STARSHIP PROMPT v2.0
 # =====================================================
-# Advanced prompt configuration for maximum productivity
+# Cinematographic Design | Concept 2: Neon Cyber Aesthetic
+# Palette: Neon Cyan (#00e5ff) + Gold (#ffd166) + Pink (#ff6b9f)
+# Background: Deep Slate (#0b0f14)
+# Typography: Meslo Nerd Font / Clean & Bold
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# ═══════════════════════════════════════════════════
+# PROMPT FORMAT
+# ═══════════════════════════════════════════════════
 format = """
-$os$username$directory$git_branch$git_status$git_metrics$nodejs$bun$rust$python$golang$java$docker_context$package$jobs$cmd_duration$status
+[](bold #00e5ff)$os\
+$username\
+$hostname\
+$directory\
+$git_branch$git_status\
+$python$nodejs$rust$golang$java$bun\
+$docker_context\
+$cmd_duration\
+$status\
+$jobs
 $character"""
+
+right_format = """$time$battery"""
 
 add_newline = false
 command_timeout = 500
 
+# ═══════════════════════════════════════════════════
+# CHARACTER (Success/Error Indicator)
+# ═══════════════════════════════════════════════════
 [character]
-success_symbol = "[❯](bold #50C7E3)"
-error_symbol = "[❯](bold #FF6B6B)"
-vicmd_symbol = "[❮](bold #FFD93D)"
+success_symbol = "[❯](bold #00e5ff)"
+error_symbol = "[❯](bold #ff6b9f)"
+vicmd_symbol = "[❮](bold #ffd166)"
 
+# ═══════════════════════════════════════════════════
+# OS SYMBOL (DreamCoder Identity)
+# ═══════════════════════════════════════════════════
 [os]
-format = "[$symbol ]($style)"
-style = "bold #6A9BD1"
+format = "[$symbol]($style) "
+style = "bold #00e5ff"
 disabled = false
 
 [os.symbols]
-Arch = "󰣇"
-Ubuntu = "󰕈"
-Debian = "󰣚"
-Fedora = "󰣛"
-Macos = "󰀵"
-Windows = "󰍲"
+Arch = ""
+Ubuntu = ""
+Debian = ""
+Fedora = ""
+Macos = ""
+Windows = ""
 
+# ═══════════════════════════════════════════════════
+# USERNAME (Context - shown on remote only)
+# ═══════════════════════════════════════════════════
 [username]
-style_user = "bold #A8DADC"
-style_root = "bold #FF6B6B"
-format = "[$user]($style) "
+style_user = "bold #cfd8dc"
+style_root = "bold #ff6b9f"
+format = "[$user]($style)[@](bold #ffd166)"
 disabled = false
-show_always = true
+show_always = false
 
+# ═══════════════════════════════════════════════════
+# HOSTNAME (Context - shown on remote only)
+# ═══════════════════════════════════════════════════
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+style = "bold #cfd8dc"
+disabled = false
 
+# ═══════════════════════════════════════════════════
+# DIRECTORY (Path with shortening)
+# ═══════════════════════════════════════════════════
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-read_only = " "
-style = "bold #50C7E3"
-format = "[$path]($style)[$read_only](bold #FF6B6B)"
+read_only = " 󰌾"
+style = "bold #00e5ff"
+format = "[$path]($style)[$read_only](bold #ff6b9f) "
 home_symbol = "~"
 fish_style_pwd_dir_length = 1
 use_logical_path = true
@@ -55,161 +92,88 @@ use_logical_path = true
 "Pictures" = "󰋩"
 "Projects" = "󰲋"
 "Desktop" = "󰖯"
+"Documentos" = "󰈙"
+"Descargas" = "󰇚"
+"Música" = "󰝚"
+"Imágenes" = "󰋩"
+"Proyectos" = "󰲋"
+"Escritorio" = "󰖯"
 
+# ═══════════════════════════════════════════════════
+# GIT BRANCH (VCS Repository)
+# ═══════════════════════════════════════════════════
 [git_branch]
 symbol = " "
-style = "bold #A8DADC"
-format = " [$symbol$branch]($style)"
-truncation_length = 15
+style = "bold #cfd8dc"
+format = "[$symbol$branch]($style)"
+truncation_length = 20
 truncation_symbol = "…"
 
+# ═══════════════════════════════════════════════════
+# GIT STATUS (Changed/Dirty Indicator)
+# ═══════════════════════════════════════════════════
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold #FFD93D"
-conflicted = "⚠️"
-ahead = "↑${count}"
-behind = "↓${count}"
-diverged = "↕️↑${ahead_count}↓${behind_count}"
-up_to_date = "✓"
+style = "bold #ff6b9f"
+conflicted = "⚡"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = ""
 untracked = "?${count}"
-stashed = "󰆉"
-modified = "~${count}"
+stashed = "󰆓"
+modified = "!${count}"
 staged = "+${count}"
 renamed = "»${count}"
-deleted = "-${count}"
+deleted = "✘${count}"
 
+# ═══════════════════════════════════════════════════
+# GIT METRICS (Lines Added/Deleted)
+# ═══════════════════════════════════════════════════
 [git_metrics]
-added_style = "bold #50C7E3"
-deleted_style = "bold #FF6B6B"
+added_style = "bold #00e5ff"
+deleted_style = "bold #ff6b9f"
 only_nonzero_diffs = true
 format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 disabled = false
+
+# ═══════════════════════════════════════════════════
+# RUNTIME ENVIRONMENTS (Python/Node/Rust/Go/Java/Bun)
+# ═══════════════════════════════════════════════════
+[python]
+format = ' [$symbol$version(\($virtualenv\))]($style)'
+symbol = " "
+style = "bold #ffd166"
+pyenv_version_name = false
+detect_extensions = ["py"]
+detect_files = [".python-version", "Pipfile", "__init__.py", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
 
 [nodejs]
 format = " [$symbol$version]($style)"
 version_format = "${raw}"
 symbol = " "
-style = "bold #50C7E3"
+style = "bold #00e5ff"
 detect_files = ["package.json", ".node-version", ".nvmrc"]
 detect_folders = ["node_modules"]
 
 [bun]
 format = " [$symbol$version]($style)"
 version_format = "${raw}"
-symbol = " "
-style = "bold #FFD93D"
+symbol = "󰂫 "
+style = "bold #ffd166"
 detect_files = ["bun.lockb", "bunfig.toml"]
 
 [rust]
 format = " [$symbol$version]($style)"
 version_format = "${raw}"
 symbol = " "
-style = "bold #FF6B6B"
+style = "bold #ff6b9f"
 detect_files = ["Cargo.toml"]
-
-[python]
-format = ' [${symbol}${version}(\($virtualenv\))]($style)'
-symbol = " "
-style = "bold #FFD93D"
-pyenv_version_name = false
-detect_extensions = ["py"]
-detect_files = [".python-version", "Pipfile", "__init__.py", "pyproject.toml", "requirements.txt", "setup.py", "tox.ini"]
-
-[docker_context]
-format = " [$symbol$context]($style)"
-symbol = " "
-style = "bold #6A9BD1"
-only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
-
-[aws]
-format = ' [$symbol$profile(\($region\))]($style)'
-symbol = " "
-style = "bold #A8DADC"
-disabled = false
-expiry_symbol = "⚠️"
-force_display = false
-
-[gcloud]
-format = ' [$symbol$account(\($region\))]($style)'
-symbol = " "
-style = "bold #50C7E3"
-
-[kubernetes]
-format = ' [$symbol$context(\($namespace\))]($style)'
-symbol = " "
-style = "bold #6A9BD1"
-disabled = false
-detect_files = ["k8s", "kustomization.yaml", "kustomization.yml"]
-detect_folders = [".kube"]
-
-[terraform]
-format = " [$symbol$workspace]($style)"
-symbol = " "
-style = "bold #A8DADC"
-
-[package]
-format = " [$symbol$version]($style)"
-symbol = " "
-style = "bold #FFD93D"
-display_private = false
-
-[cmd_duration]
-min_time = 1000
-format = " [$duration]($style)"
-style = "bold #A8DADC"
-show_milliseconds = false
-show_notifications = false
-
-[status]
-style = "bold #FF6B6B"
-symbol = "✗"
-success_symbol = "✓"
-not_executable_symbol = "⛔"
-not_found_symbol = "❓"
-sigint_symbol = "⚠️"
-signal_symbol = "⚡"
-format = ' [$symbol$maybe_int]($style)'
-map_symbol = false
-disabled = false
-
-[memory_usage]
-disabled = true
-threshold = 70
-symbol = "󰍛"
-style = "bold dimmed red"
-format = "$symbol [${ram}( | ${swap})]($style) "
-
-[time]
-disabled = true
-format = '󰥔[\[ $time \]]($style) '
-time_format = "%T"
-utc_time_offset = "local"
-time_range = "10:00:00-14:00:00"
-
-[battery]
-full_symbol = "󰁹"
-charging_symbol = "󰂄"
-discharging_symbol = "󰂃"
-unknown_symbol = "󰂑"
-empty_symbol = "󰂎"
-
-[[battery.display]]
-threshold = 30
-style = "bold red"
-
-[[battery.display]]
-threshold = 60
-style = "bold yellow"
-
-[[battery.display]]
-threshold = 100
-style = "bold green"
 
 [golang]
 format = " [$symbol$version]($style)"
 symbol = " "
-style = "bold #50C7E3"
+style = "bold #00e5ff"
 detect_files = ["go.mod", "go.sum", "glide.yaml", "Gopkg.yml", "Gopkg.lock", ".go-version"]
 detect_folders = ["Godeps"]
 detect_extensions = ["go"]
@@ -217,30 +181,158 @@ detect_extensions = ["go"]
 [java]
 format = " [$symbol$version]($style)"
 symbol = " "
-style = "bold #FFD93D"
+style = "bold #ffd166"
 detect_extensions = ["java", "class", "jar", "gradle", "clj", "cljc"]
 detect_files = ["pom.xml", "build.gradle.kts", "build.sbt", ".java-version", ".deps.edn", "project.clj", "build.boot"]
 
+# ═══════════════════════════════════════════════════
+# DOCKER CONTEXT
+# ═══════════════════════════════════════════════════
+[docker_context]
+format = " [$symbol$context]($style)"
+symbol = " "
+style = "bold #00e5ff"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+# ═══════════════════════════════════════════════════
+# CLOUD & INFRASTRUCTURE (AWS/GCP/K8s/Terraform)
+# ═══════════════════════════════════════════════════
+[aws]
+format = ' [$symbol$profile(\($region\))]($style)'
+symbol = " "
+style = "bold #cfd8dc"
+disabled = false
+expiration_symbol = "X"
+force_display = false
+
+[gcloud]
+format = ' [$symbol$account(\($region\))]($style)'
+symbol = " "
+style = "bold #00e5ff"
+
+[kubernetes]
+format = ' [$symbol$context(\($namespace\))]($style)'
+symbol = "󱃾 "
+style = "bold #00e5ff"
+disabled = false
+detect_files = ["k8s", "kustomization.yaml", "kustomization.yml"]
+detect_folders = [".kube"]
+
+[terraform]
+format = " [$symbol$workspace]($style)"
+symbol = "󱁢 "
+style = "bold #cfd8dc"
+
+# ═══════════════════════════════════════════════════
+# PACKAGE VERSION
+# ═══════════════════════════════════════════════════
+[package]
+format = " [$symbol$version]($style)"
+symbol = "󰏗 "
+style = "bold #ffd166"
+display_private = false
+
+# ═══════════════════════════════════════════════════
+# COMMAND DURATION (>2s threshold - Gold highlight)
+# ═══════════════════════════════════════════════════
+[cmd_duration]
+min_time = 2000
+format = " [ $duration]($style)"
+style = "bold #ffd166"
+show_milliseconds = false
+show_notifications = false
+
+# ═══════════════════════════════════════════════════
+# STATUS (Success/Error/Signal indicators)
+# ═══════════════════════════════════════════════════
+[status]
+style = "bold #ff6b9f"
+symbol = "✘"
+success_symbol = ""
+not_executable_symbol = "󰜺"
+not_found_symbol = "󰍉"
+sigint_symbol = "󱋭"
+signal_symbol = "󱐋"
+format = ' [$symbol$maybe_int]($style)'
+map_symbol = false
+disabled = false
+
+# ═══════════════════════════════════════════════════
+# JOBS (Background processes - Right Prompt element)
+# ═══════════════════════════════════════════════════
 [jobs]
 symbol = " "
-style = "bold #FF6B6B"
+style = "bold #ff6b9f"
 number_threshold = 1
 symbol_threshold = 1
 format = " [$symbol$number]($style)"
 
+# ═══════════════════════════════════════════════════
+# RIGHT PROMPT: TIME (Cinematographic element)
+# ═══════════════════════════════════════════════════
+[time]
+disabled = false
+format = '[󰥔 $time]($style) '
+time_format = "%H:%M"
+style = "bold #cfd8dc"
+utc_time_offset = "local"
+
+# ═══════════════════════════════════════════════════
+# RIGHT PROMPT: BATTERY (Hardware status)
+# ═══════════════════════════════════════════════════
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰂑 "
+empty_symbol = "󰂎 "
+disabled = false
+format = "[$symbol$percentage]($style)"
+
+[[battery.display]]
+threshold = 20
+style = "bold #ff6b9f"
+discharging_symbol = "󰂎 "
+
+[[battery.display]]
+threshold = 50
+style = "bold #ffd166"
+discharging_symbol = "󰁾 "
+
+[[battery.display]]
+threshold = 100
+style = "bold #00e5ff"
+discharging_symbol = "󰁹 "
+
+# ═══════════════════════════════════════════════════
+# MEMORY USAGE (Disabled for performance)
+# ═══════════════════════════════════════════════════
+[memory_usage]
+disabled = true
+threshold = 70
+symbol = "󰍛 "
+style = "bold #ff6b9f"
+format = "$symbol [${ram}( | ${swap})]($style) "
+
+# ═══════════════════════════════════════════════════
+# SHELL LEVEL & TYPE
+# ═══════════════════════════════════════════════════
 [shlvl]
 disabled = true
 format = "$shlvl level(s) down"
 threshold = 3
 
 [shell]
-fish_indicator = "󰈺"
-powershell_indicator = "󰈺"
-bash_indicator = "󰞀"
-zsh_indicator = "󰺧"
-disabled = false
+fish_indicator = "󰈺 "
+powershell_indicator = "󰨊 "
+bash_indicator = "󰞀 "
+zsh_indicator = "󰰶 "
+disabled = true
 
-# Security tools detection (disabled for performance)
+# ═══════════════════════════════════════════════════
+# CUSTOM MODULES (Disabled for performance)
+# ═══════════════════════════════════════════════════
 [custom.nuclei]
 disabled = true
 
@@ -250,12 +342,8 @@ disabled = true
 [custom.httpx]
 disabled = true
 
-# Development environment detection
 [custom.project_type]
 disabled = true
-
-# Network status (disabled for performance)
-# Custom modules disabled for performance
 
 [custom.vpn]
 disabled = true
