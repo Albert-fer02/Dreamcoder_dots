@@ -208,6 +208,8 @@ fi
 # =====================================================
 # 🧭 MODERN NAVIGATION TOOLS
 # =====================================================
+# NOTE: Zoxide must be initialized BEFORE starship
+# to avoid overwriting PROMPT_COMMAND
 
 # Zoxide initialization (smart cd replacement)
 if command -v zoxide &>/dev/null; then
@@ -388,8 +390,10 @@ alias h='history'
 alias nf='fastfetch'
 alias pf='fastfetch'
 alias ff='fastfetch'
-alias v='$EDITOR'
-alias vim='$EDITOR'
+alias ffresh='rm -rf ~/.cache/fastfetch && fastfetch --logo-recache true'
+# Editor aliases (use functions to pass arguments)
+v() { $EDITOR "$@"; }
+vim() { $EDITOR "$@"; }
 alias df='df -h'
 alias du='du -h'
 alias free='free -h'
@@ -549,12 +553,12 @@ cleantemp() {
 # Colors: Neon Cyan (#00e5ff) + Gold (#ffd166) + Pink (#ff6b9f)
 
 if command -v starship &>/dev/null; then
-    # Initialize Starship prompt
-    eval "$(starship init bash)"
-
-    # Preserve history functionality with Starship
-    # Starship handles PROMPT_COMMAND internally, so we prepend our history commands
     export STARSHIP_CONFIG="${STARSHIP_CONFIG:-$HOME/.config/starship.toml}"
+
+    # Initialize Starship prompt
+    # NOTE: Starship automatically preserves existing PROMPT_COMMAND (like zoxide's hook)
+    # by saving it to STARSHIP_PROMPT_COMMAND and executing it from starship_precmd
+    eval "$(starship init bash)"
 else
     # Fallback DreamCoder-themed prompt if starship not installed
     # Format: [symbol] user directory git ❯

@@ -12,6 +12,7 @@ Dreamcoder Dotfiles is a minimalist Arch Linux development environment configura
 ## Key Commands
 
 ### Primary Installation Script (PREFERRED)
+
 ```bash
 # Default installation with packages
 ./install.sh
@@ -30,6 +31,7 @@ Dreamcoder Dotfiles is a minimalist Arch Linux development environment configura
 ```
 
 ### Legacy Complex System (AVOID - Over-engineered)
+
 ```bash
 # Note: The dreamcoder-setup.sh system exists but is unnecessarily complex
 # Prefer using install.sh for all operations
@@ -39,6 +41,7 @@ Dreamcoder Dotfiles is a minimalist Arch Linux development environment configura
 ## Architecture
 
 ### Simple Script-Based Structure (install.sh)
+
 The preferred approach uses a single, straightforward script:
 
 ```
@@ -50,6 +53,7 @@ install.sh               # Main installation script (251 lines)
 ```
 
 ### Legacy Modular System (DEPRECATED)
+
 **Note: Avoid using the complex lib/ system - it's over-engineered**
 
 ```
@@ -65,17 +69,20 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 ## Key Features (Simplified Approach)
 
 ### Package Installation
+
 - Arch Linux focused with pacman
 - Essential packages: zsh, git, curl, wget, kitty, fastfetch, nano, starship
 - ZSH plugins: autosuggestions, syntax-highlighting
 - Modern CLI tools: fzf, bat, eza, fd, ripgrep, zoxide, tmux, github-cli, jq, stow, pass, btop
 
 ### Configuration Management
+
 - Direct file copying (no complex symlink systems)
 - Automatic backup creation with timestamps
 - Broken symlink cleanup
 
 ### Shell Setup
+
 - Oh-My-Zsh installation
 - PowerLevel10k theme integration
 - Automatic shell change to ZSH
@@ -83,17 +90,20 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 ## Development Guidelines
 
 ### Simplicity First
+
 - Prefer direct solutions over abstractions
 - Single script for single purpose
 - Avoid unnecessary modularity
 - Keep functions focused and clear
 
 ### Arch Linux Focus
+
 - Use pacman directly instead of multi-distro abstractions
 - Leverage Arch-specific package names
 - Don't abstract what doesn't need abstraction
 
 ### Error Handling
+
 - Use `set -euo pipefail` for safety
 - Provide clear error messages
 - Fail fast on critical errors
@@ -114,11 +124,13 @@ lib/ (2000+ lines total) # AVOID - Unnecessary complexity
 ```
 
 ## PowerLevel10k Configuration
+
 Custom theme with transparent background and vibrant colors optimized for development work.
 
 ## Portability Features (v3.1.0)
 
 ### Critical Improvements
+
 - **Editor Fallback:** Automatic nvim → vim → nano fallback
 - **No Hardcoded Paths:** All paths use $HOME variable
 - **Language Detection:** PROJECTS_DIR adapts to system language (Documents/Documentos)
@@ -127,11 +139,13 @@ Custom theme with transparent background and vibrant colors optimized for develo
 - **Nano Backups:** Automatically creates backup directory
 
 ### Testing & Verification
+
 - **verify.sh:** Standalone verification script (348 lines)
 - **ANALISIS_VM.md:** Complete portability analysis (13 issues identified and fixed)
 - **VM_TESTING.md:** Step-by-step VM testing guide
 
 ### Compatibility
+
 - ✅ Works on any Arch Linux installation
 - ✅ Any username (no hardcoded usernames)
 - ✅ Any language (EN/ES auto-detection)

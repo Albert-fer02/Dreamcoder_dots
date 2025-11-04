@@ -178,6 +178,22 @@ install_dotfiles() {
         fi
     }
 
+    # Bash Profile
+    [[ -f "$DOTFILES_DIR/bash_profile/.bash_profile" ]] && {
+        if [[ ! -f "$HOME/.bash_profile" ]] || ! cmp -s "$DOTFILES_DIR/bash_profile/.bash_profile" "$HOME/.bash_profile"; then
+            # Eliminar symlink roto si existe
+            [[ -L "$HOME/.bash_profile" && ! -e "$HOME/.bash_profile" ]] && rm -f "$HOME/.bash_profile"
+            if cp "$DOTFILES_DIR/bash_profile/.bash_profile" "$HOME/"; then
+                log_success "Bash profile configurado"
+            else
+                log_error "Error copiando bash profile"
+                exit 1
+            fi
+        else
+            log_info "Bash profile ya está actualizado"
+        fi
+    }
+
     # Kitty
     [[ -d "$DOTFILES_DIR/kitty" ]] && {
         mkdir -p "$HOME/.config"

@@ -221,6 +221,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'
+alias l='ls -la'
 
 # File operations with enhanced safety
 alias cp='cp -iv'
@@ -498,18 +499,19 @@ cleantemp() {
 # 🧹 CLEANUP FUNCTIONS
 # =====================================================
 unfunction _safe_path_add _setup_fzf 2>/dev/null
-# 🚀 POWERLEVEL10K PROMPT - DREAMCODER TOKYO NIGHT FUSION
+# 🚀 POWERLEVEL10K PROMPT - DREAMCODER RAINBOW NEON v3.0
 # =====================================================
-# Ensure Powerlevel10k is properly initialized first
-if typeset -f prompt_powerlevel10k_setup >/dev/null; then
-  prompt_powerlevel10k_setup
+# Cargar configuración personalizada ANTES de inicializar P10k
+if [[ -f ~/.p10k_dreamcoder.zsh ]]; then
+    source ~/.p10k_dreamcoder.zsh
+elif [[ -f ~/.p10k.zsh ]]; then
+    source ~/.p10k.zsh
 fi
 
-# Cargar configuración personalizada de Dreamcoder (tema senior transparente)
-[[ -f ~/.p10k_dreamcoder.zsh ]] && source ~/.p10k_dreamcoder.zsh
-
-# Fallback a configuración base si no existe la personalizada
-[[ ! -f ~/.p10k_dreamcoder.zsh && -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# Inicializar Powerlevel10k DESPUÉS de cargar la configuración
+if typeset -f prompt_powerlevel10k_setup >/dev/null; then
+    prompt_powerlevel10k_setup
+fi
 
 # pnpm - Portable para cualquier usuario
 export PNPM_HOME="$HOME/.local/share/pnpm"
