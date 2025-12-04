@@ -27,14 +27,7 @@ check_arch_linux() {
     fi
 }
 
-check_sudo() {
-    if ! sudo -n true 2>/dev/null; then
-        log_warning "Se requieren privilegios de administrador"
-        log_info "Ejecuta: sudo pacman -S --needed zsh git curl wget kitty fastfetch nano starship zsh-autosuggestions zsh-syntax-highlighting fzf bat eza fd ripgrep zoxide tmux github-cli jq stow pass btop"
-        log_info "Luego ejecuta nuevamente: ./install.sh --skip-packages"
-        exit 1
-    fi
-}
+# Función eliminada - sudo se maneja directamente en install_packages()
 
 install_packages() {
     local packages=(
@@ -53,11 +46,20 @@ install_packages() {
     )
 
     log_info "Instalando paquetes esenciales y herramientas CLI modernas..."
+    log_info "Se solicitará contraseña de sudo para pacman..."
 
     if sudo pacman -S --needed --noconfirm "${packages[@]}"; then
         log_success "Paquetes instalados correctamente"
     else
+        local exit_code=$?
         log_error "Error instalando paquetes"
+
+        # Verificar si el error fue por permisos de sudo
+        if [[ $exit_code -eq 1 ]]; then
+            log_warning "Si no tienes permisos sudo, puedes:"
+            log_info "1. Instalar paquetes manualmente: sudo pacman -S --needed ${packages[*]}"
+            log_info "2. Luego ejecutar: ./install.sh --skip-packages"
+        fi
         exit 1
     fi
 }
@@ -356,7 +358,14 @@ show_banner() {
 
 check_root() {
     if [[ $EUID -eq 0 ]]; then
-        log_error "No ejecutar este script como root"
+        log_error "Este script NO debe ejecutarse con sudo o como root"
+        echo ""
+        log_info "Ejecución correcta:"
+        echo "  ./install.sh              # El script pedirá sudo cuando lo necesite"
+        echo "  ./install.sh --skip-packages"
+        echo ""
+        log_warning "Razón: Los archivos de configuración deben instalarse en el home del usuario,"
+        log_warning "no en el home de root (/root). El script usa sudo internamente solo para pacman."
         exit 1
     fi
 }
@@ -371,7 +380,6 @@ main() {
             check_arch_linux
             backup_existing
             remove_broken_symlinks
-            check_sudo
             install_packages
             setup_oh_my_zsh
             install_dotfiles
@@ -395,10 +403,15 @@ main() {
             ;;
         "help"|"--help"|"-h")
             echo "Uso: $0 [install|update|help|--skip-packages]"
-            echo "  install         - Instala las configuraciones (por defecto)"
-            echo "  --skip-packages - Solo instala configuraciones (sin sudo)"
-            echo "  update          - Actualiza desde GitHub"
+            echo ""
+            echo "Opciones:"
+            echo "  install         - Instalación completa (paquetes + configuraciones)"
+            echo "                    Se solicitará contraseña sudo para pacman"
+            echo "  --skip-packages - Solo configuraciones (sin instalar paquetes)"
+            echo "  update          - Actualiza dotfiles desde GitHub"
             echo "  help            - Muestra esta ayuda"
+            echo ""
+            echo "Nota: NO ejecutar con 'sudo ./install.sh' - el script maneja sudo internamente"
             ;;
         *)
             log_error "Opción inválida: $1"
