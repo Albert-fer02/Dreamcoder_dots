@@ -31,6 +31,8 @@ readonly MODULES=(
     "DreamcoderGhostty"
     "DreamcoderFastfetch"
     "DreamcoderTmux"
+    "DreamcoderZellij"
+    "DreamcoderFish"
     "DreamcoderShell"
 )
 
@@ -50,9 +52,13 @@ verify_stow_integrity() {
     # Check if key files are symlinks to this repo
     local targets=(
         "$HOME/.zshrc"
+        "$HOME/.bashrc"
+        "$HOME/.bash_profile"
         "$HOME/.config/nvim/init.lua"
         "$HOME/.config/kitty/kitty.conf"
         "$HOME/.config/ghostty/config"
+        "$HOME/.config/zellij/config.kdl"
+        "$HOME/.config/fish/config.fish"
         "$HOME/.tmux.conf"
     )
 

@@ -28,6 +28,8 @@ Dreamcoder_dots/
 ├── DreamcoderZellij/    # 🦀 El Flujo: Multiplexor en Rust (KDL layouts)
 ├── DreamcoderTmux/      # 🗂️ El Orden: Multiplexación clásica
 ├── DreamcoderInstaller/ # 🚀 El Motor: Instalador TUI en Rust (Ratatui)
+├── scripts/             # 🛠️ Herramientas: Scripts de utilidad y mantenimiento
+├── archive/             # 📜 Legado: Archivos antiguos y respaldos históricos
 └── .gemini/skills/      # 🤖 La Inteligencia: Instrucciones maestras para IA
 ```
 

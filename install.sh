@@ -29,6 +29,8 @@ readonly MODULES=(
     "DreamcoderGhostty"
     "DreamcoderFastfetch"
     "DreamcoderTmux"
+    "DreamcoderZellij"
+    "DreamcoderFish"
     "DreamcoderShell"
 )
 
@@ -48,11 +50,11 @@ install_packages() {
         # Core
         git stow curl wget base-devel
         # Shell
-        zsh starship zsh-autosuggestions zsh-syntax-highlighting fzf zoxide bat eza fd ripgrep
+        zsh fish starship zsh-autosuggestions zsh-syntax-highlighting fzf zoxide bat eza fd ripgrep
         # Editors
         neovim nano
         # Terminal & UX
-        kitty fastfetch ghostty tmux
+        kitty fastfetch ghostty tmux zellij
         # Dev Tools (Neovim dependencies)
         npm python-pip go lazygit
         # Fonts
@@ -71,7 +73,13 @@ backup_conflict() {
     if [[ -e "$file" && ! -L "$file" ]]; then
         log_info "Backing up conflict: $file"
         mkdir -p "$BACKUP_DIR"
-        mv "$file" "$BACKUP_DIR/"
+        # Handle directories differently
+        if [[ -d "$file" ]]; then
+            cp -r "$file" "$BACKUP_DIR/"
+            rm -rf "$file"
+        else
+            mv "$file" "$BACKUP_DIR/"
+        fi
     fi
     # If it's a broken link, remove it
     if [[ -L "$file" && ! -e "$file" ]]; then
@@ -86,20 +94,23 @@ stow_modules() {
         if [[ -d "$DOTFILES_DIR/$module" ]]; then
             log_info "Stowing $module..."
             
-            # Pre-clean conflicts (Stow is cowardly by design)
-            # This is a basic check; Stow will warn if we miss something.
-            # We explicitly handle common targets.
-            
             case $module in
                 "DreamcoderShell")
                     backup_conflict "$HOME/.zshrc"
                     backup_conflict "$HOME/.bashrc"
+                    backup_conflict "$HOME/.bash_profile"
                     backup_conflict "$HOME/.p10k.zsh"
                     backup_conflict "$HOME/.p10k_dreamcoder.zsh"
                     backup_conflict "$HOME/.nanorc"
                     ;;
                 "DreamcoderTmux")
                     backup_conflict "$HOME/.tmux.conf"
+                    ;;
+                "DreamcoderZellij")
+                    backup_conflict "$HOME/.config/zellij"
+                    ;;
+                "DreamcoderFish")
+                    backup_conflict "$HOME/.config/fish"
                     ;;
                 *)
                     # Config folders
