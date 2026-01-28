@@ -1,0 +1,29 @@
+// Dreamcoder Zellij Config (KDL Format)
+// Powered by Rust 🦀
+
+keybinds {
+    unbind "Ctrl h" // Freeing up for Neovim navigation if needed
+    normal {
+        bind "Ctrl g" { SwitchToMode "Locked"; }
+        bind "Ctrl p" { SwitchToMode "Pane"; }
+        bind "Ctrl n" { SwitchToMode "Tab"; }
+        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl q" { Quit; }
+    }
+}
+
+theme "tokyo-night"
+
+// UI Configuration
+ui {
+    pane_frames {
+        rounded_corners true
+        hide_session_name true
+    }
+}
+
+default_layout "web"
+mouse_mode true
+copy_on_select true
+pane_frames true

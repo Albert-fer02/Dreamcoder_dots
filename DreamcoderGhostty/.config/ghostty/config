@@ -1,0 +1,128 @@
+# Adapted from Kitty config (kitty.conf and colors-dreamcoder.conf) to Ghostty
+# Original by DreamCoder 08
+
+# Fonts
+font-family = "MesloLGS NF"
+font-size = 13
+font-family-bold = "MesloLGS NF Bold"
+font-family-italic = "MesloLGS NF Italic"
+font-family-bold-italic = "MesloLGS NF Bold Italic"
+font-shaping-break = cursor
+
+# Colors
+background = "#0e1416"
+foreground = "#dee3e5"
+cursor-color = "#dee3e5"
+cursor-text = "#bfc8ca"
+cursor-style = "block"
+cursor-style-blink = true
+selection-foreground = "#0a0c0d"
+selection-background = "#83d3e3"
+
+# Palette (16 basic colors)
+palette = 0=#1a1e20
+palette = 1=#D49A7A
+palette = 2=#7FB3A8
+palette = 3=#E0C180
+palette = 4=#7fb3d4
+palette = 5=#C5A5D4
+palette = 6=#4da6b8
+palette = 7=#D5DAE8
+palette = 8=#3D4355
+palette = 9=#E6B798
+palette = 10=#9BD4C0
+palette = 11=#F0D99C
+palette = 12=#B8A8E8
+palette = 13=#D4B8E8
+palette = 14=#8ACEDD
+palette = 15=#F0F4FF
+
+# Tab bar
+# Note: Ghostty does not support tab bar position configuration yet (always top), no fade style or min-tabs like Kitty, tabs show when >1
+
+# Window settings
+window-padding-x = 6
+window-padding-y = 4
+window-width = 1200
+window-height = 800
+window-decoration = client
+# Note: window placement not configurable yet, remember_window_size not directly supported, Ghostty saves window state
+
+# Performance (Wayland)
+# Note: sync-to-monitor, input_delay and repaint_delay not configurable in Ghostty
+
+# IME
+# Note: ime not supported in Ghostty
+
+# Keybindings (tabs)
+keybind = ctrl+t=new_tab
+keybind = ctrl+w=close_tab
+keybind = ctrl+tab=next_tab
+keybind = ctrl+shift+tab=previous_tab
+keybind = ctrl+1=goto_tab:1
+keybind = ctrl+2=goto_tab:2
+keybind = ctrl+3=goto_tab:3
+keybind = ctrl+4=goto_tab:4
+keybind = ctrl+5=goto_tab:5
+keybind = ctrl+6=goto_tab:6
+keybind = ctrl+7=goto_tab:7
+keybind = ctrl+8=goto_tab:8
+keybind = ctrl+9=goto_tab:9
+keybind = ctrl+0=goto_tab:10
+
+# Keybindings (splits)
+keybind = f5=new_split:right
+keybind = f6=new_split:down
+
+# Keybindings (zoom)
+keybind = ctrl+shift+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+
+# Keybindings (navigation)
+keybind = ctrl+shift+z=jump_to_prompt:-1
+keybind = ctrl+shift+x=jump_to_prompt:1
+# Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
+
+# Background opacity
+background-opacity = 0.55
+# Note: dynamic_background_opacity not supported in Ghostty
+
+# Scrollback
+scrollback-limit = 10000
+# Note: scrollback-pager not supported in Ghostty
+
+# Shell integration
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+# Note: enabled_layouts not supported, Ghostty uses simple splits
+
+# Confirm close
+confirm-close-surface = false
+
+# Updates
+auto-update = off
+
+# Mouse
+mouse-hide-while-typing = true
+focus-follows-mouse = false
+
+# Bell
+# Note: bell not configurable in Ghostty
+
+# Links
+link-url = true
+copy-on-select = true
+# Note: link-style not supported
+
+# Term
+term = "xterm-ghostty"
+
+# Remote control
+# Note: allow_remote_control equivalent not found
+
+# Close on child death
+# Note: close-after-command not supported
+
+# Wayland margins (not directly supported)
+window-padding-balance = false

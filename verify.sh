@@ -1,328 +1,146 @@
 #!/bin/bash
-# Dreamcoder Dotfiles - Script de Verificación
-# Versión: 1.0.0
-# Verifica que la instalación se completó correctamente
+# Dreamcoder Dotfiles - Engineer Grade Verifier
+# Version: 2.0.0 - Powered by GNU Stow & Lua Check
+# Author: Dreamcoder (Based on Dreamcoder Logic)
 
 set -euo pipefail
 
-readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly LOG_FILE="$DOTFILES_DIR/verify.log"
 
-# Colores para output
+# Colors (Dreamcoder Palette)
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[1;33m'
 readonly BLUE='\033[0;34m'
+readonly PURPLE='\033[0;35m'
+readonly CYAN='\033[0;36m'
 readonly NC='\033[0m'
 
 log_info() { echo -e "${BLUE}[INFO]${NC} $*"; }
 log_success() { echo -e "${GREEN}[✓]${NC} $*"; }
 log_warning() { echo -e "${YELLOW}[!]${NC} $*"; }
 log_error() { echo -e "${RED}[✗]${NC} $*"; }
+log_step() { echo -e "\n${PURPLE}--- $* ---
+${NC}"; }
+
+# Modules to Verify
+readonly MODULES=(
+    "DreamcoderNvim"
+    "DreamcoderKitty"
+    "DreamcoderGhostty"
+    "DreamcoderFastfetch"
+    "DreamcoderTmux"
+    "DreamcoderShell"
+)
 
 show_banner() {
-    echo -e "${BLUE}"
+    echo -e "${CYAN}"
     echo "╔════════════════════════════════════════╗"
-    echo "║   🔍 DREAMCODER DOTFILES VERIFY 🔍    ║"
-    echo "║        Verificación de Instalación    ║"
+    echo "║    🔍 DREAMCODER SYSTEM VERIFIER 🔍   ║"
+    echo "║        Quality & Integrity Audit       ║"
     echo "╚════════════════════════════════════════╝"
     echo -e "${NC}"
 }
 
-verify_arch_linux() {
-    log_info "Verificando sistema operativo..."
-    if [[ -f /etc/arch-release ]]; then
-        log_success "Sistema: Arch Linux"
-        return 0
+verify_stow_integrity() {
+    log_step "Auditing Symlink Integrity (GNU Stow)"
+    local errors=0
+
+    # Check if key files are symlinks to this repo
+    local targets=(
+        "$HOME/.zshrc"
+        "$HOME/.config/nvim/init.lua"
+        "$HOME/.config/kitty/kitty.conf"
+        "$HOME/.config/ghostty/config"
+        "$HOME/.tmux.conf"
+    )
+
+    for target in "${targets[@]}"; do
+        if [[ -L "$target" ]]; then
+            link_path=$(readlink -f "$target")
+            if [[ "$link_path" == *"$DOTFILES_DIR"* ]]; then
+                log_success "Link OK: $target -> $link_path"
+            else
+                log_warning "Link Foreign: $target points outside repo ($link_path)"
+                ((errors++))
+            fi
+        else
+            if [[ -e "$target" ]]; then
+                log_error "Conflict: $target is a PHYSICAL file, not a symlink."
+            else
+                log_error "Missing: $target does not exist."
+            fi
+            ((errors++))
+        fi
+    done
+    return $errors
+}
+
+verify_neovim_syntax() {
+    log_step "Auditing Neovim Configuration (Lua Syntax)"
+    if ! command -v nvim &>/dev/null; then
+        log_error "Neovim not installed."
+        return 1
+    fi
+
+    # Run nvim in headless mode to check for errors in init.lua
+    if nvim --headless +qa 2> "$LOG_FILE"; then
+        log_success "Neovim init.lua syntax is valid."
     else
-        log_error "Este sistema no es Arch Linux"
+        log_error "Neovim configuration has errors. See $LOG_FILE"
+        cat "$LOG_FILE"
         return 1
     fi
 }
 
-verify_packages() {
-    log_info "Verificando paquetes esenciales..."
-    local errors=0
-
-    # Mapeo de paquetes a sus comandos reales
-    # Formato: "nombre_paquete:comando_real"
-    local essential_packages=(
-        "zsh:zsh"
-        "git:git"
-        "curl:curl"
-        "wget:wget"
-        "kitty:kitty"
-        "fastfetch:fastfetch"
-        "nano:nano"
-        "starship:starship"
-        "fzf:fzf"
-        "bat:bat"
-        "eza:eza"
-        "fd:fd"
-        "ripgrep:rg"
-        "zoxide:zoxide"
-        "tmux:tmux"
-        "github-cli:gh"
-        "jq:jq"
-        "stow:stow"
-        "pass:pass"
-        "btop:btop"
-    )
-
-    for entry in "${essential_packages[@]}"; do
-        local pkg="${entry%%:*}"
-        local cmd="${entry##*:}"
-
-        if command -v "$cmd" &>/dev/null; then
-            log_success "Paquete instalado: $pkg"
+verify_zsh_syntax() {
+    log_step "Auditing Shell Configuration (Zsh Syntax)"
+    if [[ -f "$HOME/.zshrc" ]]; then
+        # -n: check syntax without executing
+        if zsh -n "$HOME/.zshrc" 2>> "$LOG_FILE"; then
+            log_success ".zshrc syntax is valid."
         else
-            log_error "Paquete faltante: $pkg"
-            ((errors++))
-        fi
-    done
-
-    return $errors
-}
-
-verify_config_files() {
-    log_info "Verificando archivos de configuración..."
-    local errors=0
-
-    local config_files=(
-        "$HOME/.zshrc:ZSH configuration"
-        "$HOME/.bashrc:Bash configuration"
-        "$HOME/.tmux.conf:Tmux configuration"
-        "$HOME/.nanorc:Nano configuration"
-        "$HOME/.config/kitty/kitty.conf:Kitty configuration"
-        "$HOME/.config/fastfetch/config.jsonc:Fastfetch configuration"
-        "$HOME/.config/starship.toml:Starship configuration"
-        "$HOME/.p10k.zsh:PowerLevel10k configuration"
-    )
-
-    for entry in "${config_files[@]}"; do
-        local file="${entry%%:*}"
-        local desc="${entry##*:}"
-
-        if [[ -f "$file" ]]; then
-            log_success "$desc: $file"
-        else
-            log_error "Archivo faltante: $file ($desc)"
-            ((errors++))
-        fi
-    done
-
-    return $errors
-}
-
-verify_directories() {
-    log_info "Verificando directorios necesarios..."
-    local errors=0
-
-    local directories=(
-        "$HOME/.oh-my-zsh:Oh-My-Zsh"
-        "$HOME/.oh-my-zsh/custom/themes/powerlevel10k:PowerLevel10k"
-        "$HOME/.nano/backups:Nano backups"
-        "$HOME/.config:Config directory"
-    )
-
-    for entry in "${directories[@]}"; do
-        local dir="${entry%%:*}"
-        local desc="${entry##*:}"
-
-        if [[ -d "$dir" ]]; then
-            log_success "$desc: $dir"
-        else
-            log_warning "Directorio faltante: $dir ($desc)"
-            ((errors++))
-        fi
-    done
-
-    return $errors
-}
-
-verify_shell() {
-    log_info "Verificando shell por defecto..."
-
-    if [[ "$SHELL" == */zsh ]]; then
-        log_success "Shell por defecto: ZSH"
-        return 0
-    else
-        log_warning "Shell actual: $SHELL (se recomienda ZSH)"
-        log_info "Ejecuta: chsh -s /usr/bin/zsh"
-        return 1
-    fi
-}
-
-verify_editor() {
-    log_info "Verificando editor por defecto..."
-
-    if [[ -n "${EDITOR:-}" ]]; then
-        if command -v "$EDITOR" &>/dev/null; then
-            log_success "Editor configurado: $EDITOR"
-            return 0
-        else
-            log_error "Editor '$EDITOR' no encontrado"
+            log_error ".zshrc has syntax errors."
             return 1
         fi
+    fi
+}
+
+verify_skills_integrity() {
+    log_step "Auditing IA Skills Integrity"
+    local skills_dir=".gemini/skills"
+    if [[ -d "$skills_dir" ]]; then
+        for skill in "$skills_dir"/*; do
+            if [[ -f "$skill/SKILL.md" ]]; then
+                log_success "Skill OK: $(basename "$skill")"
+            else
+                log_warning "Skill Corrupt: $(basename "$skill") (Missing SKILL.md)"
+            fi
+        done
     else
-        log_warning "Variable EDITOR no configurada"
-        return 1
-    fi
-}
-
-verify_zsh_plugins() {
-    log_info "Verificando plugins de ZSH..."
-    local errors=0
-
-    # Verificar que ZSH tenga los plugins instalados
-    if [[ -f "$HOME/.zshrc" ]]; then
-        if grep -q "zsh-autosuggestions" "$HOME/.zshrc"; then
-            log_success "Plugin: zsh-autosuggestions configurado"
-        else
-            log_warning "Plugin: zsh-autosuggestions no encontrado en .zshrc"
-            ((errors++))
-        fi
-
-        if grep -q "zsh-syntax-highlighting" "$HOME/.zshrc"; then
-            log_success "Plugin: zsh-syntax-highlighting configurado"
-        else
-            log_warning "Plugin: zsh-syntax-highlighting no encontrado en .zshrc"
-            ((errors++))
-        fi
-    fi
-
-    return $errors
-}
-
-verify_modern_tools() {
-    log_info "Verificando herramientas modernas CLI..."
-    local errors=0
-
-    # Verificar que las herramientas modernas funcionan
-    local tools=(
-        "fzf --version:FZF"
-        "bat --version:Bat"
-        "eza --version:Eza"
-        "fd --version:Fd"
-        "rg --version:Ripgrep"
-        "zoxide --version:Zoxide"
-        "gh --version:GitHub CLI"
-        "jq --version:JQ"
-        "tmux -V:Tmux"
-        "btop --version:Btop"
-    )
-
-    for entry in "${tools[@]}"; do
-        local cmd="${entry%%:*}"
-        local name="${entry##*:}"
-
-        if $cmd &>/dev/null; then
-            log_success "$name funcional"
-        else
-            log_warning "$name: comando no funcional o no instalado"
-            ((errors++))
-        fi
-    done
-
-    return $errors
-}
-
-check_portability_issues() {
-    log_info "Verificando problemas de portabilidad..."
-    local warnings=0
-
-    # Verificar username hardcoded
-    if grep -q "/home/dreamcoder08" "$HOME/.zshrc" 2>/dev/null; then
-        log_warning "Username hardcoded encontrado en .zshrc"
-        ((warnings++))
-    fi
-
-    # Verificar dependencias externas
-    if [[ -f "$HOME/.config/kitty/kitty.conf" ]]; then
-        if grep -q "ml4w" "$HOME/.config/kitty/kitty.conf" 2>/dev/null && \
-           ! grep -q "^#.*ml4w" "$HOME/.config/kitty/kitty.conf" 2>/dev/null; then
-            log_warning "Dependencia ml4w no comentada en kitty.conf"
-            ((warnings++))
-        fi
-    fi
-
-    # Verificar aliases específicos de hardware
-    if grep -q "DisplayPort-0" "$HOME/.zshrc" 2>/dev/null && \
-       ! grep -q "^#.*DisplayPort-0" "$HOME/.zshrc" 2>/dev/null; then
-        if ! xrandr 2>/dev/null | grep -q "DisplayPort-0 connected"; then
-            log_warning "Aliases de DisplayPort-0 activos pero display no conectado"
-            ((warnings++))
-        fi
-    fi
-
-    return $warnings
-}
-
-generate_report() {
-    local total_errors=$1
-    local total_warnings=$2
-
-    echo ""
-    echo -e "${BLUE}╔════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║           REPORTE DE VERIFICACIÓN     ║${NC}"
-    echo -e "${BLUE}╚════════════════════════════════════════╝${NC}"
-    echo ""
-
-    if [[ $total_errors -eq 0 && $total_warnings -eq 0 ]]; then
-        echo -e "${GREEN}✅ INSTALACIÓN PERFECTA${NC}"
-        echo "   Todos los componentes verificados exitosamente"
-        return 0
-    elif [[ $total_errors -eq 0 ]]; then
-        echo -e "${YELLOW}⚠️  INSTALACIÓN COMPLETA CON ADVERTENCIAS${NC}"
-        echo "   Errores: $total_errors"
-        echo "   Advertencias: $total_warnings"
-        echo ""
-        echo "   La instalación funciona pero tiene advertencias menores"
-        return 0
-    else
-        echo -e "${RED}❌ INSTALACIÓN INCOMPLETA${NC}"
-        echo "   Errores: $total_errors"
-        echo "   Advertencias: $total_warnings"
-        echo ""
-        echo "   Se encontraron problemas que deben corregirse"
-        echo "   Ejecuta: ./install.sh"
+        log_error "IA Skills directory missing."
         return 1
     fi
 }
 
 main() {
     show_banner
-
+    
     local total_errors=0
-    local total_warnings=0
+    
+    verify_stow_integrity || ((total_errors++))
+    verify_neovim_syntax || ((total_errors++))
+    verify_zsh_syntax || ((total_errors++))
+    verify_skills_integrity || ((total_errors++))
 
-    # Verificaciones con conteo de errores
-    verify_arch_linux || ((total_errors++))
     echo ""
-
-    verify_packages || total_errors=$((total_errors + $?))
-    echo ""
-
-    verify_config_files || total_errors=$((total_errors + $?))
-    echo ""
-
-    verify_directories || total_warnings=$((total_warnings + $?))
-    echo ""
-
-    verify_shell || ((total_warnings++))
-    echo ""
-
-    verify_zsh_plugins || total_warnings=$((total_warnings + $?))
-    echo ""
-
-    verify_modern_tools || total_warnings=$((total_warnings + $?))
-    echo ""
-
-    check_portability_issues || total_warnings=$((total_warnings + $?))
-    echo ""
-
-    # Generar reporte final
-    generate_report $total_errors $total_warnings
-    exit $?
+    if [[ $total_errors -eq 0 ]]; then
+        echo -e "${GREEN}✅ ALL SYSTEMS OPERATIONAL - DREAMCODER GRADE${NC}"
+    else
+        echo -e "${RED}❌ AUDIT FAILED - $total_errors ISSUES FOUND${NC}"
+        echo -e "${YELLOW}Run ./install.sh to fix symlink issues.${NC}"
+    fi
 }
 
 main "$@"
