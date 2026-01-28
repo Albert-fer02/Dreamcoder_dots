@@ -622,3 +622,21 @@ esac
 # pnpm end
 
 
+
+# --- Senior Engineering Aliases (Dreamcoder Logic) ---
+alias pacupd='sudo pacman -Syu'
+alias pacinst='sudo pacman -S'
+alias pacrem='sudo pacman -Rns'
+alias pacfind='pacman -Ss'
+alias gs='git status'
+alias gp='git push'
+alias gpl='git pull'
+alias gc='git commit -m'
+alias gaa='git add .'
+alias gl='git log --oneline --graph --decorate'
+alias b='bun'
+alias bx='bunx'
+alias bd='bun run dev'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../../..'

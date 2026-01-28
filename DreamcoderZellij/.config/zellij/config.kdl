@@ -2,7 +2,7 @@
 // Powered by Rust 🦀
 
 keybinds {
-    unbind "Ctrl h" // Freeing up for Neovim navigation if needed
+    unbind "Ctrl h"
     normal {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl p" { SwitchToMode "Pane"; }
@@ -10,6 +10,12 @@ keybinds {
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "Ctrl o" { SwitchToMode "Session"; }
         bind "Ctrl q" { Quit; }
+        
+        // Seamless Navigation (Dreamcoder Logic)
+        bind "Ctrl h" { MoveFocusOrTab "Left"; }
+        bind "Ctrl l" { MoveFocusOrTab "Right"; }
+        bind "Ctrl j" { MoveFocus "Down"; }
+        bind "Ctrl k" { MoveFocus "Up"; }
     }
 }
 
