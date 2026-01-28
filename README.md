@@ -22,10 +22,12 @@ Siguiendo las mejores prácticas de ingeneria de softwart, este repositorio ha a
 Dreamcoder_dots/
 ├── DreamcoderNvim/      # 🧠 El Cerebro: IDE profesional (LazyVim + Node Fix)
 ├── DreamcoderShell/     # 🐚 La Voz: Zsh, Bash, Starship (Neon Cyber)
+├── DreamcoderFish/      # 🐟 La Velocidad: Fish Shell (Modern, Non-POSIX)
 ├── DreamcoderKitty/     # 🐱 La Ventana: Terminal acelerada por GPU
 ├── DreamcoderGhostty/   # 👻 El Futuro: Terminal de ultra-baja latencia
-├── DreamcoderTmux/      # 🗂️ El Orden: Multiplexación de sesiones
-├── DreamcoderFastfetch/ # 📊 La Identidad: Info del sistema personalizada
+├── DreamcoderZellij/    # 🦀 El Flujo: Multiplexor en Rust (KDL layouts)
+├── DreamcoderTmux/      # 🗂️ El Orden: Multiplexación clásica
+├── DreamcoderInstaller/ # 🚀 El Motor: Instalador TUI en Rust (Ratatui)
 └── .gemini/skills/      # 🤖 La Inteligencia: Instrucciones maestras para IA
 ```
 
