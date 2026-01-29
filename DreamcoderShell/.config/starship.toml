@@ -1,14 +1,11 @@
 # =====================================================
-# 🌌 DREAMCODER STARSHIP v5.0 - ARCHITECTURAL HORIZON
+# 🌌 DREAMCODER STARSHIP v6.0 - P10K REINCARNATION
 # =====================================================
-# Design: Two-line Cinematic (Neon Cyber Edition)
-# Philosophy: High context, low clutter, maximum space.
+# Design: Segmented Powerline (P10k Aesthetic)
+# Philosophy: High contrast, solid blocks, consistent look.
 #
-# Palette: Neon Cyber 2026
-# - Cyan: #00e5ff
-# - Gold: #ffd166
-# - Pink: #ff6b9f
-# - Purple: #d197ff
+# Separators:    
+# Palette: Dreamcoder Neon Cyber (Segmented)
 # =====================================================
 
 "$schema" = 'https://starship.rs/config-schema.json'
@@ -16,144 +13,129 @@
 # --------------------------------------------------------------------------
 # 🎯 PROMPT LAYOUT
 # --------------------------------------------------------------------------
+# We use custom grouping to simulate P10k segments
 format = """
-[╭─](bold #d197ff) $os$username$hostname$directory$git_branch$git_status$git_metrics$rust$nodejs$bun$golang$python$docker_context$kubernetes$cmd_duration$status
-[╰─](bold #d197ff)$character"""
+[](#00e5ff)
+$os
+$username
+[](fg:#00e5ff bg:#4da6b8)
+$directory
+[](fg:#4da6b8 bg:#ff6b9f)
+$git_branch
+$git_status
+[](fg:#ff6b9f bg:#ffd166)
+$rust
+$nodejs
+$bun
+$golang
+$python
+[](fg:#ffd166)
+$character"""
 
-right_format = """$time$battery"""
+# Right prompt for Time and Battery
+right_format = """[](fg:#d197ff)$time[](fg:#d197ff)"""
 
 add_newline = true
 command_timeout = 1000
 
 # --------------------------------------------------------------------------
-# ⚡ CHARACTER (Prompt Cursor)
+# ⚡ CHARACTER
 # --------------------------------------------------------------------------
 [character]
 success_symbol = "[ ❯](bold #00e5ff)"
 error_symbol = "[ ❯](bold #ff6b9f)"
-vicmd_symbol = "[ ❮](bold #ffd166)"
 
 # --------------------------------------------------------------------------
-# 🖥️ OS & CONTEXT
+# 🖥️ OS & USER (Segment 1: Neon Cyan)
 # --------------------------------------------------------------------------
 [os]
-format = "[$symbol]($style) "
-style = "bold #00e5ff"
+format = "[$symbol]($style)"
+style = "bg:#00e5ff fg:#000000"
 disabled = false
 
 [os.symbols]
-Arch = "󰣇"
-Ubuntu = "󰕈"
-Macos = "󰀵"
-Windows = "󰍲"
-Linux = "󰌽"
+Arch = "󰣇 "
+Ubuntu = "󰕈 "
+Macos = "󰀵 "
+Windows = "󰍲 "
+Linux = "󰌽 "
 
 [username]
 show_always = true
 format = "[$user]($style)"
-style_user = "bold #ffd166"
-style_root = "bold #ff6b9f"
-
-[hostname]
-ssh_only = true
-format = "@[$hostname](bold #ffd166) "
-disabled = false
+style_user = "bg:#00e5ff fg:#000000 bold"
+style_root = "bg:#ff6b9f fg:#000000 bold"
 
 # --------------------------------------------------------------------------
-# 📂 DIRECTORY
+# 📂 DIRECTORY (Segment 2: Cyan Water)
 # --------------------------------------------------------------------------
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-style = "bold #00e5ff"
-format = " in [$path]($style)[$read_only](bold #ff6b9f) "
+style = "bg:#4da6b8 fg:#000000 bold"
+format = " [$path]($style) "
 home_symbol = "🏠"
 
-[directory.substitutions]
-"Documents" = "󰈙 docs"
-"Documentos" = "󰈙 docs"
-"Projects" = "󰲋 proj"
-"PROYECTOS" = "󰲋 proj"
-".config" = "⚙️ cfg"
-
 # --------------------------------------------------------------------------
-# 🌿 GIT ECOSYSTEM
+# 🌿 GIT (Segment 3: Neon Pink)
 # --------------------------------------------------------------------------
 [git_branch]
 symbol = " "
-style = "bold #d197ff"
-format = "on [$symbol$branch]($style) "
+style = "bg:#ff6b9f fg:#000000 bold"
+format = " [$symbol$branch]($style)"
 
 [git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold #ff6b9f"
-conflicted = "🏳️ "
-ahead = "🏎️💨 "
-behind = "🐢 "
-diverged = "🔱 "
-untracked = "📝 "
-stashed = "📦 "
-modified = "✍️ "
-staged = "P "
-renamed = "󰁕 "
-deleted = "🗑️ "
-
-[git_metrics]
-added_style = "bold #00e5ff"
-deleted_style = "bold #ff6b9f"
-only_nonzero_diffs = true
-format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
-disabled = false
+style = "bg:#ff6b9f fg:#000000 bold"
+format = "[[($all_status$ahead_behind)]]($style) "
+conflicted = "🏳️"
+ahead = "🏎️💨"
+behind = "🐢"
+diverged = "🔱"
+untracked = "📝"
+stashed = "📦"
+modified = "✍️"
+staged = "P"
+renamed = "»"
+deleted = "🗑️"
 
 # --------------------------------------------------------------------------
-# 🟢 RUNTIMES (Modern Stack)
+# 🟢 RUNTIMES (Segment 4: Gold)
 # --------------------------------------------------------------------------
 [rust]
 symbol = "🦀 "
-style = "bold #ff6b9f"
-format = "via [$symbol($version)]($style) "
+style = "bg:#ffd166 fg:#000000 bold"
+format = " [$symbol($version)]($style)"
 
 [nodejs]
 symbol = "󰎘 "
-style = "bold #00e5ff"
-format = "via [$symbol($version)]($style) "
+style = "bg:#ffd166 fg:#000000 bold"
+format = " [$symbol($version)]($style)"
 
 [bun]
 symbol = "󰡘 "
-style = "bold #ffd166"
-format = "via [$symbol($version)]($style) "
+style = "bg:#ffd166 fg:#000000 bold"
+format = " [$symbol($version)]($style)"
 
 [golang]
 symbol = "󰟓 "
-style = "bold #00e5ff"
-format = "via [$symbol($version)]($style) "
+style = "bg:#ffd166 fg:#000000 bold"
+format = " [$symbol($version)]($style)"
 
 [python]
 symbol = "󰌠 "
-style = "bold #ffd166"
-format = 'via [${symbol}${version}(\($virtualenv\))]($style) '
+style = "bg:#ffd166 fg:#000000 bold"
+format = " [${symbol}${version}]($style)"
 
 # --------------------------------------------------------------------------
-# ⏱️ STATUS & PERFORMANCE
+# ⏱️ TIME (Right Segment: Purple)
 # --------------------------------------------------------------------------
-[cmd_duration]
-min_time = 2000
-format = "took [$duration]($style) "
-style = "bold #ffd166"
-
-[status]
-disabled = false
-symbol = "✖ "
-format = '[$symbol$common_meaning]($style) '
-style = "bold #ff6b9f"
-
 [time]
 disabled = false
-format = "[󰥔 $time]($style)"
-time_format = "%H:%M"
-style = "bold #d197ff"
+format = "[$time]($style)"
+time_format = " %H:%M "
+style = "bg:#d197ff fg:#000000 bold"
 
 # --------------------------------------------------------------------------
-# 🌌 "Architecture is the art of organizing chaos" 
-#      - DreamCoder v5.0
+# 🌌 "The Soul of P10k in the Body of Starship"
+#      - DreamCoder v6.0
 # --------------------------------------------------------------------------
