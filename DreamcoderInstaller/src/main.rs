@@ -63,6 +63,17 @@ fn run_app(terminal: &mut DefaultTerminal, mut app: App) -> Result<()> {
                     .map(|m| m.name.clone())
                     .collect();
 
+                // Dependency Check for AI Neovim
+                if selected_modules.contains(&"DreamcoderNvim".to_string()) {
+                    app.add_log("Checking Neovim AI dependencies...".to_string());
+                    let deps = vec!["make", "cargo", "npm", "rg", "fd"];
+                    for dep in deps {
+                        if std::process::Command::new("which").arg(dep).output().is_err() {
+                            app.add_log(format!("⚠️ Missing dependency: {}", dep));
+                        }
+                    }
+                }
+
                 for module in selected_modules {
                     app.add_log(format!("Stowing {}...", module));
                     match crate::deploy::stow_module(&module, &dotfiles_dir) {
