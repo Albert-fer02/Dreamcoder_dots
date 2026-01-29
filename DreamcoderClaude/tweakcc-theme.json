@@ -1,0 +1,70 @@
+{
+  "themes": [
+    {
+      "name": "Dreamcoder",
+      "id": "dreamcoder",
+      "colors": {
+        "autoAccept": "rgb(183,204,133)",
+        "bashBorder": "rgb(0,229,255)",
+        "claude": "rgb(0,229,255)",
+        "claudeShimmer": "rgb(255,209,102)",
+        "permission": "rgb(255,209,102)",
+        "permissionShimmer": "rgb(222,186,135)",
+        "planMode": "rgb(201,154,214)",
+        "ide": "rgb(0,229,255)",
+        "promptBorder": "rgb(49,51,66)",
+        "promptBorderShimmer": "rgb(0,229,255)",
+        "text": "rgb(255,255,255)",
+        "inverseText": "rgb(6,8,15)",
+        "inactive": "rgb(92,97,112)",
+        "subtle": "rgb(92,97,112)",
+        "suggestion": "rgb(163,181,214)",
+        "remember": "rgb(255,209,102)",
+        "background": "rgb(15,15,20)",
+        "success": "rgb(183,204,133)",
+        "error": "rgb(203,124,148)",
+        "warning": "rgb(222,186,135)",
+        "warningShimmer": "rgb(255,209,102)",
+        "diffAdded": "rgb(45,75,45)",
+        "diffRemoved": "rgb(85,65,35)",
+        "red_FOR_SUBAGENTS_ONLY": "rgb(203,124,148)",
+        "blue_FOR_SUBAGENTS_ONLY": "rgb(0,229,255)",
+        "green_FOR_SUBAGENTS_ONLY": "rgb(183,204,133)",
+        "yellow_FOR_SUBAGENTS_ONLY": "rgb(255,209,102)",
+        "purple_FOR_SUBAGENTS_ONLY": "rgb(201,154,214)",
+        "orange_FOR_SUBAGENTS_ONLY": "rgb(222,186,135)",
+        "pink_FOR_SUBAGENTS_ONLY": "rgb(203,124,148)",
+        "cyan_FOR_SUBAGENTS_ONLY": "rgb(0,229,255)",
+        "rainbow_red": "rgb(203,124,148)",
+        "rainbow_orange": "rgb(222,186,135)",
+        "rainbow_yellow": "rgb(255,209,102)",
+        "rainbow_green": "rgb(183,204,133)",
+        "rainbow_cyan": "rgb(0,229,255)",
+        "rainbow_blue": "rgb(163,181,214)",
+        "rainbow_violet": "rgb(201,154,214)",
+        "userMessageBackground": "rgb(25,25,35)",
+        "bashMessageBackgroundColor": "rgb(30,30,45)",
+        "memoryBackgroundColor": "rgb(35,35,55)"
+      }
+    }
+  ],
+  "selectedTheme": "dreamcoder",
+  "thinkingVerbs": {
+    "format": "{}… ",
+    "verbs": [
+      "Codificando el Futuro",
+      "Analizando Arquitectura",
+      "Protegiendo Invariantes",
+      "Compilando Lógica",
+      "En Modo Jarvis",
+      "Siendo el Dreamcoder",
+      "Procesando el Quilombo",
+      "Haciendo Magia Negra con Rust",
+      "Buscándole la Vuelta",
+      "Refactorizando la Realidad",
+      "Surfeando el Caos de Arch",
+      "Dale que va",
+      "Bancame un Toque"
+    ]
+  }
+}

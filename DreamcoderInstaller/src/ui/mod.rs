@@ -25,6 +25,7 @@ impl App {
             Module { name: "DreamcoderShell".to_string(), description: "🐚 Zsh, Bash, Starship & Aliases".to_string(), selected: true },
             Module { name: "DreamcoderFish".to_string(), description: "🐟 Modern Shell (Fast, Auto-suggest)".to_string(), selected: false },
             Module { name: "DreamcoderNushell".to_string(), description: "📊 Data-oriented Shell (Structured)".to_string(), selected: false },
+            Module { name: "DreamcoderClaude".to_string(), description: "🤖 AI Intelligence (Claude Desktop Skills)".to_string(), selected: true },
             Module { name: "DreamcoderZellij".to_string(), description: "🦀 Rust-native Multiplexer (KDL)".to_string(), selected: true },
             Module { name: "DreamcoderGhostty".to_string(), description: "👻 High-perf Terminal & Shaders".to_string(), selected: false },
             Module { name: "DreamcoderKitty".to_string(), description: "🐱 GPU-accelerated Terminal".to_string(), selected: false },
