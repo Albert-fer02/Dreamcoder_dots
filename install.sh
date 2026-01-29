@@ -31,6 +31,7 @@ readonly MODULES=(
     "DreamcoderTmux"
     "DreamcoderZellij"
     "DreamcoderFish"
+    "DreamcoderNushell"
     "DreamcoderShell"
 )
 
@@ -50,7 +51,7 @@ install_packages() {
         # Core
         git stow curl wget base-devel
         # Shell
-        zsh fish starship zsh-autosuggestions zsh-syntax-highlighting fzf zoxide bat eza fd ripgrep
+        zsh fish nushell starship zsh-autosuggestions zsh-syntax-highlighting fzf zoxide bat eza fd ripgrep
         # Editors
         neovim nano
         # Terminal & UX
@@ -111,6 +112,9 @@ stow_modules() {
                     ;;
                 "DreamcoderFish")
                     backup_conflict "$HOME/.config/fish"
+                    ;;
+                "DreamcoderNushell")
+                    backup_conflict "$HOME/.config/nushell"
                     ;;
                 *)
                     # Config folders

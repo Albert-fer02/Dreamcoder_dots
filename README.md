@@ -23,6 +23,7 @@ Dreamcoder_dots/
 ├── DreamcoderNvim/      # 🧠 El Cerebro: IDE profesional (LazyVim + Node Fix)
 ├── DreamcoderShell/     # 🐚 La Voz: Zsh, Bash, Starship (Neon Cyber)
 ├── DreamcoderFish/      # 🐟 La Velocidad: Fish Shell (Modern, Non-POSIX)
+├── DreamcoderNushell/   # 📊 Los Datos: Nushell (Structured Data Shell)
 ├── DreamcoderKitty/     # 🐱 La Ventana: Terminal acelerada por GPU
 ├── DreamcoderGhostty/   # 👻 El Futuro: Terminal de ultra-baja latencia
 ├── DreamcoderZellij/    # 🦀 El Flujo: Multiplexor en Rust (KDL layouts)

@@ -33,6 +33,7 @@ readonly MODULES=(
     "DreamcoderTmux"
     "DreamcoderZellij"
     "DreamcoderFish"
+    "DreamcoderNushell"
     "DreamcoderShell"
 )
 
@@ -59,6 +60,7 @@ verify_stow_integrity() {
         "$HOME/.config/ghostty/config"
         "$HOME/.config/zellij/config.kdl"
         "$HOME/.config/fish/config.fish"
+        "$HOME/.config/nushell/config.nu"
         "$HOME/.tmux.conf"
     )
 
