@@ -1,494 +1,159 @@
 # =====================================================
-# 🌌 DREAMCODER STARSHIP v4.0 - UNIFIED & OPTIMIZED
+# 🌌 DREAMCODER STARSHIP v5.0 - ARCHITECTURAL HORIZON
 # =====================================================
-# Best of both worlds: Soft productive colors + Neon features
+# Design: Two-line Cinematic (Neon Cyber Edition)
+# Philosophy: High context, low clutter, maximum space.
 #
-# Palette: DreamCoder Verse (Soft contrast for eye comfort)
-# Features: Single-line prompt + Optional right prompt
-# Performance: Optimized scan times + disabled unused modules
-# Version: 4.0 (Ultimate unified configuration)
+# Palette: Neon Cyber 2026
+# - Cyan: #00e5ff
+# - Gold: #ffd166
+# - Pink: #ff6b9f
+# - Purple: #d197ff
 # =====================================================
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# =====================================================
+# --------------------------------------------------------------------------
 # 🎯 PROMPT LAYOUT
-# =====================================================
-# Main prompt: Left-aligned, information-dense
-# Right prompt: Optional time/battery (enable below)
+# --------------------------------------------------------------------------
+format = """
+[╭─](bold #d197ff) $os$username$hostname$directory$git_branch$git_status$git_metrics$rust$nodejs$bun$golang$python$docker_context$kubernetes$cmd_duration$status
+[╰─](bold #d197ff)$character"""
 
-format = """$os\
-$username\
-$directory\
-$git_branch\
-$git_status\
-$git_metrics\
-$nodejs\
-$bun\
-$rust\
-$python\
-$golang\
-$java\
-$docker_context\
-$kubernetes\
-$package\
-$cmd_duration\
-$jobs\
-$status\
-$line_break\
-$character"""
-
-# Right prompt (disabled by default - enable if desired)
 right_format = """$time$battery"""
 
-add_newline = false
-command_timeout = 500
-scan_timeout = 30
+add_newline = true
+command_timeout = 1000
 
-# =====================================================
+# --------------------------------------------------------------------------
 # ⚡ CHARACTER (Prompt Cursor)
-# =====================================================
+# --------------------------------------------------------------------------
 [character]
-success_symbol = "[❯](bold #83d3e3)"       # Cyan - Success
-error_symbol = "[❯](bold #D49A7A)"         # Terracotta - Error
-vimcmd_symbol = "[❮](bold #C5A5D4)"        # Lavender - Vim normal
-vimcmd_visual_symbol = "[V](bold #7fb3d4)" # Blue - Vim visual
-vimcmd_replace_symbol = "[R](bold #D49A7A)" # Terracotta - Vim replace
+success_symbol = "[ ❯](bold #00e5ff)"
+error_symbol = "[ ❯](bold #ff6b9f)"
+vicmd_symbol = "[ ❮](bold #ffd166)"
 
-# =====================================================
-# 🖥️ OS INDICATOR
-# =====================================================
+# --------------------------------------------------------------------------
+# 🖥️ OS & CONTEXT
+# --------------------------------------------------------------------------
 [os]
-format = "[$symbol]($style)"
-style = "bold #7fb3d4"  # Soft blue
+format = "[$symbol]($style) "
+style = "bold #00e5ff"
 disabled = false
 
 [os.symbols]
-Arch = "󰣇 "
-Ubuntu = "󰕈 "
-Debian = "󰣚 "
-Fedora = "󰣛 "
-Macos = "󰀵 "
-Windows = "󰍲 "
-Linux = "󰌽 "
+Arch = "󰣇"
+Ubuntu = "󰕈"
+Macos = "󰀵"
+Windows = "󰍲"
+Linux = "󰌽"
 
-# =====================================================
-# 👤 USERNAME
-# =====================================================
 [username]
-style_user = "bold #83d3e3"      # Cyan for normal user
-style_root = "bold #D49A7A"      # Terracotta for root
-format = "[$user]($style) "
-disabled = false
-show_always = true               # Set to false for SSH-only
+show_always = true
+format = "[$user]($style)"
+style_user = "bold #ffd166"
+style_root = "bold #ff6b9f"
 
-# =====================================================
+[hostname]
+ssh_only = true
+format = "@[$hostname](bold #ffd166) "
+disabled = false
+
+# --------------------------------------------------------------------------
 # 📂 DIRECTORY
-# =====================================================
+# --------------------------------------------------------------------------
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-read_only = " 󰌾"
-style = "bold #4da6b8"           # Cyan
-format = "[$path]($style)[$read_only](bold #D49A7A)"
-home_symbol = "~"
-fish_style_pwd_dir_length = 1
-use_logical_path = true
-repo_root_style = "bold #C5A5D4" # Lavender for git roots
+style = "bold #00e5ff"
+format = " in [$path]($style)[$read_only](bold #ff6b9f) "
+home_symbol = "🏠"
 
 [directory.substitutions]
 "Documents" = "󰈙 docs"
 "Documentos" = "󰈙 docs"
-"Downloads" = "󰇚 down"
-"Descargas" = "󰇚 down"
-"Music" = "󰝚 music"
-"Música" = "󰝚 music"
-"Pictures" = "󰋩 pics"
-"Imágenes" = "󰋩 pics"
 "Projects" = "󰲋 proj"
 "PROYECTOS" = "󰲋 proj"
-"Desktop" = "󰖯 desk"
-"Escritorio" = "󰖯 desk"
-".config" = " cfg"
-"node_modules" = " nm"
+".config" = "⚙️ cfg"
 
-# =====================================================
-# 🌿 GIT BRANCH
-# =====================================================
+# --------------------------------------------------------------------------
+# 🌿 GIT ECOSYSTEM
+# --------------------------------------------------------------------------
 [git_branch]
-symbol = " "
-style = "bold #C5A5D4"           # Lavender
-format = " [$symbol$branch]($style)"
-truncation_length = 15
-truncation_symbol = "…"
-always_show_remote = false
+symbol = " "
+style = "bold #d197ff"
+format = "on [$symbol$branch]($style) "
 
-# =====================================================
-# 📊 GIT STATUS
-# =====================================================
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold #E0C180"           # Golden wheat
-conflicted = "⚡"
-ahead = "↑${count}"
-behind = "↓${count}"
-diverged = "↕${ahead_count}↓${behind_count}"
-up_to_date = "✓"
-untracked = "?${count}"
-stashed = "󰆉"
-modified = "~${count}"
-staged = "+${count}"
-renamed = "»${count}"
-deleted = "-${count}"
+style = "bold #ff6b9f"
+conflicted = "🏳️ "
+ahead = "🏎️💨 "
+behind = "🐢 "
+diverged = "🔱 "
+untracked = "📝 "
+stashed = "📦 "
+modified = "✍️ "
+staged = "P "
+renamed = "󰁕 "
+deleted = "🗑️ "
 
-# =====================================================
-# 📈 GIT METRICS (Lines Changed)
-# =====================================================
 [git_metrics]
-added_style = "bold #7FB3A8"     # Aqua green
-deleted_style = "bold #D49A7A"   # Terracotta
+added_style = "bold #00e5ff"
+deleted_style = "bold #ff6b9f"
 only_nonzero_diffs = true
 format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 disabled = false
-ignore_submodules = true
 
-# =====================================================
-# 🟢 PROGRAMMING LANGUAGES
-# =====================================================
+# --------------------------------------------------------------------------
+# 🟢 RUNTIMES (Modern Stack)
+# --------------------------------------------------------------------------
+[rust]
+symbol = "🦀 "
+style = "bold #ff6b9f"
+format = "via [$symbol($version)]($style) "
 
 [nodejs]
-format = " [$symbol$version]($style)"
-version_format = "${raw}"
-symbol = " "
-style = "bold #7FB3A8"           # Aqua green
-detect_files = ["package.json", ".node-version", ".nvmrc"]
-detect_folders = ["node_modules"]
+symbol = "󰎘 "
+style = "bold #00e5ff"
+format = "via [$symbol($version)]($style) "
 
 [bun]
-format = " [$symbol$version]($style)"
-version_format = "${raw}"
-symbol = " "
-style = "bold #E0C180"           # Golden wheat
-detect_files = ["bun.lockb", "bunfig.toml"]
-
-[rust]
-format = " [$symbol$version]($style)"
-version_format = "${raw}"
-symbol = " "
-style = "bold #D49A7A"           # Terracotta
-detect_files = ["Cargo.toml", "Cargo.lock"]
-
-[python]
-format = ' [$symbol$version(\($virtualenv\))]($style)'
-symbol = " "
-style = "bold #7FB3A8"           # Aqua green
-pyenv_version_name = false
-detect_extensions = ["py"]
-detect_files = [".python-version", "Pipfile", "pyproject.toml", "requirements.txt", "__init__.py"]
+symbol = "󰡘 "
+style = "bold #ffd166"
+format = "via [$symbol($version)]($style) "
 
 [golang]
-format = " [$symbol$version]($style)"
-symbol = " "
-style = "bold #4da6b8"           # Cyan
-detect_files = ["go.mod", "go.sum"]
-detect_folders = ["Godeps"]
-detect_extensions = ["go"]
+symbol = "󰟓 "
+style = "bold #00e5ff"
+format = "via [$symbol($version)]($style) "
 
-[java]
-format = " [$symbol$version]($style)"
-symbol = " "
-style = "bold #C5A5D4"           # Lavender
-detect_extensions = ["java", "class", "jar"]
-detect_files = ["pom.xml", "build.gradle.kts", "build.sbt"]
+[python]
+symbol = "󰌠 "
+style = "bold #ffd166"
+format = 'via [${symbol}${version}(\($virtualenv\))]($style) '
 
-# =====================================================
-# 🐳 DOCKER & KUBERNETES
-# =====================================================
-
-[docker_context]
-format = " [$symbol$context]($style)"
-symbol = " "
-style = "bold #7fb3d4"           # Soft blue
-only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
-
-[kubernetes]
-format = ' [$symbol$context(\($namespace\))]($style)'
-symbol = "󱃾 "
-style = "bold #C5A5D4"           # Lavender
-disabled = false
-detect_files = ["k8s", "kustomization.yaml", "kustomization.yml"]
-detect_folders = [".kube"]
-
-[kubernetes.context_aliases]
-"dev.local.cluster.k8s" = "dev"
-".*/openshift-cluster/.*" = "openshift"
-
-# =====================================================
-# 📦 PACKAGE VERSION
-# =====================================================
-[package]
-format = " [$symbol$version](dimmed $style)"
-symbol = " "
-style = "#C5A5D4"                # Lavender
-display_private = false
-disabled = true  # Enable if you want package.json version shown
-
-# =====================================================
-# ⏱️ COMMAND DURATION
-# =====================================================
+# --------------------------------------------------------------------------
+# ⏱️ STATUS & PERFORMANCE
+# --------------------------------------------------------------------------
 [cmd_duration]
-min_time = 1000                  # Show after 1 second
-format = " [$duration]($style)"
-style = "bold #83d3e3"           # Cyan
-show_milliseconds = false
-show_notifications = false
+min_time = 2000
+format = "took [$duration]($style) "
+style = "bold #ffd166"
 
-# =====================================================
-# 🔴 STATUS (Exit Code)
-# =====================================================
 [status]
-style = "bold #D49A7A"           # Terracotta
-symbol = "✗"
-success_symbol = ""
-not_executable_symbol = "⛔"
-not_found_symbol = "?"
-sigint_symbol = "⚠"
-signal_symbol = "⚡"
-format = ' [$symbol$maybe_int]($style)'
-map_symbol = false
 disabled = false
+symbol = "✖ "
+format = '[$symbol$common_meaning]($style) '
+style = "bold #ff6b9f"
 
-# =====================================================
-# 💼 BACKGROUND JOBS
-# =====================================================
-[jobs]
-symbol = " "
-style = "bold #D49A7A"           # Terracotta
-number_threshold = 1
-symbol_threshold = 1
-format = " [$symbol$number]($style)"
-
-# =====================================================
-# 🕐 TIME (Right Prompt - Optional)
-# =====================================================
 [time]
-disabled = true                  # Set to false to enable
-format = '[󰥔 $time]($style) '
+disabled = false
+format = "[󰥔 $time]($style)"
 time_format = "%H:%M"
-style = "bold dimmed #cfd8dc"
-utc_time_offset = "local"
+style = "bold #d197ff"
 
-# =====================================================
-# 🔋 BATTERY (Right Prompt - Optional)
-# =====================================================
-[battery]
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 "
-discharging_symbol = "󰂃 "
-unknown_symbol = "󰂑 "
-empty_symbol = "󰂎 "
-disabled = true                  # Set to false to enable (laptops)
-format = "[$symbol$percentage]($style)"
-
-[[battery.display]]
-threshold = 20
-style = "bold #D49A7A"           # Terracotta (low battery)
-discharging_symbol = "󰂎 "
-
-[[battery.display]]
-threshold = 50
-style = "bold #E0C180"           # Golden (medium battery)
-discharging_symbol = "󰁾 "
-
-[[battery.display]]
-threshold = 100
-style = "bold #7FB3A8"           # Aqua (full battery)
-discharging_symbol = "󰁹 "
-
-# =====================================================
-# 🧠 MEMORY USAGE (Optional)
-# =====================================================
-[memory_usage]
-disabled = true                  # Enable for monitoring
-threshold = 75
-symbol = "󰍛 "
-style = "bold #D49A7A"
-format = "$symbol [$ram( | $swap)]($style)"
-
-# =====================================================
-# 🛡️ SHELL INDICATOR (Optional)
-# =====================================================
-[shell]
-fish_indicator = "󰈺 fish"
-powershell_indicator = "󰨊 pwsh"
-bash_indicator = "󰞀 bash"
-zsh_indicator = "󰰷 zsh"
-disabled = true                  # Usually not needed
-
-# =====================================================
-# 🎨 CUSTOM MODULES (DreamCoder Extensions)
-# =====================================================
-
-# AI Assistant Indicator
-[custom.ai_mode]
-disabled = true
-detect_files = [".ai", ".cursor", ".claude"]
-command = "echo '🧠'"
-when = '[ -f .ai ] || [ -f .cursor ] || [ -f .claude ]'
-format = " [$output](bold #C5A5D4)"
-
-# Security Tools Detection
-[custom.security]
-disabled = true
-detect_files = ["nuclei", "subfinder", "httpx"]
-command = "echo '🛡️'"
-when = 'command -v nuclei >/dev/null 2>&1'
-format = " [$output](bold #7FB3A8)"
-
-# =====================================================
-# ⚡ PERFORMANCE: DISABLED MODULES
-# =====================================================
-# These are disabled to keep the prompt fast
-# Enable any you need by setting disabled = false
-[aws]
-disabled = true
-
-[gcloud]
-disabled = true
-
-[terraform]
-disabled = true
-
-[vagrant]
-disabled = true
-
-[nix_shell]
-disabled = true
-
-[conda]
-disabled = true
-
-[crystal]
-disabled = true
-
-[dart]
-disabled = true
-
-[deno]
-disabled = true
-
-[dotnet]
-disabled = true
-
-[elixir]
-disabled = true
-
-[elm]
-disabled = true
-
-[erlang]
-disabled = true
-
-[haskell]
-disabled = true
-
-[helm]
-disabled = true
-
-[julia]
-disabled = true
-
-[kotlin]
-disabled = true
-
-[lua]
-disabled = true
-
-[nim]
-disabled = true
-
-[ocaml]
-disabled = true
-
-[perl]
-disabled = true
-
-[php]
-disabled = true
-
-[pulumi]
-disabled = true
-
-[purescript]
-disabled = true
-
-[rlang]
-disabled = true
-
-[ruby]
-disabled = true
-
-[scala]
-disabled = true
-
-[swift]
-disabled = true
-
-[zig]
-disabled = true
-
-# =====================================================
-# 📝 CONFIGURATION GUIDE
-# =====================================================
-#
-# Quick Customization:
-#
-# 1. Enable Right Prompt (Time + Battery):
-#    [time] disabled = false
-#    [battery] disabled = false
-#
-# 2. Show username only on SSH:
-#    [username] show_always = false
-#
-# 3. Two-line prompt (more space):
-#    Add $line_break before $character in format
-#
-# 4. Enable package version:
-#    [package] disabled = false
-#
-# 5. Show memory usage:
-#    [memory_usage] disabled = false
-#
-# 6. Longer command duration threshold:
-#    [cmd_duration] min_time = 2000
-#
-# =====================================================
-# 🎨 COLOR PALETTE (DreamCoder Verse)
-# =====================================================
-#
-# From kitty/colors-dreamcoder.conf:
-#
-# - #83d3e3 (Cyan Selection)   → Username, duration, character
-# - #7FB3A8 (Aqua Green)       → Git added, Python, Node.js
-# - #D49A7A (Soft Terracotta)  → Errors, Rust, root user
-# - #E0C180 (Golden Wheat)     → Git status, Bun
-# - #7fb3d4 (Soft Blue)        → OS, Docker
-# - #C5A5D4 (Gentle Lavender)  → Git branch, Java, K8s
-# - #4da6b8 (Cyan Water)       → Directory, Golang
-# - #cfd8dc (Light Gray)       → Secondary text
-#
-# Background: #0b0f14 (Deep Slate)
-#
-# =====================================================
-# ✨ USAGE
-# =====================================================
-#
-# 1. Install: ./install.sh
-# 2. Or manually: cp starship.toml ~/.config/starship.toml
-# 3. Reload: source ~/.bashrc (or ~/.zshrc)
-#
-# =====================================================
-# 🌌 "Code is poetry written in light and logic"
-#      - DreamCoder
-# =====================================================
+# --------------------------------------------------------------------------
+# 🌌 "Architecture is the art of organizing chaos" 
+#      - DreamCoder v5.0
+# --------------------------------------------------------------------------
