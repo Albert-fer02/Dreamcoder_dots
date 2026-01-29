@@ -35,6 +35,7 @@ readonly MODULES=(
     "DreamcoderFish"
     "DreamcoderNushell"
     "DreamcoderClaude"
+    "DreamcoderOpenCode"
     "DreamcoderShell"
 )
 

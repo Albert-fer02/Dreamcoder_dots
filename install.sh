@@ -33,6 +33,7 @@ readonly MODULES=(
     "DreamcoderFish"
     "DreamcoderNushell"
     "DreamcoderClaude"
+    "DreamcoderOpenCode"
     "DreamcoderShell"
 )
 
@@ -122,6 +123,9 @@ stow_modules() {
                     backup_conflict "$HOME/.config/dreamcoder-claude"
                     # Claude desktop usually looks at ~/.claude.json or similar
                     # But here we are stowing into a specific config dir
+                    ;;
+                "DreamcoderOpenCode")
+                    backup_conflict "$HOME/.opencode"
                     ;;
                 *)
                     # Config folders

@@ -25,6 +25,7 @@ Dreamcoder_dots/
 ├── DreamcoderFish/      # 🐟 La Velocidad: Fish Shell (Modern, Non-POSIX)
 ├── DreamcoderNushell/   # 📊 Los Datos: Nushell (Structured Data Shell)
 ├── DreamcoderClaude/    # 🤖 La Inteligencia: Claude Desktop Config & Skills
+├── DreamcoderOpenCode/  # ⚡ El Open Source: Config para OpenCode AI
 ├── DreamcoderKitty/     # 🐱 La Ventana: Terminal acelerada por GPU
 ├── DreamcoderGhostty/   # 👻 El Futuro: Terminal de ultra-baja latencia
 ├── DreamcoderZellij/    # 🦀 El Flujo: Multiplexor en Rust (KDL layouts)
