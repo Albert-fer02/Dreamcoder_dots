@@ -66,6 +66,12 @@ chmod +x install.sh
 ./install.sh
 ```
 
+### Dev Containers (Cloud Ready) ☁️
+Si usas VS Code o GitHub Codespaces, este repositorio incluye una configuración lista para usar.
+1. Abre el repositorio en VS Code.
+2. Click en "Reopen in Container".
+3. Tendrás un entorno Arch Linux completo con todas las herramientas de Dreamcoder preinstaladas.
+
 ### Multi-OS (MacOS / Linux via Homebrew)
 ```bash
 brew tap Albert-fer02/dreamcoder-dots
