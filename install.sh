@@ -73,20 +73,29 @@ install_packages() {
 
 backup_conflict() {
     local file=$1
+    
+    # 1. Handle physical files or directories
     if [[ -e "$file" && ! -L "$file" ]]; then
-        log_info "Backing up conflict: $file"
+        log_info "Backing up physical conflict: $file"
         mkdir -p "$BACKUP_DIR"
-        # Handle directories differently
         if [[ -d "$file" ]]; then
             cp -r "$file" "$BACKUP_DIR/"
             rm -rf "$file"
         else
             mv "$file" "$BACKUP_DIR/"
         fi
+        return
     fi
-    # If it's a broken link, remove it
-    if [[ -L "$file" && ! -e "$file" ]]; then
-        rm "$file"
+
+    # 2. Handle existing symlinks (even if they are valid)
+    if [[ -L "$file" ]]; then
+        local target
+        target=$(readlink -f "$file")
+        # If the symlink doesn't point to OUR current dotfiles directory, remove it
+        if [[ "$target" != *"$DOTFILES_DIR"* ]]; then
+            log_info "Removing foreign symlink: $file -> $target"
+            rm "$file"
+        fi
     fi
 }
 
@@ -105,6 +114,7 @@ stow_modules() {
                     backup_conflict "$HOME/.p10k.zsh"
                     backup_conflict "$HOME/.p10k_dreamcoder.zsh"
                     backup_conflict "$HOME/.nanorc"
+                    backup_conflict "$HOME/.config/starship.toml"
                     ;;
                 "DreamcoderTmux")
                     backup_conflict "$HOME/.tmux.conf"

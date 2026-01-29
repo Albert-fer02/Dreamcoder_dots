@@ -26,7 +26,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # 📁 PATH CONFIGURATION (Guards against duplication)
 # =====================================================
 _safe_path_add() {
-    # Solo agregar si el directorio existe y no está ya en PATH
     [[ -d "$1" ]] && [[ ":$PATH:" != *":$1:"* ]] && export PATH="$PATH:$1"
 }
 
@@ -43,105 +42,6 @@ elif [[ -d "$HOME/Documentos" ]]; then
     export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
 else
     export PROJECTS_DIR="${PROJECTS_DIR:-$HOME/projects}"
-fi
-
-# =====================================================
-# 🧭 ZOXIDE - Inicialización directa
-# =====================================================
-if command -v zoxide &>/dev/null; then
-    function __zoxide_pwd() {
-        \builtin pwd -L
-    }
-    function __zoxide_cd() {
-        # shellcheck disable=SC2164
-        \builtin cd -- "$@"
-    }
-    function __zoxide_hook() {
-        # shellcheck disable=SC2312
-        \command zoxide add -- "$(__zoxide_pwd)"
-    }
-    \builtin typeset -ga precmd_functions
-    \builtin typeset -ga chpwd_functions
-    precmd_functions=("${(@)precmd_functions:#__zoxide_hook}")
-    chpwd_functions=("${(@)chpwd_functions:#__zoxide_hook}")
-    chpwd_functions+=(__zoxide_hook)
-    function __zoxide_doctor() {
-        [[ ${_ZO_DOCTOR:-1} -ne 0 ]] || return 0
-        [[ ${chpwd_functions[(Ie)__zoxide_hook]:-} -eq 0 ]] || return 0
-        _ZO_DOCTOR=0
-        \builtin printf '%s\n' \
-            'zoxide: detected a possible configuration issue.' \
-            'Please ensure that zoxide is initialized right at the end of your shell configuration file (usually ~/.zshrc).' \
-            '' \
-            'If the issue persists, consider filing an issue at:' \
-            'https://github.com/ajeetdsouza/zoxide/issues' \
-            '' \
-            'Disable this message by setting _ZO_DOCTOR=0.' \
-            '' >&2
-    }
-    function __zoxide_z() {
-        __zoxide_doctor
-        if [[ "$#" -eq 0 ]]; then
-            __zoxide_cd ~
-        elif [[ "$#" -eq 1 ]] && { [[ -d "$1" ]] || [[ "$1" = '-' ]] || [[ "$1" =~ ^[-+][0-9]$ ]]; }; then
-            __zoxide_cd "$1"
-        elif [[ "$#" -eq 2 ]] && [[ "$1" = "--" ]]; then
-            __zoxide_cd "$2"
-        else
-            \builtin local result
-            # shellcheck disable=SC2312
-            result="$(\command zoxide query --exclude "$(__zoxide_pwd)" -- "$@")" && __zoxide_cd "${result}"
-        fi
-    }
-    function __zoxide_zi() {
-        __zoxide_doctor
-        \builtin local result
-        result="$(\command zoxide query --interactive -- "$@")" && __zoxide_cd "${result}"
-    }
-    function z() {
-        __zoxide_z "$@"
-    }
-    function zi() {
-        __zoxide_zi "$@"
-    }
-    if [[ -o zle ]]; then
-        __zoxide_result=''
-        function __zoxide_z_complete() {
-            # Only show completions when the cursor is at the end of the line.
-            # shellcheck disable=SC2154
-            [[ "${#words[@]}" -eq "${CURRENT}" ]] || return 0
-            if [[ "${#words[@]}" -eq 2 ]]; then
-                # Show completions for local directories.
-                _cd -/
-            elif [[ "${words[-1]}" == '' ]]; then
-                # Show completions for Space-Tab.
-                # shellcheck disable=SC2086
-                __zoxide_result="$(\command zoxide query --exclude "$(__zoxide_pwd || \builtin true)" --interactive -- ${words[2,-1]})" || __zoxide_result=''
-                # shellcheck disable=SC2034,SC2296
-                compadd -Q ""
-                # Bind '\e[0n' to helper function.
-                \builtin bindkey '\e[0n' '__zoxide_z_complete_helper'
-                # Sends query device status code, which results in a '\e[0n' being sent to console input.
-                \builtin printf '\e[5n'
-                # Report that the completion was successful, so that we don't fall back
-                # to another completion function.
-                return 0
-            fi
-        }
-        function __zoxide_z_complete_helper() {
-            if [[ -n "${__zoxide_result}" ]]; then
-                # shellcheck disable=SC2034,SC2296
-                BUFFER="z ${(q-)__zoxide_result}"
-                __zoxide_result=''
-                \builtin zle reset-prompt
-                \builtin zle accept-line
-            else
-                \builtin zle reset-prompt
-            fi
-        }
-        \builtin zle -N __zoxide_z_complete_helper
-        [[ "${+functions[compdef]}" -ne 0 ]] && \compdef __zoxide_z_complete z
-    fi
 fi
 
 # =====================================================

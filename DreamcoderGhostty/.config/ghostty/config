@@ -126,3 +126,12 @@ term = "xterm-ghostty"
 
 # Wayland margins (not directly supported)
 window-padding-balance = false
+# =====================================================
+# ⚡ SHADERS (Dreamcoder Special Effects)
+# =====================================================
+# Descomentar una línea para activar el efecto
+# custom-shader = ~/.config/ghostty/shaders/bloom.glsl
+# custom-shader = ~/.config/ghostty/shaders/crt.glsl
+# custom-shader = ~/.config/ghostty/shaders/matrix-hallway.glsl
+# custom-shader = ~/.config/ghostty/shaders/animated-gradient-shader.glsl
+# custom-shader = ~/.config/ghostty/shaders/retro-terminal.glsl

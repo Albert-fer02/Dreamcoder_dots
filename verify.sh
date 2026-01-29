@@ -52,17 +52,17 @@ verify_stow_integrity() {
     log_step "Auditing Symlink Integrity (GNU Stow)"
     local errors=0
 
-    # Check if key files are symlinks to this repo
+    # Targets to check (could be the file itself or its parent directory)
     local targets=(
         "$HOME/.zshrc"
         "$HOME/.bashrc"
         "$HOME/.bash_profile"
-        "$HOME/.config/nvim/init.lua"
-        "$HOME/.config/kitty/kitty.conf"
-        "$HOME/.config/ghostty/config"
-        "$HOME/.config/zellij/config.kdl"
-        "$HOME/.config/fish/config.fish"
-        "$HOME/.config/nushell/config.nu"
+        "$HOME/.config/nvim"
+        "$HOME/.config/kitty"
+        "$HOME/.config/ghostty"
+        "$HOME/.config/zellij"
+        "$HOME/.config/fish"
+        "$HOME/.config/nushell"
         "$HOME/.tmux.conf"
     )
 
@@ -77,7 +77,7 @@ verify_stow_integrity() {
             fi
         else
             if [[ -e "$target" ]]; then
-                log_error "Conflict: $target is a PHYSICAL file, not a symlink."
+                log_error "Conflict: $target is a PHYSICAL path, not a symlink."
             else
                 log_error "Missing: $target does not exist."
             fi
