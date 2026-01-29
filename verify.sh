@@ -57,6 +57,8 @@ verify_stow_integrity() {
         "$HOME/.zshrc"
         "$HOME/.bashrc"
         "$HOME/.bash_profile"
+        "$HOME/.p10k.zsh"
+        "$HOME/.p10k_dreamcoder.zsh"
         "$HOME/.config/nvim"
         "$HOME/.config/kitty"
         "$HOME/.config/ghostty"

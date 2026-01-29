@@ -1,11 +1,14 @@
 # =====================================================
-# 🌌 DREAMCODER STARSHIP v6.0 - P10K REINCARNATION
+# 🌌 DREAMCODER STARSHIP v7.0 - CINEMATIC MINIMAL
 # =====================================================
-# Design: Segmented Powerline (P10k Aesthetic)
-# Philosophy: High contrast, solid blocks, consistent look.
+# Design: Flat Minimalist (Exact match to prompt.jpg)
+# Philosophy: Professional, clean, high-contrast symbols.
 #
-# Separators:    
-# Palette: Dreamcoder Neon Cyber (Segmented)
+# Palette: 
+# - Arch Blue: #00aaff
+# - Gold: #ffd166
+# - White: #ffffff
+# - Git Green: #a3d977
 # =====================================================
 
 "$schema" = 'https://starship.rs/config-schema.json'
@@ -13,129 +16,96 @@
 # --------------------------------------------------------------------------
 # 🎯 PROMPT LAYOUT
 # --------------------------------------------------------------------------
-# We use custom grouping to simulate P10k segments
-format = """
-[](#00e5ff)
-$os
-$username
-[](fg:#00e5ff bg:#4da6b8)
-$directory
-[](fg:#4da6b8 bg:#ff6b9f)
-$git_branch
-$git_status
-[](fg:#ff6b9f bg:#ffd166)
-$rust
-$nodejs
-$bun
-$golang
-$python
-[](fg:#ffd166)
-$character"""
+format = """$os [ | ](bold #444444) $username [ | ](bold #444444) $directory [ | ](bold #444444) $git_branch$git_status$rust$nodejs$bun$golang$python$character"""
 
-# Right prompt for Time and Battery
-right_format = """[](fg:#d197ff)$time[](fg:#d197ff)"""
-
-add_newline = true
+add_newline = false
 command_timeout = 1000
 
 # --------------------------------------------------------------------------
 # ⚡ CHARACTER
 # --------------------------------------------------------------------------
 [character]
-success_symbol = "[ ❯](bold #00e5ff)"
-error_symbol = "[ ❯](bold #ff6b9f)"
+success_symbol = "[❯](bold #00e5ff)"
+error_symbol = "[❯](bold #ff6b9f)"
 
 # --------------------------------------------------------------------------
-# 🖥️ OS & USER (Segment 1: Neon Cyan)
+# 🖥️ OS INDICATOR (Segment 1)
 # --------------------------------------------------------------------------
 [os]
 format = "[$symbol]($style)"
-style = "bg:#00e5ff fg:#000000"
+style = "bold #00aaff"
 disabled = false
 
 [os.symbols]
-Arch = "󰣇 "
-Ubuntu = "󰕈 "
-Macos = "󰀵 "
-Windows = "󰍲 "
-Linux = "󰌽 "
-
-[username]
-show_always = true
-format = "[$user]($style)"
-style_user = "bg:#00e5ff fg:#000000 bold"
-style_root = "bg:#ff6b9f fg:#000000 bold"
+Arch = "󰣇"
+Ubuntu = "󰕈"
+Macos = "󰀵"
+Windows = "󰍲"
+Linux = "󰌽"
 
 # --------------------------------------------------------------------------
-# 📂 DIRECTORY (Segment 2: Cyan Water)
+# 👤 USERNAME (Segment 2)
+# --------------------------------------------------------------------------
+[username]
+show_always = true
+format = "[⬢ ](bold #ffd166)[$user]($style)"
+style_user = "bold #ffd166"
+style_root = "bold #ff6b9f"
+
+# --------------------------------------------------------------------------
+# 📂 DIRECTORY (Segment 3)
 # --------------------------------------------------------------------------
 [directory]
 truncation_length = 3
 truncation_symbol = "…/"
-style = "bg:#4da6b8 fg:#000000 bold"
-format = " [$path]($style) "
-home_symbol = "🏠"
+style = "bold #ffffff"
+format = "[󰉋 ]($style)[$path]($style)[$read_only](bold #ff6b9f)"
+home_symbol = "~"
 
 # --------------------------------------------------------------------------
-# 🌿 GIT (Segment 3: Neon Pink)
+# 🌿 GIT (Segment 4)
 # --------------------------------------------------------------------------
 [git_branch]
-symbol = " "
-style = "bg:#ff6b9f fg:#000000 bold"
-format = " [$symbol$branch]($style)"
+symbol = "󰊤 "
+style = "bold #a3d977"
+format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "bg:#ff6b9f fg:#000000 bold"
-format = "[[($all_status$ahead_behind)]]($style) "
+style = "bold #ff6b9f"
+format = '([\[$all_status$ahead_behind\]]($style))'
 conflicted = "🏳️"
-ahead = "🏎️💨"
-behind = "🐢"
-diverged = "🔱"
-untracked = "📝"
-stashed = "📦"
-modified = "✍️"
-staged = "P"
-renamed = "»"
-deleted = "🗑️"
+ahead = "↑"
+behind = "↓"
+untracked = "?"
+modified = "~"
+staged = "+"
 
 # --------------------------------------------------------------------------
-# 🟢 RUNTIMES (Segment 4: Gold)
+# 🟢 RUNTIMES (Contextual)
 # --------------------------------------------------------------------------
 [rust]
 symbol = "🦀 "
-style = "bg:#ffd166 fg:#000000 bold"
-format = " [$symbol($version)]($style)"
+style = "bold #ff6b9f"
+format = "[$symbol($version)]($style) "
 
 [nodejs]
 symbol = "󰎘 "
-style = "bg:#ffd166 fg:#000000 bold"
-format = " [$symbol($version)]($style)"
+style = "bold #a3d977"
+format = "[$symbol($version)]($style) "
 
 [bun]
 symbol = "󰡘 "
-style = "bg:#ffd166 fg:#000000 bold"
-format = " [$symbol($version)]($style)"
-
-[golang]
-symbol = "󰟓 "
-style = "bg:#ffd166 fg:#000000 bold"
-format = " [$symbol($version)]($style)"
-
-[python]
-symbol = "󰌠 "
-style = "bg:#ffd166 fg:#000000 bold"
-format = " [${symbol}${version}]($style)"
+style = "bold #ffd166"
+format = "[$symbol($version)]($style) "
 
 # --------------------------------------------------------------------------
-# ⏱️ TIME (Right Segment: Purple)
+# ⏱️ TIME & STATUS
 # --------------------------------------------------------------------------
-[time]
-disabled = false
-format = "[$time]($style)"
-time_format = " %H:%M "
-style = "bg:#d197ff fg:#000000 bold"
+[cmd_duration]
+min_time = 2000
+format = "took [$duration](bold #ffd166) "
 
 # --------------------------------------------------------------------------
-# 🌌 "The Soul of P10k in the Body of Starship"
-#      - DreamCoder v6.0
+# 🌌 "Visual Precision for the Dreamcoder"
+#      - DreamCoder v7.0
 # --------------------------------------------------------------------------

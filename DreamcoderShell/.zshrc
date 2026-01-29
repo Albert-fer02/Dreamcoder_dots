@@ -47,7 +47,7 @@ fi
 # =====================================================
 # 🎨 OH-MY-ZSH CONFIGURATION
 # =====================================================
-ZSH_THEME=""
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Let Oh-My-Zsh handle these plugins instead of manual loading
 plugins=(
@@ -548,14 +548,20 @@ alias ....='cd ../../../..'
 alias dtree='eza --tree --icons --ignore-glob "target|.git|.cache|node_modules|archive"'
 
 # =====================================================
-# 🧭 ZOXIDE & STARSHIP (The Final Bosses)
+# 🚀 POWERLEVEL10K PROMPT - DREAMCODER STYLE
 # =====================================================
-# We initialize these at the VERY end to ensure they wrap everything else
+# Load custom config BEFORE initializing P10k
+if [[ -f ~/.p10k_dreamcoder.zsh ]]; then
+    source ~/.p10k_dreamcoder.zsh
+elif [[ -f ~/.p10k.zsh ]]; then
+    source ~/.p10k.zsh
+fi
+
+# =====================================================
+# 🧭 ZOXIDE (The Final Boss)
+# =====================================================
 if command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh)"
 fi
 
-if command -v starship &>/dev/null; then
-    eval "$(starship init zsh)"
-fi
 

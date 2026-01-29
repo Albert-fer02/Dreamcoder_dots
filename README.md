@@ -103,10 +103,10 @@ Un ingeniero no asume que todo funciona; lo verifica. Hemos incluido un auditor 
 
 ## 🎨 Personalización
 
-Dreamcoder Dotfiles utiliza **Starship** como motor de prompt único y unificado para todos los shells (Zsh, Fish, Nushell, Bash). Esto garantiza una experiencia visual consistente y de alto rendimiento.
+Dreamcoder Dotfiles utiliza un enfoque híbrido para el prompt, priorizando la estética y el rendimiento:
 
-- **Diseño:** Tema **DreamCoder Verse** (Neon Cyan & Gold).
-- **Consistencia:** El mismo prompt, los mismos símbolos y la misma información en cualquier shell.
+- **Zsh (Senior Edition):** Utiliza **Powerlevel10k** con un diseño de dos líneas premium (como se ve en la captura de referencia), permitiendo la flecha debajo de la información para máximo espacio.
+- **Fish / Nushell / Bash:** Utilizan **Starship** con el tema **DreamCoder Verse** para una experiencia visual consistente y moderna.
 - **Terminal:** Kitty y Ghostty con esquemas de color optimizados para resaltar la estética Neon Cyber.
 
 ---
