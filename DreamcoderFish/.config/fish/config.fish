@@ -67,3 +67,4 @@ end
 function fish_greeting
     # Custom greeting can go here
 end
+alias dtree='eza --tree --icons --ignore-glob "target|.git|.cache|node_modules|archive"'

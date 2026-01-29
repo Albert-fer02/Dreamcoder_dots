@@ -6,5 +6,8 @@ edition = "2024"
 [dependencies]
 color-eyre = "0.6.5"
 crossterm = "0.29.0"
+execute = "0.2.15"
+os_info = "3.14.0"
 ratatui = "0.30.0"
 serde = { version = "1.0.228", features = ["derive"] }
+sysinfo = "0.38.0"

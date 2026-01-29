@@ -1,0 +1,19 @@
+FROM archlinux:latest
+
+RUN pacman -Syu --noconfirm && \
+    pacman -S --confirm --needed git base-devel stow zsh sudo
+
+# Create a test user
+RUN useradd -m dreamcoder && \
+    echo "dreamcoder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER dreamcoder
+WORKDIR /home/dreamcoder/Dreamcoder_dots
+
+COPY --chown=dreamcoder:dreamcoder . .
+
+# Run the installer in skip-pkg mode to test symlinks
+RUN ./install.sh --skip-pkg
+
+# Run the verifier
+RUN ./verify.sh

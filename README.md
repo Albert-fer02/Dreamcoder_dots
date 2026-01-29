@@ -28,6 +28,7 @@ Dreamcoder_dots/
 ├── DreamcoderZellij/    # 🦀 El Flujo: Multiplexor en Rust (KDL layouts)
 ├── DreamcoderTmux/      # 🗂️ El Orden: Multiplexación clásica
 ├── DreamcoderInstaller/ # 🚀 El Motor: Instalador TUI en Rust (Ratatui)
+├── homebrew-tap/        # 🍺 El Tap: Soporte para MacOS y Linux via Brew
 ├── scripts/             # 🛠️ Herramientas: Scripts de utilidad y mantenimiento
 ├── archive/             # 📜 Legado: Archivos antiguos y respaldos históricos
 └── .gemini/skills/      # 🤖 La Inteligencia: Instrucciones maestras para IA
@@ -56,13 +57,19 @@ Adiós a `cp`. Usamos enlaces simbólicos (`symlinks`). Lo que editas en tu sist
 
 ## 🛠️ Instalación Rápida
 
-Para transformar tu sistema en una estación de trabajo de ingeneria de softwart:
-
+### Arch Linux (Recomendado)
 ```bash
 git clone https://github.com/Albert-fer02/Dreamcoder_dots.git
 cd Dreamcoder_dots
 chmod +x install.sh
 ./install.sh
+```
+
+### Multi-OS (MacOS / Linux via Homebrew)
+```bash
+brew tap Albert-fer02/dreamcoder-dots
+brew install dreamcoder-dots
+dreamcoder-dots
 ```
 
 > **Nota:** El instalador es inteligente. Si ya tienes los paquetes instalados, usa `./install.sh --skip-pkg`.
