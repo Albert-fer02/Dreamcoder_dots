@@ -47,7 +47,7 @@ fi
 # =====================================================
 # 🎨 OH-MY-ZSH CONFIGURATION
 # =====================================================
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 
 # Let Oh-My-Zsh handle these plugins instead of manual loading
 plugins=(
@@ -499,18 +499,11 @@ cleantemp() {
 # 🧹 CLEANUP FUNCTIONS
 # =====================================================
 unfunction _safe_path_add _setup_fzf 2>/dev/null
-# 🚀 POWERLEVEL10K PROMPT - DREAMCODER RAINBOW NEON v3.0
 # =====================================================
-# Cargar configuración personalizada ANTES de inicializar P10k
-if [[ -f ~/.p10k_dreamcoder.zsh ]]; then
-    source ~/.p10k_dreamcoder.zsh
-elif [[ -f ~/.p10k.zsh ]]; then
-    source ~/.p10k.zsh
-fi
-
-# Inicializar Powerlevel10k DESPUÉS de cargar la configuración
-if typeset -f prompt_powerlevel10k_setup >/dev/null; then
-    prompt_powerlevel10k_setup
+# 🚀 UNIFIED DREAMCODER PROMPT (Starship)
+# =====================================================
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
 fi
 
 # pnpm - Portable para cualquier usuario

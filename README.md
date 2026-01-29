@@ -103,10 +103,11 @@ Un ingeniero no asume que todo funciona; lo verifica. Hemos incluido un auditor 
 
 ## 🎨 Personalización
 
-Aunque la funcionalidad es la prioridad, la estética "Dreamcoder" sigue viva:
-- **Prompt:** Starship con el tema **DreamCoder Verse** (Neon Cyan & Gold).
-- **Zsh:** Powerlevel10k con diseño transparente vibrante.
-- **Terminal:** Kitty y Ghostty con esquemas de color optimizados para largas sesiones de código.
+Dreamcoder Dotfiles utiliza **Starship** como motor de prompt único y unificado para todos los shells (Zsh, Fish, Nushell, Bash). Esto garantiza una experiencia visual consistente y de alto rendimiento.
+
+- **Diseño:** Tema **DreamCoder Verse** (Neon Cyan & Gold).
+- **Consistencia:** El mismo prompt, los mismos símbolos y la misma información en cualquier shell.
+- **Terminal:** Kitty y Ghostty con esquemas de color optimizados para resaltar la estética Neon Cyber.
 
 ---
 

@@ -111,8 +111,6 @@ stow_modules() {
                     backup_conflict "$HOME/.zshrc"
                     backup_conflict "$HOME/.bashrc"
                     backup_conflict "$HOME/.bash_profile"
-                    backup_conflict "$HOME/.p10k.zsh"
-                    backup_conflict "$HOME/.p10k_dreamcoder.zsh"
                     backup_conflict "$HOME/.nanorc"
                     backup_conflict "$HOME/.config/starship.toml"
                     ;;
