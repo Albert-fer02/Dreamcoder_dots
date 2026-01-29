@@ -500,21 +500,33 @@ cleantemp() {
 # =====================================================
 unfunction _safe_path_add _setup_fzf 2>/dev/null
 # =====================================================
-# 🚀 UNIFIED DREAMCODER PROMPT (Starship)
+# 🚀 PRODUCTIVITY FUNCTIONS (Senior Grade)
 # =====================================================
-if command -v starship &>/dev/null; then
-    eval "$(starship init zsh)"
-fi
 
-# pnpm - Portable para cualquier usuario
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+# Jump to Project (The real 'z' for developers)
+# Usage: zp <query> or just 'zp' to browse
+zp() {
+    local project_dir="${PROJECTS_DIR:-$HOME/Documentos/PROYECTOS}"
+    if [[ ! -d "$project_dir" ]]; then
+        echo "📁 Projects directory not found: $project_dir"
+        return 1
+    fi
 
+    local selected
+    if [[ -z "$1" ]]; then
+        # Interactive mode with fzf
+        selected=$(find "$project_dir" -maxdepth 2 -type d | fzf --height 40% --reverse --border --header " 󰉋  Select Dreamcoder Project ")
+    else
+        # Direct jump mode (fuzzy)
+        selected=$(find "$project_dir" -maxdepth 2 -type d -name "*$1*" | head -n 1)
+    fi
 
+    if [[ -n "$selected" ]]; then
+        cd "$selected" || return
+    else
+        echo "✗ No project found matching: $1"
+    fi
+}
 
 # --- Senior Engineering Aliases (Dreamcoder Logic) ---
 alias pacupd='sudo pacman -Syu'
@@ -534,3 +546,16 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../..'
 alias dtree='eza --tree --icons --ignore-glob "target|.git|.cache|node_modules|archive"'
+
+# =====================================================
+# 🧭 ZOXIDE & STARSHIP (The Final Bosses)
+# =====================================================
+# We initialize these at the VERY end to ensure they wrap everything else
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
+
