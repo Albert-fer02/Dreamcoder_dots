@@ -115,6 +115,7 @@ stow_modules() {
                     backup_conflict "$HOME/.p10k_dreamcoder.zsh"
                     backup_conflict "$HOME/.nanorc"
                     backup_conflict "$HOME/.config/starship.toml"
+                    backup_conflict "$HOME/.config/zshrc"
                     ;;
                 "DreamcoderTmux")
                     backup_conflict "$HOME/.tmux.conf"
