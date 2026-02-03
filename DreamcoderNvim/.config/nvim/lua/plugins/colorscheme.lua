@@ -60,9 +60,35 @@ return {
     end,
   },
   {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      italic_comments = true,
+      hide_fillchars = true,
+      borderless_pickers = false,
+      terminal_colors = true,
+    },
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      style = "storm",
+      transparent = true,
+      terminal_colors = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin", -- Defaulting to catppuccin since custom themes might be missing
+      colorscheme = "cyberdream",
     },
   },
 }

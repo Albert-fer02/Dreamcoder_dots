@@ -41,8 +41,10 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- Optional dependency for icons
     opts = {
       options = {
-        theme = "auto", -- Auto detect theme
-        icons_enabled = true, -- Enable icons in the statusline
+        theme = "cyberdream", -- Using high-vibrancy cyberdream theme
+        icons_enabled = true,
+        component_separators = { left = "｜", right = "｜" },
+        section_separators = { left = "", right = "" },
       },
       sections = {
         lualine_a = {
