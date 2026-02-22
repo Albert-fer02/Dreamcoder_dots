@@ -1,5 +1,5 @@
-# Dreamcoder Fish Config (Powered by Softwart Engineering)
-# 2026 Standards: Modern, Fast, Human-readable.
+# Dreamcoder Fish Config
+set -g fish_greeting
 
 if status is-interactive
     # Install Fisher if not installed
