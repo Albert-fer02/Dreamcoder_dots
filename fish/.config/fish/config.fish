@@ -82,19 +82,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../..'
 
-# Smart ls (eza if available)
+# Smart ls (eza if available) - using functions to avoid Warp bug
 if type -q eza
-    alias ls='eza --icons'
-    alias ll='eza -l --icons'
-    alias la='eza -la --icons'
-    alias lt='eza --tree --icons'
-    alias dtree='eza --tree --icons --ignore-glob "target|.git|.cache|node_modules|archive"'
+    function ls; eza $argv; end
+    function ll; eza -l $argv; end
+    function la; eza -la $argv; end
+    function lt; eza --tree $argv; end
+    function dtree; eza --tree --ignore-glob "target|.git|.cache|node_modules|archive" $argv; end
 else
-    if test (uname) = Darwin
-        alias ls='ls --color=auto'
-    else
-        alias ls='gls --color=auto'
-    end
+    alias ls='ls --color=auto'
 end
 
 # --- Abbreviations (Fish specific "smart" aliases) ---
