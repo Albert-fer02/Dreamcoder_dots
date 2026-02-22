@@ -1,8 +1,21 @@
-# Log files
+# Logs
 *.log
-kitty/colors-matugen.conf
 
-# Rust build artifacts
-DreamcoderInstaller/target/
-**/target/
+# Build artifacts
+target/
+node_modules/
 
+# Generated configs
+kitty/.config/kitty/colors-matugen.conf
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*~
+
+# Backups
+*.bak
+*.backup

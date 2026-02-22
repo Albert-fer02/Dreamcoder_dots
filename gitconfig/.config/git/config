@@ -1,0 +1,49 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    DREAMCODER GIT CONFIG v2.0                                ║
+# ║                XDG Base Directory Compliant                                  ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+[core]
+    pager = less -RFX
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = Catppuccin Mocha
+    features = decorations
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    hunk-header-decoration-style = yellow box
+
+[merge]
+    conflictstyle = zdiff3
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[pull]
+    rebase = false
+
+[push]
+    autoSetupRemote = true
+    default = current
+
+[init]
+    defaultBranch = main
+
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status -sb
+    lg = log --oneline --graph --decorate -15
+    amend = commit --amend --no-edit
+    wip = !git add -A && git commit -m 'WIP'
+    undo = reset HEAD~1 --mixed
