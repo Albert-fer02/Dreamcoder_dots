@@ -1,0 +1,7 @@
+# Gentleman Guardian Angel Configuration
+
+PROVIDER="claude"
+FILE_PATTERNS="*.sh,*.zsh,*.bash,.zshrc,.bashrc,.bash_profile,.tmux.conf"
+EXCLUDE_PATTERNS="*.log,*.bak,node_modules,target,.git"
+RULES_FILE="AGENTS.md"
+STRICT_MODE="true"
