@@ -1,42 +1,33 @@
 # DreamcoderDots
 
-Personal Arch Linux dotfiles - shell configs + terminals.
-
-## What's Here
-
-- `.zshrc`, `.bashrc`, `.zshenv` - Shell configs
-- `.p10k.zsh` - Powerlevel10k
-- `Kitty/` - Kitty terminal config
-- `Ghostty/` - Ghostty terminal config
-- `Fastfetch/` - System info display
-
-## Rest (from Gentleman.Dots)
-
-Copy from `gentleman-dots`:
-- `Fish/` - Fish shell
-- `Nvim/` - Neovim
-- `Tmux/` - Tmux
-- `Zellij/` - Zellij
-- `Nushell/` - Nushell
-
-## Install
-
-```bash
-git clone https://github.com/Albert-fer02/Dreamcoder_dots.git
-cd Dreamcoder_dots
-./scripts/install.sh
-```
+Personal dotfiles - managed via GNU Stow.
 
 ## Structure
 
 ```
-DreamcoderDots/
-├── .zshrc, .bashrc, .zshenv    # Shell configs
-├── .p10k.zsh                   # Prompt
-├── Kitty/                      # Kitty terminal
-├── Ghostty/                    # Ghostty terminal
-├── gitconfig/                  # Git config
-└── scripts/
-    ├── install.sh
-    └── verify.sh
+.dotfiles/           ← Repo (symlinked to ~/somnyx/ops/dotfiles/dreamcoder-dots)
+├── Shell/           # .zshrc, .bashrc, .p10k.zsh, etc.
+├── Kitty/           # ~/.config/kitty
+├── Ghostty/         # ~/.config/ghostty
+└── Fastfetch/       # ~/.config/fastfetch
 ```
+
+## Install
+
+```bash
+# Clone somewhere and symlink to ~/.dotfiles
+ln -s ~/somnyx/ops/dotfiles/dreamcoder-dots ~/.dotfiles
+
+# Or clone fresh
+git clone https://github.com/Albert-fer02/Dreamcoder_dots.git ~/.dotfiles
+
+# Stow everything
+cd ~/.dotfiles
+stow -t ~ Shell Kitty Ghostty Fastfetch
+```
+
+## Usage
+
+- Edit configs in `~/.dotfiles/`
+- Changes are reflected immediately (symlinks)
+- Commit and push from `~/.dotfiles/`
