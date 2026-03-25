@@ -12,10 +12,12 @@ log_info() { echo -e "${BLUE}→${NC} $*"; }
 
 verify_stow() {
     log_info "Checking symlinks..."
-    local targets=("$HOME/.zshrc" "$HOME/.config/kitty" "$HOME/.config/ghostty")
+    local targets=("$HOME/.zshrc" "$HOME/.bashrc" "$HOME/.config/kitty" "$HOME/.config/ghostty" "$HOME/.config/fastfetch")
+    local real_dotfiles="$(readlink -f "$DOTFILES_DIR")"
     for target in "${targets[@]}"; do
         if [[ -L "$target" ]]; then
-            [[ "$(readlink -f "$target")" == *"$DOTFILES_DIR"* ]] && log_ok "$target" || log_err "$target"
+            local target_real="$(readlink -f "$target")"
+            [[ "$target_real" == *"$real_dotfiles"* ]] && log_ok "$target" || log_err "$target"
         elif [[ -e "$target" ]]; then
             log_err "$target (physical)"
         else
