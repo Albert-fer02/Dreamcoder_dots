@@ -52,8 +52,8 @@ stow_modules() {
         backup_conflict "$HOME/.config/${app,,}"
     done
     
-    # Stow all modules
-    stow -R -t "$HOME" -d "$DOTFILES_DIR" "${MODULES[@]}" && ok "Stow complete" || err "Stow failed"
+    # Stow all modules (quiet mode)
+    stow -t "$HOME" -d "$DOTFILES_DIR" "${MODULES[@]}" 2>/dev/null && ok "Stow complete" || err "Stow failed"
 }
 
 main() {
