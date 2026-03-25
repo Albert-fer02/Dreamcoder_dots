@@ -51,8 +51,8 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 # Cargo
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
-# Fastfetch on shell start
-command -v fastfetch &>/dev/null && fastfetch
+# Fastfetch with random logo on shell start
+command -v fastfetch &>/dev/null && "$HOME/.dotfiles/scripts/fastfetch.sh"
 
 # Start tmux/zellij if needed
 start_if_needed() {
