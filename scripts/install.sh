@@ -11,7 +11,7 @@ log() { echo -e "${BLUE}→${NC} $*"; }
 ok() { echo -e "${GREEN}✓${NC} $*"; }
 err() { echo -e "${RED}✗${NC} $*"; }
 
-MODULES=(Kitty Ghostty)
+MODULES=(Kitty Ghostty Fastfetch)
 
 check_deps() {
     command -v stow &>/dev/null || { err "Missing: stow"; return 1; }

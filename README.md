@@ -8,6 +8,7 @@ Personal Arch Linux dotfiles - shell configs + terminals.
 - `.p10k.zsh` - Powerlevel10k
 - `Kitty/` - Kitty terminal config
 - `Ghostty/` - Ghostty terminal config
+- `Fastfetch/` - System info display
 
 ## Rest (from Gentleman.Dots)
 
