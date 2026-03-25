@@ -10,10 +10,10 @@ font-family-bold-italic = "MesloLGS NF Bold Italic"
 font-shaping-break = cursor
 
 # Colors
-background = "#0e1416"
-foreground = "#dee3e5"
-cursor-color = "#dee3e5"
-cursor-text = "#bfc8ca"
+background = "#111318"
+foreground = "#e1e2e9"
+cursor-color = "#e1e2e9"
+cursor-text = "#c4c6cf"
 cursor-style = "block"
 cursor-style-blink = true
 selection-foreground = "#0a0c0d"
