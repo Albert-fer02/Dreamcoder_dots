@@ -1,35 +1,38 @@
 #!/usr/bin/env bash
-# Dreamcoder Dotfiles - Modular Installer
-# Version: 5.0.0 - Clean Architecture
-
+# DreamcoderDots Installer
 set -euo pipefail
 
-readonly DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-readonly BACKUP_DIR="$HOME/.config/dreamcoder-backup-$(date +%Y%m%d-%H%M%S)"
-readonly LOG_FILE="$DOTFILES_DIR/install.log"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BACKUP_DIR="$HOME/.config/dreamcoder-backup-$(date +%Y%m%d-%H%M%S)"
 
-# Colors
-readonly RED='\033[0;31m' GREEN='\033[0;32m' BLUE='\033[0;34m' CYAN='\033[0;36m' NC='\033[0m'
+RED='\033[0;31m' GREEN='\033[0;32m' BLUE='\033[0;34m' CYAN='\033[0;36m' NC='\033[0m'
 
 log() { echo -e "${BLUE}→${NC} $*"; }
 ok() { echo -e "${GREEN}✓${NC} $*"; }
-err() { echo -e "${RED}✗${NC} $*" >&2; }
+err() { echo -e "${RED}✗${NC} $*"; }
 
-# Modules (simplified names)
-readonly MODULES=(shell nvim kitty ghostty tmux gitconfig fastfetch zellij fish nushell claude opencode)
+MODULES=(
+    "Fish"
+    "Ghostty"
+    "Kitty"
+    "Nvim"
+    "Tmux"
+    "Zellij"
+    "Nushell"
+)
 
 check_deps() {
     local missing=()
     command -v stow &>/dev/null || missing+=(stow)
     command -v git &>/dev/null || missing+=(git)
-    [[ ${#missing[@]} -gt 0 ]] && { err "Missing: ${missing[*]}"; exit 1; }
+    [[ ${#missing[@]} -gt 0 ]] && { err "Missing: ${missing[*]}"; return 1; }
 }
 
 install_packages() {
-    [[ "${1:-}" == "--skip-pkg" ]] && return
+    [[ "${1:-}" == "--skip-packages" ]] && return
     log "Installing packages..."
-    local pkgs=(git stow curl wget base-devel zsh fish starship zsh-autosuggestions zsh-syntax-highlighting fzf zoxide bat eza fd ripgrep neovim kitty fastfetch ghostty tmux npm python-pip go ttf-jetbrains-mono-nerd)
-    command -v pacman &>/dev/null && sudo pacman -S --needed --noconfirm "${pkgs[@]}" || err "Pacman not found"
+    local pkgs=(git stow zsh fish starship fzf zoxide bat eza fd ripgrep neovim kitty fastfetch tmux)
+    command -v pacman &>/dev/null && sudo pacman -S --needed --noconfirm "${pkgs[@]}" || log "Skipping package install"
 }
 
 backup_conflict() {
@@ -44,41 +47,21 @@ backup_conflict() {
 
 stow_modules() {
     log "Deploying configs..."
-    for m in "${MODULES[@]}"; do
-        [[ -d "$DOTFILES_DIR/$m" ]] || continue
-        
-        case "$m" in
-            shell) 
-                for f in .zshrc .bashrc .bash_profile .p10k.zsh; do backup_conflict "$HOME/$f"; done
-                backup_conflict "$HOME/.config/starship.toml"
-                ;;
-            tmux) backup_conflict "$HOME/.tmux.conf" ;;
-            gitconfig) backup_conflict "$HOME/.config/git" ;;
-        esac
-        
-        stow -R -t "$HOME" -d "$DOTFILES_DIR" "$m" 2>>"$LOG_FILE" && ok "$m" || err "$m failed"
-    done
-}
-
-post_install() {
-    log "Setting up TPM..."
-    local tpm="$HOME/.tmux/plugins/tpm"
-    [[ ! -d "$tpm" ]] && git clone -q https://github.com/tmux-plugins/tpm "$tpm"
     
-    echo ""
-    echo -e "${CYAN}══════════════════════════════════${NC}"
-    ok "Installation complete!"
-    echo -e "  Backup: ${BLUE}$BACKUP_DIR${NC}"
-    echo -e "  Next: ${CYAN}exec \$SHELL${NC}"
-    echo -e "  Tmux: ${CYAN}Prefix + I${NC} for plugins"
-    echo -e "${CYAN}══════════════════════════════════${NC}"
+    # Shell configs to root
+    for f in .zshrc .bashrc .bash_profile .p10k.zsh .zshenv .inputrc .nanorc; do
+        backup_conflict "$HOME/$f"
+    done
+    
+    stow -R -t "$HOME" -d "$DOTFILES_DIR" "${MODULES[@]}" && ok "Stow complete" || err "Stow failed"
 }
 
 main() {
+    echo -e "${CYAN}═══ DreamcoderDots Installer ═══${NC}"
     check_deps
     install_packages "$@"
     stow_modules
-    post_install
+    echo -e "${CYAN}═══ Done! Run: exec \$SHELL ═══${NC}"
 }
 
 main "$@"
