@@ -1,0 +1,89 @@
+# =============================================================================
+# Readline configuration - Affects ALL programs using readline
+# (bash, gdb, mysql, python, etc.)
+# =============================================================================
+# https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Editing Mode
+# -----------------------------------------------------------------------------
+# Vi mode is more powerful for keyboard-heavy workflows
+set editing-mode vi
+
+# Enable 8-bit input (for Unicode/utf-8)
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# -----------------------------------------------------------------------------
+# Keybindings - Vi Mode
+# -----------------------------------------------------------------------------
+# Basic vi movements in command mode
+"\C-f": forward-char
+"\C-b": backward-char
+"\C-n": next-history
+"\C-p": previous-history
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-k": kill-line
+"\C-u": unix-line-discard
+"\C-w": unix-word-rubout
+
+# Search history with arrow keys (like in zsh)
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Completion behavior
+# Show all matches immediately instead of ringing bell
+set show-all-if-ambiguous on
+
+# Don't insert completions until user presses TAB twice
+set menu-complete-display-prefix on
+
+# Case-insensitive completion (optional - comment out if you prefer case-sensitive)
+# set completion-ignore-case on
+
+# -----------------------------------------------------------------------------
+# Completion Colors (if terminal supports it)
+# -----------------------------------------------------------------------------
+# These colors are applied to completions when using 'colored-completion-prefix'
+# The format is: "parameter=value"
+# Colors: 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=white
+# Attributes: 0=none, 1=bold, 4=underline, 5=blink, 7=reverse
+
+# Uncomment for colored prefix in completions:
+# set colored-completion-prefix on
+
+# -----------------------------------------------------------------------------
+# History
+# -----------------------------------------------------------------------------
+# Don't add duplicate lines to history
+set history-preserve-point on
+
+# Ignore common commands in history (optional)
+# set history-ignore-space "pqosa"
+
+# -----------------------------------------------------------------------------
+# Display
+# -----------------------------------------------------------------------------
+# Enable visible bell (flash) instead of audible
+# set visible-bell on
+
+# Show matching parentheses/brackets
+set blink-matching-paren on
+
+# For horizontal scroll (instead of wrapping)
+# set horizontal-scroll-mode on
+
+# -----------------------------------------------------------------------------
+# Miscellaneous
+# -----------------------------------------------------------------------------
+# Disable start/stop output control (usually not needed in modern terminals)
+# set enable-keypad off
+
+# Correct directory spelling in cd
+set cdspell on
+
+# Accept completions even if they're not exact matches
+set completion-map-case on
