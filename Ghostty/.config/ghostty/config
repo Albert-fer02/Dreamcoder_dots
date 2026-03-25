@@ -81,6 +81,9 @@ keybind = ctrl+minus=decrease_font_size:1
 # Keybindings (navigation)
 keybind = ctrl+shift+z=jump_to_prompt:-1
 keybind = ctrl+shift+x=jump_to_prompt:1
+
+# Custom - wallpaper colors
+keybind = ctrl+super+k=spawn:/home/dreamcoder08/.dotfiles/scripts/auto-colors.sh
 # Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
 
 # Background opacity
