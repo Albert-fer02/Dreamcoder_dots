@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # DreamcoderDots Installer
 # Usage: ./install.sh [--skip-packages]
-set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BACKUP_DIR="$HOME/.config/dreamcoder-backup-$(date +%Y%m%d-%H%M%S)"
@@ -15,34 +14,36 @@ err() { echo -e "${RED}✗${NC} $*"; }
 MODULES=(Shell Kitty Ghostty Fastfetch)
 
 check_deps() {
-    command -v stow &>/dev/null || { err "Missing: stow (sudo pacman -S stow)"; return 1; }
-    command -v git &>/dev/null || { err "Missing: git"; return 1; }
+    command -v stow >/dev/null 2>&1 || { err "Missing: stow"; return 1; }
+    command -v git >/dev/null 2>&1 || { err "Missing: git"; return 1; }
 }
 
 install_packages() {
-    [[ "${1:-}" == "--skip-packages" ]] && return
+    [[ "$1" == "--skip-packages" ]] && return
     log "Installing packages..."
     local pkgs=(kitty ghostty stow git fastfetch zsh)
-    command -v pacman &>/dev/null && sudo pacman -S --needed --noconfirm "${pkgs[@]}" || log "Skipping package install"
+    command -v pacman >/dev/null 2>&1 && sudo pacman -S --needed --noconfirm "${pkgs[@]}" 2>/dev/null || true
 }
 
 backup_conflict() {
     local file="$1"
-    [[ -e "$file" && ! -L "$file" ]] && {
+    if [[ -e "$file" && ! -L "$file" ]]; then
         mkdir -p "$BACKUP_DIR"
         mv "$file" "$BACKUP_DIR/"
         log "Backed up: $file"
-    }
-    [[ -L "$file" ]] && [[ "$(readlink -f "$file")" != *"$DOTFILES_DIR"* ]] && {
-        rm "$file"
-        log "Removed old symlink: $file"
-    }
+    elif [[ -L "$file" ]]; then
+        local target="$(readlink -f "$file")"
+        if [[ "$target" != *"$DOTFILES_DIR"* ]]; then
+            rm "$file"
+            log "Removed old symlink: $file"
+        fi
+    fi
 }
 
 stow_modules() {
     log "Creating symlinks..."
     
-    # Shell configs to home
+    # Shell configs
     for f in .zshrc .bashrc .bash_profile .p10k.zsh .zshenv .inputrc .nanorc; do
         backup_conflict "$HOME/$f"
     done
@@ -52,8 +53,10 @@ stow_modules() {
         backup_conflict "$HOME/.config/${app,,}"
     done
     
-    # Stow all modules (quiet mode)
-    stow -t "$HOME" -d "$DOTFILES_DIR" "${MODULES[@]}" 2>/dev/null && ok "Stow complete" || err "Stow failed"
+    # Stow
+    cd "$DOTFILES_DIR"
+    stow -t "$HOME" "${MODULES[@]}" 2>&1 | grep -v "^C" || true
+    ok "Stow complete"
 }
 
 main() {
