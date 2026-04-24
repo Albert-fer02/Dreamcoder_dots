@@ -19,7 +19,7 @@ Personal dotfiles - managed via GNU Stow.
 ln -s ~/somnyx/ops/dotfiles/dreamcoder-dots ~/.dotfiles
 
 # Or clone fresh
-git clone https://github.com/Albert-fer02/Dreamcoder_dots.git ~/.dotfiles
+git clone https://github.com/dreamcoder08/Dreamcoder_dots.git ~/.dotfiles
 
 # Stow everything
 cd ~/.dotfiles
