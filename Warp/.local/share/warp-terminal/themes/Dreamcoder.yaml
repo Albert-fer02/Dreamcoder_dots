@@ -1,0 +1,25 @@
+name: Dreamcoder
+accent: '#fbb974'
+cursor: '#eee0d5'
+background: '#000000'
+foreground: '#eee0d5'
+details: darker
+terminal_colors:
+  normal:
+    black: '#4c4c4c'
+    red: '#ffb4ab'
+    green: '#9ec49f'
+    yellow: '#aca98a'
+    blue: '#fbb974'
+    magenta: '#ffb4ab'
+    cyan: '#9ec3c4'
+    white: '#f0f0f0'
+  bright:
+    black: '#eee0d5'
+    red: '#c49ea0'
+    green: '#eee0d5'
+    yellow: '#c4c19e'
+    blue: '#a39ec4'
+    magenta: '#c49ec4'
+    cyan: '#eee0d5'
+    white: '#e7e7e7'
