@@ -1,0 +1,78 @@
+add_newline = true
+palette = "cocoa_lucuma"
+
+format = """
+[](fg:surface0)\
+$username\
+[](bg:surface1 fg:surface0)\
+$hostname\
+[](bg:cream fg:surface1)\
+$directory\
+[](bg:lucuma fg:cream)\
+$git_branch\
+$git_status\
+[](fg:lucuma)\
+$fill\
+$cmd_duration\
+$time
+$character"""
+
+[palettes.cocoa_lucuma]
+bg = "#19120c"
+surface0 = "#2a1d13"
+surface1 = "#402c18"
+cream = "#eee0d5"
+muted = "#d5c3b5"
+beige = "#e1c1a3"
+lucuma = "#fbb974"
+sage = "#9ec49f"
+cyan = "#9ec3c4"
+lavender = "#a39ec4"
+mauve = "#c49ec4"
+red = "#ffb4ab"
+
+[username]
+show_always = true
+style_user = "bg:surface0 fg:cream bold"
+style_root = "bg:surface0 fg:red bold"
+format = "[  $user ]($style)"
+
+[hostname]
+ssh_only = false
+style = "bg:surface1 fg:cream bold"
+format = "[ 󰣇 $hostname ]($style)"
+
+[directory]
+style = "bg:cream fg:bg bold"
+format = "[  $path ]($style)"
+truncation_length = 3
+truncate_to_repo = false
+
+[git_branch]
+symbol = ""
+style = "bg:lucuma fg:bg bold"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bg:lucuma fg:bg bold"
+format = "[$all_status$ahead_behind ]($style)"
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+min_time = 500
+style = "fg:muted"
+format = "[  $duration ]($style) "
+
+[time]
+disabled = false
+time_format = "%H:%M:%S"
+style = "fg:muted"
+format = "[ ✓ $time ]($style)"
+
+[character]
+success_symbol = "[❯](bold fg:lucuma)"
+error_symbol = "[❯](bold fg:red)"
+vimcmd_symbol = "[❮](bold fg:sage)"
+

@@ -1,5 +1,5 @@
-# Enable Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+# Enable Powerlevel10k instant prompt only when Starship is unavailable
+if ! command -v starship >/dev/null 2>&1 && [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -14,7 +14,7 @@ export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.cargo/bin:$HOME/.volta/
 export LS_COLORS="di=38;5;67:ow=48;5;60:ex=38;5;132:ln=38;5;144:*.tar=38;5;180:*.zip=38;5;180:*.jpg=38;5;175:*.png=38;5;175:*.mp3=38;5;175:*.wav=38;5;175:*.txt=38;5;223:*.sh=38;5;132"
 
 # bun
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
@@ -28,7 +28,7 @@ plugins=(
   web-search
 )
 
-source $ZSH/oh-my-zsh.sh
+source "${ZSH}/oh-my-zsh.sh"
 
 # History
 HISTSIZE=50000
@@ -45,8 +45,12 @@ done
 eval "$(fzf --zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
-# Load p10k
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# Prompt: Starship Cocoa/Lúcuma with Powerlevel10k fallback
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+elif [[ -f "${HOME}/.p10k.zsh" ]]; then
+  source "${HOME}/.p10k.zsh"
+fi
 
 # Cargo
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"

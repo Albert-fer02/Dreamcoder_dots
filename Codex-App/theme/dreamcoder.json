@@ -1,0 +1,36 @@
+{
+  "name": "Dreamcoder",
+  "appearance": "dark",
+  "colors": {
+    "background": "#0e1416",
+    "surface": "#111318",
+    "surfaceAlt": "#1a1e20",
+    "foreground": "#dee3e5",
+    "foregroundSoft": "#bfc8ca",
+    "selectionBackground": "#83d3e3",
+    "selectionForeground": "#0a0c0d",
+    "cursor": "#dee3e5",
+    "accent": "#83d3e3",
+    "accentWarm": "#D49A7A",
+    "border": "#3D4355",
+    "ansi": [
+      "#1a1e20",
+      "#D49A7A",
+      "#7FB3A8",
+      "#E0C180",
+      "#7fb3d4",
+      "#C5A5D4",
+      "#4da6b8",
+      "#D5DAE8",
+      "#3D4355",
+      "#E6B798",
+      "#9BD4C0",
+      "#F0D99C",
+      "#B8A8E8",
+      "#D4B8E8",
+      "#8ACEDD",
+      "#F0F4FF"
+    ]
+  }
+}
+

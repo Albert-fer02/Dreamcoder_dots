@@ -9,7 +9,8 @@ Personal dotfiles - managed via GNU Stow.
 ├── Shell/           # .zshrc, .bashrc, .p10k.zsh, etc.
 ├── Kitty/           # ~/.config/kitty
 ├── Ghostty/         # ~/.config/ghostty
-└── Fastfetch/       # ~/.config/fastfetch
+├── Fastfetch/       # ~/.config/fastfetch
+└── Codex-App/       # Dreamcoder theme assets only
 ```
 
 ## Install
@@ -25,6 +26,12 @@ git clone https://github.com/dreamcoder08/Dreamcoder_dots.git ~/.dotfiles
 cd ~/.dotfiles
 stow -t ~ Shell Kitty Ghostty Fastfetch
 ```
+
+## Dreamcoder Cocoa/Lúcuma
+
+- Starship prompt: `Shell/.config/starship.toml`
+- Ghostty theme: `Ghostty/.config/ghostty/themes/cocoa-lucuma`
+- Ghostty config uses `theme = cocoa-lucuma`
 
 ## Usage
 
