@@ -9,8 +9,7 @@ Personal dotfiles - managed via GNU Stow.
 ├── Shell/           # .zshrc, .bashrc, .p10k.zsh, etc.
 ├── Kitty/           # ~/.config/kitty
 ├── Ghostty/         # ~/.config/ghostty
-├── Fastfetch/       # ~/.config/fastfetch
-└── Codex-App/       # Dreamcoder theme assets only
+└── Fastfetch/       # ~/.config/fastfetch
 ```
 
 ## Install
@@ -27,11 +26,28 @@ cd ~/.dotfiles
 stow -t ~ Shell Kitty Ghostty Fastfetch
 ```
 
-## Dreamcoder Cocoa/Lúcuma
+## Dreamcoder
 
 - Starship prompt: `Shell/.config/starship.toml`
-- Ghostty theme: `Ghostty/.config/ghostty/themes/cocoa-lucuma`
-- Ghostty config uses `theme = cocoa-lucuma`
+- Ghostty theme: `Ghostty/.config/ghostty/themes/dreamcoder`
+- Ghostty config uses `theme = dreamcoder`
+
+## Dynamic wallpaper colors
+
+`scripts/sync-dreamcoder-theme.py` reads the active ML4W wallpaper,
+asks Matugen for the full dark palette, and regenerates Ghostty +
+Starship colors. If no wallpaper is found, it falls back to Kitty's
+`colors-matugen.conf`.
+
+```bash
+./scripts/update-colors.sh /path/to/wallpaper.jpg
+```
+
+## Prompt
+
+Dreamcoder uses one official Starship prompt. It stays segmented and
+premium, but keeps noise low with SSH-only hostname, contextual runtime
+modules, improved Git status, and wallpaper-driven colors.
 
 ## Usage
 

@@ -7,7 +7,7 @@ font-size = 13
 font-shaping-break = cursor
 
 # Theme
-theme = cocoa-lucuma
+theme = dreamcoder
 cursor-style = "block"
 cursor-style-blink = true
 
@@ -20,7 +20,8 @@ window-padding-y = 16
 window-width = 1200
 window-height = 800
 window-decoration = client
-# Note: window placement not configurable yet, remember_window_size not directly supported, Ghostty saves window state
+window-save-state = never
+# Note: disable restored tabs/scrollback so Fastfetch always renders the current Dreamcoder01 image on launch
 
 # Performance (Wayland)
 # Note: sync-to-monitor, input_delay and repaint_delay not configurable in Ghostty

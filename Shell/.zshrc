@@ -45,7 +45,7 @@ done
 eval "$(fzf --zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
-# Prompt: Starship Cocoa/Lúcuma with Powerlevel10k fallback
+# Prompt: Dreamcoder with Powerlevel10k fallback
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 elif [[ -f "${HOME}/.p10k.zsh" ]]; then
