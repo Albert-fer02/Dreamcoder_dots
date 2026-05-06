@@ -1,4 +1,6 @@
 # DreamcoderDots
+<img width="1600" height="900" alt="Dreamcoder" src="https://github.com/user-attachments/assets/9e2e50d0-a792-46de-99e0-015d52786eb8" />
+
 
 Personal Arch Linux dotfiles for the **Dreamcoder** identity.
 
