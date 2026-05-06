@@ -1,56 +1,115 @@
 # DreamcoderDots
 
-Personal dotfiles - managed via GNU Stow.
+Personal Arch Linux dotfiles for the **Dreamcoder** identity.
+
+This repo is focused on terminal identity, shell ergonomics, AI tooling, and
+repeatable configuration. The visual system is intentionally stable: wallpaper
+changes must not redefine the Dreamcoder brand.
+
+## Identity
+
+**Dreamcoder Prime** is the official daily theme.
+
+```txt
+background  #19120c
+foreground  #eee0d5
+accent      #fbb974
+error       #ffb4ab
+opacity     0.60
+```
+
+Principles:
+
+- one visible name: **Dreamcoder**
+- fixed Cocoa/Lúcuma-inspired palette
+- Kitty and Ghostty should look equivalent
+- Fastfetch always uses `Dreamcoder01.jpg`
+- Starship uses `palette = "dreamcoder"`
+- wallpaper changes may run ML4W/Matugen, but Dreamcoder reapplies itself
 
 ## Structure
 
-```
-.dotfiles/           ← Repo (symlinked to ~/somnyx/ops/dotfiles/dreamcoder-dots)
-├── Shell/           # .zshrc, .bashrc, .p10k.zsh, etc.
-├── Kitty/           # ~/.config/kitty
-├── Ghostty/         # ~/.config/ghostty
-└── Fastfetch/       # ~/.config/fastfetch
+```txt
+.dotfiles/
+├── Shell/      # Fish, Zsh, Bash, Starship
+├── Kitty/      # Kitty config and Dreamcoder colors
+├── Ghostty/    # Ghostty config and Dreamcoder theme
+├── Fastfetch/  # Fastfetch config and Dreamcoder image
+└── scripts/    # Sync and utility scripts
 ```
 
 ## Install
 
 ```bash
-# Clone somewhere and symlink to ~/.dotfiles
 ln -s ~/somnyx/ops/dotfiles/dreamcoder-dots ~/.dotfiles
-
-# Or clone fresh
-git clone https://github.com/dreamcoder08/Dreamcoder_dots.git ~/.dotfiles
-
-# Stow everything
 cd ~/.dotfiles
 stow -t ~ Shell Kitty Ghostty Fastfetch
 ```
 
-## Dreamcoder
-
-- Starship prompt: `Shell/.config/starship.toml`
-- Ghostty theme: `Ghostty/.config/ghostty/themes/dreamcoder`
-- Ghostty config uses `theme = dreamcoder`
-
-## Dynamic wallpaper colors
-
-`scripts/sync-dreamcoder-theme.py` reads the active ML4W wallpaper,
-asks Matugen for the full dark palette, and regenerates Ghostty +
-Starship colors. If no wallpaper is found, it falls back to Kitty's
-`colors-matugen.conf`.
+If cloning fresh:
 
 ```bash
-./scripts/update-colors.sh /path/to/wallpaper.jpg
+git clone https://github.com/dreamcoder08/Dreamcoder_dots.git ~/.dotfiles
+cd ~/.dotfiles
+stow -t ~ Shell Kitty Ghostty Fastfetch
 ```
 
-## Prompt
+## Apply Dreamcoder identity
 
-Dreamcoder uses one official Starship prompt. It stays segmented and
-premium, but keeps noise low with SSH-only hostname, contextual runtime
-modules, improved Git status, and wallpaper-driven colors.
+```bash
+./scripts/sync-dreamcoder-theme.py
+```
+
+This writes the fixed Dreamcoder palette to:
+
+- `~/.config/kitty/colors-matugen.conf`
+- `~/.config/ghostty/themes/dreamcoder`
+- `~/.config/starship.toml`
+
+The filename `colors-matugen.conf` is kept for ML4W compatibility, but the
+content is Dreamcoder-fixed.
+
+## Wallpaper changes
+
+ML4W can still change wallpapers. After Matugen runs, execute:
+
+```bash
+~/.dotfiles/scripts/sync-dreamcoder-theme.py
+```
+
+Kitty reloads automatically through `SIGUSR1` in `scripts/update-colors.sh`.
+Ghostty writes the new theme file, then reload open windows with:
+
+```txt
+Ctrl + Shift + R
+```
+
+## Fastfetch
+
+Fastfetch is pinned to:
+
+```txt
+~/.config/dreamcoder/Dreamcoder01.jpg
+```
+
+The repo keeps only this image for the Dreamcoder identity.
+
+## GitHub MCP
+
+GitHub MCP uses a private wrapper, not repo-stored secrets:
+
+```txt
+~/.local/bin/github-mcp-dreamcoder
+~/.config/github/pat
+```
+
+The wrapper reads the token from the private file and launches the official
+Dockerized GitHub MCP server. Never commit tokens to this repo.
 
 ## Usage
 
 - Edit configs in `~/.dotfiles/`
-- Changes are reflected immediately (symlinks)
+- Run `./scripts/sync-dreamcoder-theme.py` after visual changes
+- Validate Ghostty with `ghostty +validate-config`
+- Validate Starship with `STARSHIP_CONFIG=Shell/.config/starship.toml starship explain`
 - Commit and push from `~/.dotfiles/`

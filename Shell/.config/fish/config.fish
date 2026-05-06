@@ -13,5 +13,4 @@ end
 
 if status is-interactive
     command -q zoxide; and zoxide init fish | source
-    command -q fastfetch; and fastfetch
 end

@@ -13,12 +13,14 @@ if [[ -z "${WALLPAPER}" || ! -f "${WALLPAPER}" ]]; then
     exit 1
 fi
 
-echo "🎨 Generando colores desde: ${WALLPAPER}"
+echo "🎨 Wallpaper cambiado: ${WALLPAPER}"
+echo "🟤 Reaplicando identidad fija Dreamcoder"
 
 matugen image "${WALLPAPER}" -m dark 2>/dev/null
 WALLPAPER="${WALLPAPER}" "${DOTFILES_DIR}/scripts/sync-dreamcoder-theme.py"
 
 pkill -SIGUSR1 kitty 2>/dev/null && echo "✅ Kitty recargado" || echo "⚠️ Kitty no estaba corriendo"
-pkill -SIGUSR1 ghostty 2>/dev/null && echo "✅ Ghostty recargado" || echo "⚠️ Ghostty no estaba corriendo"
+echo "ℹ️ Ghostty escribió el theme; recarga con Ctrl+Shift+R"
+command -v hyprctl >/dev/null && hyprctl notify 1 3500 "rgb(fbb974)" "Ghostty: Ctrl+Shift+R para recargar theme" >/dev/null 2>&1 || true
 
-echo "✅ Colores actualizados"
+echo "✅ Identidad Dreamcoder actualizada"

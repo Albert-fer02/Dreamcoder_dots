@@ -1,190 +1,73 @@
-# Dreamcoder Setup - Security Guidelines
+# Security
 
-## Overview
-This document outlines security best practices and hardening guidelines for the Dreamcoder Setup project.
+Security rules for DreamcoderDots.
 
-## Security Vulnerabilities Fixed
+## Secrets
 
-### 1. Sudo Validation Vulnerability
-**Issue**: Insecure sudo privilege validation
-**Fix**: Implemented proper sudo access validation with timeout and error handling
+Never commit secrets to this repo.
 
-```bash
-# Before (vulnerable)
-sudo echo "Privilegios confirmados" >/dev/null
+Do not commit:
 
-# After (secure)
-validate_sudo_access() {
-    if [[ $EUID -eq 0 ]]; then
-        return 0
-    fi
-    # Proper validation with timeout
-    if timeout 30 sudo -v 2>/dev/null; then
-        return 0
-    fi
-    return 1
-}
+- GitHub PATs
+- OpenAI keys
+- `auth.json`
+- `.env` files
+- `~/.codex/` runtime data
+- session logs
+- MCP tokens
+
+## GitHub MCP token
+
+GitHub MCP uses a private token file:
+
+```txt
+~/.config/github/pat
 ```
 
-### 2. Path Traversal Vulnerability
-**Issue**: Unsafe path expansion without validation
-**Fix**: Added path sanitization and validation
+Expected permissions:
 
-```bash
-# Before (vulnerable)
-dest_path="${dest_path/#\~/$HOME}"
-
-# After (secure)
-sanitize_path() {
-    local path="$1"
-    path="${path//../}"  # Remove dangerous sequences
-    # Additional validation...
-}
+```txt
+0600
 ```
 
-### 3. Input Validation Issues
-**Issue**: No validation of user inputs
-**Fix**: Comprehensive input validation functions
+The private wrapper is:
 
-```bash
-validate_user_input() {
-    local input="$1"
-    local max_length="${2:-100}"
-
-    if [[ ${#input} -gt $max_length ]]; then
-        return 1
-    fi
-
-    if [[ "$input" =~ [\;\|\&\$\`\<\>\(\)\[\]\{\}] ]]; then
-        return 1
-    fi
-
-    return 0
-}
+```txt
+~/.local/bin/github-mcp-dreamcoder
 ```
 
-## Security Best Practices
+It reads the token and launches the official GitHub MCP server. This keeps the
+token out of the repo and avoids depending on Codex inheriting environment
+variables.
 
-### Input Validation
-- Always validate user inputs before processing
-- Use allowlists instead of blocklists for input validation
-- Limit input length to prevent buffer overflow attacks
-- Sanitize file paths and URLs
+If a token is pasted into chat, rotate it in GitHub and replace the private
+file.
 
-### Privilege Management
-- Use sudo only when necessary
-- Validate sudo access before privileged operations
-- Implement proper privilege dropping
-- Log all privilege escalations
+## Dotfiles safety
 
-### File System Security
-- Validate all file paths before operations
-- Prevent directory traversal attacks (.. sequences)
-- Use absolute paths when possible
-- Check file permissions before operations
+- Use symlinks/stow for configs.
+- Keep runtime data out of the repo.
+- Keep scripts small and auditable.
+- Prefer private files under `~/.config/...` for credentials.
 
-### Command Execution
-- Avoid shell command injection
-- Use arrays for command arguments
-- Validate command existence before execution
-- Implement command whitelisting
+## Shell script rules
 
-### Error Handling
-- Don't expose sensitive information in error messages
-- Log security events appropriately
-- Implement proper cleanup on errors
-- Use consistent error handling patterns
+Follow `AGENTS.md`:
 
-## Hardening Checklist
+- scripts should use `set -euo pipefail`
+- quote variables
+- use safe sourcing
+- keep scripts focused and short
+- avoid hardcoded secrets
 
-### Code Security
-- [x] Input validation implemented
-- [x] Path sanitization added
-- [x] Sudo validation secured
-- [x] Command injection prevented
-- [x] Error handling improved
-- [ ] Code signing implemented
-- [ ] Dependency vulnerability scanning
+## Validation
 
-### System Security
-- [x] Privilege separation
-- [x] File permission validation
-- [x] Secure temporary file handling
-- [ ] SELinux/AppArmor integration
-- [ ] Audit logging
+Useful checks:
 
-### Network Security
-- [x] URL validation
-- [ ] Certificate validation
-- [ ] Secure download protocols
-- [ ] Network timeout handling
-
-## Security Testing
-
-### Manual Testing
 ```bash
-# Test path traversal attempts
-./dreamcoder-setup.sh --test-path "../../../etc/passwd"
-
-# Test command injection
-./dreamcoder-setup.sh --input "; rm -rf /;"
-
-# Test privilege escalation
-sudo -u nobody ./dreamcoder-setup.sh
+bash -n scripts/update-colors.sh
+python3 -m py_compile scripts/sync-dreamcoder-theme.py
+ghostty +validate-config
+STARSHIP_CONFIG=Shell/.config/starship.toml starship explain
+fish -n Shell/.config/fish/config.fish
 ```
-
-### Automated Testing
-```bash
-# Run shellcheck for static analysis
-shellcheck lib/*.sh *.sh
-
-# Test with different privilege levels
-sudo -u testuser ./dreamcoder-setup.sh
-```
-
-## Incident Response
-
-### Security Incident Procedure
-1. **Detection**: Monitor logs for suspicious activity
-2. **Containment**: Isolate affected systems
-3. **Investigation**: Analyze security events
-4. **Recovery**: Restore from clean backups
-5. **Lessons Learned**: Update security measures
-
-### Log Analysis
-```bash
-# Monitor security events
-grep "security\|error\|warning" ~/.dreamcoder-setup.log
-
-# Check for suspicious patterns
-grep -E "(sudo|path|injection)" ~/.dreamcoder-setup.log
-```
-
-## Maintenance
-
-### Regular Security Updates
-- Review and update security dependencies
-- Monitor security advisories for used tools
-- Update security guidelines based on new threats
-- Conduct regular security audits
-
-### Security Monitoring
-- Implement log monitoring
-- Set up alerts for security events
-- Regular vulnerability scanning
-- Code review for security issues
-
-## Contact
-
-For security issues, please report to:
-- Email: security@dreamcoder.dev
-- Create an issue on GitHub with "SECURITY" label
-- PGP Key: Available on project repository
-
-## Version History
-
-- v2.0.0: Initial security hardening implementation
-- Fixed sudo validation vulnerability
-- Added comprehensive input validation
-- Implemented path sanitization
-- Enhanced error handling

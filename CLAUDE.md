@@ -1,42 +1,70 @@
 # CLAUDE.md
 
-DreamcoderDots - Personal Arch Linux dotfiles configuration.
+DreamcoderDots is the personal Arch Linux dotfiles repo for the **Dreamcoder**
+identity.
 
-## Project Overview
+## Project overview
 
-Modular dotfiles system for Arch Linux: shell configs (ZSH, Bash, Fish), terminals (Kitty, Ghostty, Zellij), editor (Neovim), and AI tools integration.
+This repo manages terminal and shell configuration for a fixed visual identity:
 
-## Key Commands
+- Kitty
+- Ghostty
+- Fish/Zsh/Bash
+- Starship
+- Fastfetch
+- AI tooling integration
+
+The theme strategy is **identity-first**. Do not replace Dreamcoder colors with
+wallpaper-derived palettes unless explicitly requested.
+
+## Important commands
 
 ```bash
-./install.sh              # Full installation
-./install.sh --skip-packages  # Skip packages
-./verify.sh              # Verify installation
+./scripts/sync-dreamcoder-theme.py
+bash -n scripts/update-colors.sh
+ghostty +validate-config
+STARSHIP_CONFIG=Shell/.config/starship.toml starship explain
+fish -n Shell/.config/fish/config.fish
 ```
 
-## File Structure
+## Structure
 
-```
-├── .zshrc, .bashrc       # Shell configs
-├── Fish/                 # Fish shell
-├── Ghostty/              # Ghostty terminal
-├── Kitty/                # Kitty terminal  
-├── Nvim/                 # Neovim
-├── Tmux/                 # Tmux
-├── Zellij/               # Zellij
-├── opencode/             # OpenCode integration
-├── claude/               # Claude AI integration
-└── scripts/              # Install scripts
+```txt
+├── Shell/      # shell configs, Starship, Fish conf.d
+├── Kitty/      # Kitty config and Dreamcoder colors
+├── Ghostty/    # Ghostty config and Dreamcoder theme
+├── Fastfetch/  # Fastfetch config and Dreamcoder01 image
+└── scripts/    # sync/update helpers
 ```
 
-## Architecture
+## Dreamcoder identity
 
-- Modular: each folder = one tool/subsystem
-- Reproducible: install, stow, backup flows
-- Arch Linux focused
+Official daily palette:
 
-## Guidelines
+```txt
+background  #19120c
+foreground  #eee0d5
+accent      #fbb974
+error       #ffb4ab
+opacity     0.60
+```
 
-- Keep configs modular and portable
-- Use `$HOME` instead of hardcoded paths
-- Prefer direct solutions over abstractions
+Rules:
+
+- visible theme name is `Dreamcoder`
+- Starship palette is `dreamcoder`
+- Ghostty theme is `dreamcoder`
+- Fastfetch logo is `Dreamcoder01.jpg`
+- do not reintroduce `Codex-App/`
+- do not commit secrets or tokens
+
+## GitHub MCP
+
+GitHub MCP is configured outside the repo using:
+
+```txt
+~/.local/bin/github-mcp-dreamcoder
+~/.config/github/pat
+```
+
+Never print or commit the token.

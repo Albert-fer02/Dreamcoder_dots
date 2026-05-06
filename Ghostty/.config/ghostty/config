@@ -56,6 +56,7 @@ keybind = ctrl+minus=decrease_font_size:1
 # Keybindings (navigation)
 keybind = ctrl+shift+z=jump_to_prompt:-1
 keybind = ctrl+shift+x=jump_to_prompt:1
+keybind = ctrl+shift+r=reload_config
 
 # Custom - wallpaper colors
 # Ghostty does not expose a portable spawn action in current keybind docs.
@@ -63,7 +64,7 @@ keybind = ctrl+shift+x=jump_to_prompt:1
 # Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
 
 # Background opacity
-background-opacity = 1
+background-opacity = 0.60
 background-blur = false
 # Note: dynamic_background_opacity not supported in Ghostty
 
