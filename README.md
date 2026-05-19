@@ -1,30 +1,65 @@
-# DreamcoderDots
+# Dreamcoder OS
 
-Personal Arch Linux dotfiles for the **Dreamcoder** identity.
+Personal Arch Linux dotfiles for the **Dreamcoder** identity: a visual layer on top of ML4W/Gentleman Dots focused on readability, eye comfort, and a premium coding experience.
 
-Dreamcoder uses one identity with two visual contexts:
+## Philosophy
 
-- **Dreamcoder Environment**: Warp-like dark glass, OpenAI/Codex-like light UI, ML4W/Gentleman-compatible snippets.
-- **Dreamcoder Prompt**: Cocoa/Lúcuma warmth, ivory text, vivid lúcuma focus, cyan diagnostics.
+Dreamcoder is not a neon rice. It is a workbench:
 
-Wallpaper tools may change generated colors, but the Dreamcoder identity should be reapplied from this repo.
+- **health first**: no pure black/white primary backgrounds, strong contrast, low glare;
+- **daily comfort**: larger terminal type, calmer prompt density, automatic day/night mode;
+- **identity second**: Cocoa/Lúcuma warmth, diagnostic cyan, restrained editorial colors;
+- **ML4W-compatible**: Dreamcoder owns colors and hooks, ML4W/Gentleman can keep layout behavior.
 
-## Typography and spacing
+## Quick commands
 
-Dreamcoder terminals use slightly larger, calmer typography for long sessions:
+```bash
+./scripts/install.sh              # first install / full reapply
+./scripts/repair.sh               # after ML4W or Gentleman updates
+./scripts/doctor.sh               # inspect current health/status
+./scripts/verify.sh               # symlinks + starship + theme health
+./scripts/theme-auto.sh           # apply light/dark for current time
+./scripts/auto-colors.sh          # refresh from current wallpaper
+./scripts/set-wallpaper.sh <file> # set wallpaper and refresh Dreamcoder
+```
 
-- Kitty: 14pt with a bit more padding
-- Ghostty: 14pt with a bit more padding
-- The goal is fewer micro-adjustments and less eye fatigue over time
+## Installation
 
-## Prompt density
+```bash
+git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
+cd ~/Documents/PROYECTOS/dreamcoder-dots
+./scripts/install.sh
+```
 
-The daily prompt is intentionally calmer than the full showcase prompt:
+`install.sh` stows the Dreamcoder modules, installs ML4W/Waypaper hooks, enables the day/night timer, applies the current mode, and verifies the setup.
 
-- project/user, directory, git, and slow command duration stay visible;
-- runtime modules stay configured but are not shown in the main format by default;
-- hostname appears only over SSH;
-- paths truncate to the repo for less horizontal scanning.
+## Post-update repair
+
+After updating ML4W, Gentleman Dots, Waypaper, or Hyprland configs, run:
+
+```bash
+cd ~/Documents/PROYECTOS/dreamcoder-dots
+./scripts/repair.sh
+```
+
+This reapplies hooks, restows modules, restarts the timer, refreshes the current theme, and runs verification.
+
+## Theme system
+
+- **Day**: warm light mode, paper-like surfaces, dark graphite text.
+- **Night**: softened graphite mode, warm text, lower glare than pure black.
+- **Wallpaper adaptive**: wallpaper colors can tint accents, but contrast guardrails stay mandatory.
+- **opencode/Codex**: `dreamcoder.json` and `gentleman-dreamcoder-legible.json` are generated together.
+
+Important files:
+
+```txt
+scripts/sync-dreamcoder-theme.py     # generator for terminals/opencode/overlays
+scripts/theme-auto.sh                # time-based light/dark orchestrator
+scripts/wallpaper-hook.sh            # robust wallpaper + Dreamcoder refresh hook
+scripts/verify-theme-health.py       # contrast and eye-comfort guardrails
+Systemd/.config/systemd/user/*       # day/night user timer
+```
 
 ## Visual health policy
 
@@ -35,192 +70,41 @@ Dreamcoder prioritizes long-session comfort over trendy contrast extremes:
 - softened dark mode instead of harsh black/white inversion;
 - AAA-level main text contrast where practical;
 - AA-or-better semantic token contrast for code, markdown, and diffs;
-- wallpaper adaptation may tint accents, but cannot bypass contrast guardrails.
+- typography and spacing tuned for fewer micro-adjustments.
 
-Run the guardrail check with:
+## Troubleshooting
 
 ```bash
-./scripts/verify-theme-health.py
+./scripts/doctor.sh
 ```
 
-## Identity
+Common fixes:
 
-### Active dark mode
-
-```txt
-terminal bg   #0b0c0e
-terminal text #f1eee7
-prompt cocoa  #19120c / #2a1d13 / #402c18
-prompt lucuma #fbb974
-cyan diag     #9ecad0
-error coral   #d98a7a
-opacity       0.60
-```
-
-### Light mode reference
-
-```txt
-ui bg         #fbfaf7
-ui surface    #ffffff
-ui text       #0b0c0e
-prompt cocoa  #fff7e8 / #e4caa7
-prompt copper #a35f29
-cyan diag     #176875
-```
+- **Looks dark during the day**: run `./scripts/theme-auto.sh`; check GTK in `doctor.sh`.
+- **Wallpaper with spaces does not load**: use `./scripts/set-wallpaper.sh <file>` or re-run `./scripts/repair.sh`.
+- **ML4W update overwrote hooks**: run `./scripts/repair.sh`.
+- **opencode theme looks old**: ensure `~/.config/opencode/tui.json` uses `gentleman-dreamcoder-legible`, then run `./scripts/theme-auto.sh`.
+- **Theme feels too intense**: run `DREAMCODER_ADAPTIVE=0 ./scripts/theme-auto.sh` to disable wallpaper tinting for that run.
 
 ## Structure
 
 ```txt
-dreamcoder-dots/
-├── Shell/       # Bash, Zsh, Fish, Starship dark/light
-├── Kitty/       # Kitty config and Dreamcoder dark/light colors
-├── Ghostty/     # Ghostty config and Dreamcoder dark/light themes
-├── Warp/        # Warp Terminal themes
-├── Fastfetch/   # Fastfetch config and Dreamcoder image
-├── Codex-App/   # Codex/opencode-style theme exports
-├── themes/      # Portable ML4W/Gentleman color-only snippets
-└── scripts/     # Sync and utility scripts
+Shell/       Starship and shell ergonomics
+Kitty/       Kitty config and Dreamcoder colors
+Ghostty/     Ghostty config and Dreamcoder theme
+Warp/        Warp Terminal themes
+Fastfetch/   Fastfetch config
+Codex-App/   Codex/opencode theme exports
+themes/      ML4W/Gentleman portable color overlays
+scripts/     install, repair, doctor, theme, wallpaper, verification
+Systemd/     user timer/service for automatic day/night mode
 ```
 
-## Install with stow
+## Verification
 
 ```bash
-./scripts/install.sh
+./scripts/verify.sh
+./scripts/verify-theme-health.py
 ```
 
-Run this again after installing or updating ML4W/Gentleman Dots. It restows
-Dreamcoder, re-enables the day/night timer, reapplies the current mode, and
-reinstalls the Waypaper/ML4W wallpaper hooks so Dreamcoder remains the final
-theme layer.
-
-`Codex-App/` is kept as an import/export artifact, not stowed into `$HOME` by default.
-
-## Post-update repair
-
-After updating ML4W or Gentleman Dots, run:
-
-```bash
-./scripts/repair.sh
-```
-
-It reapplies hooks, stows Dreamcoder modules, restarts the day/night timer,
-refreshes the current theme, and runs verification.
-
-## Apply active dark identity
-
-```bash
-./scripts/sync-dreamcoder-theme.py
-```
-
-This writes/regenerates:
-
-- `Kitty/.config/kitty/colors-dreamcoder.conf`
-- `Ghostty/.config/ghostty/themes/dreamcoder`
-- `Warp/.local/share/warp-terminal/themes/Dreamcoder.yaml`
-- `Shell/.config/starship.toml`
-- `Codex-App/Dreamcoder.codex-theme.json`
-
-## Generate light identity
-
-```bash
-DREAMCODER_THEME_MODE=light ./scripts/sync-dreamcoder-theme.py
-```
-
-## Adaptive wallpaper accents
-
-Pass the current wallpaper to keep the readable light/dark base while adapting
-accent, selection, border, and prompt warmth to the image:
-
-```bash
-DREAMCODER_THEME_MODE=light DREAMCODER_WALLPAPER="$wallpaper" ./scripts/sync-dreamcoder-theme.py
-```
-
-`DREAMCODER_ADAPTIVE=0` disables wallpaper adaptation. The main foreground and
-background stay contrast-guarded so the wallpaper cannot make the terminal
-illegible.
-
-Light variants are also stored in the repo:
-
-- `Kitty/.config/kitty/colors-dreamcoder-dark.conf`
-- `Kitty/.config/kitty/colors-dreamcoder-light.conf`
-- `Ghostty/.config/ghostty/themes/dreamcoder-dark`
-- `Ghostty/.config/ghostty/themes/dreamcoder-light`
-- `Warp/.local/share/warp-terminal/themes/Dreamcoder-Dark.yaml`
-- `Warp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml`
-- `Shell/.config/starship-dark.toml`
-- `Shell/.config/starship-light.toml`
-- `Codex-App/Dreamcoder-Dark.codex-theme.json`
-- `Codex-App/Dreamcoder-Light.codex-theme.json`
-
-## ML4W / Gentleman Dots integration
-
-Use `themes/dreamcoder/` as color-only overlays after your existing ML4W/Gentleman files:
-
-- `themes/dreamcoder/hyprland-dark.conf`
-- `themes/dreamcoder/hyprland-light.conf`
-- `themes/dreamcoder/waybar-dark.css`
-- `themes/dreamcoder/waybar-light.css`
-- `themes/dreamcoder/rofi-dark.rasi`
-- `themes/dreamcoder/rofi-light.rasi`
-
-Do not move keybinds, layouts, wallpaper automation, gaps, or animation logic into these snippets.
-
-## Automatic day/night mode
-
-Dreamcoder can switch by local time automatically:
-
-```bash
-cd ~/.dotfiles
-systemctl --user daemon-reload
-systemctl --user enable --now dreamcoder-theme-auto.timer
-```
-
-Defaults:
-
-```txt
-light: 07:00–17:59
-dark:  18:00–06:59
-```
-
-The automation also updates GTK/GNOME color preference so apps see
-`prefer-light` during the day and `prefer-dark` at night.
-
-For Waypaper/ML4W wallpaper changes, use the Dreamcoder hook after the ML4W
-wallpaper script:
-
-```ini
-post_command = ~/.config/hypr/scripts/wallpaper.sh "$wallpaper" > /dev/null 2>&1; ~/.dotfiles/scripts/wallpaper-hook.sh "$wallpaper" > /dev/null 2>&1
-```
-
-The hook creates a safe cache symlink for wallpaper paths with spaces, applies
-Hyprpaper per monitor, then refreshes Dreamcoder light/dark/adaptive colors.
-
-Override hours if needed:
-
-```bash
-systemctl --user edit dreamcoder-theme-auto.service
-```
-
-Then add:
-
-```ini
-[Service]
-Environment=DREAMCODER_LIGHT_START=8
-Environment=DREAMCODER_DARK_START=19
-```
-
-## Verify
-
-```bash
-STARSHIP_CONFIG="Shell/.config/starship.toml" starship explain
-STARSHIP_CONFIG="Shell/.config/starship-light.toml" starship explain
-git diff --check
-```
-
-## Rules
-
-- Public identity stays **Dreamcoder**.
-- Prompt keeps Cocoa/Lúcuma warmth.
-- Desktop/terminal can use Dreamcoder glass.
-- Scripts should stay small, quoted, safe, and portable.
-- Do not commit secrets or machine-local tokens.
+A healthy setup should report linked configs, valid Starship, active timer, and passing visual-health guardrails.
