@@ -49,7 +49,7 @@ This reapplies hooks, restows modules, restarts the timer, refreshes the current
 - **Day**: warm light mode, paper-like surfaces, dark graphite text.
 - **Night**: softened graphite mode, warm text, lower glare than pure black.
 - **Wallpaper adaptive**: wallpaper colors can tint accents, but contrast guardrails stay mandatory.
-- **opencode/Codex**: `dreamcoder.json` and `gentleman-dreamcoder-legible.json` are generated together.
+- **opencode/Codex**: only `dreamcoder.json` is generated and selected; stale opencode theme JSONs are removed by the sync script.
 
 Important files:
 
@@ -83,7 +83,7 @@ Common fixes:
 - **Looks dark during the day**: run `./scripts/theme-auto.sh`; check GTK in `doctor.sh`.
 - **Wallpaper with spaces does not load**: use `./scripts/set-wallpaper.sh <file>` or re-run `./scripts/repair.sh`.
 - **ML4W update overwrote hooks**: run `./scripts/repair.sh`.
-- **opencode theme looks old**: ensure `~/.config/opencode/tui.json` uses `gentleman-dreamcoder-legible`, then run `./scripts/theme-auto.sh`.
+- **opencode theme looks old**: ensure `~/.config/opencode/tui.json` uses `dreamcoder`, then run `./scripts/theme-auto.sh`.
 - **Theme feels too intense**: run `DREAMCODER_ADAPTIVE=0 ./scripts/theme-auto.sh` to disable wallpaper tinting for that run.
 
 ## Structure

@@ -20,7 +20,7 @@ ghostty = Path(os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dre
 starship = Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml"))
 warp = Path(os.environ.get("WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"))
 opencode = Path(os.environ.get("OPENCODE_THEME", config_home / "opencode/themes/dreamcoder.json"))
-opencode_alias = Path(os.environ.get("OPENCODE_THEME_ALIAS", config_home / "opencode/themes/gentleman-dreamcoder-legible.json"))
+opencode_tui = Path(os.environ.get("OPENCODE_TUI", config_home / "opencode/tui.json"))
 wallpaper = Path(os.environ.get("DREAMCODER_WALLPAPER", ""))
 adaptive = os.environ.get("DREAMCODER_ADAPTIVE", "1") != "0"
 
@@ -211,6 +211,30 @@ def write_if_changed(path: Path, content: str) -> bool:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content)
     return True
+
+
+def write_opencode_tui(path: Path) -> bool:
+    data = {}
+    if path.exists():
+        try:
+            data = json.loads(path.read_text())
+        except json.JSONDecodeError:
+            data = {}
+    data["$schema"] = data.get("$schema", "https://opencode.ai/tui.json")
+    data["theme"] = "dreamcoder"
+    return write_if_changed(path, json.dumps(data, indent=2) + "\n")
+
+
+def cleanup_opencode_themes(path: Path) -> bool:
+    changed = False
+    keep = path.name
+    if os.environ.get("DREAMCODER_CLEAN_OPENCODE_THEMES", "1") == "0":
+        return False
+    for theme in path.parent.glob("*.json"):
+        if theme.name != keep:
+            theme.unlink()
+            changed = True
+    return changed
 
 
 def valid_starship(path: Path) -> bool:
@@ -745,7 +769,8 @@ changed = {
     "ghostty": write_if_changed(ghostty, ghostty_content(active)),
     "warp": write_if_changed(warp, warp_content(active)),
     "opencode": write_if_changed(opencode, opencode_content(active)),
-    "opencode_alias": write_if_changed(opencode_alias, opencode_content(active)),
+    "opencode_tui": write_opencode_tui(opencode_tui),
+    "opencode_cleanup": cleanup_opencode_themes(opencode),
     "starship": write_if_changed(starship, starship_content(active)),
 }
 
@@ -773,7 +798,7 @@ print(f"Kitty: {kitty}")
 print(f"Ghostty: {ghostty}")
 print(f"Warp: {warp}")
 print(f"opencode: {opencode}")
-print(f"opencode alias: {opencode_alias}")
+print(f"opencode tui: {opencode_tui}")
 print(f"Starship: {starship}")
 print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
 print(f"Repo variant/snippet changes: {sum(repo_changes)}")
