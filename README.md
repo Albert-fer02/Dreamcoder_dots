@@ -9,6 +9,23 @@ Dreamcoder uses one identity with two visual contexts:
 
 Wallpaper tools may change generated colors, but the Dreamcoder identity should be reapplied from this repo.
 
+## Visual health policy
+
+Dreamcoder prioritizes long-session comfort over trendy contrast extremes:
+
+- no pure black or pure white as primary backgrounds;
+- warm off-white light mode to reduce glare;
+- softened dark mode instead of harsh black/white inversion;
+- AAA-level main text contrast where practical;
+- AA-or-better semantic token contrast for code, markdown, and diffs;
+- wallpaper adaptation may tint accents, but cannot bypass contrast guardrails.
+
+Run the guardrail check with:
+
+```bash
+./scripts/verify-theme-health.py
+```
+
 ## Identity
 
 ### Active dark mode

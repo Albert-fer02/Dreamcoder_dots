@@ -21,4 +21,5 @@ check_link "${CONFIG_HOME}/starship.toml"
 check_link "${DATA_HOME}/warp-terminal/themes"
 STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship.toml" starship explain >/dev/null
 STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship-light.toml" starship explain >/dev/null
-ok 'Starship configs valid'
+"${DREAMCODER_DOTS_DIR}/scripts/verify-theme-health.py" >/dev/null
+ok 'Starship configs and theme health valid'

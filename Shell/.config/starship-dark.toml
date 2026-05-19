@@ -22,22 +22,22 @@ $cmd_duration
 $character"""
 
 [palettes.dreamcoder]
-bg = "#0b0c0e"
-text = "#f1eee7"
-muted = "#b9bcc2"
+bg = "#101216"
+text = "#e8e1d7"
+muted = "#b8b0a5"
 prompt_bg = "#19120c"
 prompt_surface0 = "#2a1d13"
 prompt_surface1 = "#402c18"
 prompt_surface2 = "#5a3a1f"
 prompt_text = "#f4e9dd"
 prompt_muted = "#d5c3b5"
-prompt_accent = "#fbb974"
-prompt_accent_2 = "#c9863f"
-sage = "#9fb99f"
-diagnostic = "#9ecad0"
-lavender = "#c7b6e8"
-mauve = "#d6a8ca"
-error = "#d98a7a"
+prompt_accent = "#e8aa67"
+prompt_accent_2 = "#be7d42"
+sage = "#a5b89c"
+diagnostic = "#92c7cd"
+lavender = "#c4b3df"
+mauve = "#d2a3c3"
+error = "#d78373"
 
 [username]
 show_always = true

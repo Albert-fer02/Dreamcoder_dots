@@ -1,13 +1,13 @@
 /* Dreamcoder color layer for Rofi. */
 * {
-  background: rgba(251, 250, 247, 0.88);
-  background-alt: #ffffff;
-  foreground: #0b0c0e;
-  muted: #3f454d;
-  selected: rgba(128, 83, 19, 0.14);
-  active: #805313;
-  urgent: #a3483c;
-  border-color: #805313;
+  background: rgba(246, 241, 232, 0.90);
+  background-alt: #fbf8f1;
+  foreground: #15130f;
+  muted: #4a463f;
+  selected: rgba(133, 87, 25, 0.15);
+  active: #855719;
+  urgent: #9b4b40;
+  border-color: #855719;
 }
 
 window {

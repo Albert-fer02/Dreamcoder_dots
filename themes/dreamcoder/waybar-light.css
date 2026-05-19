@@ -1,19 +1,19 @@
 /* Dreamcoder color layer for Waybar. */
-@define-color bg #fbfaf7;
-@define-color bg-soft #f2eee6;
-@define-color surface #ffffff;
-@define-color text #0b0c0e;
-@define-color muted #3f454d;
-@define-color border #b8afa1;
-@define-color accent #805313;
-@define-color accent-2 #7d4423;
-@define-color diagnostic #176875;
-@define-color error #a3483c;
-@define-color success #3f7047;
-@define-color warning #714b0e;
+@define-color bg #f6f1e8;
+@define-color bg-soft #ece4d8;
+@define-color surface #fbf8f1;
+@define-color text #15130f;
+@define-color muted #4a463f;
+@define-color border #b7a78f;
+@define-color accent #855719;
+@define-color accent-2 #7f4a27;
+@define-color diagnostic #1e6871;
+@define-color error #9b4b40;
+@define-color success #496f45;
+@define-color warning #765019;
 
 window#waybar {
-  background: rgba(251, 250, 247, 0.88);
+  background: rgba(246, 241, 232, 0.90);
   color: @text;
   border-bottom: 1px solid alpha(@accent, 0.26);
 }
@@ -25,7 +25,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @accent;
-  background: rgba(128, 83, 19, 0.14);
+  background: rgba(133, 87, 25, 0.15);
 }
 
 #clock,
@@ -35,7 +35,7 @@ window#waybar {
 #cpu,
 #memory,
 #tray {
-  background: rgba(11, 12, 14, 0.07);
+  background: rgba(21, 19, 15, 0.075);
   color: @text;
   border: 1px solid alpha(@border, 0.45);
 }
