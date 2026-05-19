@@ -18,6 +18,7 @@ Dreamcoder is not a neon rice. It is a workbench:
 ./scripts/dreamcoder repair       # after ML4W or Gentleman updates
 ./scripts/dreamcoder doctor       # inspect current health/status
 ./scripts/dreamcoder verify       # symlinks + starship + theme health
+./scripts/dreamcoder preview      # regenerate docs/dreamcoder-theme-preview.md
 ./scripts/dreamcoder auto         # apply light/dark for current time
 ./scripts/dreamcoder light        # force light mode
 ./scripts/dreamcoder dark         # force dark mode
@@ -62,6 +63,7 @@ scripts/sync-dreamcoder-theme.py     # generator for terminals/opencode/overlays
 scripts/theme-auto.sh                # time-based light/dark orchestrator
 scripts/wallpaper-hook.sh            # robust wallpaper + Dreamcoder refresh hook
 scripts/verify-theme-health.py       # contrast and eye-comfort guardrails
+scripts/generate-theme-preview.py     # Markdown palette/contrast preview
 Systemd/.config/systemd/user/*       # day/night user timer
 ```
 
@@ -117,4 +119,4 @@ Systemd/     user timer/service for automatic day/night mode
 ./scripts/verify-theme-health.py
 ```
 
-A healthy setup should report linked configs, valid Starship, active timer, and passing visual-health guardrails.
+A healthy setup should report linked configs, valid Starship, active timer, and passing visual-health guardrails. Use `./scripts/dreamcoder preview` after palette edits to refresh the auditable preview gallery.

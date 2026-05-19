@@ -12,12 +12,13 @@ case "${CMD}" in
     repair) exec "${DREAMCODER_DOTS_DIR}/scripts/repair.sh" "$@" ;;
     doctor) exec "${DREAMCODER_DOTS_DIR}/scripts/doctor.sh" "$@" ;;
     verify) exec "${DREAMCODER_DOTS_DIR}/scripts/verify.sh" "$@" ;;
+    preview) exec "${DREAMCODER_DOTS_DIR}/scripts/generate-theme-preview.py" "$@" ;;
     auto) exec "${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh" "$@" ;;
     light|dark)
         DREAMCODER_THEME_MODE="${CMD}" exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@"
         ;;
     sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
     *)
-        printf 'Usage: dreamcoder {install|repair|doctor|verify|auto|light|dark|sync}\n'
+        printf 'Usage: dreamcoder {install|repair|doctor|verify|preview|auto|light|dark|sync}\n'
         ;;
 esac
