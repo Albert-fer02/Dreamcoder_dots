@@ -1,6 +1,12 @@
-#!/bin/bash
-# Fastfetch with random logo
-IMG_DIR="$HOME/.config/dreamcoder"
-IMGS=(Dreamcoder01.jpg Dreamcoder02.jpg Dreamcoder03.jpg Dreamcoder04.jpg Dreamcoder05.jpg Dreamcoder06.jpg Dreamcoder07.jpg Dreamcoder08.jpg Dreamcoder09.jpg)
-RANDOM_IMG="${IMGS[$((RANDOM % 9))]}"
-fastfetch --kitty "$IMG_DIR/$RANDOM_IMG"
+#!/usr/bin/env bash
+set -euo pipefail
+
+command -v fastfetch >/dev/null || exit 0
+IMG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/dreamcoder"
+IMG="${IMG_DIR}/Dreamcoder01.jpg"
+
+if [[ -f "${IMG}" ]]; then
+    fastfetch --kitty "${IMG}"
+else
+    fastfetch
+fi

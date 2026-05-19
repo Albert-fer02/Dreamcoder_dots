@@ -1,0 +1,32 @@
+/* Dreamcoder color layer for Rofi. */
+* {
+  background: rgba(11, 12, 14, 0.72);
+  background-alt: #171a20;
+  foreground: #f1eee7;
+  muted: #b9bcc2;
+  selected: rgba(216, 181, 109, 0.12);
+  active: #d8b56d;
+  urgent: #d98a7a;
+  border-color: #d8b56d;
+}
+
+window {
+  background-color: @background;
+  border: 1px;
+  border-color: @border-color;
+  border-radius: 18px;
+}
+
+entry {
+  background-color: @selected;
+  text-color: @foreground;
+  border-radius: 12px;
+}
+
+element selected {
+  background-color: @selected;
+  text-color: @foreground;
+}
+
+element-text { text-color: @muted; }
+element selected element-text { text-color: @foreground; }

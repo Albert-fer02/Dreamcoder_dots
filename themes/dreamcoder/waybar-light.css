@@ -1,0 +1,45 @@
+/* Dreamcoder color layer for Waybar. */
+@define-color bg #f7f5f0;
+@define-color bg-soft #efede7;
+@define-color surface #ffffff;
+@define-color text #101113;
+@define-color muted #565b63;
+@define-color border #c9c3b8;
+@define-color accent #9a6f24;
+@define-color accent-2 #8f5730;
+@define-color diagnostic #2f7882;
+@define-color error #b65f51;
+@define-color success #587f5d;
+@define-color warning #8b641f;
+
+window#waybar {
+  background: rgba(247, 245, 240, 0.82);
+  color: @text;
+  border-bottom: 1px solid alpha(@accent, 0.26);
+}
+
+#workspaces button {
+  color: @muted;
+  background: transparent;
+}
+
+#workspaces button.active {
+  color: @accent;
+  background: rgba(154, 111, 36, 0.12);
+}
+
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#cpu,
+#memory,
+#tray {
+  background: rgba(16, 17, 19, 0.055);
+  color: @text;
+  border: 1px solid alpha(@border, 0.45);
+}
+
+#battery.warning { color: @warning; }
+#battery.critical { color: @error; }
+#network.disconnected { color: @error; }

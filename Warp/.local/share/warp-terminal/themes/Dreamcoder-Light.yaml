@@ -1,0 +1,25 @@
+name: Dreamcoder Light
+accent: '#9a6f24'
+cursor: '#9a6f24'
+background: '#f7f5f0'
+foreground: '#101113'
+details: lighter
+terminal_colors:
+  normal:
+    black: '#ffffff'
+    red: '#b65f51'
+    green: '#587f5d'
+    yellow: '#9a6f24'
+    blue: '#2f7882'
+    magenta: '#985f86'
+    cyan: '#6d5aa7'
+    white: '#565b63'
+  bright:
+    black: '#757b84'
+    red: '#e9a092'
+    green: '#75a579'
+    yellow: '#8b641f'
+    blue: '#579ba4'
+    magenta: '#846fc5'
+    cyan: '#72b6bd'
+    white: '#101113'
