@@ -324,7 +324,28 @@ terminal_colors:
 """
 
 
+
+def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
+    mode_name = "dark" if c["details"] == "darker" else "light"
+    return {
+        "keyword": guard(mix(c["accent"], c["warning"], 0.25), c["bg"], mode_name),
+        "function": guard(c["diagnostic"], c["bg"], mode_name),
+        "variable": c["text"],
+        "property": guard(mix(c["text"], c["diagnostic"], 0.28), c["bg"], mode_name),
+        "string": guard(c["sage"], c["bg"], mode_name),
+        "number": guard(c["accent_2"], c["bg"], mode_name),
+        "constant": guard(mix(c["accent_2"], c["mauve"], 0.25), c["bg"], mode_name),
+        "type": guard(c["lavender"], c["bg"], mode_name),
+        "operator": guard(c["mauve"], c["bg"], mode_name),
+        "punctuation": guard(c["muted"], c["bg"], mode_name),
+        "comment": guard(c["comment"], c["bg"], mode_name),
+        "code_bg": mix(c["surface0"], c["bg"], 0.35),
+        "selection": c["selection"],
+        "search": mix(c["warning"], c["bg"], 0.78),
+    }
+
 def opencode_content(c: dict[str, str]) -> str:
+    t = opencode_tokens(c)
     added_bg = mix(c["sage"], c["bg"], 0.88)
     removed_bg = mix(c["error"], c["bg"], 0.90)
     hunk_bg = mix(c["lavender"], c["bg"], 0.90)
@@ -334,11 +355,18 @@ def opencode_content(c: dict[str, str]) -> str:
     "background": "{c['bg']}",
     "backgroundPanel": "{c['surface0']}",
     "backgroundElement": "{c['bg_soft']}",
+    "backgroundHover": "{mix(c['surface1'], c['bg'], 0.45)}",
+    "backgroundSelected": "{t['selection']}",
+    "backgroundCode": "{t['code_bg']}",
+    "backgroundSearch": "{t['search']}",
     "text": "{c['text']}",
     "textMuted": "{c['muted']}",
+    "textSubtle": "{c['subtle']}",
+    "textPlaceholder": "{c['comment']}",
     "primary": "{c['accent']}",
     "secondary": "{c['accent_2']}",
     "accent": "{c['accent']}",
+    "accentMuted": "{mix(c['accent'], c['bg'], 0.55)}",
     "error": "{c['error']}",
     "warning": "{c['warning']}",
     "success": "{c['sage']}",
@@ -346,6 +374,8 @@ def opencode_content(c: dict[str, str]) -> str:
     "border": "{c['border_hi']}",
     "borderActive": "{c['accent']}",
     "borderSubtle": "{c['border']}",
+    "borderFocus": "{c['diagnostic']}",
+    "shadow": "{mix(c['bg'], '#000000', 0.25)}",
     "diffAdded": "{c['sage']}",
     "diffRemoved": "{c['error']}",
     "diffContext": "{c['muted']}",
@@ -370,18 +400,37 @@ def opencode_content(c: dict[str, str]) -> str:
     "markdownHorizontalRule": "{c['border']}",
     "markdownListItem": "{c['accent']}",
     "markdownListEnumeration": "{c['lavender']}",
+    "markdownTableBorder": "{c['border_hi']}",
+    "markdownTableHeader": "{c['accent_2']}",
     "markdownImage": "{c['mauve']}",
     "markdownImageText": "{c['text']}",
     "markdownCodeBlock": "{c['text']}",
-    "syntaxComment": "{c['comment']}",
-    "syntaxKeyword": "{c['accent']}",
-    "syntaxFunction": "{c['diagnostic']}",
-    "syntaxVariable": "{c['text']}",
-    "syntaxString": "{c['sage']}",
-    "syntaxNumber": "{c['accent_2']}",
-    "syntaxType": "{c['lavender']}",
-    "syntaxOperator": "{c['mauve']}",
-    "syntaxPunctuation": "{c['muted']}"
+    "syntaxComment": "{t['comment']}",
+    "syntaxKeyword": "{t['keyword']}",
+    "syntaxFunction": "{t['function']}",
+    "syntaxMethod": "{t['function']}",
+    "syntaxVariable": "{t['variable']}",
+    "syntaxProperty": "{t['property']}",
+    "syntaxString": "{t['string']}",
+    "syntaxNumber": "{t['number']}",
+    "syntaxBoolean": "{t['constant']}",
+    "syntaxConstant": "{t['constant']}",
+    "syntaxType": "{t['type']}",
+    "syntaxClass": "{t['type']}",
+    "syntaxInterface": "{mix(t['type'], c['diagnostic'], 0.22)}",
+    "syntaxOperator": "{t['operator']}",
+    "syntaxPunctuation": "{t['punctuation']}",
+    "syntaxTag": "{t['keyword']}",
+    "syntaxAttribute": "{t['property']}",
+    "syntaxRegexp": "{mix(c['mauve'], c['error'], 0.28)}",
+    "terminalBlack": "{c['surface0']}",
+    "terminalRed": "{c['error']}",
+    "terminalGreen": "{c['sage']}",
+    "terminalYellow": "{c['warning']}",
+    "terminalBlue": "{c['diagnostic']}",
+    "terminalMagenta": "{c['mauve']}",
+    "terminalCyan": "{c['lavender']}",
+    "terminalWhite": "{c['text']}"
   }}
 }}
 '''
@@ -650,6 +699,7 @@ repo_changes += write_variant_files(ROOT / "Ghostty/.config/ghostty/themes", "dr
 repo_changes += write_variant_files(ROOT / "Warp/.local/share/warp-terminal/themes", "Dreamcoder-Dark.yaml", "Dreamcoder-Light.yaml", warp_content)
 repo_changes += write_variant_files(ROOT / "Shell/.config", "starship-dark.toml", "starship-light.toml", starship_content)
 repo_changes += write_variant_files(ROOT / "Codex-App", "Dreamcoder-Dark.codex-theme.json", "Dreamcoder-Light.codex-theme.json", opencode_content)
+repo_changes.append(write_if_changed(ROOT / "Codex-App/Dreamcoder.codex-theme.json", opencode_content(active)))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-dark.conf", hypr_content(VARIANTS["dark"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-light.conf", hypr_content(VARIANTS["light"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/waybar-dark.css", waybar_content(VARIANTS["dark"])))
