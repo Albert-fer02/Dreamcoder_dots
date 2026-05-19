@@ -272,7 +272,6 @@ def kitty_content(c: dict[str, str]) -> str:
 
 foreground              {c['text']}
 background              {c['bg']}
-transparent_background_colors {c['bg']}@0.72 {c['bg_soft']}@0.72 {c['surface0']}@0.72 {c['surface1']}@0.72
 selection_foreground    {c['text']}
 selection_background    {c['selection']}
 url_color               {c['diagnostic']}
@@ -286,7 +285,7 @@ cursor_stop_blinking_after 15.0
 active_tab_foreground   {c['bg']}
 active_tab_background   {c['accent']}
 inactive_tab_foreground {c['muted']}
-inactive_tab_background {c['surface0']}
+inactive_tab_background {c['bg']}
 tab_bar_background      {c['bg']}
 
 active_border_color     {c['accent']}
