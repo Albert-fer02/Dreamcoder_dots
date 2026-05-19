@@ -1,37 +1,27 @@
-[[ -z "$TERM" || "$TERM" == "dumb" ]] && export TERM="xterm-256color"
+# shellcheck shell=bash
+# shellcheck disable=SC1090,SC1091
+[[ -z "${TERM:-}" || "${TERM}" == "dumb" ]] && export TERM="xterm-256color"
 export COLORTERM="${COLORTERM:-truecolor}"
-[[ $- != *i* ]] && return
-
-# Enable options
+[[ "${-}" != *i* ]] && return
 shopt -s histappend cmdhist autocd cdspell globstar
-
-# History
-export HISTFILE=~/.bash_history
+export HISTFILE="${HOME}/.bash_history"
 HISTSIZE=50000
 HISTFILESIZE=100000
 export HISTCONTROL=ignoreboth:erasedups
-
-# PATH - include all important bins
-export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.cargo/bin:$HOME/.volta/bin:$HOME/.bun/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:$HOME/.config:$PATH"
-
-# bun
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Load bash completion
-[[ -f /usr/share/bash-completion/bash_completion ]] && source $_
-
-# Load custom shell config
-_shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
-for d in core aliases functions; do
-    for f in "$_shell_dir"/$d/*.sh; do [[ -f "$f" ]] && source "$f"; done
+PATH_DIRS=("${HOME}/.local/bin" "${HOME}/.opencode/bin" "${HOME}/.cargo/bin" "${HOME}/.volta/bin" "${HOME}/.nix-profile/bin" "${HOME}/.config")
+for dir in "${PATH_DIRS[@]}"; do
+    [[ -d "${dir}" && ":${PATH}:" != *":${dir}:"* ]] && export PATH="${dir}:${PATH}"
 done
-
-# Integrations
-command -v fzf &>/dev/null && eval "$(fzf --bash)"
-command -v starship &>/dev/null && eval "$(starship init bash)"
-command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
-
-# Cargo
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+BUN_COMPLETION="${HOME}/.bun/_bun"
+[[ -f "${BUN_COMPLETION}" ]] && source "${BUN_COMPLETION}"
+export BUN_INSTALL="${HOME}/.bun"
+[[ -d "${BUN_INSTALL}/bin" ]] && export PATH="${BUN_INSTALL}/bin:${PATH}"
+SHELL_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/shell"
+for group in core aliases functions; do
+    for file in "${SHELL_DIR}/${group}"/*.sh; do [[ -f "${file}" ]] && source "${file}"; done
+done
+command -v fzf >/dev/null && eval "$(fzf --bash)"
+command -v starship >/dev/null && eval "$(starship init bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
+[[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
+unset PATH_DIRS dir group file BUN_COMPLETION SHELL_DIR
