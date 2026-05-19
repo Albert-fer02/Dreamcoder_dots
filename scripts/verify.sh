@@ -16,6 +16,7 @@ check_path() {
 command -v starship >/dev/null || fail 'Missing dependency: starship'
 for app in "${MODULES[@]}"; do check_path "${CONFIG_HOME}/${app}"; done
 check_path "${CONFIG_HOME}/starship.toml"
+check_path "${CONFIG_HOME}/kitty/dreamcoder-ui.conf"
 check_path "${DATA_HOME}/warp-terminal/themes"
 STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship.toml" starship explain >/dev/null
 STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship-light.toml" starship explain >/dev/null

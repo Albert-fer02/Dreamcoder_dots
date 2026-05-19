@@ -16,6 +16,8 @@ if mode not in {"dark", "light"}:
     raise SystemExit("DREAMCODER_THEME_MODE must be 'dark' or 'light'")
 
 kitty = Path(os.environ.get("KITTY_COLORS", config_home / "kitty/colors-dreamcoder.conf"))
+kitty_config = Path(os.environ.get("KITTY_CONFIG", config_home / "kitty/kitty.conf"))
+kitty_ui = Path(os.environ.get("KITTY_DREAMCODER_UI", config_home / "kitty/dreamcoder-ui.conf"))
 ghostty = Path(os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dreamcoder"))
 starship = Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml"))
 warp = Path(os.environ.get("WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"))
@@ -316,6 +318,45 @@ mark2_background        {c['diagnostic']}
 mark3_foreground        {c['bg']}
 mark3_background        {c['mauve']}
 """
+
+
+def kitty_ui_content() -> str:
+    return """# Dreamcoder Kitty UI parity layer
+# Loaded last so ML4W can keep behavior while Dreamcoder owns readability.
+
+include colors-dreamcoder.conf
+
+font_family           JetBrainsMono Nerd Font
+bold_font             auto
+italic_font           auto
+bold_italic_font      auto
+font_size             14
+disable_ligatures     cursor
+
+window_padding_width  18
+initial_window_width  1180
+initial_window_height 780
+background_opacity    0.60
+dynamic_background_opacity no
+
+tab_bar_edge          top
+tab_bar_style         fade
+tab_bar_min_tabs      2
+
+mouse_hide_wait       2.0
+copy_on_select        clipboard
+"""
+
+
+def ensure_kitty_ui_include(path: Path) -> bool:
+    line = "include dreamcoder-ui.conf"
+    if not path.exists():
+        return False
+    content = path.read_text()
+    if line in content:
+        return False
+    path.write_text(content.rstrip() + "\n\n# Dreamcoder readability override\n" + line + "\n")
+    return True
 
 
 def ghostty_content(c: dict[str, str]) -> str:
@@ -783,6 +824,8 @@ VARIANTS = load_variants(VARIANTS)
 active = adaptive_palette(VARIANTS[mode], mode)
 changed = {
     "kitty": write_if_changed(kitty, kitty_content(active)),
+    "kitty_ui": write_if_changed(kitty_ui, kitty_ui_content()),
+    "kitty_config": ensure_kitty_ui_include(kitty_config),
     "ghostty": write_if_changed(ghostty, ghostty_content(active)),
     "warp": write_if_changed(warp, warp_content(active)),
     "opencode": write_if_changed(opencode, opencode_content(active)),
@@ -793,6 +836,7 @@ changed = {
 
 repo_changes = []
 repo_changes += write_variant_files(ROOT / "Kitty/.config/kitty", "colors-dreamcoder-dark.conf", "colors-dreamcoder-light.conf", kitty_content)
+repo_changes.append(write_if_changed(ROOT / "Kitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content()))
 repo_changes += write_variant_files(ROOT / "Ghostty/.config/ghostty/themes", "dreamcoder-dark", "dreamcoder-light", ghostty_content)
 repo_changes += write_variant_files(ROOT / "Warp/.local/share/warp-terminal/themes", "Dreamcoder-Dark.yaml", "Dreamcoder-Light.yaml", warp_content)
 repo_changes += write_variant_files(ROOT / "Shell/.config", "starship-dark.toml", "starship-light.toml", starship_content)
@@ -812,6 +856,7 @@ if not valid_starship(starship):
 
 print(f"Synced Dreamcoder {mode} identity")
 print(f"Kitty: {kitty}")
+print(f"Kitty UI: {kitty_ui}")
 print(f"Ghostty: {ghostty}")
 print(f"Warp: {warp}")
 print(f"opencode: {opencode}")
