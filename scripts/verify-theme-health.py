@@ -9,7 +9,12 @@ FILES = [
     ROOT / "Codex-App/Dreamcoder-Dark.codex-theme.json",
 ]
 TEXT_KEYS = ["text", "textMuted", "primary", "info", "success", "error", "warning"]
-SYNTAX_KEYS = ["syntaxKeyword", "syntaxFunction", "syntaxString", "syntaxType", "syntaxOperator", "syntaxComment"]
+SYNTAX_KEYS = [
+    "syntaxKeyword", "syntaxFunction", "syntaxMethod", "syntaxVariable",
+    "syntaxParameter", "syntaxProperty", "syntaxField", "syntaxString",
+    "syntaxType", "syntaxEnum", "syntaxOperator", "syntaxComment",
+    "syntaxTodo", "syntaxDeprecated",
+]
 
 def rgb(value):
     value = value.lstrip("#")
