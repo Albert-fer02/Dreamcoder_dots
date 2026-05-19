@@ -9,6 +9,14 @@ Dreamcoder uses one identity with two visual contexts:
 
 Wallpaper tools may change generated colors, but the Dreamcoder identity should be reapplied from this repo.
 
+## Typography and spacing
+
+Dreamcoder terminals use slightly larger, calmer typography for long sessions:
+
+- Kitty: 14pt with a bit more padding
+- Ghostty: 14pt with a bit more padding
+- The goal is fewer micro-adjustments and less eye fatigue over time
+
 ## Visual health policy
 
 Dreamcoder prioritizes long-session comfort over trendy contrast extremes:

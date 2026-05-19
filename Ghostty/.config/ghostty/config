@@ -3,7 +3,7 @@
 
 # Fonts
 font-family = "JetBrainsMono Nerd Font"
-font-size = 13
+font-size = 14
 font-shaping-break = cursor
 
 # Theme
@@ -15,10 +15,10 @@ cursor-style-blink = true
 # Note: Ghostty does not support tab bar position configuration yet (always top), no fade style or min-tabs like Kitty, tabs show when >1
 
 # Window settings
-window-padding-x = 18
-window-padding-y = 16
-window-width = 1200
-window-height = 800
+window-padding-x = 20
+window-padding-y = 18
+window-width = 1180
+window-height = 780
 window-decoration = client
 window-save-state = never
 # Note: disable restored tabs/scrollback so Fastfetch always renders the current Dreamcoder01 image on launch
