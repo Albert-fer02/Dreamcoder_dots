@@ -23,6 +23,7 @@ opencode = Path(os.environ.get("OPENCODE_THEME", config_home / "opencode/themes/
 opencode_tui = Path(os.environ.get("OPENCODE_TUI", config_home / "opencode/tui.json"))
 wallpaper = Path(os.environ.get("DREAMCODER_WALLPAPER", ""))
 adaptive = os.environ.get("DREAMCODER_ADAPTIVE", "1") != "0"
+tokens_file = Path(os.environ.get("DREAMCODER_TOKENS", ROOT / "themes/dreamcoder/tokens.json"))
 
 VARIANTS = {
     "dark": {
@@ -117,6 +118,19 @@ ANSI_KEYS = [
     "#72b6bd",
     "text",
 ]
+
+
+
+def load_variants(defaults: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
+    if not tokens_file.exists():
+        return defaults
+    tokens = json.loads(tokens_file.read_text())
+    modes = tokens.get("modes", {})
+    merged = {key: value.copy() for key, value in defaults.items()}
+    for key in ("dark", "light"):
+        if key in modes:
+            merged[key].update(modes[key])
+    return merged
 
 
 def resolve_color(palette: dict[str, str], value: str) -> str:
@@ -745,12 +759,14 @@ element selected element-text {{ text-color: @foreground; }}
 def readme_content() -> str:
     return """# Dreamcoder Palette Layer
 
-This directory contains color-only snippets for applying the Dreamcoder identity on top of ML4W/Gentleman Dots.
+This directory contains the Dreamcoder visual contract and generated color-only snippets for ML4W/Gentleman Dots.
 
+- `tokens.json`: canonical Dreamcoder OS design tokens and guardrails.
+- `tokens.schema.json`: machine-readable token contract.
 - `*-dark.*`: Warp-inspired dark glass mode for daily work.
 - `*-light.*`: Codex/OpenAI-inspired light mode for clean showcase and daytime use.
 
-Import these snippets after your existing ML4W/Gentleman files so layouts, keybinds, wallpaper scripts, gaps, animations, and behavior remain owned by those systems.
+Import these snippets after existing ML4W/Gentleman files so layouts, keybinds, wallpaper scripts, gaps, animations, and behavior remain owned by those systems.
 """
 
 
@@ -763,6 +779,7 @@ def write_variant_files(base: Path, dark_name: str, light_name: str, builder) ->
     ]
 
 
+VARIANTS = load_variants(VARIANTS)
 active = adaptive_palette(VARIANTS[mode], mode)
 changed = {
     "kitty": write_if_changed(kitty, kitty_content(active)),

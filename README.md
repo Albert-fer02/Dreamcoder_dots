@@ -14,12 +14,13 @@ Dreamcoder is not a neon rice. It is a workbench:
 ## Quick commands
 
 ```bash
-./scripts/install.sh              # first install / full reapply
-./scripts/repair.sh               # after ML4W or Gentleman updates
-./scripts/doctor.sh               # inspect current health/status
-./scripts/verify.sh               # symlinks + starship + theme health
-./scripts/theme-auto.sh           # apply light/dark for current time
-./scripts/auto-colors.sh          # refresh from current wallpaper
+./scripts/dreamcoder install      # first install / full reapply
+./scripts/dreamcoder repair       # after ML4W or Gentleman updates
+./scripts/dreamcoder doctor       # inspect current health/status
+./scripts/dreamcoder verify       # symlinks + starship + theme health
+./scripts/dreamcoder auto         # apply light/dark for current time
+./scripts/dreamcoder light        # force light mode
+./scripts/dreamcoder dark         # force dark mode
 ./scripts/set-wallpaper.sh <file> # set wallpaper and refresh Dreamcoder
 ```
 
@@ -28,7 +29,7 @@ Dreamcoder is not a neon rice. It is a workbench:
 ```bash
 git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
 cd ~/Documents/PROYECTOS/dreamcoder-dots
-./scripts/install.sh
+./scripts/dreamcoder install
 ```
 
 `install.sh` stows the Dreamcoder modules, installs ML4W/Waypaper hooks, enables the day/night timer, applies the current mode, and verifies the setup.
@@ -39,7 +40,7 @@ After updating ML4W, Gentleman Dots, Waypaper, or Hyprland configs, run:
 
 ```bash
 cd ~/Documents/PROYECTOS/dreamcoder-dots
-./scripts/repair.sh
+./scripts/dreamcoder repair
 ```
 
 This reapplies hooks, restows modules, restarts the timer, refreshes the current theme, and runs verification.
@@ -54,12 +55,21 @@ This reapplies hooks, restows modules, restarts the timer, refreshes the current
 Important files:
 
 ```txt
+themes/dreamcoder/tokens.json        # canonical design tokens: colors + guardrails
+themes/dreamcoder/tokens.schema.json # schema for the token contract
+scripts/dreamcoder                   # unified CLI entrypoint
 scripts/sync-dreamcoder-theme.py     # generator for terminals/opencode/overlays
 scripts/theme-auto.sh                # time-based light/dark orchestrator
 scripts/wallpaper-hook.sh            # robust wallpaper + Dreamcoder refresh hook
 scripts/verify-theme-health.py       # contrast and eye-comfort guardrails
 Systemd/.config/systemd/user/*       # day/night user timer
 ```
+
+## Design-token architecture
+
+Dreamcoder has one canonical palette contract: `themes/dreamcoder/tokens.json`. The generator reads these tokens first, then emits terminal, Codex/opencode, Waybar, Rofi, Hyprland, and prompt outputs. This keeps the system coherent after ML4W/Gentleman updates and prevents each app from drifting into a different palette.
+
+The token file includes hard guardrails: canonical opencode theme `dreamcoder`, no harsh pure black/white primary backgrounds, AA minimum token contrast, and AAA target contrast for main text.
 
 ## Visual health policy
 
@@ -75,16 +85,16 @@ Dreamcoder prioritizes long-session comfort over trendy contrast extremes:
 ## Troubleshooting
 
 ```bash
-./scripts/doctor.sh
+./scripts/dreamcoder doctor
 ```
 
 Common fixes:
 
-- **Looks dark during the day**: run `./scripts/theme-auto.sh`; check GTK in `doctor.sh`.
-- **Wallpaper with spaces does not load**: use `./scripts/set-wallpaper.sh <file>` or re-run `./scripts/repair.sh`.
-- **ML4W update overwrote hooks**: run `./scripts/repair.sh`.
-- **opencode theme looks old**: ensure `~/.config/opencode/tui.json` uses `dreamcoder`, then run `./scripts/theme-auto.sh`.
-- **Theme feels too intense**: run `DREAMCODER_ADAPTIVE=0 ./scripts/theme-auto.sh` to disable wallpaper tinting for that run.
+- **Looks dark during the day**: run `./scripts/dreamcoder auto`; check GTK in `doctor.sh`.
+- **Wallpaper with spaces does not load**: use `./scripts/set-wallpaper.sh <file>` or re-run `./scripts/dreamcoder repair`.
+- **ML4W update overwrote hooks**: run `./scripts/dreamcoder repair`.
+- **opencode theme looks old**: ensure `~/.config/opencode/tui.json` uses `dreamcoder`, then run `./scripts/dreamcoder auto`.
+- **Theme feels too intense**: run `DREAMCODER_ADAPTIVE=0 ./scripts/dreamcoder auto` to disable wallpaper tinting for that run.
 
 ## Structure
 
@@ -103,7 +113,7 @@ Systemd/     user timer/service for automatic day/night mode
 ## Verification
 
 ```bash
-./scripts/verify.sh
+./scripts/dreamcoder verify
 ./scripts/verify-theme-health.py
 ```
 

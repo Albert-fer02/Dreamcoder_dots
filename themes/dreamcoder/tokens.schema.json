@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dreamcoder OS design tokens",
+  "type": "object",
+  "required": ["name", "version", "modes", "guardrails"],
+  "properties": {
+    "name": { "const": "Dreamcoder OS" },
+    "version": { "type": "integer", "minimum": 1 },
+    "description": { "type": "string" },
+    "modes": {
+      "type": "object",
+      "required": ["dark", "light"],
+      "additionalProperties": { "$ref": "#/$defs/palette" }
+    },
+    "guardrails": {
+      "type": "object",
+      "required": ["canonical_opencode_theme", "minimum_text_contrast", "preferred_main_text_contrast"],
+      "properties": {
+        "canonical_opencode_theme": { "const": "dreamcoder" },
+        "avoid_pure_black_white": { "type": "boolean" },
+        "minimum_text_contrast": { "type": "number", "minimum": 4.5 },
+        "preferred_main_text_contrast": { "type": "number", "minimum": 7 },
+        "light_hours_default": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "palette": {
+      "type": "object",
+      "required": ["bg", "text", "muted", "comment", "accent", "accent_2", "diagnostic", "sage", "error", "warning"],
+      "additionalProperties": { "type": "string" },
+      "properties": {
+        "bg": { "$ref": "#/$defs/hex" },
+        "text": { "$ref": "#/$defs/hex" },
+        "muted": { "$ref": "#/$defs/hex" },
+        "comment": { "$ref": "#/$defs/hex" },
+        "accent": { "$ref": "#/$defs/hex" },
+        "accent_2": { "$ref": "#/$defs/hex" },
+        "diagnostic": { "$ref": "#/$defs/hex" },
+        "sage": { "$ref": "#/$defs/hex" },
+        "error": { "$ref": "#/$defs/hex" },
+        "warning": { "$ref": "#/$defs/hex" }
+      }
+    }
+  }
+}

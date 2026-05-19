@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
+# shellcheck source=/dev/null
+[[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
+CMD="${1:-help}"
+shift || true
+
+case "${CMD}" in
+    install) exec "${DREAMCODER_DOTS_DIR}/scripts/install.sh" "$@" ;;
+    repair) exec "${DREAMCODER_DOTS_DIR}/scripts/repair.sh" "$@" ;;
+    doctor) exec "${DREAMCODER_DOTS_DIR}/scripts/doctor.sh" "$@" ;;
+    verify) exec "${DREAMCODER_DOTS_DIR}/scripts/verify.sh" "$@" ;;
+    auto) exec "${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh" "$@" ;;
+    light|dark)
+        DREAMCODER_THEME_MODE="${CMD}" exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@"
+        ;;
+    sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
+    *)
+        printf 'Usage: dreamcoder {install|repair|doctor|verify|auto|light|dark|sync}\n'
+        ;;
+esac
