@@ -1,5 +1,6 @@
 set -gx EDITOR nvim
 set -gx VISUAL nvim
+set -q COLORTERM; or set -gx COLORTERM truecolor
 
 fish_add_path -g "$HOME/.local/bin" "$HOME/.opencode/bin" "$HOME/.cargo/bin"
 fish_add_path -g "$HOME/.volta/bin" "$HOME/.bun/bin"

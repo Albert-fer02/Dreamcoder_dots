@@ -5,6 +5,7 @@
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
 font-shaping-break = cursor
+font-feature = -calt, -liga, -dlig
 
 # Theme
 theme = dreamcoder
@@ -17,6 +18,7 @@ cursor-style-blink = true
 # Window settings
 window-padding-x = 20
 window-padding-y = 18
+window-padding-color = background
 window-width = 1180
 window-height = 780
 window-decoration = client
@@ -64,8 +66,10 @@ keybind = ctrl+shift+r=reload_config
 # Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
 
 # Background opacity
-background-opacity = 0.60
+background-opacity = 0.72
+background-opacity-cells = true
 background-blur = false
+minimum-contrast = 4.5
 # Note: dynamic_background_opacity not supported in Ghostty
 
 # Scrollback
@@ -107,6 +111,7 @@ term = "xterm-ghostty"
 
 # Wayland margins (not directly supported)
 window-padding-balance = false
+unfocused-split-opacity = 0.92
 # =====================================================
 # ⚡ SHADERS (Dreamcoder Special Effects)
 # =====================================================

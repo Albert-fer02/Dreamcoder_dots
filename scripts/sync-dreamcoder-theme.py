@@ -380,6 +380,8 @@ def ghostty_content(c: dict[str, str]) -> str:
         f"cursor-text = {c['bg']}",
         f"selection-background = {c['selection']}",
         f"selection-foreground = {c['text']}",
+        "minimum-contrast = 4.5",
+        "background-opacity-cells = true",
         "",
     ]
     lines.extend(f"palette = {i}={color}" for i, color in enumerate(ansi(c)))

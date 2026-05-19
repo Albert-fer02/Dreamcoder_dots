@@ -1,4 +1,5 @@
 [[ -z "$TERM" || "$TERM" == "dumb" ]] && export TERM="xterm-256color"
+export COLORTERM="${COLORTERM:-truecolor}"
 [[ $- != *i* ]] && return
 
 # Enable options
