@@ -495,12 +495,6 @@ $git_status\\
 [](fg:prompt_accent)\\
 $fill\\
 $hostname\\
-$bun\\
-$nodejs\\
-$python\\
-$golang\\
-$rust\\
-$docker_context\\
 $cmd_duration
 $character"""
 
@@ -529,15 +523,15 @@ style_root = "bg:prompt_surface0 fg:error bold"
 format = "[  $user ]($style)"
 
 [hostname]
-ssh_only = false
+ssh_only = true
 style = "fg:prompt_muted bold"
 format = "[ 󰣇 $hostname ]($style) "
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
 format = "[  $path ]($style)"
-truncation_length = 3
-truncate_to_repo = false
+truncation_length = 2
+truncate_to_repo = true
 
 [git_branch]
 symbol = ""
@@ -593,7 +587,7 @@ format = "[ $symbol $context]($style)"
 only_with_files = true
 
 [cmd_duration]
-min_time = 1500
+min_time = 2500
 style = "fg:prompt_muted"
 format = "[  $duration ]($style) "
 

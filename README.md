@@ -17,6 +17,15 @@ Dreamcoder terminals use slightly larger, calmer typography for long sessions:
 - Ghostty: 14pt with a bit more padding
 - The goal is fewer micro-adjustments and less eye fatigue over time
 
+## Prompt density
+
+The daily prompt is intentionally calmer than the full showcase prompt:
+
+- project/user, directory, git, and slow command duration stay visible;
+- runtime modules stay configured but are not shown in the main format by default;
+- hostname appears only over SSH;
+- paths truncate to the repo for less horizontal scanning.
+
 ## Visual health policy
 
 Dreamcoder prioritizes long-session comfort over trendy contrast extremes:
@@ -85,6 +94,17 @@ reinstalls the Waypaper/ML4W wallpaper hooks so Dreamcoder remains the final
 theme layer.
 
 `Codex-App/` is kept as an import/export artifact, not stowed into `$HOME` by default.
+
+## Post-update repair
+
+After updating ML4W or Gentleman Dots, run:
+
+```bash
+./scripts/repair.sh
+```
+
+It reapplies hooks, stows Dreamcoder modules, restarts the day/night timer,
+refreshes the current theme, and runs verification.
 
 ## Apply active dark identity
 
