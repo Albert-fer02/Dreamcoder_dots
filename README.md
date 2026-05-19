@@ -78,6 +78,19 @@ This writes/regenerates:
 DREAMCODER_THEME_MODE=light ./scripts/sync-dreamcoder-theme.py
 ```
 
+## Adaptive wallpaper accents
+
+Pass the current wallpaper to keep the readable light/dark base while adapting
+accent, selection, border, and prompt warmth to the image:
+
+```bash
+DREAMCODER_THEME_MODE=light DREAMCODER_WALLPAPER="$wallpaper" ./scripts/sync-dreamcoder-theme.py
+```
+
+`DREAMCODER_ADAPTIVE=0` disables wallpaper adaptation. The main foreground and
+background stay contrast-guarded so the wallpaper cannot make the terminal
+illegible.
+
 Light variants are also stored in the repo:
 
 - `Kitty/.config/kitty/colors-dreamcoder-dark.conf`

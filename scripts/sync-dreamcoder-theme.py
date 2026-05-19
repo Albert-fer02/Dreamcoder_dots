@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Generate Dreamcoder theme files for terminal and desktop UI."""
 
+import json
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -18,6 +20,8 @@ ghostty = Path(os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dre
 starship = Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml"))
 warp = Path(os.environ.get("WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"))
 opencode = Path(os.environ.get("OPENCODE_THEME", config_home / "opencode/themes/dreamcoder.json"))
+wallpaper = Path(os.environ.get("DREAMCODER_WALLPAPER", ""))
+adaptive = os.environ.get("DREAMCODER_ADAPTIVE", "1") != "0"
 
 VARIANTS = {
     "dark": {
@@ -116,6 +120,83 @@ ANSI_KEYS = [
 
 def resolve_color(palette: dict[str, str], value: str) -> str:
     return palette.get(value, value)
+
+
+def hex_to_rgb(value: str) -> tuple[int, int, int]:
+    value = value.lstrip("#")
+    return tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
+
+
+def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+    return "#" + "".join(f"{max(0, min(255, part)):02x}" for part in rgb)
+
+
+def mix(left: str, right: str, amount: float) -> str:
+    a = hex_to_rgb(left)
+    b = hex_to_rgb(right)
+    return rgb_to_hex(tuple(round(x + (y - x) * amount) for x, y in zip(a, b)))
+
+
+def rel_luminance(value: str) -> float:
+    def channel(part: int) -> float:
+        scaled = part / 255
+        return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
+
+    r, g, b = (channel(part) for part in hex_to_rgb(value))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def contrast(left: str, right: str) -> float:
+    a, b = sorted((rel_luminance(left), rel_luminance(right)), reverse=True)
+    return (a + 0.05) / (b + 0.05)
+
+
+def guard(color: str, background: str, mode_name: str, minimum: float = 4.5) -> str:
+    target = "#ffffff" if mode_name == "dark" else "#000000"
+    safe = color
+    for _ in range(12):
+        if contrast(safe, background) >= minimum:
+            return safe
+        safe = mix(safe, target, 0.18)
+    return safe
+
+
+def matugen_scheme(path: Path, mode_name: str) -> dict[str, str]:
+    if not adaptive or not path.is_file():
+        return {}
+    result = subprocess.run(
+        ["matugen", "image", str(path), "--json", "hex", "-m", mode_name],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        check=False,
+    )
+    match = re.search(r"\{.*\}", result.stdout, flags=re.S)
+    if not match:
+        return {}
+    return json.loads(match.group(0)).get("colors", {}).get(mode_name, {})
+
+
+def adaptive_palette(base: dict[str, str], mode_name: str) -> dict[str, str]:
+    scheme = matugen_scheme(wallpaper, mode_name)
+    if not scheme:
+        return base
+
+    c = dict(base)
+    bg = mix(c["bg"], scheme.get("background", c["bg"]), 0.18)
+    if contrast(bg, c["text"]) >= 7:
+        c["bg"] = bg
+    c["surface0"] = mix(c["surface0"], scheme.get("surface_container", c["surface0"]), 0.16)
+    c["surface1"] = mix(c["surface1"], scheme.get("surface_container_high", c["surface1"]), 0.18)
+    c["surface2"] = mix(c["surface2"], scheme.get("surface_variant", c["surface2"]), 0.18)
+    c["accent"] = guard(mix(c["prompt_accent"], scheme.get("primary", c["accent"]), 0.25), c["bg"], mode_name)
+    c["accent_2"] = guard(mix(c["prompt_accent_2"], scheme.get("secondary", c["accent_2"]), 0.22), c["bg"], mode_name)
+    c["diagnostic"] = guard(mix(c["diagnostic"], scheme.get("tertiary", c["diagnostic"]), 0.45), c["bg"], mode_name)
+    c["border"] = mix(c["border"], scheme.get("outline", c["border"]), 0.25)
+    c["selection"] = mix(c["selection"], scheme.get("primary_container", c["selection"]), 0.18)
+    c["prompt_accent"] = c["accent"]
+    c["prompt_accent_2"] = c["accent_2"]
+    return c
 
 
 def ansi(palette: dict[str, str]) -> list[str]:
@@ -550,7 +631,7 @@ def write_variant_files(base: Path, dark_name: str, light_name: str, builder) ->
     ]
 
 
-active = VARIANTS[mode]
+active = adaptive_palette(VARIANTS[mode], mode)
 changed = {
     "kitty": write_if_changed(kitty, kitty_content(active)),
     "ghostty": write_if_changed(ghostty, ghostty_content(active)),
