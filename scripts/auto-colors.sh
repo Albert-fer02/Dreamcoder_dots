@@ -2,8 +2,14 @@
 set -euo pipefail
 
 ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
+# shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 WALLPAPER="${1:-${WALLPAPER:-}}"
+ML4W_WALLPAPER="${HOME}/.cache/ml4w/hyprland-dotfiles/current_wallpaper"
+
+if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then
+    WALLPAPER="$(cat "${ML4W_WALLPAPER}")"
+fi
 
 if [[ -z "${WALLPAPER}" ]] && command -v swww >/dev/null; then
     WALLPAPER="$(swww query 2>/dev/null | sed 's/.*image: //' || true)"
@@ -14,7 +20,5 @@ if [[ -z "${WALLPAPER}" || ! -f "${WALLPAPER}" ]]; then
     exit 1
 fi
 
-command -v matugen >/dev/null && matugen image "${WALLPAPER}" -m dark >/dev/null 2>&1 || true
-WALLPAPER="${WALLPAPER}" "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
-pkill -SIGUSR1 kitty 2>/dev/null || true
-printf '✓ Dreamcoder identity reapplied\n'
+"${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh" "${WALLPAPER}"
+printf '✓ Dreamcoder wallpaper colors refreshed\n'
