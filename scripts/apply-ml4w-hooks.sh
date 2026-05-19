@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DREAMCODER_DOTS_DIR="${DREAMCODER_DOTS_DIR:-$(cd "${0%/*}/.." && pwd)}"
+WAYPAPER_CONFIG="${WAYPAPER_CONFIG:-${HOME}/.config/waypaper/config.ini}"
+ML4W_WALLPAPER_SCRIPT="${ML4W_WALLPAPER_SCRIPT:-${HOME}/.config/hypr/scripts/wallpaper.sh}"
+HOOK="${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh \"\$wallpaper\" > /dev/null 2>&1"
+BLOCK="\"${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh\" \"\$used_wallpaper\""
+
+if [[ -f "${WAYPAPER_CONFIG}" ]] && ! grep -q 'wallpaper-hook.sh' "${WAYPAPER_CONFIG}"; then
+    sed -i "s|^post_command = \(.*\)|post_command = \1; ${HOOK}|" "${WAYPAPER_CONFIG}"
+fi
+
+if [[ -f "${ML4W_WALLPAPER_SCRIPT}" ]] && ! grep -q 'wallpaper-hook.sh' "${ML4W_WALLPAPER_SCRIPT}"; then
+    cat >>"${ML4W_WALLPAPER_SCRIPT}" <<ML4W_HOOK
+
+# Dreamcoder final wallpaper/theme sync
+if [[ -x "${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh" ]]; then
+    ${BLOCK}
+fi
+ML4W_HOOK
+fi
+
+"${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh"
+printf '✓ Dreamcoder ML4W hooks applied\n'

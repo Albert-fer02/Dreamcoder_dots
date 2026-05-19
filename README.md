@@ -26,12 +26,12 @@ opacity       0.60
 ### Light mode reference
 
 ```txt
-ui bg         #f7f5f0
+ui bg         #fbfaf7
 ui surface    #ffffff
-ui text       #101113
-prompt cocoa  #fff8ee / #ead8bf
-prompt copper #b97945
-cyan diag     #2f7882
+ui text       #0b0c0e
+prompt cocoa  #fff7e8 / #e4caa7
+prompt copper #a35f29
+cyan diag     #176875
 ```
 
 ## Structure
@@ -51,10 +51,13 @@ dreamcoder-dots/
 ## Install with stow
 
 ```bash
-ln -sfn /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots ~/.dotfiles
-cd ~/.dotfiles
-stow -t "$HOME" Shell Kitty Ghostty Fastfetch Warp Systemd
+./scripts/install.sh
 ```
+
+Run this again after installing or updating ML4W/Gentleman Dots. It restows
+Dreamcoder, re-enables the day/night timer, reapplies the current mode, and
+reinstalls the Waypaper/ML4W wallpaper hooks so Dreamcoder remains the final
+theme layer.
 
 `Codex-App/` is kept as an import/export artifact, not stowed into `$HOME` by default.
 
