@@ -560,11 +560,11 @@ changed = {
 }
 
 repo_changes = []
-repo_changes += write_variant_files(ROOT / "Kitty/.config/kitty", "colors-dreamcoder.conf", "colors-dreamcoder-light.conf", kitty_content)
-repo_changes += write_variant_files(ROOT / "Ghostty/.config/ghostty/themes", "dreamcoder", "dreamcoder-light", ghostty_content)
-repo_changes += write_variant_files(ROOT / "Warp/.local/share/warp-terminal/themes", "Dreamcoder.yaml", "Dreamcoder-Light.yaml", warp_content)
-repo_changes += write_variant_files(ROOT / "Shell/.config", "starship.toml", "starship-light.toml", starship_content)
-repo_changes += write_variant_files(ROOT / "Codex-App", "Dreamcoder.codex-theme.json", "Dreamcoder-Light.codex-theme.json", opencode_content)
+repo_changes += write_variant_files(ROOT / "Kitty/.config/kitty", "colors-dreamcoder-dark.conf", "colors-dreamcoder-light.conf", kitty_content)
+repo_changes += write_variant_files(ROOT / "Ghostty/.config/ghostty/themes", "dreamcoder-dark", "dreamcoder-light", ghostty_content)
+repo_changes += write_variant_files(ROOT / "Warp/.local/share/warp-terminal/themes", "Dreamcoder-Dark.yaml", "Dreamcoder-Light.yaml", warp_content)
+repo_changes += write_variant_files(ROOT / "Shell/.config", "starship-dark.toml", "starship-light.toml", starship_content)
+repo_changes += write_variant_files(ROOT / "Codex-App", "Dreamcoder-Dark.codex-theme.json", "Dreamcoder-Light.codex-theme.json", opencode_content)
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-dark.conf", hypr_content(VARIANTS["dark"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-light.conf", hypr_content(VARIANTS["light"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/waybar-dark.css", waybar_content(VARIANTS["dark"])))

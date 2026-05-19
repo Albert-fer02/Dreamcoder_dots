@@ -80,10 +80,15 @@ DREAMCODER_THEME_MODE=light ./scripts/sync-dreamcoder-theme.py
 
 Light variants are also stored in the repo:
 
+- `Kitty/.config/kitty/colors-dreamcoder-dark.conf`
 - `Kitty/.config/kitty/colors-dreamcoder-light.conf`
+- `Ghostty/.config/ghostty/themes/dreamcoder-dark`
 - `Ghostty/.config/ghostty/themes/dreamcoder-light`
+- `Warp/.local/share/warp-terminal/themes/Dreamcoder-Dark.yaml`
 - `Warp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml`
+- `Shell/.config/starship-dark.toml`
 - `Shell/.config/starship-light.toml`
+- `Codex-App/Dreamcoder-Dark.codex-theme.json`
 - `Codex-App/Dreamcoder-Light.codex-theme.json`
 
 ## ML4W / Gentleman Dots integration
