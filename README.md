@@ -134,6 +134,19 @@ light: 07:00–17:59
 dark:  18:00–06:59
 ```
 
+The automation also updates GTK/GNOME color preference so apps see
+`prefer-light` during the day and `prefer-dark` at night.
+
+For Waypaper/ML4W wallpaper changes, use the Dreamcoder hook after the ML4W
+wallpaper script:
+
+```ini
+post_command = ~/.config/hypr/scripts/wallpaper.sh "$wallpaper" > /dev/null 2>&1; ~/.dotfiles/scripts/wallpaper-hook.sh "$wallpaper" > /dev/null 2>&1
+```
+
+The hook creates a safe cache symlink for wallpaper paths with spaces, applies
+Hyprpaper per monitor, then refreshes Dreamcoder light/dark/adaptive colors.
+
 Override hours if needed:
 
 ```bash

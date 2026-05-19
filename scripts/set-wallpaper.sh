@@ -21,5 +21,5 @@ else
     exit 1
 fi
 
-"${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh" "${WALLPAPER}"
+"${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh" "${WALLPAPER}"
 printf '✓ Wallpaper and Dreamcoder colors updated\n'

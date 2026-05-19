@@ -1,16 +1,16 @@
 # Dreamcoder Light
-background = #f7f6f2
+background = #f8f6f1
 foreground = #101113
-cursor-color = #726042
-cursor-text = #f7f6f2
-selection-background = #dce2d2
+cursor-color = #8d5b30
+cursor-text = #f8f6f1
+selection-background = #eedec7
 selection-foreground = #101113
 
-palette = 0=#fbfcfd
+palette = 0=#fefcfa
 palette = 1=#b65f51
 palette = 2=#587f5d
-palette = 3=#726042
-palette = 4=#406c80
+palette = 3=#8d5b30
+palette = 4=#436e61
 palette = 5=#985f86
 palette = 6=#6d5aa7
 palette = 7=#565b63

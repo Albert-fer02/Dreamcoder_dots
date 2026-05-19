@@ -8,13 +8,13 @@ LIGHT_START="${DREAMCODER_LIGHT_START:-7}"
 DARK_START="${DREAMCODER_DARK_START:-18}"
 HOUR="$(date +%H)"
 WALLPAPER="${1:-${DREAMCODER_WALLPAPER:-${WALLPAPER:-}}}"
+ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
 
-if (( 10#${HOUR} >= LIGHT_START && 10#${HOUR} < DARK_START )); then
-    MODE="light"
-else
-    MODE="dark"
-fi
+MODE="dark"
+if (( 10#${HOUR} >= LIGHT_START && 10#${HOUR} < DARK_START )); then MODE="light"; fi
+if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
 
+"${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && command -v matugen >/dev/null; then
     matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
 fi
