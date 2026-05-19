@@ -1,25 +1,25 @@
-name: Dreamcoder Dark
-accent: '#d8b56d'
-cursor: '#d8b56d'
-background: '#0b0c0e'
-foreground: '#f1eee7'
-details: darker
+name: Dreamcoder Light
+accent: '#9a6f24'
+cursor: '#9a6f24'
+background: '#f7f5f0'
+foreground: '#101113'
+details: lighter
 terminal_colors:
   normal:
-    black: '#171a20'
-    red: '#d98a7a'
-    green: '#9fb99f'
-    yellow: '#d8b56d'
-    blue: '#9ecad0'
-    magenta: '#d6a8ca'
-    cyan: '#c7b6e8'
-    white: '#b9bcc2'
+    black: '#ffffff'
+    red: '#b65f51'
+    green: '#587f5d'
+    yellow: '#9a6f24'
+    blue: '#2f7882'
+    magenta: '#985f86'
+    cyan: '#6d5aa7'
+    white: '#565b63'
   bright:
-    black: '#858b94'
+    black: '#757b84'
     red: '#e9a092'
     green: '#75a579'
-    yellow: '#e2bd73'
+    yellow: '#8b641f'
     blue: '#579ba4'
     magenta: '#846fc5'
     cyan: '#72b6bd'
-    white: '#f1eee7'
+    white: '#101113'

@@ -53,7 +53,7 @@ dreamcoder-dots/
 ```bash
 ln -sfn /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots ~/.dotfiles
 cd ~/.dotfiles
-stow -t "$HOME" Shell Kitty Ghostty Fastfetch Warp
+stow -t "$HOME" Shell Kitty Ghostty Fastfetch Warp Systemd
 ```
 
 `Codex-App/` is kept as an import/export artifact, not stowed into `$HOME` by default.
@@ -103,6 +103,37 @@ Use `themes/dreamcoder/` as color-only overlays after your existing ML4W/Gentlem
 - `themes/dreamcoder/rofi-light.rasi`
 
 Do not move keybinds, layouts, wallpaper automation, gaps, or animation logic into these snippets.
+
+## Automatic day/night mode
+
+Dreamcoder can switch by local time automatically:
+
+```bash
+cd ~/.dotfiles
+systemctl --user daemon-reload
+systemctl --user enable --now dreamcoder-theme-auto.timer
+```
+
+Defaults:
+
+```txt
+light: 07:00–17:59
+dark:  18:00–06:59
+```
+
+Override hours if needed:
+
+```bash
+systemctl --user edit dreamcoder-theme-auto.service
+```
+
+Then add:
+
+```ini
+[Service]
+Environment=DREAMCODER_LIGHT_START=8
+Environment=DREAMCODER_DARK_START=19
+```
 
 ## Verify
 

@@ -4,7 +4,7 @@ set -euo pipefail
 ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 BACKUP_DIR="${CONFIG_HOME}/dreamcoder-backup-$(date +%Y%m%d-%H%M%S)"
-MODULES=(Shell Kitty Ghostty Fastfetch Warp)
+MODULES=(Shell Kitty Ghostty Fastfetch Warp Systemd)
 TARGETS=("${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/fastfetch" "${DATA_HOME}/warp-terminal/themes" "${CONFIG_HOME}/starship.toml")
 
 fail() { printf '✗ %s\n' "$*" >&2; exit 1; }

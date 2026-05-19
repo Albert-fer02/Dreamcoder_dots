@@ -1,0 +1,7 @@
+[Unit]
+Description=Apply Dreamcoder theme based on local time
+
+[Service]
+Type=oneshot
+Environment=DREAMCODER_DOTS_DIR=%h/.dotfiles
+ExecStart=%h/.dotfiles/scripts/theme-auto.sh
