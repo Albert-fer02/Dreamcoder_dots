@@ -20,6 +20,7 @@ ghostty = Path(os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dre
 starship = Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml"))
 warp = Path(os.environ.get("WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"))
 opencode = Path(os.environ.get("OPENCODE_THEME", config_home / "opencode/themes/dreamcoder.json"))
+opencode_alias = Path(os.environ.get("OPENCODE_THEME_ALIAS", config_home / "opencode/themes/gentleman-dreamcoder-legible.json"))
 wallpaper = Path(os.environ.get("DREAMCODER_WALLPAPER", ""))
 adaptive = os.environ.get("DREAMCODER_ADAPTIVE", "1") != "0"
 
@@ -349,8 +350,26 @@ def opencode_content(c: dict[str, str]) -> str:
     added_bg = mix(c["sage"], c["bg"], 0.88)
     removed_bg = mix(c["error"], c["bg"], 0.90)
     hunk_bg = mix(c["lavender"], c["bg"], 0.90)
+    line_bg = mix(c["surface0"], c["bg"], 0.70)
+    assistant = guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")
+    user = guard(mix(c["accent"], c["text"], 0.15), c["bg"], "dark" if c["details"] == "darker" else "light")
     return f'''{{
   "$schema": "https://opencode.ai/theme.json",
+  "defs": {{
+    "dreamBackground": "{c['bg']}",
+    "dreamPanel": "{c['surface0']}",
+    "dreamElement": "{c['bg_soft']}",
+    "dreamText": "{c['text']}",
+    "dreamMuted": "{c['muted']}",
+    "dreamCocoa": "{c['accent_2']}",
+    "dreamLucuma": "{c['accent']}",
+    "dreamDiagnostic": "{c['diagnostic']}",
+    "dreamSage": "{c['sage']}",
+    "dreamViolet": "{c['lavender']}",
+    "dreamMauve": "{c['mauve']}",
+    "dreamCoral": "{c['error']}",
+    "dreamWarning": "{c['warning']}"
+  }},
   "theme": {{
     "background": "{c['bg']}",
     "backgroundPanel": "{c['surface0']}",
@@ -359,10 +378,17 @@ def opencode_content(c: dict[str, str]) -> str:
     "backgroundSelected": "{t['selection']}",
     "backgroundCode": "{t['code_bg']}",
     "backgroundSearch": "{t['search']}",
+    "backgroundLine": "{line_bg}",
+    "backgroundAssistant": "{mix(c['diagnostic'], c['bg'], 0.88)}",
+    "backgroundUser": "{mix(c['accent'], c['bg'], 0.88)}",
+    "backgroundTool": "{mix(c['lavender'], c['bg'], 0.90)}",
     "text": "{c['text']}",
     "textMuted": "{c['muted']}",
     "textSubtle": "{c['subtle']}",
     "textPlaceholder": "{c['comment']}",
+    "textAssistant": "{assistant}",
+    "textUser": "{user}",
+    "textTool": "{t['type']}",
     "primary": "{c['accent']}",
     "secondary": "{c['accent_2']}",
     "accent": "{c['accent']}",
@@ -389,6 +415,8 @@ def opencode_content(c: dict[str, str]) -> str:
     "diffAddedLineNumberBg": "{added_bg}",
     "diffRemovedLineNumberBg": "{removed_bg}",
     "diffHunkHeaderBg": "{hunk_bg}",
+    "diffFold": "{c['comment']}",
+    "diffFoldBg": "{mix(c['surface1'], c['bg'], 0.82)}",
     "markdownText": "{c['text']}",
     "markdownHeading": "{c['accent']}",
     "markdownLink": "{c['diagnostic']}",
@@ -405,6 +433,8 @@ def opencode_content(c: dict[str, str]) -> str:
     "markdownImage": "{c['mauve']}",
     "markdownImageText": "{c['text']}",
     "markdownCodeBlock": "{c['text']}",
+    "markdownCodeBlockBg": "{t['code_bg']}",
+    "markdownInlineCodeBg": "{mix(c['sage'], c['bg'], 0.90)}",
     "syntaxComment": "{t['comment']}",
     "syntaxKeyword": "{t['keyword']}",
     "syntaxFunction": "{t['function']}",
@@ -423,6 +453,12 @@ def opencode_content(c: dict[str, str]) -> str:
     "syntaxTag": "{t['keyword']}",
     "syntaxAttribute": "{t['property']}",
     "syntaxRegexp": "{mix(c['mauve'], c['error'], 0.28)}",
+    "syntaxEscape": "{c['warning']}",
+    "syntaxNamespace": "{t['type']}",
+    "syntaxModule": "{t['type']}",
+    "syntaxDecorator": "{t['operator']}",
+    "syntaxBuiltin": "{t['constant']}",
+    "syntaxSpecial": "{c['warning']}",
     "terminalBlack": "{c['surface0']}",
     "terminalRed": "{c['error']}",
     "terminalGreen": "{c['sage']}",
@@ -430,7 +466,15 @@ def opencode_content(c: dict[str, str]) -> str:
     "terminalBlue": "{c['diagnostic']}",
     "terminalMagenta": "{c['mauve']}",
     "terminalCyan": "{c['lavender']}",
-    "terminalWhite": "{c['text']}"
+    "terminalWhite": "{c['text']}",
+    "terminalBrightBlack": "{c['subtle']}",
+    "terminalBrightRed": "{guard(mix(c['error'], c['text'], 0.18), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightGreen": "{guard(mix(c['sage'], c['text'], 0.18), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightYellow": "{guard(mix(c['warning'], c['text'], 0.16), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightBlue": "{guard(mix(c['diagnostic'], c['text'], 0.18), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightMagenta": "{guard(mix(c['mauve'], c['text'], 0.18), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightCyan": "{guard(mix(c['lavender'], c['text'], 0.18), c['bg'], 'dark' if c['details'] == 'darker' else 'light')}",
+    "terminalBrightWhite": "{c['text']}"
   }}
 }}
 '''
@@ -690,6 +734,7 @@ changed = {
     "ghostty": write_if_changed(ghostty, ghostty_content(active)),
     "warp": write_if_changed(warp, warp_content(active)),
     "opencode": write_if_changed(opencode, opencode_content(active)),
+    "opencode_alias": write_if_changed(opencode_alias, opencode_content(active)),
     "starship": write_if_changed(starship, starship_content(active)),
 }
 
@@ -700,6 +745,7 @@ repo_changes += write_variant_files(ROOT / "Warp/.local/share/warp-terminal/them
 repo_changes += write_variant_files(ROOT / "Shell/.config", "starship-dark.toml", "starship-light.toml", starship_content)
 repo_changes += write_variant_files(ROOT / "Codex-App", "Dreamcoder-Dark.codex-theme.json", "Dreamcoder-Light.codex-theme.json", opencode_content)
 repo_changes.append(write_if_changed(ROOT / "Codex-App/Dreamcoder.codex-theme.json", opencode_content(active)))
+repo_changes.append(write_if_changed(ROOT / ".opencode/themes/dreamcoder.json", opencode_content(active)))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-dark.conf", hypr_content(VARIANTS["dark"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/hyprland-light.conf", hypr_content(VARIANTS["light"])))
 repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/waybar-dark.css", waybar_content(VARIANTS["dark"])))
@@ -716,6 +762,7 @@ print(f"Kitty: {kitty}")
 print(f"Ghostty: {ghostty}")
 print(f"Warp: {warp}")
 print(f"opencode: {opencode}")
+print(f"opencode alias: {opencode_alias}")
 print(f"Starship: {starship}")
 print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
 print(f"Repo variant/snippet changes: {sum(repo_changes)}")
