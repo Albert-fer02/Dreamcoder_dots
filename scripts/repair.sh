@@ -6,6 +6,8 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-ml4w-hooks.sh"
+"${DREAMCODER_DOTS_DIR}/scripts/apply-cli-env-hooks.sh"
+"${DREAMCODER_DOTS_DIR}/scripts/apply-fastfetch-assets.sh"
 if command -v stow >/dev/null; then
     stow -t "${HOME}" Shell Kitty Ghostty Fastfetch Warp Systemd
 fi

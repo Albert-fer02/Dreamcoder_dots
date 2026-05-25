@@ -1,31 +1,37 @@
 /* Dreamcoder color layer for Rofi. */
 * {
-  background: rgba(246, 241, 232, 0.90);
-  background-alt: #fbf8f1;
-  foreground: #15130f;
-  muted: #4a463f;
-  selected: rgba(133, 87, 25, 0.15);
-  active: #855719;
-  urgent: #9b4b40;
-  border-color: #855719;
+  background: rgba(243, 234, 220, 0.96);
+  background-alt: #fff7ea;
+  foreground: #17120d;
+  muted: #3d3228;
+  selected: rgba(130, 79, 22, 0.34);
+  active: #824f16;
+  border-ui: #66513b;
+  focus: #0f6570;
+  urgent: #842f24;
+  border-color: #66513b;
 }
 
 window {
   background-color: @background;
   border: 1px;
-  border-color: @border-color;
+  border-color: @border-ui;
   border-radius: 18px;
 }
 
 entry {
   background-color: @selected;
   text-color: @foreground;
+  border: 1px;
+  border-color: @focus;
   border-radius: 12px;
 }
 
 element selected {
   background-color: @selected;
   text-color: @foreground;
+  border: 0 0 0 3px;
+  border-color: @focus;
 }
 
 element-text { text-color: @muted; }

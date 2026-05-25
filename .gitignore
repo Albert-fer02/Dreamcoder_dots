@@ -19,3 +19,15 @@ Thumbs.db
 # Backups
 *.bak
 *.backup
+
+# Local AI sessions / usage cache
+.gemini/
+
+# Local migration/editor backups
+.local-backups/
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local AI session metadata
+.atl/

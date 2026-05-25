@@ -66,7 +66,7 @@ keybind = ctrl+shift+r=reload_config
 # Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
 
 # Background opacity
-background-opacity = 0.72
+background-opacity = 0.98
 background-opacity-cells = true
 background-blur = false
 minimum-contrast = 4.5

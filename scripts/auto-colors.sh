@@ -14,6 +14,7 @@ fi
 if [[ -z "${WALLPAPER}" ]] && command -v swww >/dev/null; then
     WALLPAPER="$(swww query 2>/dev/null | sed 's/.*image: //' || true)"
 fi
+WALLPAPER="$("${DREAMCODER_DOTS_DIR}/scripts/normalize-wallpaper-path.sh" "${WALLPAPER}")"
 
 if [[ -z "${WALLPAPER}" || ! -f "${WALLPAPER}" ]]; then
     printf '✗ Wallpaper not found: %s\n' "${WALLPAPER:-none}" >&2

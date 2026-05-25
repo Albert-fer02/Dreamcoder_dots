@@ -1,68 +1,29 @@
-# Enable Powerlevel10k instant prompt only when Starship is unavailable
-if ! command -v starship >/dev/null 2>&1 && [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Dreamcoder interactive Zsh ergonomics.
+set -euo pipefail
+[[ -o interactive ]] || return
 
-export ZSH="$HOME/.oh-my-zsh"
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="nvim" VISUAL="nvim" COLORTERM="${COLORTERM:-truecolor}"
+typeset -U path PATH
+path=("${HOME}/.local/bin" "${HOME}/.opencode/bin" "${HOME}/.cargo/bin" "${HOME}/.volta/bin" "${HOME}/.bun/bin" "${HOME}/.nix-profile/bin" "${HOME}/.config" "${path[@]}")
+export LS_COLORS="di=38;5;179:ex=38;5;208:ln=38;5;116:ow=48;5;236;38;5;179:*.tar=38;5;181:*.zip=38;5;181:*.jpg=38;5;108:*.png=38;5;108:*.mp3=38;5;108:*.wav=38;5;108:*.txt=38;5;223:*.md=38;5;223:*.sh=38;5;208"
+BUN_INSTALL="${HOME}/.bun"
+[[ -s "${BUN_INSTALL}/_bun" ]] && source "${BUN_INSTALL}/_bun"
+[[ -d "${BUN_INSTALL}/bin" ]] && path=("${BUN_INSTALL}/bin" "${path[@]}")
+export BUN_INSTALL
 
-# PATH - include all important bins
-export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.cargo/bin:$HOME/.volta/bin:$HOME/.bun/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:$HOME/.config:$PATH"
-
-# LS_COLORS - gruvbox inspired
-export LS_COLORS="di=38;5;67:ow=48;5;60:ex=38;5;132:ln=38;5;144:*.tar=38;5;180:*.zip=38;5;180:*.jpg=38;5;175:*.png=38;5;175:*.mp3=38;5;175:*.wav=38;5;175:*.txt=38;5;223:*.sh=38;5;132"
-
-# bun
-[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Zsh plugins
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  archlinux
-  sudo
-  web-search
-)
-
-source "${ZSH}/oh-my-zsh.sh"
-
-# History
-HISTSIZE=50000
-SAVEHIST=50000
-setopt HIST_IGNORE_DUPS SHARE_HISTORY AUTO_CD
-
-# Load custom shell config
-_shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
-for d in core aliases functions; do
-    for f in "$_shell_dir/$d"/*.sh(N); do source "$f"; done
+ZSH="${ZSH:-${HOME}/.oh-my-zsh}"
+plugins=(git sudo web-search)
+for plugin in zsh-autosuggestions zsh-syntax-highlighting archlinux; do
+  [[ -d "${ZSH_CUSTOM:-${ZSH}/custom}/plugins/${plugin}" || -d "${ZSH}/plugins/${plugin}" ]] && plugins+=("${plugin}")
 done
-
-# Integrations
-eval "$(fzf --zsh)"
-command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-
-# Prompt: Dreamcoder with Powerlevel10k fallback
-if command -v starship >/dev/null 2>&1; then
-  eval "$(starship init zsh)"
-elif [[ -f "${HOME}/.p10k.zsh" ]]; then
-  source "${HOME}/.p10k.zsh"
-fi
-
-# Cargo
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
-
-# Fastfetch with random logo on shell start
-command -v fastfetch &>/dev/null && fastfetch
-
-# Start tmux/zellij if needed
-start_if_needed() {
-    WM_VAR="/$TMUX"
-    WM_CMD="tmux"
-    if [[ $- == *i* ]] && [[ -z "${WM_VAR#/}" ]] && [[ -t 1 ]]; then
-        exec $WM_CMD
-    fi
-}
+[[ -f "${ZSH}/oh-my-zsh.sh" ]] && source "${ZSH}/oh-my-zsh.sh"
+HISTSIZE=50000; SAVEHIST=50000; setopt HIST_IGNORE_DUPS SHARE_HISTORY AUTO_CD
+shell_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/shell"
+for group in core aliases functions; do for file in "${shell_dir}/${group}"/*.sh(N); do [[ -f "${file}" ]] && source "${file}"; done; done
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)" && functions -q enable_transience && enable_transience
+command -v starship >/dev/null 2>&1 || { [[ -f "${HOME}/.p10k.zsh" ]] && source "${HOME}/.p10k.zsh"; }
+[[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
+[[ "${DREAMCODER_FASTFETCH_ON_START:-0}" == "1" ]] && command -v fastfetch >/dev/null 2>&1 && fastfetch
+unset shell_dir group file plugin

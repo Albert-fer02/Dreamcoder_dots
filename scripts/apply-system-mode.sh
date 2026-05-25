@@ -4,9 +4,11 @@ set -euo pipefail
 MODE="${1:-light}"
 GTK3="${XDG_CONFIG_HOME:-${HOME}/.config}/gtk-3.0/settings.ini"
 GTK4="${XDG_CONFIG_HOME:-${HOME}/.config}/gtk-4.0/settings.ini"
-[[ "${MODE}" == "dark" ]] && GTK3_VALUE="1" || GTK3_VALUE="0"
-[[ "${MODE}" == "dark" ]] && GTK4_VALUE="true" || GTK4_VALUE="false"
-[[ "${MODE}" == "dark" ]] && SCHEME="prefer-dark" || SCHEME="prefer-light"
+if [[ "${MODE}" == "dark" ]]; then
+    GTK3_VALUE="1"; GTK4_VALUE="true"; SCHEME="prefer-dark"
+else
+    GTK3_VALUE="0"; GTK4_VALUE="false"; SCHEME="prefer-light"
+fi
 
 set_gtk_key() {
     local file="${1}" key="${2}" value="${3}"

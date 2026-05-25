@@ -1,5 +1,5 @@
-# shellcheck shell=bash
-# shellcheck disable=SC1090,SC1091
+# shellcheck shell=bash disable=SC1090,SC1091
+set -euo pipefail
 [[ -z "${TERM:-}" || "${TERM}" == "dumb" ]] && export TERM="xterm-256color"
 export COLORTERM="${COLORTERM:-truecolor}"
 [[ "${-}" != *i* ]] && return
@@ -21,7 +21,10 @@ for group in core aliases functions; do
     for file in "${SHELL_DIR}/${group}"/*.sh; do [[ -f "${file}" ]] && source "${file}"; done
 done
 command -v fzf >/dev/null && eval "$(fzf --bash)"
-command -v starship >/dev/null && eval "$(starship init bash)"
+if command -v starship >/dev/null; then
+    eval "$(starship init bash)"
+    enable_transience
+fi
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 [[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
 unset PATH_DIRS dir group file BUN_COMPLETION SHELL_DIR

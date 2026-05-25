@@ -90,9 +90,15 @@ _add_to_path "$HOME/.npm-global/bin"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 _add_to_path "$PNPM_HOME"
 
-# NVM (lazy-loaded via shell config, but path here as fallback)
+# NVM (resolved statically to avoid NVM startup subshell overhead)
 export NVM_DIR="$HOME/.nvm"
-[[ -d "$NVM_DIR" ]] && _add_to_path "$NVM_DIR/versions/node/$(nvm version default)/bin"
+if [[ -d "$NVM_DIR/versions/node" ]]; then
+    local node_bins
+    node_bins=("$NVM_DIR"/versions/node/*/bin)
+    if [[ -d "${node_bins[-1]:-}" ]]; then
+        _add_to_path "${node_bins[-1]}"
+    fi
+fi
 
 # Cleanup function
 unset -f _add_to_path

@@ -6,11 +6,26 @@ ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "themes/dreamcoder/tokens.json"
 OUT = ROOT / "docs/dreamcoder-theme-preview.md"
 TEXT_KEYS = ["text", "muted", "comment", "accent", "accent_2", "diagnostic", "sage", "error", "warning"]
-ROLES = ["bg", "bg_soft", "surface0", "surface1", "text", "muted", "accent", "accent_2", "diagnostic", "sage", "lavender", "mauve", "error", "warning"]
+ROLES = ["bg", "bg_soft", "surface0", "surface1", "surface2", "text", "muted", "subtle", "comment", "accent", "accent_2", "diagnostic", "sage", "lavender", "mauve", "error", "warning", "border", "border_ui", "border_hi", "focus"]
 
 def rgb(value):
     value = value.lstrip("#")
     return tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
+
+def srgb_lin(channel):
+    channel /= 255
+    return channel / 12.92 if channel <= 0.040448236 else ((channel + 0.055) / 1.055) ** 2.4
+
+def apca_y(value):
+    r, g, b = (srgb_lin(part) for part in rgb(value))
+    y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b
+    return y ** 0.56
+
+def apca_lc(foreground, background):
+    y_fg, y_bg = apca_y(foreground), apca_y(background)
+    if y_bg >= y_fg:
+        return (y_bg - y_fg) * 1.14 * 100
+    return (y_fg - y_bg) * 1.14 * 100
 
 def lum(value):
     def channel(part):
@@ -34,7 +49,7 @@ def palette_table(name, palette):
     return "\n".join(rows)
 
 def contrast_table(name, palette):
-    rows = [f"### {name} contrast\n", "| Token | Ratio vs bg | Target |", "| --- | ---: | --- |"]
+    rows = [f"### {name} contrast (WCAG 2)\n", "| Token | Ratio vs bg | Target |", "| --- | ---: | --- |"]
     bg = palette["bg"]
     for key in TEXT_KEYS:
         ratio = contrast(bg, palette[key])
@@ -42,19 +57,50 @@ def contrast_table(name, palette):
         rows.append(f"| `{key}` | {ratio:.2f}:1 | {target} |")
     return "\n".join(rows)
 
+def apca_table(name, palette, body_min, ui_min):
+    rows = [f"### {name} APCA\n", "| Token | Lc vs bg | Target |", "| --- | ---: | --- |"]
+    bg = palette["bg"]
+    for key in TEXT_KEYS:
+        lc = apca_lc(palette[key], bg)
+        target = "body" if lc >= body_min else "FAIL"
+        rows.append(f"| `{key}` | {lc:.1f} | ≥{body_min} ({target}) |")
+    for key in ["border_ui", "focus"]:
+        lc = apca_lc(palette[key], bg)
+        target = "UI" if lc >= ui_min else "FAIL"
+        rows.append(f"| `{key}` | {lc:.1f} | ≥{ui_min} ({target}) |")
+    return "\n".join(rows)
+
+def ui_contrast_table(name, palette):
+    rows = [f"### {name} UI affordance contrast\n", "| Token | Ratio vs bg | Target |", "| --- | ---: | --- |"]
+    bg = palette["bg"]
+    for key in ["border_ui", "border_hi", "focus"]:
+        ratio = contrast(bg, palette[key])
+        target = "PASS" if ratio >= 3 else "FAIL"
+        rows.append(f"| `{key}` | {ratio:.2f}:1 | {target} |")
+    return "\n".join(rows)
+
 def main():
     tokens = json.loads(TOKENS.read_text())
+    guardrails = tokens["guardrails"]
+    body_min = guardrails.get("minimum_apca_body", 75)
+    ui_min = guardrails.get("minimum_apca_ui", 60)
     parts = ["# Dreamcoder Theme Preview", "", "Generated from `themes/dreamcoder/tokens.json`.", ""]
+    parts += ["## Design rationale", "", "Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.", "", "Dreamcoder dark uses an **Ember Noir** identity: espresso/cacao glass surfaces, warm silver text, refined orange and maple red protagonists, and gold as the support accent. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the autumn glass color.", "", "Semantic tokens are intentionally distinct:", "", "- `comment` is softer and lower-chroma than `subtle` (syntax vs UI chrome).", "- Dark `accent` (refined ember orange), `accent_2` (maple red), `error` (soft coral red), and `warning` (lúcuma gold) form the orange/red/gold signature.", "- `focus` follows the orange protagonist instead of a separate cyan ring; `diagnostic` stays warm amber so the palette remains autumnal.", "- **Dusk** bridges daytime light and night dark for late-afternoon sessions on Arch.", ""]
     parts += ["## Palette", ""]
     for mode, palette in tokens["modes"].items():
         parts.append(palette_table(palette.get("name", mode), palette))
         parts.append("")
     parts += ["## Contrast audit", ""]
     for mode, palette in tokens["modes"].items():
-        parts.append(contrast_table(palette.get("name", mode), palette))
+        label = palette.get("name", mode)
+        parts.append(contrast_table(label, palette))
         parts.append("")
-    parts += ["## Usage", "", "```bash", "./scripts/dreamcoder auto", "./scripts/dreamcoder light", "./scripts/dreamcoder dark", "./scripts/dreamcoder verify", "```", ""]
-    parts += ["## Design notes", "", "- Main backgrounds avoid pure black and pure white.", "- Main text targets AAA contrast for long coding sessions.", "- Cocoa/Lúcuma accents are identity colors; cyan is diagnostic, not decoration.", "- opencode uses one canonical theme: `dreamcoder`.", ""]
+        parts.append(apca_table(label, palette, body_min, ui_min))
+        parts.append("")
+        parts.append(ui_contrast_table(label, palette))
+        parts.append("")
+    parts += ["## Usage", "", "```bash", "./scripts/dreamcoder auto", "./scripts/dreamcoder light", "./scripts/dreamcoder dusk", "./scripts/dreamcoder dark", "./scripts/dreamcoder verify", "./scripts/dreamcoder preview", "```", ""]
+    parts += ["## Design notes", "", "- Main backgrounds avoid pure black and pure white.", "- Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.", "- Cocoa/Lúcuma accents are identity colors in light/dusk; Ember Noir uses refined orange, maple red, soft coral, and gold for dark-mode personality.", "- UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.", "- opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.", ""]
     OUT.write_text("\n".join(parts))
     print(f"Generated {OUT}")
 

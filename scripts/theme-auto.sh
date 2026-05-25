@@ -5,22 +5,10 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 # shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 LIGHT_START="${DREAMCODER_LIGHT_START:-7}"
+DUSK_START="${DREAMCODER_DUSK_START:-16}"
 DARK_START="${DREAMCODER_DARK_START:-18}"
 HOUR="$(date +%H)"
-WALLPAPER="${1:-${DREAMCODER_WALLPAPER:-${WALLPAPER:-}}}"
-ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
-
 MODE="dark"
-if (( 10#${HOUR} >= LIGHT_START && 10#${HOUR} < DARK_START )); then MODE="light"; fi
-if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
-
-"${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
-if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && command -v matugen >/dev/null; then
-    matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
-fi
-
-DREAMCODER_THEME_MODE="${MODE}" \
-DREAMCODER_WALLPAPER="${WALLPAPER}" \
-    "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
-command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
-printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
+if (( 10#${HOUR} >= LIGHT_START && 10#${HOUR} < DUSK_START )); then MODE="light"; fi
+if (( 10#${HOUR} >= DUSK_START && 10#${HOUR} < DARK_START )); then MODE="dusk"; fi
+exec "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" "${MODE}" "$@"
