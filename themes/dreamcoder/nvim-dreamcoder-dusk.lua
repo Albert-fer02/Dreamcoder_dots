@@ -51,7 +51,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "FloatBorder", {
-    fg = "#a7947a",
+    fg = "#665845",
     bg = "#f1eadf"
   })
 
@@ -109,12 +109,12 @@ end
 
   -- ── Selection & Search ───────────────────────────────
   vim.api.nvim_set_hl(0, "Visual", {
-    fg = "#1a1713",
+    fg = "#ebe4d6",
     bg = "#1a1713"
   })
 
   vim.api.nvim_set_hl(0, "VisualNOS", {
-    fg = "#1a1713",
+    fg = "#ebe4d6",
     bg = "#1a1713"
   })
 
@@ -229,23 +229,19 @@ end
 
   -- ── Diff ──────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "DiffAdd", {
-    fg = "#466b41",
-    bg = "#d2d2c0"
+    bg = "#bec4b0"
   })
 
   vim.api.nvim_set_hl(0, "DiffChange", {
-    fg = "#604000",
-    bg = "#d6cbb6"
+    bg = "#c6b79c"
   })
 
   vim.api.nvim_set_hl(0, "DiffDelete", {
-    fg = "#773126",
-    bg = "#dac9bc"
+    bg = "#ccb2a8"
   })
 
   vim.api.nvim_set_hl(0, "DiffText", {
-    fg = "#216a73",
-    bg = "#c3ccc2"
+    bg = "#a8bdb9"
   })
 
 
@@ -871,7 +867,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeBorder", {
-    fg = "#a7947a",
+    fg = "#665845",
     bg = "#ebe4d6"
   })
 
@@ -896,7 +892,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeSelection", {
-    fg = "#1a1713",
+    fg = "#ebe4d6",
     bg = "#1a1713"
   })
 
@@ -915,7 +911,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopePreviewBorder", {
-    fg = "#a7947a",
+    fg = "#665845",
     bg = "#f1eadf"
   })
 
@@ -925,7 +921,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsBorder", {
-    fg = "#a7947a",
+    fg = "#665845",
     bg = "#ebe4d6"
   })
 
@@ -990,7 +986,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", {
-    fg = "#a7947a",
+    fg = "#665845",
     bg = "#ebe4d6"
   })
 
@@ -1027,7 +1023,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyBorder", {
-    fg = "#a7947a"
+    fg = "#665845"
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyValue", {

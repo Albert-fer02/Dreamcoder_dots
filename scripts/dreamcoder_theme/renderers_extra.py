@@ -41,14 +41,13 @@ def nvim_content(c: dict[str, str]) -> str:
         inner = ",\n".join(parts)
         return f'  vim.api.nvim_set_hl(0, "{name}", {{\n{inner}\n  }})\n'
 
-    mode = "dark" if c["details"] == "darker" else "light"
+    invert = c.get("details") == "lighter"
     bg = c["bg"]
     text = c["text"]
     fg = text
-    sel_bg = c["selection"]
-    sel_fg = bg if mode == "dark" else text
-    inv_bg = bg if mode == "dark" else text
-    inv_fg = text if mode == "dark" else bg
+    # Selection: invert in light/dusk (bg ↔ text), use selection color in dark
+    sel_bg = c["text"] if invert else c["selection"]
+    sel_fg = c["bg"] if invert else c["text"]
 
     lines = [
         f"""-- ========================================================
@@ -95,7 +94,7 @@ end
 """,
         hl("Normal", fg=fg, bg="none"),
         hl("NormalFloat", fg=fg, bg=c["surface0"]),
-        hl("FloatBorder", fg=c["border"], bg=c["surface0"]),
+        hl("FloatBorder", fg=c["border_ui"], bg=c["surface0"]),
         hl("NonText", fg=c["subtle"]),
         hl("SpecialKey", fg=c["muted"]),
         hl("Whitespace", fg=c["border"]),
@@ -143,10 +142,10 @@ end
         hl("FoldColumn", fg=c["muted"]),
         "",
         "  -- ── Diff ──────────────────────────────────────────────",
-        hl("DiffAdd", fg=c["sage"], bg=mix(c["sage"], bg, 0.85)),
-        hl("DiffChange", fg=c["warning"], bg=mix(c["warning"], bg, 0.85)),
-        hl("DiffDelete", fg=c["error"], bg=mix(c["error"], bg, 0.85)),
-        hl("DiffText", fg=c["focus"] if "focus" in c else c["accent"], bg=mix(c.get("focus", c["accent"]), bg, 0.80)),
+        hl("DiffAdd", bg=mix(c["sage"], c["surface0"], 0.7)),
+        hl("DiffChange", bg=mix(c["warning"], c["surface0"], 0.7)),
+        hl("DiffDelete", bg=mix(c["error"], c["surface0"], 0.7)),
+        hl("DiffText", bg=mix(c.get("focus", c["accent"]), c["surface0"], 0.65)),
         "",
         "  -- ── Spell ─────────────────────────────────────────────",
         hl("SpellBad", sp=c["error"], undercurl=True),
@@ -306,18 +305,18 @@ end
         "",
         "  -- ── Telescope ─────────────────────────────────────────",
         hl("TelescopeNormal", fg=fg, bg=bg),
-        hl("TelescopeBorder", fg=c["border"], bg=bg),
+        hl("TelescopeBorder", fg=c["border_ui"], bg=bg),
         hl("TelescopeTitle", fg=c["accent"], bold=True),
         hl("TelescopePromptNormal", fg=fg, bg=c["surface0"]),
         hl("TelescopePromptBorder", fg=c["border_ui"], bg=c["surface0"]),
         hl("TelescopePromptTitle", fg=c["accent_2"], bold=True),
-        hl("TelescopeSelection", fg=fg, bg=sel_bg),
+        hl("TelescopeSelection", fg=sel_fg, bg=sel_bg),
         hl("TelescopeMultiSelection", fg=c["accent"]),
         hl("TelescopeMatching", fg=c["accent"], bold=True),
         hl("TelescopePreviewNormal", fg=fg, bg=c["surface0"]),
-        hl("TelescopePreviewBorder", fg=c["border"], bg=c["surface0"]),
+        hl("TelescopePreviewBorder", fg=c["border_ui"], bg=c["surface0"]),
         hl("TelescopeResultsNormal", fg=fg, bg=bg),
-        hl("TelescopeResultsBorder", fg=c["border"], bg=bg),
+        hl("TelescopeResultsBorder", fg=c["border_ui"], bg=bg),
         "",
         "  -- ── NvimTree ─────────────────────────────────────────",
         hl("NvimTreeNormal", fg=fg, bg=bg),
@@ -334,7 +333,7 @@ end
         hl("NvimTreeOpenedFolderName", fg=c["accent"]),
         hl("NvimTreeImageFile", fg=c["lavender"]),
         hl("NvimTreeIndentMarker", fg=c["border"]),
-        hl("NvimTreeWinSeparator", fg=c["border"], bg=bg),
+        hl("NvimTreeWinSeparator", fg=c["border_ui"], bg=bg),
         hl("NvimTreeCursorLine", bg=c["surface0"]),
         "",
         "  -- ── WhichKey ─────────────────────────────────────────",
@@ -344,7 +343,7 @@ end
         hl("WhichKeySeperator", fg=c["muted"]),
         hl("WhichKeySeparator", fg=c["muted"]),
         hl("WhichKeyFloat", fg=fg, bg=c["surface0"]),
-        hl("WhichKeyBorder", fg=c["border"]),
+        hl("WhichKeyBorder", fg=c["border_ui"]),
         hl("WhichKeyValue", fg=c["mauve"]),
         "",
         "  -- ── Lazy / Noice / Cmp ───────────────────────────────",
