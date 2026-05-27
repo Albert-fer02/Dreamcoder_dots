@@ -13,13 +13,15 @@
     navigate = true
     side-by-side = true
     line-numbers = true
-    syntax-theme = Catppuccin Mocha
     features = decorations
 
 [delta "decorations"]
     commit-decoration-style = bold yellow box ul
     file-style = bold yellow ul
     hunk-header-decoration-style = yellow box
+
+[include]
+    path = ~/.config/git/delta-dreamcoder.gitconfig
 
 [merge]
     conflictstyle = zdiff3

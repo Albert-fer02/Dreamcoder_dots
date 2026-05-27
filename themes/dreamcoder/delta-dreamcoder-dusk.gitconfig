@@ -1,0 +1,45 @@
+# ========================================================
+# Dreamcoder Dusk — Git Delta theme
+# ========================================================
+# Include from ~/.config/git/config:
+#   [include]
+#       path = ~/.config/git/delta-dreamcoder.gitconfig
+
+[delta]
+    # Syntax highlighting theme for diff content
+    syntax-theme = Dreamcoder-Light
+
+    # Line colors
+    plus-color = "#d2d2c0"
+    minus-color = "#dac9bc"
+    plus-emph-color = "#466b41"
+    minus-emph-color = "#773126"
+
+    # Diff UI
+    file-style = "#8a5520"
+    file-decoration-style = "bold yellow box ul"
+    hunk-header-style = "file line-number syntax"
+    hunk-header-decoration-style = "yellow box"
+    hunk-header-file-style = "#8a5520"
+    hunk-header-line-number-style = "##4c443a"
+    hunk-header-color = "#d3ccbf"
+
+    # Commit decorations
+    commit-style = "#8a5520 bold"
+    commit-decoration-style = "bold yellow box ul"
+
+    # Line numbers
+    line-numbers = true
+    line-numbers-left-style = "#4c443a"
+    line-numbers-right-style = "#4c443a"
+    line-numbers-minus-style = "#773126"
+    line-numbers-plus-style = "#466b41"
+
+    # Side-by-side
+    side-by-side = true
+
+    # Whitespace highlighting
+    whitespace-error-style = "#604000"
+
+    # Navigation
+    navigate = true

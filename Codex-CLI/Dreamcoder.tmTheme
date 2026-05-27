@@ -7,23 +7,23 @@
   <key>settings</key>
   <array>
     <dict><key>settings</key><dict>
-      <key>background</key><string>#f3eadc</string>
-      <key>foreground</key><string>#17120d</string>
-      <key>caret</key><string>#824f16</string>
-      <key>selection</key><string>#17120d</string>
-      <key>lineHighlight</key><string>#decbb1</string>
-      <key>gutter</key><string>#c8ad89</string>
-      <key>gutterForeground</key><string>#3d3228</string>
-      <key>invisibles</key><string>#66523f</string>
+      <key>background</key><string>#15100d</string>
+      <key>foreground</key><string>#f0e7dc</string>
+      <key>caret</key><string>#e6a15c</string>
+      <key>selection</key><string>#43291d</string>
+      <key>lineHighlight</key><string>#241b16</string>
+      <key>gutter</key><string>#30231c</string>
+      <key>gutterForeground</key><string>#c7b9aa</string>
+      <key>invisibles</key><string>#9c826d</string>
     </dict></dict>
-    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#66523f</string><key>fontStyle</key><string>italic</string></dict></dict>
-    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string><key>fontStyle</key><string>bold</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#15516e</string></dict></dict>
-    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#17120d</string></dict></dict>
-    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#3f6b35</string></dict></dict>
-    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#9d452d</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
-    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#7d3e64</string></dict></dict>
+    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#9c826d</string><key>fontStyle</key><string>italic</string></dict></dict>
+    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#e6a65e</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#d2a268</string></dict></dict>
+    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#f0e7dc</string></dict></dict>
+    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#b8bf84</string></dict></dict>
+    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#d77565</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#c9a8dc</string></dict></dict>
+    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#d98aa9</string></dict></dict>
   </array>
 </dict>
 </plist>

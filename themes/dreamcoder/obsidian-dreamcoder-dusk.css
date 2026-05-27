@@ -1,0 +1,143 @@
+/* ========================================================
+   Dreamcoder Dusk — Obsidian CSS snippet
+   ========================================================
+   Place in your vault's .obsidian/snippets/ folder.
+   Enable in Settings → Appearance → CSS snippets. */
+
+.theme-light {
+  /* Base — raw palette colors for backgrounds and surfaces */
+  --background-primary: #ebe4d6;
+  --background-primary-alt: #f1eadf;
+  --background-secondary: #f1eadf;
+  --background-secondary-alt: #d8cbb8;
+  --background-modifier-border: #a7947a;
+  --background-modifier-border-hover: #665845;
+  --background-modifier-form-field: #f1eadf;
+  --background-modifier-success: #c2c6b1;
+  --background-modifier-error: #ceb7aa;
+  --background-modifier-message: #d8cbb8;
+
+  /* Text — guarded against background for accessibility */
+  --text-normal: #1a1713;
+  --text-muted: #4c443a;
+  --text-faint: #5a4f43;
+  --text-accent: #8a5520;
+  --text-accent-hover: #96411e;
+  --text-error: #773126;
+  --text-warning: #604000;
+  --text-success: #466b41;
+  --text-selection: #827e74;
+  --text-on-accent: #ebe4d6;
+
+  /* Interactive */
+  --interactive-normal: #d8cbb8;
+  --interactive-hover: #c6b6a0;
+  --interactive-accent: #8a5520;
+  --interactive-accent-hover: #96411e;
+  --interactive-success: #466b41;
+
+  /* Scrollbar */
+  --scrollbar-bg: transparent;
+  --scrollbar-thumb-bg: #a7947a;
+  --scrollbar-active-thumb-bg: #665845;
+
+  /* Code — syntax highlighting colors */
+  --code-normal: #1a1713;
+  --code-comment: #615548;
+  --code-punctuation: #4c443a;
+  --code-keyword: #8a5520;
+  --code-operator: #96411e;
+  --code-function: #96411e;
+  --code-string: #466b41;
+  --code-number: #784762;
+  --code-tag: #8a5520;
+  --code-important: #773126;
+  --code-background: #f1eadf;
+
+  /* Heading */
+  --h1-color: #8a5520;
+  --h2-color: #8a5520;
+  --h3-color: #96411e;
+  --h4-color: #104b67;
+  --h5-color: #4c443a;
+  --h6-color: #5a4f43;
+
+  /* Link */
+  --link-color: #8a5520;
+  --link-color-hover: #96411e;
+  --link-external-color: #104b67;
+  --link-external-color-hover: #96411e;
+
+  /* Checkbox */
+  --checkbox-color: #8a5520;
+  --checkbox-color-hover: #96411e;
+  --checkbox-border-color: #a7947a;
+  --checkbox-mark-color: #ebe4d6;
+
+  /* Table */
+  --table-header-background: #d8cbb8;
+  --table-header-background-hover: #c6b6a0;
+  --table-row-background-hover: #f1eadf;
+  --table-border-color: #a7947a;
+
+  /* Graph */
+  --graph-line: #a7947a;
+  --graph-node: #4c443a;
+  --graph-node-focused: #8a5520;
+  --graph-node-tag: #104b67;
+  --graph-node-attachment: #466b41;
+}
+
+/* Headings */
+.markdown-rendered h1 { color: var(--h1-color); }
+.markdown-rendered h2 { color: var(--h2-color); }
+.markdown-rendered h3 { color: var(--h3-color); }
+.markdown-rendered h4 { color: var(--h4-color); }
+.markdown-rendered h5 { color: var(--h5-color); }
+.markdown-rendered h6 { color: var(--h6-color); }
+
+/* Tags */
+.tag {
+  background-color: #dccfbb;
+  color: #8a5520;
+  border-radius: 4px;
+  padding: 0 6px;
+}
+
+/* Blockquotes */
+blockquote {
+  border-color: #8a5520 !important;
+}
+
+/* Search highlights */
+.search-result-file-matched-text,
+.is-selected .search-result-file-matched-text,
+mark {
+  background-color: #d8c7b2 !important;
+  color: #ebe4d6 !important;
+}
+
+/* Active line in edit mode */
+.cm-active {
+  background-color: #f1eadf !important;
+}
+
+/* Selection */
+::selection {
+  background-color: #78736b !important;
+}
+
+/* Tooltip */
+.tooltip {
+  background-color: #d8cbb8 !important;
+  color: #1a1713 !important;
+}
+
+/* Menu */
+.menu {
+  background-color: #f1eadf !important;
+}
+
+.menu-item:hover {
+  background-color: #d8cbb8 !important;
+}

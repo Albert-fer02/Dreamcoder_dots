@@ -1,0 +1,45 @@
+# ========================================================
+# Dreamcoder Ember Noir — Git Delta theme
+# ========================================================
+# Include from ~/.config/git/config:
+#   [include]
+#       path = ~/.config/git/delta-dreamcoder.gitconfig
+
+[delta]
+    # Syntax highlighting theme for diff content
+    syntax-theme = Dreamcoder-Dark
+
+    # Line colors
+    plus-color = "#2d2a1f"
+    minus-color = "#35211c"
+    plus-emph-color = "#b8bf84"
+    minus-emph-color = "#e98272"
+
+    # Diff UI
+    file-style = "#e6a15c"
+    file-decoration-style = "bold yellow box ul"
+    hunk-header-style = "file line-number syntax"
+    hunk-header-decoration-style = "yellow box"
+    hunk-header-file-style = "#e6a15c"
+    hunk-header-line-number-style = "##c7b9aa"
+    hunk-header-color = "#302925"
+
+    # Commit decorations
+    commit-style = "#e6a15c bold"
+    commit-decoration-style = "bold yellow box ul"
+
+    # Line numbers
+    line-numbers = true
+    line-numbers-left-style = "#c7b9aa"
+    line-numbers-right-style = "#c7b9aa"
+    line-numbers-minus-style = "#e98272"
+    line-numbers-plus-style = "#b8bf84"
+
+    # Side-by-side
+    side-by-side = true
+
+    # Whitespace highlighting
+    whitespace-error-style = "#e8b866"
+
+    # Navigation
+    navigate = true

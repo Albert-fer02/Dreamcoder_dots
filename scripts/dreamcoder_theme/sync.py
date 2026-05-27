@@ -5,11 +5,21 @@ from __future__ import annotations
 from .palette import VARIANTS as DEFAULT_VARIANTS, adaptive_palette, load_variants
 from .renderers import (
     antigravity_content,
+    bat_content,
+    btop_content,
+    cava_content,
     codex_tmtheme_content,
+    delta_content,
+    dunst_content,
+    firefox_content,
+    fzf_content,
     ghostty_content,
     hypr_content,
     kitty_content,
     kitty_ui_content,
+    ls_colors_content,
+    nvim_content,
+    obsidian_content,
     opencode_content,
     pi_theme_content,
     readme_content,
@@ -17,6 +27,7 @@ from .renderers import (
     starship_content,
     warp_content,
     waybar_content,
+    zsh_syntax_content,
 )
 from .settings import ROOT, adaptive_enabled, theme_mode, theme_paths, write_repo_enabled
 from .writers import (
@@ -46,6 +57,18 @@ def sync_active_targets(paths, active: dict[str, str]) -> dict[str, bool]:
         "pi_theme": write_if_changed(paths.pi_theme, pi_theme_content(active)),
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
+        # New targets
+        "nvim": write_if_changed(paths.nvim, nvim_content(active)),
+        "zsh_syntax": write_if_changed(paths.zsh_syntax, zsh_syntax_content(active)),
+        "ls_colors": write_if_changed(paths.ls_colors, ls_colors_content(active)),
+        "bat": write_if_changed(paths.bat, bat_content(active)),
+        "delta": write_if_changed(paths.delta, delta_content(active)),
+        "fzf": write_if_changed(paths.fzf, fzf_content(active)),
+        "btop": write_if_changed(paths.btop, btop_content(active)),
+        "dunst": write_if_changed(paths.dunst, dunst_content(active)),
+        "firefox": write_if_changed(paths.firefox, firefox_content(active)),
+        "obsidian": write_if_changed(paths.obsidian, obsidian_content(active)),
+        "cava": write_if_changed(paths.cava, cava_content(active)),
     }
 
 
@@ -75,6 +98,19 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/rofi-dusk.rasi", rofi_content(variants["dusk"])))
     repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/README.md", readme_content()))
     repo_changes += write_variant_files(ROOT / "Antigravity", {k: f"Dreamcoder-{v.title()}.json" for k, v in mode_names.items()}, antigravity_content, variants)
+    # New targets — variant snippets in themes/dreamcoder/
+    theme_dir = ROOT / "themes/dreamcoder"
+    repo_changes += write_variant_files(theme_dir, {k: f"nvim-dreamcoder-{v}.lua" for k, v in mode_names.items()}, nvim_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"zsh-syntax-highlighting-dreamcoder-{v}.zsh" for k, v in mode_names.items()}, zsh_syntax_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"ls-colors-dreamcoder-{v}.sh" for k, v in mode_names.items()}, ls_colors_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"bat-dreamcoder-{v}.sh" for k, v in mode_names.items()}, bat_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"delta-dreamcoder-{v}.gitconfig" for k, v in mode_names.items()}, delta_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"fzf-dreamcoder-{v}.sh" for k, v in mode_names.items()}, fzf_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"btop-dreamcoder-{v}.theme" for k, v in mode_names.items()}, btop_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"dunst-dreamcoder-{v}.conf" for k, v in mode_names.items()}, dunst_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"firefox-dreamcoder-{v}.css" for k, v in mode_names.items()}, firefox_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"obsidian-dreamcoder-{v}.css" for k, v in mode_names.items()}, obsidian_content, variants)
+    repo_changes += write_variant_files(theme_dir, {k: f"cava-dreamcoder-{v}.config" for k, v in mode_names.items()}, cava_content, variants)
     return repo_changes
 
 
@@ -90,6 +126,18 @@ def print_summary(mode: str, paths, changed: dict[str, bool], repo_changes: list
     print(f"PI CLI theme: {paths.pi_theme}")
     print(f"PI CLI settings: {paths.pi_settings}")
     print(f"Starship: {paths.starship}")
+    # New targets
+    print(f"Neovim: {paths.nvim}")
+    print(f"Zsh-syntax-highlighting: {paths.zsh_syntax}")
+    print(f"LS_COLORS: {paths.ls_colors}")
+    print(f"Bat: {paths.bat}")
+    print(f"Delta: {paths.delta}")
+    print(f"Fzf: {paths.fzf}")
+    print(f"Btop: {paths.btop}")
+    print(f"Dunst: {paths.dunst}")
+    print(f"Firefox: {paths.firefox}")
+    print(f"Obsidian: {paths.obsidian}")
+    print(f"Cava: {paths.cava}")
     print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
     print(f"Repo variant/snippet changes: {sum(repo_changes)}")
 

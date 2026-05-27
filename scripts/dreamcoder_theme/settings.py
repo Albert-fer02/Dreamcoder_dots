@@ -29,6 +29,18 @@ class ThemePaths:
     pi_settings: Path
     wallpaper: Path
     tokens_file: Path
+    # New targets
+    nvim: Path
+    zsh_syntax: Path
+    ls_colors: Path
+    bat: Path
+    delta: Path
+    fzf: Path
+    btop: Path
+    dunst: Path
+    firefox: Path
+    obsidian: Path
+    cava: Path
 
 
 def theme_mode() -> str:
@@ -43,6 +55,7 @@ def theme_paths() -> ThemePaths:
     data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
     codex_home = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
     pi_agent_home = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi/agent"))
+    dreamcoder_theme = ROOT / "themes/dreamcoder"
     return ThemePaths(
         kitty=Path(os.environ.get("KITTY_COLORS", config_home / "kitty/colors-dreamcoder.conf")),
         kitty_config=Path(os.environ.get("KITTY_CONFIG", config_home / "kitty/kitty.conf")),
@@ -58,6 +71,18 @@ def theme_paths() -> ThemePaths:
         pi_settings=Path(os.environ.get("PI_SETTINGS", pi_agent_home / "settings.json")),
         wallpaper=Path(os.environ.get("DREAMCODER_WALLPAPER", "")),
         tokens_file=Path(os.environ.get("DREAMCODER_TOKENS", ROOT / "themes/dreamcoder/tokens.json")),
+        # New targets — all stored in themes/dreamcoder/ by default
+        nvim=Path(os.environ.get("DREAMCODER_NVIM_THEME", dreamcoder_theme / "nvim-dreamcoder.lua")),
+        zsh_syntax=Path(os.environ.get("DREAMCODER_ZSH_SYNTAX_THEME", dreamcoder_theme / "zsh-syntax-highlighting-dreamcoder.zsh")),
+        ls_colors=Path(os.environ.get("DREAMCODER_LS_COLORS_THEME", dreamcoder_theme / "ls-colors-dreamcoder.sh")),
+        bat=Path(os.environ.get("DREAMCODER_BAT_THEME", dreamcoder_theme / "bat-dreamcoder.sh")),
+        delta=Path(os.environ.get("DREAMCODER_DELTA_THEME", dreamcoder_theme / "delta-dreamcoder.gitconfig")),
+        fzf=Path(os.environ.get("DREAMCODER_FZF_THEME", dreamcoder_theme / "fzf-dreamcoder.sh")),
+        btop=Path(os.environ.get("DREAMCODER_BTOP_THEME", dreamcoder_theme / "btop-dreamcoder.theme")),
+        dunst=Path(os.environ.get("DREAMCODER_DUNST_THEME", dreamcoder_theme / "dunst-dreamcoder.conf")),
+        firefox=Path(os.environ.get("DREAMCODER_FIREFOX_THEME", dreamcoder_theme / "firefox-dreamcoder.css")),
+        obsidian=Path(os.environ.get("DREAMCODER_OBSIDIAN_THEME", dreamcoder_theme / "obsidian-dreamcoder.css")),
+        cava=Path(os.environ.get("DREAMCODER_CAVA_THEME", dreamcoder_theme / "cava-dreamcoder.config")),
     )
 
 
