@@ -49,26 +49,63 @@ This reapplies hooks, restows modules, restarts the timer, refreshes the current
 
 ## Theme system
 
+Dreamcoder themes are **generated from one canonical token set** (`themes/dreamcoder/tokens.json`) and rendered into **22 targets** — spanning terminals, editors, shell tooling, desktop UI, and even browser/note apps.
+
 - **Day** (`light`): warm paper surfaces, flat surface ladder, distinct semantic tokens.
 - **Dusk** (`dusk`): transitional warmth (default 16:00–18:00) before night mode.
-- **Night** (`dark`): softened graphite mode, warm text, lower glare than pure black.
+- **Night** (`dark`): Ember Noir — espresso/cacao glass with semi-transparent backgrounds, warm silver text, refined orange and maple red protagonists, gold support accent.
 - **Wallpaper adaptive**: wallpaper colors can tint accents, but contrast guardrails stay mandatory.
 - **UI affordances**: focus and meaningful borders use dedicated 3:1+ tokens; decorative borders stay subtle.
-- **opencode/Codex/PI CLI**: `dreamcoder.json` is generated and selected globally; stale opencode theme JSONs are removed by the sync script.
+- **Neovim glass blur**: the Neovim theme uses `none` backgrounds for main groups so terminal transparency and blur show through; panels and selections carry the autumn glass color.
+- **One source of truth**: `sync-dreamcoder-theme.py` reads `tokens.json`, renders all targets, and the `dreamcoder` CLI applies modes or regenerates selectively.
+
+### 22 theme targets
+
+| Target | Files | How it wires up |
+|--------|-------|-----------------|
+| **Kitty** | `kitty-dreamcoder-{mode}.conf` | `include` in kitty.conf |
+| **Ghostty** | `ghostty-dreamcoder-{mode}` | `theme = dreamcoder-{mode}` |
+| **Warp** | `Warp/.../Dreamcoder-{Mode}.yaml` | Warp theme picker |
+| **Hyprland** | `hyprland-{mode}.conf` | `source` from hyprland.conf |
+| **Waybar** | `waybar-{mode}.css` | `@import` in waybar style.css |
+| **Rofi** | `rofi-{mode}.rasi` | `@import` or `-theme` in rofi launch |
+| **Starship** | `starship-{mode}.toml` | `STARSHIP_CONFIG` env var |
+| **Antigravity** | `Antigravity/Dreamcoder-{Mode}.json` | Antigravity theme selector |
+| **opencode** | `opencode/dreamcoder.json` | `theme: "dreamcoder"` in opencode config |
+| **Codex CLI** | `Codex-CLI/Dreamcoder-{Mode}.tmTheme` | `theme = "Dreamcoder"` in codex config |
+| **PI CLI** | `Pi/.pi/agent/themes/dreamcoder-{mode}.json` | `theme: "dreamcoder"` in pi settings |
+| **Neovim** | `nvim-dreamcoder-{mode}.lua` | `require('dreamcoder')` in neovim config |
+| **Zsh-syntax-highlighting** | `zsh-syntax-highlighting-dreamcoder-{mode}.zsh` | `source` after zsh-syntax-highlighting plugin |
+| **LS_COLORS / eza** | `ls-colors-dreamcoder-{mode}.sh` | `source` in .zshrc or .bashrc |
+| **Bat** | `bat-dreamcoder-{mode}.sh` | Sets `BAT_THEME` env var; pairs with Codex CLI tmTheme |
+| **Delta (git diff)** | `delta-dreamcoder-{mode}.gitconfig` | `[include]` in `~/.config/git/config` |
+| **Fzf** | `fzf-dreamcoder-{mode}.sh` | `source` in .zshrc or .bashrc |
+| **Btop** | `btop-dreamcoder-{mode}.theme` | Place in `~/.config/btop/themes/` |
+| **Dunst** | `dunst-dreamcoder-{mode}.conf` | `[include]` in dunstrc |
+| **Firefox** | `firefox-dreamcoder-{mode}.css` | userChrome.css for Firefox customization |
+| **Obsidian** | `obsidian-dreamcoder-{mode}.css` | CSS snippet in Obsidian vault |
+| **Cava** | `cava-dreamcoder-{mode}.config` | `include` in `~/.config/cava/config` |
 
 Important files:
 
 ```txt
-themes/dreamcoder/tokens.json        # canonical design tokens: colors + guardrails
-themes/dreamcoder/tokens.schema.json # schema for the token contract
-scripts/dreamcoder                   # unified CLI entrypoint
-scripts/sync-dreamcoder-theme.py     # generator for terminals/opencode/overlays
-scripts/theme-auto.sh                # time-based light/dusk/dark selector
-scripts/apply-theme-mode.sh          # shared mode applier for auto and manual modes
-scripts/wallpaper-hook.sh            # robust wallpaper + Dreamcoder refresh hook
-scripts/verify-theme-health.py       # contrast and eye-comfort guardrails
-scripts/generate-theme-preview.py     # Markdown palette/contrast preview
-Systemd/.config/systemd/user/*       # day/night user timer
+themes/dreamcoder/tokens.json            # canonical design tokens: colors + guardrails
+themes/dreamcoder/tokens.schema.json     # schema for the token contract
+scripts/dreamcoder                       # unified CLI entrypoint
+scripts/sync-dreamcoder-theme.py         # generator for core targets (terminals/opencode)
+scripts/dreamcoder_theme/renderers.py    # shared rendering helpers
+scripts/dreamcoder_theme/renderers_core.py   # core target renderers
+scripts/dreamcoder_theme/renderers_extra.py  # extra target renderers (neovim, fzf, bat, delta, etc.)
+scripts/dreamcoder_theme/renderers_desktop.py # desktop-UI renderers
+scripts/dreamcoder_theme/settings.py     # schema-based token settings
+scripts/dreamcoder_theme/sync.py         # stale-file cleanup & install orchestration
+scripts/apply-theme-mode.sh              # shared mode applier for all targets
+scripts/install-dreamcoder-hooks.sh      # one-time hook installer (symlinks, includes)
+scripts/theme-auto.sh                    # time-based light/dusk/dark selector
+scripts/wallpaper-hook.sh                # robust wallpaper + Dreamcoder refresh hook
+scripts/verify-theme-health.py           # contrast and eye-comfort guardrails
+scripts/generate-theme-preview.py        # Markdown palette/contrast preview
+Systemd/.config/systemd/user/*           # day/night user timer
 ```
 
 ## Design-token architecture
@@ -127,8 +164,9 @@ Ghostty/     Ghostty config and Dreamcoder theme
 Warp/        Warp Terminal themes
 Fastfetch/   Fastfetch config
 Codex-App/   Codex/opencode theme exports
-themes/      ML4W/Gentleman portable color overlays
-scripts/     install, repair, doctor, theme, wallpaper, verification
+themes/      Canonical theme tokens + generated snippets for all 22 targets
+themes/dreamcoder/  tokens.json, tokens.schema.json, nvim, fzf, delta, dunst, etc.
+scripts/     install, repair, doctor, theme sync, wallpaper, verification, preview
 Systemd/     user timer/service for automatic day/night mode
 ```
 
