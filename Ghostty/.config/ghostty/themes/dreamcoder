@@ -1,18 +1,18 @@
 # Dreamcoder Ember Noir
-background = #15100d
+background = #14110e
 foreground = #f0e7dc
-cursor-color = #e6a15c
-cursor-text = #15100d
-selection-background = #43291d
+cursor-color = #cdae7d
+cursor-text = #14110e
+selection-background = #373027
 selection-foreground = #f0e7dc
 minimum-contrast = 4.5
 background-opacity-cells = true
 
-palette = 0=#86827e
+palette = 0=#868280
 palette = 1=#e98272
 palette = 2=#b8bf84
-palette = 3=#e6a15c
-palette = 4=#d2a268
+palette = 3=#cdae7d
+palette = 4=#c7b2a2
 palette = 5=#d98aa9
 palette = 6=#c9a8dc
 palette = 7=#c7b9aa

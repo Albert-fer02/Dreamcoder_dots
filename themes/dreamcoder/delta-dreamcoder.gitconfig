@@ -10,22 +10,22 @@
     syntax-theme = Dreamcoder-Dark
 
     # Line colors
-    plus-color = "#2d2a1f"
-    minus-color = "#35211c"
+    plus-color = "#2d2b20"
+    minus-color = "#34221d"
     plus-emph-color = "#b8bf84"
     minus-emph-color = "#e98272"
 
     # Diff UI
-    file-style = "#e6a15c"
+    file-style = "#cdae7d"
     file-decoration-style = "bold yellow box ul"
     hunk-header-style = "file line-number syntax"
     hunk-header-decoration-style = "yellow box"
-    hunk-header-file-style = "#e6a15c"
+    hunk-header-file-style = "#cdae7d"
     hunk-header-line-number-style = "##c7b9aa"
-    hunk-header-color = "#302925"
+    hunk-header-color = "#2f2a25"
 
     # Commit decorations
-    commit-style = "#e6a15c bold"
+    commit-style = "#cdae7d bold"
     commit-decoration-style = "bold yellow box ul"
 
     # Line numbers

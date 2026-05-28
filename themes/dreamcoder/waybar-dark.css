@@ -1,21 +1,21 @@
-/* Dreamcoder color layer for Waybar. */
-@define-color bg #15100d;
-@define-color bg-soft #1d1613;
-@define-color surface #241b16;
-@define-color text #f0e7dc;
-@define-color muted #c7b9aa;
-@define-color border #49362c;
+/* Dreamcoder color layer for Waybar OLED. */
+@define-color bg #12100e;
+@define-color bg-soft #1a1511;
+@define-color surface #211c18;
+@define-color text #e8dfd0;
+@define-color muted #b8a99a;
+@define-color border #594d46;
 @define-color border-ui #806754;
-@define-color focus #e6a15c;
-@define-color accent #e6a15c;
-@define-color accent-2 #d66f50;
-@define-color diagnostic #d2a268;
+@define-color focus #d99555;
+@define-color accent #d99555;
+@define-color accent-2 #c96a45;
+@define-color diagnostic #c8b2a2;
 @define-color error #e98272;
 @define-color success #b8bf84;
 @define-color warning #e8b866;
 
 window#waybar {
-  background: rgba(21, 16, 13, 0.76);
+  background: rgba(18, 16, 14, 0.76);
   color: @text;
   border-bottom: 1px solid alpha(@accent, 0.26);
 }
@@ -28,7 +28,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @accent;
-  background: rgba(230, 161, 92, 0.24);
+  background: rgba(217, 149, 85, 0.24);
   border-color: alpha(@focus, 0.82);
 }
 
@@ -39,7 +39,7 @@ window#waybar {
 #cpu,
 #memory,
 #tray {
-  background: rgba(240, 231, 220, 0.08);
+  background: rgba(232, 223, 208, 0.08);
   color: @text;
   border: 1px solid alpha(@border-ui, 0.78);
 }

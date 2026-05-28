@@ -4,24 +4,24 @@
 # Source this from .zshrc or .bashrc.
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"'
-  --color=bg:#15100d
-  --color=bg+:#241b16
-  --color=fg:#f0e7dc
-  --color=fg+:#f0e7dc
-  --color=hl:#e6a15c
-  --color=hl+:#e6a15c
-  --color=info:#d2a268
+  --color=bg:#12100e
+  --color=bg+:#211c18
+  --color=fg:#e8dfd0
+  --color=fg+:#e8dfd0
+  --color=hl:#d99555
+  --color=hl+:#d99555
+  --color=info:#c8b2a2
   --color=marker:#b8bf84
-  --color=prompt:#e6a15c
+  --color=prompt:#d99555
   --color=spinner:#c9a8dc
-  --color=pointer:#d66f50
-  --color=header:#c7b9aa
-  --color=border:#49362c
-  --color=label:#c7b9aa
-  --color=query:#f0e7dc
-  --color=gutter:#15100d
-  --color=scrollbar:#49362c
-  --color=separator:#49362c
-  --color=preview-bg:#15100d
-  --color=preview-border:#49362c
+  --color=pointer:#c96a45
+  --color=header:#b8a99a
+  --color=border:#594d46
+  --color=label:#b8a99a
+  --color=query:#e8dfd0
+  --color=gutter:#12100e
+  --color=scrollbar:#594d46
+  --color=separator:#594d46
+  --color=preview-bg:#12100e
+  --color=preview-border:#594d46
 '

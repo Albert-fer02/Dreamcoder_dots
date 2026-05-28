@@ -6,20 +6,20 @@
    in about:config. */
 
 :root {
-  --dreamcoder-bg: #15100d;
-  --dreamcoder-surface: #241b16;
-  --dreamcoder-surface-1: #30231c;
-  --dreamcoder-text: #f0e7dc;
-  --dreamcoder-text-dim: #c7b9aa;
-  --dreamcoder-accent: #e6a15c;
-  --dreamcoder-accent-2: #d66f50;
-  --dreamcoder-border: #49362c;
+  --dreamcoder-bg: #12100e;
+  --dreamcoder-surface: #211c18;
+  --dreamcoder-surface-1: #2e241f;
+  --dreamcoder-text: #e8dfd0;
+  --dreamcoder-text-dim: #b8a99a;
+  --dreamcoder-accent: #d99555;
+  --dreamcoder-accent-2: #c96a45;
+  --dreamcoder-border: #594d46;
   --dreamcoder-border-ui: #806754;
   --dreamcoder-error: #e98272;
   --dreamcoder-warning: #e8b866;
   --dreamcoder-sage: #b8bf84;
-  --dreamcoder-input-bg: #241b16;
-  --dreamcoder-toolbar-bg: #241b16;
+  --dreamcoder-input-bg: #211c18;
+  --dreamcoder-toolbar-bg: #211c18;
   --dreamcoder-hover: #342619;
   --dreamcoder-active: #493421;
 }
