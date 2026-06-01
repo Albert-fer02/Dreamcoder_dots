@@ -4,6 +4,7 @@
 
 ### Added
 
+- Automated terminal readability guardrails for ANSI colors, cursor contrast, and selection contrast.
 - Design system governance documentation for Dreamcoder's product definition, token contract, component model, accessibility policy, and release readiness checklist.
 - Global design-system regression tests covering APCA dark diagnostic contrast, governance docs, README discoverability, and changelog discipline.
 

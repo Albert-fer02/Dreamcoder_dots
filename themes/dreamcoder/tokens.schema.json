@@ -34,7 +34,10 @@
       "required": [
         "canonical_opencode_theme",
         "minimum_text_contrast",
-        "preferred_main_text_contrast"
+        "preferred_main_text_contrast",
+        "minimum_terminal_ansi_contrast",
+        "minimum_terminal_cursor_contrast",
+        "minimum_terminal_selection_contrast"
       ],
       "properties": {
         "canonical_opencode_theme": {
@@ -68,6 +71,18 @@
         "minimum_apca_ui": {
           "type": "number",
           "minimum": 45
+        },
+        "minimum_terminal_ansi_contrast": {
+          "type": "number",
+          "minimum": 4.5
+        },
+        "minimum_terminal_cursor_contrast": {
+          "type": "number",
+          "minimum": 4.5
+        },
+        "minimum_terminal_selection_contrast": {
+          "type": "number",
+          "minimum": 7
         }
       }
     }

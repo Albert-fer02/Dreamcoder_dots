@@ -3,6 +3,7 @@ import json
 import plistlib
 import re
 from pathlib import Path
+from dreamcoder_theme.palette import ansi as terminal_ansi
 
 ROOT = Path(__file__).resolve().parent.parent
 FILES = [
@@ -79,6 +80,9 @@ def check_tokens():
     apca_quiet = guardrails.get("minimum_apca_quiet", 55)
     apca_ui_light = guardrails.get("minimum_apca_ui", 60)
     apca_ui_dark = guardrails.get("minimum_apca_ui_dark", 28)
+    terminal_ansi_min = guardrails.get("minimum_terminal_ansi_contrast", 4.5)
+    terminal_cursor_min = guardrails.get("minimum_terminal_cursor_contrast", 4.5)
+    terminal_selection_min = guardrails.get("minimum_terminal_selection_contrast", 7.0)
     require(tokens["guardrails"]["canonical_opencode_theme"] == "dreamcoder", "tokens: canonical opencode theme must be dreamcoder")
     for mode, palette in tokens["modes"].items():
         bg = palette["bg"]
@@ -112,6 +116,13 @@ def check_tokens():
             require(apca_lc(value, bg) >= apca_quiet, f"tokens:{mode}:{key} APCA Lc {apca_lc(value, bg):.1f} < {apca_quiet}")
         require(contrast(bg, palette["text"]) >= 7, f"tokens:{mode}: main text below AAA")
         require(apca_lc(palette["text"], bg) >= apca_body, f"tokens:{mode}: main text APCA below {apca_body}")
+        for index, color in enumerate(terminal_ansi(palette)):
+            require(contrast(color, bg) >= terminal_ansi_min, f"tokens:{mode}: ANSI color{index} contrast {contrast(color, bg):.2f} < {terminal_ansi_min}")
+        invert = palette.get("details") == "lighter"
+        sel_fg = palette["bg"] if invert else palette["text"]
+        sel_bg = palette["text"] if invert else palette["selection"]
+        require(contrast(palette["accent"], bg) >= terminal_cursor_min, f"tokens:{mode}: cursor contrast {contrast(palette['accent'], bg):.2f} < {terminal_cursor_min}")
+        require(contrast(sel_fg, sel_bg) >= terminal_selection_min, f"tokens:{mode}: selection pair contrast {contrast(sel_fg, sel_bg):.2f} < {terminal_selection_min}")
         require(palette["border_ui"] != palette["border_hi"], f"tokens:{mode}: border_ui and border_hi must differ")
         require(palette["comment"] != palette["subtle"], f"tokens:{mode}: comment and subtle must differ")
         require(palette["focus"] != palette["diagnostic"], f"tokens:{mode}: focus and diagnostic must differ")

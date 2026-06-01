@@ -51,6 +51,8 @@ Minimums:
 - APCA body floors from `tokens.json` guardrails.
 - APCA UI floors for borders/focus affordances.
 - Selection must be visibly stronger than passive surfaces.
+- Terminal ANSI colors must stay at WCAG AA against each mode background.
+- Terminal cursor and selection pairs have explicit contrast floors in `tokens.json`.
 - Meaningful borders use `border_ui` or `border_hi`; decorative borders may use `border`.
 
 Verification commands:
