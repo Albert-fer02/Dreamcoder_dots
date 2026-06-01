@@ -10,9 +10,9 @@ from .palette import mix
 Hl = Callable[..., str]
 
 
-def nvim_ui_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str) -> list[str]:
+def nvim_ui_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str, normal_bg: str) -> list[str]:
     return [
-        hl("Normal", fg=fg, bg="none"),
+        hl("Normal", fg=fg, bg=normal_bg),
         hl("NormalFloat", fg=fg, bg=c["surface0"]),
         hl("FloatBorder", fg=c["border_ui"], bg=c["surface0"]),
         hl("NonText", fg=c["subtle"]),
@@ -26,7 +26,7 @@ def nvim_ui_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel
         hl("LineNr", fg=c["muted"]),
         hl("CursorColumn", bg=c["surface0"]),
         hl("ColorColumn", bg=c["surface0"]),
-        hl("SignColumn", bg="none"),
+        hl("SignColumn", bg=normal_bg),
         "",
         "  -- ── Selection & Search ───────────────────────────────",
         hl("Visual", fg=sel_fg, bg=sel_bg),

@@ -6,7 +6,7 @@
 
 vim.g.colors_name = "dreamcoder"
 
--- Glass blur: transparent background + subtle float transparency
+-- Glass blur stays dark-only; light/dusk need opaque paper backgrounds for readability.
 vim.opt.winblend = 10
 vim.opt.pumblend = 10
 
@@ -37,12 +37,12 @@ local function h(name, opts)
 end
 
 -- ── Editor UI ────────────────────────────────────────────────
--- Normal background = "none" for glass blur effect.
--- Terminal (Kitty/Ghostty) handles transparency + blur.
+-- Normal background is opaque in light/dusk so dark terminal transparency cannot hide text.
+-- Dark mode keeps transparent Normal for Ember Noir glass.
 
   vim.api.nvim_set_hl(0, "Normal", {
     fg = "#17120d",
-    bg = "none"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "NormalFloat", {
@@ -103,7 +103,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "SignColumn", {
-    bg = "none"
+    bg = "#f3eadc"
   })
 
 

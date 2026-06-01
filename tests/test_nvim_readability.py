@@ -1,12 +1,16 @@
 """Neovim syntax readability tests for Dreamcoder themes."""
 
 import json
+import sys
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
+
+from dreamcoder_theme.renderers_extra_nvim import nvim_content
 
 
 def rel_luminance(value: str) -> float:
@@ -115,6 +119,21 @@ class NvimReadabilityTest(unittest.TestCase):
             80,
             f"Dark diagnostic {diagnostic} too similar to comment {comment}"
         )
+
+    def test_light_and_dusk_normal_backgrounds_are_opaque(self):
+        """Light/dusk Neovim must not rely on terminal transparency."""
+        for mode in ("light", "dusk"):
+            palette = self.modes[mode]
+            rendered = nvim_content(palette)
+            normal_block = rendered.split('"Normal", {', 1)[1].split('})', 1)[0]
+            sign_block = rendered.split('"SignColumn", {', 1)[1].split('})', 1)[0]
+            self.assertIn(f'bg = "{palette["bg"]}"', normal_block)
+            self.assertIn(f'bg = "{palette["bg"]}"', sign_block)
+
+    def test_dark_normal_background_stays_transparent(self):
+        rendered = nvim_content(self.modes["dark"])
+        normal_block = rendered.split('"Normal", {', 1)[1].split('})', 1)[0]
+        self.assertIn('bg = "none"', normal_block)
 
 
 if __name__ == "__main__":

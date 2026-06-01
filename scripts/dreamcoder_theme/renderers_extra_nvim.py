@@ -37,6 +37,7 @@ def nvim_content(c: dict[str, str]) -> str:
 
     invert = c.get("details") == "lighter"
     bg = c["bg"]
+    normal_bg = bg if invert else "none"
     text = c["text"]
     fg = text
     # Selection: invert in light/dusk (bg ↔ text), use selection color in dark
@@ -52,7 +53,7 @@ def nvim_content(c: dict[str, str]) -> str:
 
 vim.g.colors_name = "dreamcoder"
 
--- Glass blur: transparent background + subtle float transparency
+-- Glass blur stays dark-only; light/dusk need opaque paper backgrounds for readability.
 vim.opt.winblend = 10
 vim.opt.pumblend = 10
 
@@ -83,12 +84,12 @@ local function h(name, opts)
 end
 
 -- ── Editor UI ────────────────────────────────────────────────
--- Normal background = "none" for glass blur effect.
--- Terminal (Kitty/Ghostty) handles transparency + blur.
+-- Normal background is opaque in light/dusk so dark terminal transparency cannot hide text.
+-- Dark mode keeps transparent Normal for Ember Noir glass.
 """,
     ]
     group_args = (hl, c, fg, bg, sel_fg, sel_bg)
-    lines.extend(nvim_ui_groups(*group_args))
+    lines.extend(nvim_ui_groups(hl, c, fg, bg, sel_fg, sel_bg, normal_bg))
     lines.extend(nvim_syntax_groups(*group_args))
     lines.extend(nvim_lsp_groups(*group_args))
     lines.extend(nvim_plugin_groups(*group_args))
