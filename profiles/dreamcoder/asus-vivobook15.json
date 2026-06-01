@@ -1,0 +1,13 @@
+{
+  "name": "asus-vivobook15",
+  "description": "Dreamcoder tuned profile for ASUS VivoBook 15 FHD laptop panels.",
+  "monitor": "eDP-1,1920x1080@60,0x0,1",
+  "monitor_scale": 1,
+  "keyboard_layout": "latam",
+  "repeat_rate": 50,
+  "repeat_delay": 250,
+  "shell": "fish --login",
+  "terminal_default_mode": "light",
+  "motion_preset": "fluid",
+  "performance_notes": "Optimized for responsive typing, FHD readability, light default mode, and laptop-friendly motion."
+}

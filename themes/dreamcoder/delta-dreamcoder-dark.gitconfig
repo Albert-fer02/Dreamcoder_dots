@@ -1,5 +1,5 @@
 # ========================================================
-# Dreamcoder Ember Noir — Git Delta theme
+# Dreamcoder Ember Noir OLED — Git Delta theme
 # ========================================================
 # Include from ~/.config/git/config:
 #   [include]
@@ -10,9 +10,9 @@
     syntax-theme = Dreamcoder-Dark
 
     # Line colors
-    plus-color = "#2d2a1f"
-    minus-color = "#35211c"
-    plus-emph-color = "#b8bf84"
+    plus-color = "#182317"
+    minus-color = "#32211d"
+    plus-emph-color = "#388c48"
     minus-emph-color = "#e98272"
 
     # Diff UI
@@ -21,8 +21,8 @@
     hunk-header-style = "file line-number syntax"
     hunk-header-decoration-style = "yellow box"
     hunk-header-file-style = "#d99555"
-    hunk-header-line-number-style = "##b8a99a"
-    hunk-header-color = "#302925"
+    hunk-header-line-number-style = "##c7b9aa"
+    hunk-header-color = "#2d2925"
 
     # Commit decorations
     commit-style = "#d99555 bold"
@@ -30,10 +30,10 @@
 
     # Line numbers
     line-numbers = true
-    line-numbers-left-style = "#b8a99a"
-    line-numbers-right-style = "#b8a99a"
+    line-numbers-left-style = "#c7b9aa"
+    line-numbers-right-style = "#c7b9aa"
     line-numbers-minus-style = "#e98272"
-    line-numbers-plus-style = "#b8bf84"
+    line-numbers-plus-style = "#388c48"
 
     # Side-by-side
     side-by-side = true

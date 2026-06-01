@@ -47,6 +47,47 @@ cd ~/Documents/PROYECTOS/dreamcoder-dots
 
 This reapplies hooks, restows modules, restarts the timer, refreshes the current theme, and runs verification.
 
+
+## Dreamcoder Control Center
+
+Dreamcoder now exposes a structured control layer behind the existing CLI. This is the foundation for a future TUI/GUI settings app and gives scripts a stable JSON contract instead of scraping terminal output.
+
+```bash
+./scripts/dreamcoder dashboard --markdown
+./scripts/dreamcoder dashboard --json
+./scripts/dreamcoder tui render
+./scripts/dreamcoder tui render --json
+./scripts/dreamcoder tui set terminal.default_mode light --dry-run --json
+./scripts/dreamcoder docs report --markdown
+./scripts/dreamcoder docs report --write --json
+./scripts/dreamcoder audit compare --markdown
+./scripts/dreamcoder audit compare --json
+./scripts/dreamcoder doctor-json
+./scripts/dreamcoder settings schema --json
+./scripts/dreamcoder settings validate --json
+./scripts/dreamcoder profile list --json
+./scripts/dreamcoder profile apply asus-vivobook15 --dry-run --json
+./scripts/dreamcoder motion list --json
+./scripts/dreamcoder motion apply fluid --dry-run --json
+./scripts/dreamcoder settings set terminal.default_mode light
+./scripts/dreamcoder settings get terminal.default_mode --json
+./scripts/dreamcoder repair catalog --json
+./scripts/dreamcoder repair plan --json
+./scripts/dreamcoder repair apply --dry-run --json
+./scripts/dreamcoder backup list --json
+./scripts/dreamcoder backup restore <backup-id> --dry-run --json
+```
+
+See `docs/DREAMCODER_CONTROL_CENTER.md` for the operator dashboard, safety model, and visual command map.
+
+The first built-in machine profiles are `default` and `asus-vivobook15`. Motion presets are `battery`, `balanced`, `fluid`, and `cinematic`; each preset declares its terminal cursor behavior, Hyprland animation intent, and performance cost.
+
+`doctor-json` emits `dreamcoder.doctor.v1` checks with `name`, `status`, `detail`, and `repair`, making health issues actionable and testable.
+
+`repair plan` emits `dreamcoder.repair-plan.v1` and separates safe automatic fixes from manual actions. `repair apply` only applies safe repairs and creates a backup manifest first.
+
+Profile and motion applies create `dreamcoder.backup.v1` manifests under `$XDG_DATA_HOME/dreamcoder/backups`, so risky changes can be inspected and rolled back instead of blindly overwritten.
+
 ## Theme system
 
 Dreamcoder themes are **generated from one canonical token set** (`themes/dreamcoder/tokens.json`) and rendered into **22 targets** — spanning terminals, editors, shell tooling, desktop UI, and even browser/note apps.
@@ -115,6 +156,8 @@ Dreamcoder has one canonical palette contract: `themes/dreamcoder/tokens.json`. 
 The token file includes hard guardrails: canonical opencode theme `dreamcoder`, no harsh pure black/white primary backgrounds, WCAG AA minimum token contrast, AAA target for main text, and APCA Lc checks for body and UI tokens.
 
 See the auditable palette gallery: [docs/dreamcoder-theme-preview.md](docs/dreamcoder-theme-preview.md).
+
+For the design-system contract, component model, accessibility policy, governance rules, and release checklist, see [docs/DREAMCODER_DESIGN_SYSTEM.md](docs/DREAMCODER_DESIGN_SYSTEM.md).
 
 ## Design rationale (light)
 

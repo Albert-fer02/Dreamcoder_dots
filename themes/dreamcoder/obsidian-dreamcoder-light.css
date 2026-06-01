@@ -13,19 +13,19 @@
   --background-modifier-border: #8a7358;
   --background-modifier-border-hover: #66513b;
   --background-modifier-form-field: #fff7ea;
-  --background-modifier-success: #c6cab2;
+  --background-modifier-success: #c6ccb4;
   --background-modifier-error: #d7bbae;
   --background-modifier-message: #decbb1;
 
   /* Text — guarded against background for accessibility */
   --text-normal: #17120d;
-  --text-muted: #3d3228;
-  --text-faint: #554635;
+  --text-muted: #352e22;
+  --text-faint: #554638;
   --text-accent: #824f16;
   --text-accent-hover: #a7471c;
   --text-error: #842f24;
   --text-warning: #654300;
-  --text-success: #3f6b35;
+  --text-success: #3d723d;
   --text-selection: #857e74;
   --text-on-accent: #f3eadc;
 
@@ -34,7 +34,7 @@
   --interactive-hover: #c8ad89;
   --interactive-accent: #824f16;
   --interactive-accent-hover: #a7471c;
-  --interactive-success: #3f6b35;
+  --interactive-success: #3d723d;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -43,12 +43,12 @@
 
   /* Code — syntax highlighting colors */
   --code-normal: #17120d;
-  --code-comment: #66523f;
-  --code-punctuation: #3d3228;
+  --code-comment: #725e4c;
+  --code-punctuation: #352e22;
   --code-keyword: #824f16;
   --code-operator: #a7471c;
   --code-function: #a7471c;
-  --code-string: #3f6b35;
+  --code-string: #3d723d;
   --code-number: #7d3e64;
   --code-tag: #824f16;
   --code-important: #842f24;
@@ -58,14 +58,14 @@
   --h1-color: #824f16;
   --h2-color: #824f16;
   --h3-color: #a7471c;
-  --h4-color: #15516e;
-  --h5-color: #3d3228;
-  --h6-color: #554635;
+  --h4-color: #0d4a68;
+  --h5-color: #352e22;
+  --h6-color: #554638;
 
   /* Link */
   --link-color: #824f16;
   --link-color-hover: #a7471c;
-  --link-external-color: #15516e;
+  --link-external-color: #0d4a68;
   --link-external-color-hover: #a7471c;
 
   /* Checkbox */
@@ -82,10 +82,10 @@
 
   /* Graph */
   --graph-line: #8a7358;
-  --graph-node: #3d3228;
+  --graph-node: #352e22;
   --graph-node-focused: #824f16;
-  --graph-node-tag: #15516e;
-  --graph-node-attachment: #3f6b35;
+  --graph-node-tag: #0d4a68;
+  --graph-node-attachment: #3d723d;
 }
 
 /* Headings */

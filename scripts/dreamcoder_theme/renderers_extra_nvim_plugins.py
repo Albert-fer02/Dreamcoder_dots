@@ -1,0 +1,72 @@
+"""Neovim highlight group chunks for Dreamcoder."""
+
+from __future__ import annotations
+
+from typing import Callable
+
+from .palette import mix
+
+
+Hl = Callable[..., str]
+
+
+def nvim_plugin_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str) -> list[str]:
+    return [
+        hl("WhichKey", fg=c["accent"], bold=True),
+        hl("WhichKeyGroup", fg=c["diagnostic"]),
+        hl("WhichKeyDesc", fg=fg),
+        hl("WhichKeySeperator", fg=c["muted"]),
+        hl("WhichKeySeparator", fg=c["muted"]),
+        hl("WhichKeyFloat", fg=fg, bg=c["surface0"]),
+        hl("WhichKeyBorder", fg=c["border_ui"]),
+        hl("WhichKeyValue", fg=c["mauve"]),
+        "",
+        "  -- ── Lazy / Noice / Cmp ───────────────────────────────",
+        hl("LazyNormal", fg=fg, bg=bg),
+        hl("LazyReasonPlugin", fg=c["accent"]),
+        hl("LazyReasonStart", fg=c["sage"]),
+        hl("LazyReasonSource", fg=c["diagnostic"]),
+        hl("LazyReasonRt", fg=c["mauve"]),
+        hl("LazyReasonCmd", fg=c["lavender"]),
+        hl("LazyValue", fg=c["mauve"]),
+        hl("LazyCommit", fg=c["sage"]),
+        hl("LazySpecial", fg=c["lavender"]),
+        hl("LazyDir", fg=c["diagnostic"]),
+        hl("LazyH1", fg=c["accent"], bold=True),
+        hl("LazyButton", fg=fg, bg=c["surface1"]),
+        hl("LazyButtonActive", fg=bg, bg=c["accent"]),
+        hl("NoiceMsg", fg=fg),
+        hl("NoiceCursor", fg=bg, bg=c["accent"]),
+        hl("MiniCompletionActiveParameter", underline=True),
+        hl("CmpItemAbbr", fg=fg),
+        hl("CmpItemAbbrMatch", fg=c["accent"], bold=True),
+        hl("CmpItemAbbrMatchFuzzy", fg=c["accent"]),
+        hl("CmpItemKind", fg=c["muted"]),
+        hl("CmpItemMenu", fg=c["muted"]),
+        hl("CmpItemKindSnippet", fg=c["mauve"]),
+        hl("CmpItemKindKeyword", fg=c["accent"]),
+        hl("CmpItemKindText", fg=fg),
+        hl("CmpItemKindMethod", fg=c["accent_2"]),
+        hl("CmpItemKindFunction", fg=c["accent_2"]),
+        hl("CmpItemKindConstructor", fg=c["accent"]),
+        hl("CmpItemKindField", fg=c["diagnostic"]),
+        hl("CmpItemKindVariable", fg=c["mauve"]),
+        hl("CmpItemKindClass", fg=c["diagnostic"]),
+        hl("CmpItemKindInterface", fg=c["diagnostic"]),
+        hl("CmpItemKindModule", fg=c["diagnostic"]),
+        hl("CmpItemKindProperty", fg=c["diagnostic"]),
+        hl("CmpItemKindUnit", fg=c["sage"]),
+        hl("CmpItemKindValue", fg=c["mauve"]),
+        hl("CmpItemKindEnum", fg=c["diagnostic"]),
+        hl("CmpItemKindEnumMember", fg=c["mauve"]),
+        hl("CmpItemKindKeyword", fg=c["accent"]),
+        hl("CmpItemKindColor", fg=c["lavender"]),
+        hl("CmpItemKindFile", fg=fg),
+        hl("CmpItemKindReference", fg=c["accent_2"]),
+        hl("CmpItemKindFolder", fg=c["diagnostic"]),
+        hl("CmpItemKindEvent", fg=c["warning"]),
+        hl("CmpItemKindOperator", fg=c["accent_2"]),
+        hl("CmpItemKindTypeParameter", fg=c["diagnostic"]),
+        hl("CmpItemKindCopied", fg=c["sage"]),
+        "",
+    ]

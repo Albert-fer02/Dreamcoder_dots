@@ -1,17 +1,17 @@
-/* Dreamcoder color layer for Waybar OLED. */
+/* Dreamcoder color layer for Waybar. */
 @define-color bg #12100e;
-@define-color bg-soft #1a1511;
+@define-color bg-soft #1b1612;
 @define-color surface #211c18;
 @define-color text #e8dfd0;
-@define-color muted #b8a99a;
+@define-color muted #c7b9aa;
 @define-color border #594d46;
 @define-color border-ui #806754;
 @define-color focus #d99555;
 @define-color accent #d99555;
 @define-color accent-2 #c96a45;
-@define-color diagnostic #c8b2a2;
+@define-color diagnostic #5f95ca;
 @define-color error #e98272;
-@define-color success #b8bf84;
+@define-color success #388c48;
 @define-color warning #e8b866;
 
 window#waybar {

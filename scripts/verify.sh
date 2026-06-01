@@ -3,23 +3,20 @@ set -euo pipefail
 ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 # shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
-MODULES=(kitty ghostty fastfetch)
-ok() { printf '✓ %s\n' "$*"; }
-fail() { printf '✗ %s\n' "$*" >&2; return 1; }
-check_path() { local path="$1"; [[ -e "${path}" ]] || { fail "${path} is missing"; return; }; ok "${path}"; }
+ok() { printf '✓ %s
+' "$*"; }
+fail() { printf '✗ %s
+' "$*" >&2; return 1; }
+check_path() { [[ -e "${1}" ]] || { fail "${1} is missing"; return; }; ok "${1}"; }
+control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
 command -v starship >/dev/null || fail 'Missing dependency: starship'
-for app in "${MODULES[@]}"; do check_path "${CONFIG_HOME}/${app}"; done
-check_path "${CONFIG_HOME}/starship.toml"
-check_path "${CONFIG_HOME}/kitty/dreamcoder-ui.conf"
-check_path "${DATA_HOME}/warp-terminal/themes"
-PI_AGENT_DIR="${PI_AGENT_DIR:-${HOME}/.pi/agent}"
-check_path "${PI_AGENT_DIR}/themes/dreamcoder.json"
+for path in "${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/fastfetch" "${CONFIG_HOME}/starship.toml" "${CONFIG_HOME}/kitty/dreamcoder-ui.conf" "${DATA_HOME}/warp-terminal/themes"; do check_path "${path}"; done
+PI_AGENT_DIR="${PI_AGENT_DIR:-${HOME}/.pi/agent}"; check_path "${PI_AGENT_DIR}/themes/dreamcoder.json"
 "${DREAMCODER_DOTS_DIR}/scripts/verify-pi-theme.py" "${PI_AGENT_DIR}/themes/dreamcoder.json" "${PI_AGENT_DIR}/settings.json"
-STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship.toml" starship explain >/dev/null
-STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/starship-light.toml" starship explain >/dev/null
+for file in starship.toml starship-light.toml; do STARSHIP_CONFIG="${DREAMCODER_DOTS_DIR}/Shell/.config/${file}" starship explain >/dev/null; done
 "${DREAMCODER_DOTS_DIR}/scripts/verify-theme-health.py" >/dev/null
-[[ -x "${DREAMCODER_DOTS_DIR}/scripts/doctor.sh" ]] || fail 'Missing doctor.sh'
-[[ -x "${DREAMCODER_DOTS_DIR}/scripts/repair.sh" ]] || fail 'Missing repair.sh'
-[[ -x "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" ]] || fail 'Missing apply-theme-mode.sh'
-[[ -x "${DREAMCODER_DOTS_DIR}/scripts/status.sh" ]] || fail 'Missing status.sh'
+python3 -m unittest tests/test_dreamcoder_control_center.py tests/test_dreamcoder_tui.py tests/test_dreamcoder_docs_report.py tests/test_dreamcoder_audit.py tests/test_dreamcoder_repair_catalog.py >/dev/null
+CONTROL_CASES=('doctor --json' 'dashboard --json' 'dashboard --markdown' 'tui render --json' 'tui render' 'tui set terminal.default_mode light --dry-run --json' 'docs report --json' 'docs report --markdown' 'audit compare --json' 'audit compare --markdown' 'settings schema --json' 'settings validate --json' 'repair catalog --json' 'repair plan --json' 'repair apply --dry-run --json' 'profile apply asus-vivobook15 --dry-run --json' 'motion apply fluid --dry-run --json')
+for case_args in "${CONTROL_CASES[@]}"; do read -r -a argv <<< "${case_args}"; control "${argv[@]}" >/dev/null; done
+for script in doctor.sh repair.sh apply-theme-mode.sh status.sh; do [[ -x "${DREAMCODER_DOTS_DIR}/scripts/${script}" ]] || fail "Missing ${script}"; done
 ok 'Starship configs and theme health valid'

@@ -7,26 +7,42 @@ ROOT = Path(__file__).resolve().parents[1]
 TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
 
 
+def rel_luminance(value: str) -> float:
+    """Calculate relative luminance for WCAG contrast."""
+    def channel(part: int) -> float:
+        scaled = part / 255
+        return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
+    value = value.lstrip("#")
+    r, g, b = (channel(int(value[i : i + 2], 16)) for i in (0, 2, 4))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def contrast(left: str, right: str) -> float:
+    """Calculate WCAG 2 contrast ratio."""
+    a, b = sorted((rel_luminance(left), rel_luminance(right)), reverse=True)
+    return (a + 0.05) / (b + 0.05)
+
+
 class DreamcoderThemeQualityTest(unittest.TestCase):
     def setUp(self):
         self.modes = json.loads(TOKENS.read_text())["modes"]
 
     def test_dark_uses_refined_ember_noir_scale(self):
         dark = self.modes["dark"]
-        self.assertEqual(dark["name"], "Dreamcoder Ember Noir")
-        self.assertEqual(dark["surface0"], "#241b16")
-        self.assertEqual(dark["surface1"], "#30231c")
-        self.assertEqual(dark["surface2"], "#3e2c22")
-        self.assertEqual(dark["accent"], "#e6a15c")
-        self.assertEqual(dark["accent_2"], "#d66f50")
+        self.assertEqual(dark["name"], "Dreamcoder Ember Noir OLED")
+        self.assertEqual(dark["surface0"], "#211c18")
+        self.assertEqual(dark["surface1"], "#2e241f")
+        self.assertEqual(dark["surface2"], "#3e3129")
+        self.assertEqual(dark["accent"], "#d99555")
+        self.assertEqual(dark["accent_2"], "#c96a45")
 
     def test_light_has_stronger_editor_readability_tiers(self):
         light = self.modes["light"]
         self.assertEqual(light["surface0"], "#fff7ea")
         self.assertEqual(light["surface2"], "#c8ad89")
-        self.assertEqual(light["subtle"], "#554635")
-        self.assertEqual(light["comment"], "#66523f")
-        self.assertEqual(light["accent"], "#824f16")
+        # Verify subtle has sufficient contrast against background
+        self.assertGreaterEqual(contrast(light["subtle"], light["bg"]), 4.5)
+        self.assertGreaterEqual(contrast(light["comment"], light["bg"]), 4.5)
 
     def test_dusk_is_not_a_duplicate_light_palette(self):
         dusk = self.modes["dusk"]

@@ -9,8 +9,10 @@ font-feature = -calt, -liga, -dlig
 
 # Theme
 theme = dreamcoder
+command = fish --login
 cursor-style = "block"
 cursor-style-blink = true
+cursor-opacity = 0.96
 
 # Tab bar
 # Note: Ghostty does not support tab bar position configuration yet (always top), no fade style or min-tabs like Kitty, tabs show when >1
@@ -115,7 +117,9 @@ unfocused-split-opacity = 0.92
 # =====================================================
 # ⚡ SHADERS (Dreamcoder Special Effects)
 # =====================================================
-# Descomentar una línea para activar el efecto
+custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl
+custom-shader-animation = true
+# Uncomment one line below to replace the Dreamcoder Motion cursor pulse.
 # custom-shader = ~/.config/ghostty/shaders/bloom.glsl
 # custom-shader = ~/.config/ghostty/shaders/crt.glsl
 # custom-shader = ~/.config/ghostty/shaders/matrix-hallway.glsl

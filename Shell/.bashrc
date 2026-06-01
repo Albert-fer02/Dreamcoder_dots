@@ -23,7 +23,7 @@ done
 command -v fzf >/dev/null && eval "$(fzf --bash)"
 if command -v starship >/dev/null; then
     eval "$(starship init bash)"
-    enable_transience
+    declare -F enable_transience >/dev/null && enable_transience
 fi
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 [[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"

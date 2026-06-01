@@ -1,11 +1,10 @@
-if status is-interactive
-    set -l dotfiles "$HOME/.dotfiles"
-    set -l config "$dotfiles/Fastfetch/.config/fastfetch/config.jsonc"
-    set -l logo "$HOME/.config/dreamcoder/Dreamcoder01.jpg"
+# -----------------------------------------------------
+# AUTOSTART
+# -----------------------------------------------------
 
-    if command -q fastfetch; and test -f "$config"; and test -f "$logo"
-        fastfetch --config "$config" --logo "$logo" --logo-recache true
-    else if command -q fastfetch
-        fastfetch
-    end
+# -----------------------------------------------------
+# Fastfetch
+# -----------------------------------------------------
+if status is-interactive; and test "$DREAMCODER_FASTFETCH_ON_START" != "0"
+    fastfetch
 end

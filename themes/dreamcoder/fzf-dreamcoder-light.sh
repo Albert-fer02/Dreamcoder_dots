@@ -1,27 +1,4 @@
-# ========================================================
-# Dreamcoder Light — Fzf theme
-# ========================================================
-# Source this from .zshrc or .bashrc.
-
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"'
-  --color=bg:#f3eadc
-  --color=bg+:#fff7ea
-  --color=fg:#17120d
-  --color=fg+:#17120d
-  --color=hl:#824f16
-  --color=hl+:#824f16
-  --color=info:#15516e
-  --color=marker:#3f6b35
-  --color=prompt:#824f16
-  --color=spinner:#57478b
-  --color=pointer:#a7471c
-  --color=header:#3d3228
-  --color=border:#8a7358
-  --color=label:#3d3228
-  --color=query:#17120d
-  --color=gutter:#f3eadc
-  --color=scrollbar:#8a7358
-  --color=separator:#8a7358
-  --color=preview-bg:#f3eadc
-  --color=preview-border:#8a7358
-'
+#!/usr/bin/env bash
+set -euo pipefail
+# Dreamcoder Light — fzf
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --color=bg:#f3eadc,bg+:#fff7ea,fg:#17120d,fg+:#17120d,hl:#824f16,hl+:#824f16,info:#0d4a68,marker:#3d723d,prompt:#824f16,spinner:#57478b,pointer:#a7471c,header:#352e22,border:#8a7358,label:#352e22,query:#17120d,gutter:#f3eadc,scrollbar:#8a7358,separator:#8a7358,preview-bg:#f3eadc,preview-border:#8a7358"

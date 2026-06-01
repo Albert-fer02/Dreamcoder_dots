@@ -3,15 +3,15 @@
 @define-color bg-soft #e6d7c4;
 @define-color surface #fff7ea;
 @define-color text #17120d;
-@define-color muted #3d3228;
+@define-color muted #352e22;
 @define-color border #8a7358;
 @define-color border-ui #66513b;
 @define-color focus #0f6570;
 @define-color accent #824f16;
 @define-color accent-2 #a7471c;
-@define-color diagnostic #15516e;
+@define-color diagnostic #0d4a68;
 @define-color error #842f24;
-@define-color success #3f6b35;
+@define-color success #3d723d;
 @define-color warning #654300;
 
 window#waybar {

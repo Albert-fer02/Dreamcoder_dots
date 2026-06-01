@@ -1,91 +1,91 @@
 /* ========================================================
-   Dreamcoder Ember Noir — Obsidian CSS snippet
+   Dreamcoder Light — Obsidian CSS snippet
    ========================================================
    Place in your vault's .obsidian/snippets/ folder.
    Enable in Settings → Appearance → CSS snippets. */
 
-.theme-dark {
+.theme-light {
   /* Base — raw palette colors for backgrounds and surfaces */
-  --background-primary: #14110e;
-  --background-primary-alt: #231c18;
-  --background-secondary: #231c18;
-  --background-secondary-alt: #2e241f;
-  --background-modifier-border: #594d46;
-  --background-modifier-border-hover: #806754;
-  --background-modifier-form-field: #231c18;
-  --background-modifier-success: #3d3c2c;
-  --background-modifier-error: #492d27;
-  --background-modifier-message: #2e241f;
+  --background-primary: #f3eadc;
+  --background-primary-alt: #fff7ea;
+  --background-secondary: #fff7ea;
+  --background-secondary-alt: #decbb1;
+  --background-modifier-border: #8a7358;
+  --background-modifier-border-hover: #66513b;
+  --background-modifier-form-field: #fff7ea;
+  --background-modifier-success: #c6ccb4;
+  --background-modifier-error: #d7bbae;
+  --background-modifier-message: #decbb1;
 
   /* Text — guarded against background for accessibility */
-  --text-normal: #f0e7dc;
-  --text-muted: #c7b9aa;
-  --text-faint: #aa927c;
-  --text-accent: #cdae7d;
-  --text-accent-hover: #ce836c;
-  --text-error: #e98272;
-  --text-warning: #e8b866;
-  --text-success: #b8bf84;
-  --text-selection: #26201a;
-  --text-on-accent: #14110e;
+  --text-normal: #17120d;
+  --text-muted: #352e22;
+  --text-faint: #554638;
+  --text-accent: #824f16;
+  --text-accent-hover: #a7471c;
+  --text-error: #842f24;
+  --text-warning: #654300;
+  --text-success: #3d723d;
+  --text-selection: #857e74;
+  --text-on-accent: #f3eadc;
 
   /* Interactive */
-  --interactive-normal: #2e241f;
-  --interactive-hover: #3e3129;
-  --interactive-accent: #cdae7d;
-  --interactive-accent-hover: #ce836c;
-  --interactive-success: #b8bf84;
+  --interactive-normal: #decbb1;
+  --interactive-hover: #c8ad89;
+  --interactive-accent: #824f16;
+  --interactive-accent-hover: #a7471c;
+  --interactive-success: #3d723d;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: #594d46;
-  --scrollbar-active-thumb-bg: #806754;
+  --scrollbar-thumb-bg: #8a7358;
+  --scrollbar-active-thumb-bg: #66513b;
 
   /* Code — syntax highlighting colors */
-  --code-normal: #f0e7dc;
-  --code-comment: #9c826d;
-  --code-punctuation: #c7b9aa;
-  --code-keyword: #cdae7d;
-  --code-operator: #ce836c;
-  --code-function: #ce836c;
-  --code-string: #b8bf84;
-  --code-number: #d98aa9;
-  --code-tag: #cdae7d;
-  --code-important: #e98272;
-  --code-background: #231c18;
+  --code-normal: #17120d;
+  --code-comment: #725e4c;
+  --code-punctuation: #352e22;
+  --code-keyword: #824f16;
+  --code-operator: #a7471c;
+  --code-function: #a7471c;
+  --code-string: #3d723d;
+  --code-number: #7d3e64;
+  --code-tag: #824f16;
+  --code-important: #842f24;
+  --code-background: #fff7ea;
 
   /* Heading */
-  --h1-color: #cdae7d;
-  --h2-color: #cdae7d;
-  --h3-color: #ce836c;
-  --h4-color: #c7b2a2;
-  --h5-color: #c7b9aa;
-  --h6-color: #aa927c;
+  --h1-color: #824f16;
+  --h2-color: #824f16;
+  --h3-color: #a7471c;
+  --h4-color: #0d4a68;
+  --h5-color: #352e22;
+  --h6-color: #554638;
 
   /* Link */
-  --link-color: #cdae7d;
-  --link-color-hover: #ce836c;
-  --link-external-color: #c7b2a2;
-  --link-external-color-hover: #ce836c;
+  --link-color: #824f16;
+  --link-color-hover: #a7471c;
+  --link-external-color: #0d4a68;
+  --link-external-color-hover: #a7471c;
 
   /* Checkbox */
-  --checkbox-color: #cdae7d;
-  --checkbox-color-hover: #ce836c;
-  --checkbox-border-color: #594d46;
-  --checkbox-mark-color: #14110e;
+  --checkbox-color: #824f16;
+  --checkbox-color-hover: #a7471c;
+  --checkbox-border-color: #8a7358;
+  --checkbox-mark-color: #f3eadc;
 
   /* Table */
-  --table-header-background: #2e241f;
-  --table-header-background-hover: #3e3129;
-  --table-row-background-hover: #231c18;
-  --table-border-color: #594d46;
+  --table-header-background: #decbb1;
+  --table-header-background-hover: #c8ad89;
+  --table-row-background-hover: #fff7ea;
+  --table-border-color: #8a7358;
 
   /* Graph */
-  --graph-line: #594d46;
-  --graph-node: #c7b9aa;
-  --graph-node-focused: #cdae7d;
-  --graph-node-tag: #c7b2a2;
-  --graph-node-attachment: #b8bf84;
+  --graph-line: #8a7358;
+  --graph-node: #352e22;
+  --graph-node-focused: #824f16;
+  --graph-node-tag: #0d4a68;
+  --graph-node-attachment: #3d723d;
 }
 
 /* Headings */
@@ -98,46 +98,46 @@
 
 /* Tags */
 .tag {
-  background-color: #30291f;
-  color: #cdae7d;
+  background-color: #e2d3be;
+  color: #824f16;
   border-radius: 4px;
   padding: 0 6px;
 }
 
 /* Blockquotes */
 blockquote {
-  border-color: #cdae7d !important;
+  border-color: #824f16 !important;
 }
 
 /* Search highlights */
 .search-result-file-matched-text,
 .is-selected .search-result-file-matched-text,
 mark {
-  background-color: #393024 !important;
-  color: #14110e !important;
+  background-color: #dccbb4 !important;
+  color: #f3eadc !important;
 }
 
 /* Active line in edit mode */
 .cm-active {
-  background-color: #231c18 !important;
+  background-color: #fff7ea !important;
 }
 
 /* Selection */
 ::selection {
-  background-color: #27221c !important;
+  background-color: #7a736a !important;
 }
 
 /* Tooltip */
 .tooltip {
-  background-color: #2e241f !important;
-  color: #f0e7dc !important;
+  background-color: #decbb1 !important;
+  color: #17120d !important;
 }
 
 /* Menu */
 .menu {
-  background-color: #231c18 !important;
+  background-color: #fff7ea !important;
 }
 
 .menu-item:hover {
-  background-color: #2e241f !important;
+  background-color: #decbb1 !important;
 }

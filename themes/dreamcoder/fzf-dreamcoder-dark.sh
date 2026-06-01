@@ -1,27 +1,4 @@
-# ========================================================
-# Dreamcoder Ember Noir — Fzf theme
-# ========================================================
-# Source this from .zshrc or .bashrc.
-
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"'
-  --color=bg:#12100e
-  --color=bg+:#211c18
-  --color=fg:#e8dfd0
-  --color=fg+:#e8dfd0
-  --color=hl:#d99555
-  --color=hl+:#d99555
-  --color=info:#c8b2a2
-  --color=marker:#b8bf84
-  --color=prompt:#d99555
-  --color=spinner:#c9a8dc
-  --color=pointer:#c96a45
-  --color=header:#b8a99a
-  --color=border:#594d46
-  --color=label:#b8a99a
-  --color=query:#e8dfd0
-  --color=gutter:#12100e
-  --color=scrollbar:#594d46
-  --color=separator:#594d46
-  --color=preview-bg:#12100e
-  --color=preview-border:#594d46
-'
+#!/usr/bin/env bash
+set -euo pipefail
+# Dreamcoder Ember Noir OLED — fzf
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --color=bg:#12100e,bg+:#211c18,fg:#e8dfd0,fg+:#e8dfd0,hl:#d99555,hl+:#d99555,info:#5f95ca,marker:#388c48,prompt:#d99555,spinner:#c9a8dc,pointer:#c96a45,header:#c7b9aa,border:#594d46,label:#c7b9aa,query:#e8dfd0,gutter:#12100e,scrollbar:#594d46,separator:#594d46,preview-bg:#12100e,preview-border:#594d46"

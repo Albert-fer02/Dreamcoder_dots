@@ -1,25 +1,25 @@
-name: Dreamcoder Ember Noir
-accent: '#e6a15c'
-cursor: '#e6a15c'
-background: '#15100d'
-foreground: '#f0e7dc'
+name: Dreamcoder Ember Noir OLED
+accent: '#d99555'
+cursor: '#d99555'
+background: '#12100e'
+foreground: '#e8dfd0'
 details: darker
 terminal_colors:
   normal:
-    black: '#86827e'
+    black: '#858280'
     red: '#e98272'
-    green: '#b8bf84'
-    yellow: '#e6a15c'
-    blue: '#d2a268'
+    green: '#388c48'
+    yellow: '#d99555'
+    blue: '#5f95ca'
     magenta: '#d98aa9'
     cyan: '#c9a8dc'
     white: '#c7b9aa'
   bright:
-    black: '#aa927c'
+    black: '#938274'
     red: '#e9a092'
     green: '#75a579'
     yellow: '#e8b866'
     blue: '#579ba4'
     magenta: '#846fc5'
     cyan: '#72b6bd'
-    white: '#f0e7dc'
+    white: '#e8dfd0'

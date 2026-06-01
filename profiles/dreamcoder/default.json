@@ -1,0 +1,13 @@
+{
+  "name": "default",
+  "description": "Portable Dreamcoder defaults for unknown machines.",
+  "monitor": "auto",
+  "monitor_scale": 1,
+  "keyboard_layout": "latam",
+  "repeat_rate": 40,
+  "repeat_delay": 300,
+  "shell": "fish --login",
+  "terminal_default_mode": "light",
+  "motion_preset": "balanced",
+  "performance_notes": "Safe defaults with moderate key repeat and low visual overhead."
+}

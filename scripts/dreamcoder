@@ -6,11 +6,28 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 CMD="${1:-help}"
 shift || true
+CONTROL() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
 
 case "${CMD}" in
     install) exec "${DREAMCODER_DOTS_DIR}/scripts/install.sh" "$@" ;;
-    repair) exec "${DREAMCODER_DOTS_DIR}/scripts/repair.sh" "$@" ;;
+    repair)
+        case "${1:-}" in
+            catalog|plan|apply) CONTROL repair "$@" ;;
+            *) exec "${DREAMCODER_DOTS_DIR}/scripts/repair.sh" "$@" ;;
+        esac
+        ;;
     doctor) exec "${DREAMCODER_DOTS_DIR}/scripts/doctor.sh" "$@" ;;
+    doctor-json) CONTROL doctor --json "$@" ;;
+    dashboard) CONTROL dashboard "$@" ;;
+    tui) CONTROL tui "$@" ;;
+    docs) CONTROL docs "$@" ;;
+    audit) CONTROL audit "$@" ;;
+    control) CONTROL "$@" ;;
+    settings) CONTROL settings "$@" ;;
+    profile) CONTROL profile "$@" ;;
+    motion) CONTROL motion "$@" ;;
+    backup) CONTROL backup "$@" ;;
+    installer) CONTROL installer "$@" ;;
     status) exec "${DREAMCODER_DOTS_DIR}/scripts/status.sh" "$@" ;;
     verify) exec "${DREAMCODER_DOTS_DIR}/scripts/verify.sh" "$@" ;;
     preview) exec "${DREAMCODER_DOTS_DIR}/scripts/generate-theme-preview.py" "$@" ;;
@@ -18,7 +35,7 @@ case "${CMD}" in
     light|dark|dusk) exec "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" "${CMD}" "$@" ;;
     sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
     *)
-        printf 'Usage: dreamcoder {install|repair|doctor|status|verify|preview|auto|light|dusk|dark|sync}\n' >&2
+        printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|installer|status|verify|preview|auto|light|dusk|dark|sync}\n' >&2
         exit 2
         ;;
 esac

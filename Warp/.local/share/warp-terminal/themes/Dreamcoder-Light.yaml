@@ -8,14 +8,14 @@ terminal_colors:
   normal:
     black: '#5e5c57'
     red: '#842f24'
-    green: '#3f6b35'
+    green: '#3d723d'
     yellow: '#824f16'
-    blue: '#15516e'
+    blue: '#0d4a68'
     magenta: '#7d3e64'
     cyan: '#57478b'
-    white: '#3d3228'
+    white: '#352e22'
   bright:
-    black: '#554635'
+    black: '#554638'
     red: '#815850'
     green: '#4f6f51'
     yellow: '#654300'

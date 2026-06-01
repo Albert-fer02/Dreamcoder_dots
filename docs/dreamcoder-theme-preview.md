@@ -17,31 +17,31 @@ Semantic tokens are intentionally distinct:
 
 ## Palette
 
-### Dreamcoder Ember Noir
+### Dreamcoder Ember Noir OLED
 
 | Role | Color |
 | --- | --- |
-| `bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#15100d'></span> `#15100d` |
-| `bg_soft` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#1d1613'></span> `#1d1613` |
-| `surface0` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#241b16'></span> `#241b16` |
-| `surface1` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#30231c'></span> `#30231c` |
-| `surface2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3e2c22'></span> `#3e2c22` |
-| `text` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#f0e7dc'></span> `#f0e7dc` |
+| `bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#12100e'></span> `#12100e` |
+| `bg_soft` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#1b1612'></span> `#1b1612` |
+| `surface0` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#211c18'></span> `#211c18` |
+| `surface1` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#2e241f'></span> `#2e241f` |
+| `surface2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3e3129'></span> `#3e3129` |
+| `text` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#e8dfd0'></span> `#e8dfd0` |
 | `muted` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#c7b9aa'></span> `#c7b9aa` |
-| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#aa927c'></span> `#aa927c` |
-| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#9c826d'></span> `#9c826d` |
-| `accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#e6a15c'></span> `#e6a15c` |
-| `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d66f50'></span> `#d66f50` |
-| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d2a268'></span> `#d2a268` |
-| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#b8bf84'></span> `#b8bf84` |
+| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#938274'></span> `#938274` |
+| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#b8a99a'></span> `#b8a99a` |
+| `accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d99555'></span> `#d99555` |
+| `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#c96a45'></span> `#c96a45` |
+| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#5f95ca'></span> `#5f95ca` |
+| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#388c48'></span> `#388c48` |
 | `lavender` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#c9a8dc'></span> `#c9a8dc` |
 | `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d98aa9'></span> `#d98aa9` |
 | `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#e98272'></span> `#e98272` |
 | `warning` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#e8b866'></span> `#e8b866` |
-| `border` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#49362c'></span> `#49362c` |
+| `border` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#594d46'></span> `#594d46` |
 | `border_ui` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#806754'></span> `#806754` |
-| `border_hi` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d8c1a5'></span> `#d8c1a5` |
-| `focus` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#e6a15c'></span> `#e6a15c` |
+| `border_hi` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#c8b195'></span> `#c8b195` |
+| `focus` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#d99555'></span> `#d99555` |
 
 ### Dreamcoder Light
 
@@ -53,13 +53,13 @@ Semantic tokens are intentionally distinct:
 | `surface1` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#decbb1'></span> `#decbb1` |
 | `surface2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#c8ad89'></span> `#c8ad89` |
 | `text` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#17120d'></span> `#17120d` |
-| `muted` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3d3228'></span> `#3d3228` |
-| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#554635'></span> `#554635` |
-| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#66523f'></span> `#66523f` |
+| `muted` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#352e22'></span> `#352e22` |
+| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#554638'></span> `#554638` |
+| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#725e4c'></span> `#725e4c` |
 | `accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#824f16'></span> `#824f16` |
 | `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#a7471c'></span> `#a7471c` |
-| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#15516e'></span> `#15516e` |
-| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3f6b35'></span> `#3f6b35` |
+| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#0d4a68'></span> `#0d4a68` |
+| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3d723d'></span> `#3d723d` |
 | `lavender` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#57478b'></span> `#57478b` |
 | `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#7d3e64'></span> `#7d3e64` |
 | `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#842f24'></span> `#842f24` |
@@ -97,55 +97,55 @@ Semantic tokens are intentionally distinct:
 
 ## Contrast audit
 
-### Dreamcoder Ember Noir contrast (WCAG 2)
+### Dreamcoder Ember Noir OLED contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `text` | 15.44:1 | AAA |
-| `muted` | 9.85:1 | AA |
-| `comment` | 5.24:1 | AA |
-| `accent` | 8.65:1 | AA |
-| `accent_2` | 5.62:1 | AA |
-| `diagnostic` | 8.19:1 | AA |
-| `sage` | 9.74:1 | AA |
-| `error` | 7.11:1 | AA |
-| `warning` | 10.32:1 | AA |
+| `text` | 14.37:1 | AAA |
+| `muted` | 9.90:1 | AA |
+| `comment` | 8.30:1 | AA |
+| `accent` | 7.58:1 | AA |
+| `accent_2` | 5.09:1 | AA |
+| `diagnostic` | 6.00:1 | AA |
+| `sage` | 4.53:1 | AA |
+| `error` | 7.14:1 | AA |
+| `warning` | 10.38:1 | AA |
 
-### Dreamcoder Ember Noir APCA
+### Dreamcoder Ember Noir OLED APCA
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 95.0 | ≥75 (body) |
-| `muted` | 70.9 | ≥75 (FAIL) |
-| `comment` | 45.2 | ≥75 (FAIL) |
-| `accent` | 64.9 | ≥75 (FAIL) |
-| `accent_2` | 47.7 | ≥75 (FAIL) |
-| `diagnostic` | 62.5 | ≥75 (FAIL) |
-| `sage` | 70.3 | ≥75 (FAIL) |
-| `error` | 56.6 | ≥75 (FAIL) |
-| `warning` | 73.1 | ≥75 (FAIL) |
-| `border_ui` | 33.1 | ≥60 (FAIL) |
-| `focus` | 64.9 | ≥60 (UI) |
+| `text` | 90.6 | ≥75 (body) |
+| `muted` | 71.0 | ≥75 (FAIL) |
+| `comment` | 63.0 | ≥75 (FAIL) |
+| `accent` | 59.2 | ≥75 (FAIL) |
+| `accent_2` | 44.2 | ≥75 (FAIL) |
+| `diagnostic` | 50.0 | ≥75 (FAIL) |
+| `sage` | 40.3 | ≥75 (FAIL) |
+| `error` | 56.8 | ≥75 (FAIL) |
+| `warning` | 73.3 | ≥75 (FAIL) |
+| `border_ui` | 33.2 | ≥60 (FAIL) |
+| `focus` | 59.2 | ≥60 (FAIL) |
 
-### Dreamcoder Ember Noir UI affordance contrast
+### Dreamcoder Ember Noir OLED UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `border_ui` | 3.59:1 | PASS |
-| `border_hi` | 10.88:1 | PASS |
-| `focus` | 8.65:1 | PASS |
+| `border_ui` | 3.60:1 | PASS |
+| `border_hi` | 9.20:1 | PASS |
+| `focus` | 7.58:1 | PASS |
 
 ### Dreamcoder Light contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
 | `text` | 15.60:1 | AAA |
-| `muted` | 10.45:1 | AA |
-| `comment` | 6.19:1 | AA |
+| `muted` | 11.25:1 | AA |
+| `comment` | 5.15:1 | AA |
 | `accent` | 5.72:1 | AA |
 | `accent_2` | 4.95:1 | AA |
-| `diagnostic` | 7.24:1 | AA |
-| `sage` | 5.23:1 | AA |
+| `diagnostic` | 8.02:1 | AA |
+| `sage` | 4.80:1 | AA |
 | `error` | 7.30:1 | AA |
 | `warning` | 7.48:1 | AA |
 
@@ -154,12 +154,12 @@ Semantic tokens are intentionally distinct:
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
 | `text` | 96.0 | ≥75 (body) |
-| `muted` | 85.5 | ≥75 (body) |
-| `comment` | 72.8 | ≥75 (FAIL) |
+| `muted` | 87.3 | ≥75 (body) |
+| `comment` | 67.8 | ≥75 (FAIL) |
 | `accent` | 70.7 | ≥75 (FAIL) |
 | `accent_2` | 66.7 | ≥75 (FAIL) |
-| `diagnostic` | 76.7 | ≥75 (body) |
-| `sage` | 68.3 | ≥75 (FAIL) |
+| `diagnostic` | 79.2 | ≥75 (body) |
+| `sage` | 65.8 | ≥75 (FAIL) |
 | `error` | 76.9 | ≥75 (body) |
 | `warning` | 77.5 | ≥75 (body) |
 | `border_ui` | 73.1 | ≥60 (UI) |

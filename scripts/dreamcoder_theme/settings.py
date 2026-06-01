@@ -44,7 +44,7 @@ class ThemePaths:
 
 
 def theme_mode() -> str:
-    mode = os.environ.get("DREAMCODER_THEME_MODE", "dark").lower()
+    mode = os.environ.get("DREAMCODER_THEME_MODE", "light").lower()
     if mode not in {"dark", "light", "dusk"}:
         raise SystemExit("DREAMCODER_THEME_MODE must be 'dark', 'light', or 'dusk'")
     return mode

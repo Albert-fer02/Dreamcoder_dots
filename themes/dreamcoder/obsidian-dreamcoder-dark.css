@@ -1,5 +1,5 @@
 /* ========================================================
-   Dreamcoder Ember Noir — Obsidian CSS snippet
+   Dreamcoder Ember Noir OLED — Obsidian CSS snippet
    ========================================================
    Place in your vault's .obsidian/snippets/ folder.
    Enable in Settings → Appearance → CSS snippets. */
@@ -13,20 +13,20 @@
   --background-modifier-border: #594d46;
   --background-modifier-border-hover: #806754;
   --background-modifier-form-field: #211c18;
-  --background-modifier-success: #3e3c2b;
-  --background-modifier-error: #4a2c26;
+  --background-modifier-success: #1c2f1c;
+  --background-modifier-error: #482c27;
   --background-modifier-message: #2e241f;
 
   /* Text — guarded against background for accessibility */
   --text-normal: #e8dfd0;
-  --text-muted: #b8a99a;
-  --text-faint: #9a8b7c;
+  --text-muted: #c7b9aa;
+  --text-faint: #938274;
   --text-accent: #d99555;
   --text-accent-hover: #c96a45;
   --text-error: #e98272;
   --text-warning: #e8b866;
-  --text-success: #b8bf84;
-  --text-selection: #2c1c15;
+  --text-success: #388c48;
+  --text-selection: #24201a;
   --text-on-accent: #12100e;
 
   /* Interactive */
@@ -34,7 +34,7 @@
   --interactive-hover: #3e3129;
   --interactive-accent: #d99555;
   --interactive-accent-hover: #c96a45;
-  --interactive-success: #b8bf84;
+  --interactive-success: #388c48;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -43,12 +43,12 @@
 
   /* Code — syntax highlighting colors */
   --code-normal: #e8dfd0;
-  --code-comment: #8c7c6d;
-  --code-punctuation: #b8a99a;
+  --code-comment: #b8a99a;
+  --code-punctuation: #c7b9aa;
   --code-keyword: #d99555;
   --code-operator: #c96a45;
   --code-function: #c96a45;
-  --code-string: #b8bf84;
+  --code-string: #388c48;
   --code-number: #d98aa9;
   --code-tag: #d99555;
   --code-important: #e98272;
@@ -58,14 +58,14 @@
   --h1-color: #d99555;
   --h2-color: #d99555;
   --h3-color: #c96a45;
-  --h4-color: #c8b2a2;
-  --h5-color: #b8a99a;
-  --h6-color: #9a8b7c;
+  --h4-color: #5f95ca;
+  --h5-color: #c7b9aa;
+  --h6-color: #938274;
 
   /* Link */
   --link-color: #d99555;
   --link-color-hover: #c96a45;
-  --link-external-color: #c8b2a2;
+  --link-external-color: #5f95ca;
   --link-external-color-hover: #c96a45;
 
   /* Checkbox */
@@ -82,10 +82,10 @@
 
   /* Graph */
   --graph-line: #594d46;
-  --graph-node: #b8a99a;
+  --graph-node: #c7b9aa;
   --graph-node-focused: #d99555;
-  --graph-node-tag: #c8b2a2;
-  --graph-node-attachment: #b8bf84;
+  --graph-node-tag: #5f95ca;
+  --graph-node-attachment: #388c48;
 }
 
 /* Headings */
@@ -98,7 +98,7 @@
 
 /* Tags */
 .tag {
-  background-color: #342619;
+  background-color: #302419;
   color: #d99555;
   border-radius: 4px;
   padding: 0 6px;
@@ -113,7 +113,7 @@ blockquote {
 .search-result-file-matched-text,
 .is-selected .search-result-file-matched-text,
 mark {
-  background-color: #3f2d1d !important;
+  background-color: #3a2b1c !important;
   color: #12100e !important;
 }
 
@@ -124,7 +124,7 @@ mark {
 
 /* Selection */
 ::selection {
-  background-color: #2e1e16 !important;
+  background-color: #26221c !important;
 }
 
 /* Tooltip */

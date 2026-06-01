@@ -1,9 +1,9 @@
-/* Dreamcoder color layer for Rofi OLED. */
+/* Dreamcoder color layer for Rofi. */
 * {
   background: rgba(18, 16, 14, 0.76);
   background-alt: #211c18;
   foreground: #e8dfd0;
-  muted: #b8a99a;
+  muted: #c7b9aa;
   selected: rgba(217, 149, 85, 0.24);
   active: #d99555;
   border-ui: #806754;

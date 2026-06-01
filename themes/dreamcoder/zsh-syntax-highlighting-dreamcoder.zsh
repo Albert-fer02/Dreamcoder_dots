@@ -1,56 +1,12 @@
-# ========================================================
-# Dreamcoder Ember Noir — Zsh-syntax-highlighting theme
-# Source this from .zshrc AFTER zsh-syntax-highlighting plugin.
-# ========================================================
-
+# Dreamcoder Light — zsh-syntax-highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
-
-# Main
-ZSH_HIGHLIGHT_STYLES[default]='fg=#f0e7dc'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#e98272'
-ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#cdae7d,bold'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#ce836c'
-ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#ce836c'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=#cdae7d'
-ZSH_HIGHLIGHT_STYLES[function]='fg=#ce836c'
-ZSH_HIGHLIGHT_STYLES[command]='fg=#cdae7d'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=#cdae7d,italic'
-ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#c7b9aa'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#cdae7d'
-
-# Paths
-ZSH_HIGHLIGHT_STYLES[path]='fg=#c7b2a2'
-ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=#cdae7d'
-ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=#c7b2a2,underline'
-ZSH_HIGHLIGHT_STYLES[path_approx]='fg=#e8b866,underline'
-
-# Globbing
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=#c9a8dc'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#c9a8dc'
-
-# Quoting & Brackets
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#c7b2a2'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#c7b2a2'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#b8bf84'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#b8bf84'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#b8bf84'
-ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#b8bf84'
-ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[assign]='fg=#f0e7dc'
-ZSH_HIGHLIGHT_STYLES[redirection]='fg=#ce836c'
-ZSH_HIGHLIGHT_STYLES[comment]='fg=#9c826d,italic'
-ZSH_HIGHLIGHT_STYLES[variable]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[mathvar]='fg=#d98aa9'
-ZSH_HIGHLIGHT_STYLES[null]='fg=#c7b9aa'
-
-# Brackets
-ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#cdae7d'
-ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#c7b2a2'
-ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#b8bf84'
-ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#c9a8dc'
-
-# Cursor
-ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='fg=#14110e,bg=#cdae7d'
+ZSH_HIGHLIGHT_STYLES[default]='fg=#17120d'; ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#842f24'; ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#824f16,bold'; ZSH_HIGHLIGHT_STYLES[alias]='fg=#a7471c'
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#a7471c'; ZSH_HIGHLIGHT_STYLES[builtin]='fg=#824f16'; ZSH_HIGHLIGHT_STYLES[function]='fg=#a7471c'; ZSH_HIGHLIGHT_STYLES[command]='fg=#824f16'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=#824f16,italic'; ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#352e22'; ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=#824f16'; ZSH_HIGHLIGHT_STYLES[path]='fg=#0d4a68'
+ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=#824f16'; ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=#0d4a68,underline'; ZSH_HIGHLIGHT_STYLES[path_approx]='fg=#654300,underline'; ZSH_HIGHLIGHT_STYLES[globbing]='fg=#57478b'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#57478b'; ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#0d4a68'; ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#0d4a68'; ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#3d723d'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#3d723d'; ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#3d723d'; ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=#3d723d'; ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=#7d3e64'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[assign]='fg=#17120d'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=#a7471c'; ZSH_HIGHLIGHT_STYLES[comment]='fg=#725e4c,italic'; ZSH_HIGHLIGHT_STYLES[variable]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[mathvar]='fg=#7d3e64'
+ZSH_HIGHLIGHT_STYLES[null]='fg=#352e22'; ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#824f16'; ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#0d4a68'; ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#3d723d'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#57478b'; ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='fg=#f3eadc,bg=#824f16'
