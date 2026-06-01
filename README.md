@@ -62,6 +62,8 @@ Dreamcoder now exposes a structured control layer behind the existing CLI. This 
 ./scripts/dreamcoder docs report --write --json
 ./scripts/dreamcoder audit compare --markdown
 ./scripts/dreamcoder audit compare --json
+./scripts/dreamcoder visual plan --markdown
+./scripts/dreamcoder visual plan --json
 ./scripts/dreamcoder doctor-json
 ./scripts/dreamcoder settings schema --json
 ./scripts/dreamcoder settings validate --json
@@ -78,7 +80,7 @@ Dreamcoder now exposes a structured control layer behind the existing CLI. This 
 ./scripts/dreamcoder backup restore <backup-id> --dry-run --json
 ```
 
-See `docs/DREAMCODER_CONTROL_CENTER.md` for the operator dashboard, safety model, and visual command map.
+See `docs/DREAMCODER_CONTROL_CENTER.md` for the operator dashboard, safety model, and visual command map. `visual plan` defines the screenshot baseline targets for Neovim, terminals, Waybar, Rofi, Codex CLI, and opencode.
 
 The first built-in machine profiles are `default` and `asus-vivobook15`. Motion presets are `battery`, `balanced`, `fluid`, and `cinematic`; each preset declares its terminal cursor behavior, Hyprland animation intent, and performance cost.
 

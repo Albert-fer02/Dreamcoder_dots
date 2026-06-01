@@ -87,6 +87,12 @@ def build_parser() -> argparse.ArgumentParser:
     repair_apply.add_argument("--dry-run", action="store_true")
     repair_apply.add_argument("--json", action="store_true")
 
+    visual = sub.add_parser("visual", help="Plan screenshot-based visual regression")
+    visual_sub = visual.add_subparsers(dest="visual_cmd", required=True)
+    visual_plan_p = visual_sub.add_parser("plan")
+    visual_plan_p.add_argument("--json", action="store_true")
+    visual_plan_p.add_argument("--markdown", action="store_true")
+
     backup = sub.add_parser("backup", help="Create and restore Dreamcoder backup manifests")
     backup_sub = backup.add_subparsers(dest="backup_cmd", required=True)
     backup_create = backup_sub.add_parser("create")

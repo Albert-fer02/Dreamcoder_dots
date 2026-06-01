@@ -27,6 +27,7 @@ case "${CMD}" in
     profile) CONTROL profile "$@" ;;
     motion) CONTROL motion "$@" ;;
     backup) CONTROL backup "$@" ;;
+    visual) CONTROL visual "$@" ;;
     installer) CONTROL installer "$@" ;;
     status) exec "${DREAMCODER_DOTS_DIR}/scripts/status.sh" "$@" ;;
     verify) exec "${DREAMCODER_DOTS_DIR}/scripts/verify.sh" "$@" ;;
@@ -35,7 +36,7 @@ case "${CMD}" in
     light|dark|dusk) exec "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" "${CMD}" "$@" ;;
     sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
     *)
-        printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|installer|status|verify|preview|auto|light|dusk|dark|sync}\n' >&2
+        printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|visual|installer|status|verify|preview|auto|light|dusk|dark|sync}\n' >&2
         exit 2
         ;;
 esac

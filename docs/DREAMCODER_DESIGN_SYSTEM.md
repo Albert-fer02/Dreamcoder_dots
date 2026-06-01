@@ -60,7 +60,7 @@ Verification commands:
 pytest -q tests/test_dreamcoder_theme_quality.py tests/test_nvim_readability.py tests/test_dreamcoder_global_design_system.py
 ```
 
-Visual regression is mandatory for future top-tier maturity: capture representative screenshots for Neovim, Kitty/Ghostty, Waybar, Rofi, Codex CLI, and opencode before accepting palette changes.
+Visual regression is mandatory for top-tier maturity. Run `./scripts/dreamcoder visual plan --json` to list required screenshot baselines, then capture representative screenshots for Neovim, Kitty/Ghostty, Waybar, Rofi, Codex CLI, and opencode before accepting palette changes.
 
 ## Governance
 

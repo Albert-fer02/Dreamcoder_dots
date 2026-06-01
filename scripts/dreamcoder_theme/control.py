@@ -13,6 +13,7 @@ from dreamcoder_theme.cli_handlers import (
     handle_repair,
     handle_settings,
     handle_tui,
+    handle_visual,
 )
 from dreamcoder_theme.cli_parser import build_parser
 from dreamcoder_theme.core import emit
@@ -35,6 +36,7 @@ def main(argv: list[str] | None = None) -> int:
         "installer": handle_installer,
         "repair": handle_repair,
         "backup": handle_backup,
+        "visual": handle_visual,
     }
     return handlers[args.cmd](args)
 
