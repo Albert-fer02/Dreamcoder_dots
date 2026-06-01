@@ -53,6 +53,7 @@ def sync_active_targets(paths, active: dict[str, str]) -> dict[str, bool]:
         "opencode_tui": write_opencode_tui(paths.opencode_tui),
         "opencode_cleanup": cleanup_opencode_themes(paths.opencode),
         "codex_theme": write_if_changed(paths.codex_theme, codex_tmtheme_content(active)),
+        "bat_theme": write_if_changed(paths.bat_theme_dir / "Dreamcoder.tmTheme", codex_tmtheme_content(active)),
         "codex_config": ensure_codex_theme_config(paths.codex_config),
         "pi_theme": write_if_changed(paths.pi_theme, pi_theme_content(active)),
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
@@ -83,6 +84,8 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     repo_changes += write_variant_files(ROOT / "Codex-App", {k: f"Dreamcoder-{v.title()}.codex-theme.json" for k, v in mode_names.items()}, opencode_content, variants)
     repo_changes += write_variant_files(ROOT / "Codex-CLI", {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()}, codex_tmtheme_content, variants)
     repo_changes.append(write_if_changed(ROOT / "Codex-CLI/Dreamcoder.tmTheme", codex_tmtheme_content(active)))
+    repo_changes += write_variant_files(ROOT / "Bat/.config/bat/themes", {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()}, codex_tmtheme_content, variants)
+    repo_changes.append(write_if_changed(ROOT / "Bat/.config/bat/themes/Dreamcoder.tmTheme", codex_tmtheme_content(active)))
     repo_changes.append(write_if_changed(ROOT / "Codex-App/Dreamcoder.codex-theme.json", opencode_content(active)))
     repo_changes.append(write_if_changed(ROOT / ".opencode/themes/dreamcoder.json", opencode_content(active, transparent_background=True)))
     repo_changes += write_variant_files(ROOT / "Pi/.pi/agent/themes", {k: f"dreamcoder-{v}.json" for k, v in mode_names.items()}, pi_theme_content, variants)
@@ -114,6 +117,11 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     return repo_changes
 
 
+def sync_bat_theme_variants(paths, variants: dict[str, dict[str, str]]) -> list[bool]:
+    mode_names = {"dark": "dark", "light": "light", "dusk": "dusk"}
+    return write_variant_files(paths.bat_theme_dir, {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()}, codex_tmtheme_content, variants)
+
+
 def print_summary(mode: str, paths, changed: dict[str, bool], repo_changes: list[bool]) -> None:
     print(f"Synced Dreamcoder {mode} identity")
     print(f"Kitty: {paths.kitty}")
@@ -123,6 +131,7 @@ def print_summary(mode: str, paths, changed: dict[str, bool], repo_changes: list
     print(f"opencode: {paths.opencode}")
     print(f"opencode tui: {paths.opencode_tui}")
     print(f"Codex CLI theme: {paths.codex_theme}")
+    print(f"Bat theme dir: {paths.bat_theme_dir}")
     print(f"PI CLI theme: {paths.pi_theme}")
     print(f"PI CLI settings: {paths.pi_settings}")
     print(f"Starship: {paths.starship}")
@@ -148,7 +157,9 @@ def main() -> None:
     variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)
     active = adaptive_palette(variants[mode], mode, paths.wallpaper, adaptive_enabled())
     changed = sync_active_targets(paths, active)
+    bat_variant_changes = sync_bat_theme_variants(paths, variants)
     repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []
+    changed["bat_theme_variants"] = any(bat_variant_changes)
 
     if not valid_starship(paths.starship):
         raise SystemExit(f"Generated Starship config is invalid: {paths.starship}")

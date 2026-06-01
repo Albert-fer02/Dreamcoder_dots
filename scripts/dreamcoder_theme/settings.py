@@ -30,6 +30,7 @@ class ThemePaths:
     wallpaper: Path
     tokens_file: Path
     # New targets
+    bat_theme_dir: Path
     nvim: Path
     zsh_syntax: Path
     ls_colors: Path
@@ -72,6 +73,7 @@ def theme_paths() -> ThemePaths:
         wallpaper=Path(os.environ.get("DREAMCODER_WALLPAPER", "")),
         tokens_file=Path(os.environ.get("DREAMCODER_TOKENS", ROOT / "themes/dreamcoder/tokens.json")),
         # New targets — all stored in themes/dreamcoder/ by default
+        bat_theme_dir=Path(os.environ.get("BAT_THEME_DIR", config_home / "bat/themes")),
         nvim=Path(os.environ.get("DREAMCODER_NVIM_THEME", dreamcoder_theme / "nvim-dreamcoder.lua")),
         zsh_syntax=Path(os.environ.get("DREAMCODER_ZSH_SYNTAX_THEME", dreamcoder_theme / "zsh-syntax-highlighting-dreamcoder.zsh")),
         ls_colors=Path(os.environ.get("DREAMCODER_LS_COLORS_THEME", dreamcoder_theme / "ls-colors-dreamcoder.sh")),

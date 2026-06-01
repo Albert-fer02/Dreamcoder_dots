@@ -24,6 +24,7 @@ def managed_targets() -> list[dict[str, Any]]:
         {"module": "Shell", "path": str(home / ".zshrc")},
         {"module": "Shell", "path": str(home / ".bashrc")},
         {"module": "Shell", "path": str(home / ".inputrc")},
+        {"module": "Bat", "path": str(ch / "bat")},
         {"module": "Warp", "path": str(dh / "warp-terminal" / "themes")},
         {"module": "Systemd", "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.service")},
         {"module": "Systemd", "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.timer")},
@@ -70,9 +71,9 @@ def installer_plan() -> dict[str, Any]:
     target_args = " ".join(json.dumps(item["path"]) for item in targets)
     return {
         "schema": "dreamcoder.install-plan.v1",
-        "modules": ["Shell", "Kitty", "Ghostty", "Fastfetch", "Warp", "Systemd"],
+        "modules": ["Shell", "Kitty", "Ghostty", "Fastfetch", "Warp", "Bat", "Systemd"],
         "targets": targets,
         "conflicts": conflicts,
         "backup_command": f"./scripts/dreamcoder backup create {target_args} --reason install-preflight --json",
-        "stow_command": "stow -t ${HOME} Shell Kitty Ghostty Fastfetch Warp Systemd",
+        "stow_command": "stow -t ${HOME} Shell Kitty Ghostty Fastfetch Warp Bat Systemd",
     }
