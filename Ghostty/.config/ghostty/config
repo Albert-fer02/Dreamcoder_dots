@@ -3,6 +3,7 @@
 
 # Fonts
 font-family = "JetBrainsMono Nerd Font"
+font-family = "Symbols Nerd Font"
 font-size = 14
 font-shaping-break = cursor
 font-feature = -calt, -liga, -dlig
