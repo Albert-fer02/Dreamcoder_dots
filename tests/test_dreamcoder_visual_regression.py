@@ -46,6 +46,34 @@ class DreamcoderVisualRegressionTest(unittest.TestCase):
         self.assertIn("Baseline", result.stdout)
         self.assertIn("Capture command", result.stdout)
 
+    def test_visual_plan_covers_full_light_mode_surface_area(self):
+        result = run_control("visual", "plan", "--json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        data = json.loads(result.stdout)
+        keys = {target["key"] for target in data["targets"]}
+        self.assertGreaterEqual(keys, {
+            "bat", "delta", "fzf", "btop", "dunst", "cava", "obsidian", "firefox"
+        })
+
+    def test_visual_audit_reports_sources_baselines_and_runtime_contracts(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = run_control("visual", "audit", "--json", home=Path(tmpdir))
+            self.assertEqual(result.returncode, 0, result.stderr)
+            data = json.loads(result.stdout)
+            self.assertEqual(data["schema"], "dreamcoder.visual-audit.v1")
+            self.assertIn("ready", data["readiness"])
+            self.assertIn("sources", data["checks"])
+            self.assertIn("baselines", data["checks"])
+            self.assertIn("runtime", data["checks"])
+            self.assertIn("bat_themes", data["checks"]["runtime"])
+
+    def test_visual_audit_markdown_is_actionable(self):
+        result = run_control("visual", "audit", "--markdown")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("# Dreamcoder Visual Audit", result.stdout)
+        self.assertIn("Runtime contracts", result.stdout)
+        self.assertIn("Screenshot baselines", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

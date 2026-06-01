@@ -92,6 +92,9 @@ def build_parser() -> argparse.ArgumentParser:
     visual_plan_p = visual_sub.add_parser("plan")
     visual_plan_p.add_argument("--json", action="store_true")
     visual_plan_p.add_argument("--markdown", action="store_true")
+    visual_audit_p = visual_sub.add_parser("audit")
+    visual_audit_p.add_argument("--json", action="store_true")
+    visual_audit_p.add_argument("--markdown", action="store_true")
 
     backup = sub.add_parser("backup", help="Create and restore Dreamcoder backup manifests")
     backup_sub = backup.add_subparsers(dest="backup_cmd", required=True)

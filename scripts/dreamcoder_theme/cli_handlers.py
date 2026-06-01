@@ -33,7 +33,7 @@ from dreamcoder_theme.settings_store import (
     validate_settings,
 )
 from dreamcoder_theme.tui import tui_apply_setting, tui_model, tui_render
-from dreamcoder_theme.visual_regression import visual_markdown, visual_plan
+from dreamcoder_theme.visual_regression import visual_audit, visual_audit_markdown, visual_markdown, visual_plan
 
 
 def handle_dashboard(args: argparse.Namespace) -> int:
@@ -106,6 +106,13 @@ def handle_visual(args: argparse.Namespace) -> int:
         report = visual_plan()
         if args.markdown:
             print(visual_markdown(report), end="")
+        else:
+            emit(report, args.json)
+        return 0
+    if args.visual_cmd == "audit":
+        report = visual_audit()
+        if args.markdown:
+            print(visual_audit_markdown(report), end="")
         else:
             emit(report, args.json)
         return 0
