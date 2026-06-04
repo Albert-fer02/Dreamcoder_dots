@@ -101,8 +101,8 @@ def update_ghostty_theme(path: Path, mode: str) -> bool:
         return False
     content = path.read_text()
     theme_name = f"dreamcoder-{mode}" if mode != "light" else "dreamcoder"
-    # Check if already correct
-    if re.search(rf"theme\s*=\s*{re.escape(theme_name)}", content):
+    # Check if already correct (use word boundary to avoid "dreamcoder-dark" matching "dreamcoder")
+    if re.search(rf"theme\s*=\s*{re.escape(theme_name)}(?:\s|$)", content):
         return False
     # Replace or add theme line
     if re.search(r"theme\s*=", content):
