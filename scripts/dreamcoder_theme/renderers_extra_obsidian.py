@@ -15,93 +15,93 @@ def obsidian_content(c: dict[str, str]) -> str:
     class_prefix = ".theme-dark" if is_dark else ".theme-light"
 
     return f"""/* ========================================================
-   {c['name']} — Obsidian CSS snippet
+   {c["name"]} — Obsidian CSS snippet
    ========================================================
    Place in your vault's .obsidian/snippets/ folder.
    Enable in Settings → Appearance → CSS snippets. */
 
 {class_prefix} {{
   /* Base — raw palette colors for backgrounds and surfaces */
-  --background-primary: {c['bg']};
-  --background-primary-alt: {c['surface0']};
-  --background-secondary: {c['surface0']};
-  --background-secondary-alt: {c['surface1']};
-  --background-modifier-border: {c['border']};
-  --background-modifier-border-hover: {c['border_ui']};
-  --background-modifier-form-field: {c['surface0']};
-  --background-modifier-success: {mix(c['sage'], bg, 0.75)};
-  --background-modifier-error: {mix(c['error'], bg, 0.75)};
-  --background-modifier-message: {c['surface1']};
+  --background-primary: {c["bg"]};
+  --background-primary-alt: {c["surface0"]};
+  --background-secondary: {c["surface0"]};
+  --background-secondary-alt: {c["surface1"]};
+  --background-modifier-border: {c["border"]};
+  --background-modifier-border-hover: {c["border_ui"]};
+  --background-modifier-form-field: {c["surface0"]};
+  --background-modifier-success: {mix(c["sage"], bg, 0.75)};
+  --background-modifier-error: {mix(c["error"], bg, 0.75)};
+  --background-modifier-message: {c["surface1"]};
 
   /* Text — guarded against background for accessibility */
-  --text-normal: {c['text']};
-  --text-muted: {c['muted']};
-  --text-faint: {c['subtle']};
-  --text-accent: {c['accent']};
-  --text-accent-hover: {c['accent_2']};
-  --text-error: {c['error']};
-  --text-warning: {c['warning']};
-  --text-success: {c['sage']};
-  --text-selection: {mix(c['selection'], bg, 0.5)};
-  --text-on-accent: {c['bg']};
+  --text-normal: {c["text"]};
+  --text-muted: {c["muted"]};
+  --text-faint: {c["subtle"]};
+  --text-accent: {c["accent"]};
+  --text-accent-hover: {c["accent_2"]};
+  --text-error: {c["error"]};
+  --text-warning: {c["warning"]};
+  --text-success: {c["sage"]};
+  --text-selection: {mix(c["surface1"], bg, 0.5)};
+  --text-on-accent: {c["bg"]};
 
   /* Interactive */
-  --interactive-normal: {c['surface1']};
-  --interactive-hover: {c['surface2']};
-  --interactive-accent: {c['accent']};
-  --interactive-accent-hover: {c['accent_2']};
-  --interactive-success: {c['sage']};
+  --interactive-normal: {c["surface1"]};
+  --interactive-hover: {c["surface2"]};
+  --interactive-accent: {c["accent"]};
+  --interactive-accent-hover: {c["accent_2"]};
+  --interactive-success: {c["sage"]};
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: {c['border']};
-  --scrollbar-active-thumb-bg: {c['border_ui']};
+  --scrollbar-thumb-bg: {c["border"]};
+  --scrollbar-active-thumb-bg: {c["border_ui"]};
 
   /* Code — syntax highlighting colors */
-  --code-normal: {c['text']};
-  --code-comment: {c['comment']};
-  --code-punctuation: {c['muted']};
-  --code-keyword: {c['accent']};
-  --code-operator: {c['accent_2']};
-  --code-function: {c['accent_2']};
-  --code-string: {c['sage']};
-  --code-number: {c['mauve']};
-  --code-tag: {c['accent']};
-  --code-important: {c['error']};
-  --code-background: {c['surface0']};
+  --code-normal: {c["text"]};
+  --code-comment: {c["comment"]};
+  --code-punctuation: {c["muted"]};
+  --code-keyword: {c["accent"]};
+  --code-operator: {c["accent_2"]};
+  --code-function: {c["accent_2"]};
+  --code-string: {c["sage"]};
+  --code-number: {c["mauve"]};
+  --code-tag: {c["accent"]};
+  --code-important: {c["error"]};
+  --code-background: {c["surface0"]};
 
   /* Heading */
-  --h1-color: {c['accent']};
-  --h2-color: {c['accent']};
-  --h3-color: {c['accent_2']};
-  --h4-color: {c['diagnostic']};
-  --h5-color: {c['muted']};
-  --h6-color: {c['subtle']};
+  --h1-color: {c["accent"]};
+  --h2-color: {c["accent"]};
+  --h3-color: {c["accent_2"]};
+  --h4-color: {c["diagnostic"]};
+  --h5-color: {c["muted"]};
+  --h6-color: {c["subtle"]};
 
   /* Link */
-  --link-color: {c['accent']};
-  --link-color-hover: {c['accent_2']};
-  --link-external-color: {c['diagnostic']};
-  --link-external-color-hover: {c['accent_2']};
+  --link-color: {c["accent"]};
+  --link-color-hover: {c["accent_2"]};
+  --link-external-color: {c["diagnostic"]};
+  --link-external-color-hover: {c["accent_2"]};
 
   /* Checkbox */
-  --checkbox-color: {c['accent']};
-  --checkbox-color-hover: {c['accent_2']};
-  --checkbox-border-color: {c['border']};
-  --checkbox-mark-color: {c['bg']};
+  --checkbox-color: {c["accent"]};
+  --checkbox-color-hover: {c["accent_2"]};
+  --checkbox-border-color: {c["border"]};
+  --checkbox-mark-color: {c["bg"]};
 
   /* Table */
-  --table-header-background: {c['surface1']};
-  --table-header-background-hover: {c['surface2']};
-  --table-row-background-hover: {c['surface0']};
-  --table-border-color: {c['border']};
+  --table-header-background: {c["surface1"]};
+  --table-header-background-hover: {c["surface2"]};
+  --table-row-background-hover: {c["surface0"]};
+  --table-border-color: {c["border"]};
 
   /* Graph */
-  --graph-line: {c['border']};
-  --graph-node: {c['muted']};
-  --graph-node-focused: {c['accent']};
-  --graph-node-tag: {c['diagnostic']};
-  --graph-node-attachment: {c['sage']};
+  --graph-line: {c["border"]};
+  --graph-node: {c["muted"]};
+  --graph-node-focused: {c["accent"]};
+  --graph-node-tag: {c["diagnostic"]};
+  --graph-node-attachment: {c["sage"]};
 }}
 
 /* Headings */
@@ -114,47 +114,47 @@ def obsidian_content(c: dict[str, str]) -> str:
 
 /* Tags */
 .tag {{
-  background-color: {mix(c['accent'], bg, 0.85)};
-  color: {c['accent']};
+  background-color: {mix(c["accent"], bg, 0.85)};
+  color: {c["accent"]};
   border-radius: 4px;
   padding: 0 6px;
 }}
 
 /* Blockquotes */
 blockquote {{
-  border-color: {c['accent']} !important;
+  border-color: {c["accent"]} !important;
 }}
 
 /* Search highlights */
 .search-result-file-matched-text,
 .is-selected .search-result-file-matched-text,
 mark {{
-  background-color: {mix(c['accent'], bg, 0.80)} !important;
-  color: {c['bg']} !important;
+  background-color: {mix(c["accent"], bg, 0.80)} !important;
+  color: {c["bg"]} !important;
 }}
 
 /* Active line in edit mode */
 .cm-active {{
-  background-color: {c['surface0']} !important;
+  background-color: {c["surface0"]} !important;
 }}
 
 /* Selection */
 ::selection {{
-  background-color: {mix(c['selection'], bg, 0.45)} !important;
+  background-color: {mix(c["surface1"], bg, 0.45)} !important;
 }}
 
 /* Tooltip */
 .tooltip {{
-  background-color: {c['surface1']} !important;
-  color: {c['text']} !important;
+  background-color: {c["surface1"]} !important;
+  color: {c["text"]} !important;
 }}
 
 /* Menu */
 .menu {{
-  background-color: {c['surface0']} !important;
+  background-color: {c["surface0"]} !important;
 }}
 
 .menu-item:hover {{
-  background-color: {c['surface1']} !important;
+  background-color: {c["surface1"]} !important;
 }}
 """

@@ -14,10 +14,9 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
     function = guard(c["diagnostic"], c["bg"], mode_name)
     type_color = guard(c["lavender"], c["bg"], mode_name)
     constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name)
-    # Selection colors: text must invert on light, stay on dark
-    # Dark mode: use surface1 instead of selection for better visibility
-    sel_bg = c["surface1"] if mode_name == "dark" else c["selection"]
-    sel_fg = c["bg"] if mode_name == "light" else c["text"]
+    # Use surface1 for selection background in all modes - better visibility
+    sel_bg = c["surface1"]
+    sel_fg = c["text"]
     return {
         "keyword": keyword,
         "function": function,

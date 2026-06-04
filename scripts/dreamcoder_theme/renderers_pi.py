@@ -45,7 +45,7 @@ def pi_theme_content(c: dict[str, str]) -> str:
             "dim": "subtle",
             "text": "",
             "thinkingText": "muted",
-            "selectedBg": c["selection"],
+            "selectedBg": c["surface1"],
             "userMessageBg": user_bg,
             "userMessageText": "",
             "customMessageBg": c["surface0"],
@@ -80,7 +80,9 @@ def pi_theme_content(c: dict[str, str]) -> str:
             "syntaxPunctuation": t["punctuation"],
             "thinkingOff": "comment",
             "thinkingMinimal": "borderUi",
-            "thinkingLow": guard(mix(c["diagnostic"], c["text"], 0.12), c["bg"], mode_name),
+            "thinkingLow": guard(
+                mix(c["diagnostic"], c["text"], 0.12), c["bg"], mode_name
+            ),
             "thinkingMedium": "diagnostic",
             "thinkingHigh": "mauve",
             "thinkingXhigh": "coral",

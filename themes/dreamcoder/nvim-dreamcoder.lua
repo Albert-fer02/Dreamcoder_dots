@@ -29,7 +29,7 @@ local c = {
   warning   = "#654300",
   border    = "#8a7358",
   border_ui = "#66513b",
-  selection = "#17120d",
+  selection = "#decbb1",
 }
 
 local function h(name, opts)
@@ -109,13 +109,13 @@ end
 
   -- ── Selection & Search ───────────────────────────────
   vim.api.nvim_set_hl(0, "Visual", {
-    fg = "#f3eadc",
-    bg = "#17120d"
+    fg = "#17120d",
+    bg = "#decbb1"
   })
 
   vim.api.nvim_set_hl(0, "VisualNOS", {
-    fg = "#f3eadc",
-    bg = "#17120d"
+    fg = "#17120d",
+    bg = "#decbb1"
   })
 
   vim.api.nvim_set_hl(0, "Search", {
@@ -892,8 +892,8 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeSelection", {
-    fg = "#f3eadc",
-    bg = "#17120d"
+    fg = "#17120d",
+    bg = "#decbb1"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeMultiSelection", {

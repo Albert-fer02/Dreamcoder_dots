@@ -8,10 +8,9 @@ from .renderers_core import ansi
 
 def kitty_content(c: dict[str, str]) -> str:
     p = ansi(c)
-    invert = c.get("details") == "lighter"
-    sel_fg = c["bg"] if invert else c["text"]
-    # Dark mode: use surface1 instead of selection for better visibility
-    sel_bg = c["text"] if invert else c["surface1"]
+    # Use surface1 for selection background in all modes - better visibility
+    sel_fg = c["text"]
+    sel_bg = c["surface1"]
     return f"""# ==========================================================
 #              {c["name"]}
 # ==========================================================

@@ -7,10 +7,9 @@ from .renderers_core import ansi
 
 
 def ghostty_content(c: dict[str, str]) -> str:
-    invert = c.get("details") == "lighter"
-    # Dark mode: use surface1 instead of selection for better visibility
-    sel_bg = c["text"] if invert else c["surface1"]
-    sel_fg = c["bg"] if invert else c["text"]
+    # Use surface1 for selection background in all modes - better visibility
+    sel_bg = c["surface1"]
+    sel_fg = c["text"]
     lines = [
         f"# {c['name']}",
         f"background = {c['bg']}",
