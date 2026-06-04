@@ -43,6 +43,10 @@ class ThemePaths:
     firefox: Path
     obsidian: Path
     cava: Path
+    # Desktop/WM targets
+    hyprland: Path
+    waybar: Path
+    rofi: Path
 
 
 def theme_mode() -> str:
@@ -163,6 +167,25 @@ def theme_paths() -> ThemePaths:
         cava=Path(
             os.environ.get(
                 "DREAMCODER_CAVA_THEME", dreamcoder_theme / "cava-dreamcoder.config"
+            )
+        ),
+        # Desktop/WM targets
+        hyprland=Path(
+            os.environ.get(
+                "DREAMCODER_HYPRLAND_THEME",
+                dreamcoder_theme / "hyprland.conf",
+            )
+        ),
+        waybar=Path(
+            os.environ.get(
+                "DREAMCODER_WAYBAR_THEME",
+                dreamcoder_theme / "waybar.css",
+            )
+        ),
+        rofi=Path(
+            os.environ.get(
+                "DREAMCODER_ROFI_THEME",
+                dreamcoder_theme / "rofi.rasi",
             )
         ),
     )

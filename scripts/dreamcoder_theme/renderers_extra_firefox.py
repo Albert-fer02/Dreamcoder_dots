@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from .palette import guard, mix
-from .renderers_core import ansi
 
 
 def firefox_content(c: dict[str, str]) -> str:

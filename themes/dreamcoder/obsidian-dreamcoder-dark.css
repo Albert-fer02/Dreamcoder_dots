@@ -26,7 +26,7 @@
   --text-error: #e98272;
   --text-warning: #e8b866;
   --text-success: #388c48;
-  --text-selection: #24201a;
+  --text-selection: #201a16;
   --text-on-accent: #12100e;
 
   /* Interactive */
@@ -124,7 +124,7 @@ mark {
 
 /* Selection */
 ::selection {
-  background-color: #26221c !important;
+  background-color: #211b17 !important;
 }
 
 /* Tooltip */

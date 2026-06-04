@@ -12,5 +12,5 @@ switch "$DREAMCODER_THEME_MODE"
         set -gx BAT_THEME Dreamcoder-Light
 end
 
-set -gx BAT_STYLE header,numbers,changes,grid
+set -gx BAT_STYLE auto,changes,header,grid
 set -gx BAT_TABS 4

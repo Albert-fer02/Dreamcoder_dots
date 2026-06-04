@@ -1,5 +1,13 @@
+# ========================================================
+# Dreamcoder Light — Starship prompt
+# ========================================================
+# Modern two-line layout with powerline segments.
+# Line 1: context (directory, git)
+# Line 2: input character only (clean)
+
 add_newline = true
 palette = "dreamcoder"
+command_timeout = 500
 
 format = """
 [](fg:prompt_surface0)\
@@ -11,27 +19,29 @@ $git_branch\
 $git_status\
 [](fg:prompt_accent)\
 $fill\
-$hostname\
-$cmd_duration
+$cmd_duration\
+$time
 $character"""
 
+right_format = ""
+
 [palettes.dreamcoder]
-bg = "#12100e"
-text = "#e8dfd0"
-muted = "#c7b9aa"
-prompt_bg = "#19110c"
-prompt_surface0 = "#2c1c14"
-prompt_surface1 = "#52301c"
-prompt_surface2 = "#744524"
-prompt_text = "#fff0df"
-prompt_muted = "#dcc3aa"
-prompt_accent = "#e6a15c"
-prompt_accent_2 = "#d66f50"
-sage = "#388c48"
-diagnostic = "#5f95ca"
-lavender = "#c9a8dc"
-mauve = "#d98aa9"
-error = "#e98272"
+bg = "#f3eadc"
+text = "#17120d"
+muted = "#352e22"
+prompt_bg = "#f3eadc"
+prompt_surface0 = "#5e5950"
+prompt_surface1 = "#765f3e"
+prompt_surface2 = "#8b5928"
+prompt_text = "#20150c"
+prompt_muted = "#53402e"
+prompt_accent = "#8a5520"
+prompt_accent_2 = "#a7471c"
+sage = "#3d723d"
+diagnostic = "#0d4a68"
+lavender = "#57478b"
+mauve = "#7d3e64"
+error = "#842f24"
 
 [username]
 show_always = true
@@ -39,16 +49,12 @@ style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
 format = "[  $user ]($style)"
 
-[hostname]
-ssh_only = true
-style = "fg:prompt_muted bold"
-format = "[ 󰣇 $hostname ]($style) "
-
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
 format = "[  $path ]($style)"
 truncation_length = 2
 truncate_to_repo = true
+home_symbol = ""
 
 [git_branch]
 symbol = ""
@@ -72,6 +78,22 @@ deleted = "✘${count} "
 [fill]
 symbol = " "
 
+[cmd_duration]
+min_time = 2500
+style = "fg:prompt_muted"
+format = "[  $duration ]($style)"
+
+[time]
+disabled = false
+format = "[ $time ]($style)"
+style = "fg:prompt_muted"
+
+[character]
+success_symbol = "[❯](bold fg:prompt_accent)"
+error_symbol = "[❯](bold fg:error)"
+vimcmd_symbol = "[❮](bold fg:sage)"
+
+# Runtime versions - show only when relevant, keep compact
 [bun]
 symbol = ""
 style = "fg:prompt_accent bold"
@@ -102,16 +124,3 @@ symbol = ""
 style = "fg:diagnostic bold"
 format = "[ $symbol $context]($style)"
 only_with_files = true
-
-[cmd_duration]
-min_time = 2500
-style = "fg:prompt_muted"
-format = "[  $duration ]($style) "
-
-[time]
-disabled = true
-
-[character]
-success_symbol = "[❯](bold fg:prompt_accent)"
-error_symbol = "[❯](bold fg:error)"
-vimcmd_symbol = "[❮](bold fg:sage)"

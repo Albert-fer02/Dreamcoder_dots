@@ -3,8 +3,8 @@ background = #ebe4d6
 foreground = #1a1713
 cursor-color = #8a5520
 cursor-text = #ebe4d6
-selection-background = #1a1713
-selection-foreground = #ebe4d6
+selection-background = #d8cbb8
+selection-foreground = #1a1713
 minimum-contrast = 4.5
 background-opacity-cells = true
 

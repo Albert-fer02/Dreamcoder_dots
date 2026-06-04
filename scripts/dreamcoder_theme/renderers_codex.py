@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 
-from .palette import guard, mix
 from .settings import PI_THEME_SCHEMA
 from .renderers_opencode import opencode_tokens
 

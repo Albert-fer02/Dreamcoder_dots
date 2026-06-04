@@ -12,7 +12,7 @@ class BatVisualCoherenceTest(unittest.TestCase):
         content = FISH_THEME.read_text()
         self.assertIn("set -gx BAT_THEME Dreamcoder-Dark", content)
         self.assertIn("set -gx BAT_THEME Dreamcoder-Light", content)
-        self.assertIn("set -gx BAT_STYLE header,numbers,changes,grid", content)
+        self.assertIn("set -gx BAT_STYLE auto,changes,header,grid", content)
         self.assertIn("set -gx BAT_TABS 4", content)
         self.assertIn("set -e NO_COLOR", content)
 

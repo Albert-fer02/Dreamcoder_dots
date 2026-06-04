@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from .palette import guard, mix
-from .renderers_core import ansi
 
 from .renderers_extra_nvim_lsp import nvim_lsp_groups
 from .renderers_extra_nvim_plugins import nvim_plugin_groups
@@ -37,7 +36,7 @@ def nvim_content(c: dict[str, str]) -> str:
         inner = ",\n".join(parts)
         return f'  vim.api.nvim_set_hl(0, "{name}", {{\n{inner}\n  }})\n'
 
-    invert = c.get("details") == "lighter"
+    invert = c["details"] == "lighter"
     bg = c["bg"]
     normal_bg = bg if invert else "none"
     text = c["text"]

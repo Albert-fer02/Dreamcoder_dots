@@ -84,6 +84,10 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "firefox": write_if_changed(paths.firefox, firefox_content(active)),
         "obsidian": write_if_changed(paths.obsidian, obsidian_content(active)),
         "cava": write_if_changed(paths.cava, cava_content(active)),
+        # Desktop/WM targets
+        "hyprland": write_if_changed(paths.hyprland, hypr_content(active)),
+        "waybar": write_if_changed(paths.waybar, waybar_content(active)),
+        "rofi": write_if_changed(paths.rofi, rofi_content(active)),
     }
 
 
@@ -221,6 +225,22 @@ def sync_repo_snippets(
             ROOT / "themes/dreamcoder/rofi-dusk.rasi", rofi_content(variants["dusk"])
         )
     )
+    # Desktop/WM active files (no suffix — tracks current mode)
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "themes/dreamcoder/hyprland.conf", hypr_content(active)
+        )
+    )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "themes/dreamcoder/waybar.css", waybar_content(active)
+        )
+    )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "themes/dreamcoder/rofi.rasi", rofi_content(active)
+        )
+    )
     repo_changes.append(
         write_if_changed(ROOT / "themes/dreamcoder/README.md", readme_content())
     )
@@ -229,6 +249,11 @@ def sync_repo_snippets(
         {k: f"Dreamcoder-{v.title()}.json" for k, v in mode_names.items()},
         antigravity_content,
         variants,
+    )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "Antigravity/Dreamcoder.json", antigravity_content(active)
+        )
     )
     # New targets — variant snippets in themes/dreamcoder/
     theme_dir = ROOT / "themes/dreamcoder"
@@ -341,6 +366,10 @@ def print_summary(
     print(f"Firefox: {paths.firefox}")
     print(f"Obsidian: {paths.obsidian}")
     print(f"Cava: {paths.cava}")
+    # Desktop/WM targets
+    print(f"Hyprland: {paths.hyprland}")
+    print(f"Waybar: {paths.waybar}")
+    print(f"Rofi: {paths.rofi}")
     print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
     print(f"Repo variant/snippet changes: {sum(repo_changes)}")
 

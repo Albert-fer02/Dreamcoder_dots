@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
-from .renderers_core import ansi
+from .palette import guard
 
 
 def starship_content(c: dict[str, str]) -> str:
-    mode = "dark" if c.get("details") == "darker" else "light"
+    mode = "dark" if c["details"] == "darker" else "light"
     prom_acc = guard(c["prompt_accent"], c["bg"], mode)
     prom_s0 = guard(c["prompt_surface0"], c["bg"], mode)
     prom_s1 = guard(c["prompt_surface1"], c["bg"], mode)

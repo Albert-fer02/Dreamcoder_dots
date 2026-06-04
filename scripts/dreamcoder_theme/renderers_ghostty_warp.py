@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
-from .renderers_core import ansi
+from .palette import ansi, guard, mix
 
 
 def ghostty_content(c: dict[str, str]) -> str:
