@@ -45,6 +45,8 @@ class ThemePaths:
     cava: Path
     # Desktop/WM targets
     hyprland: Path
+    hypr_colors_lua: Path
+    hypr_colors_conf: Path
     waybar: Path
     rofi: Path
 
@@ -174,6 +176,18 @@ def theme_paths() -> ThemePaths:
             os.environ.get(
                 "DREAMCODER_HYPRLAND_THEME",
                 dreamcoder_theme / "hyprland.conf",
+            )
+        ),
+        hypr_colors_lua=Path(
+            os.environ.get(
+                "DREAMCODER_HYPR_COLORS_LUA",
+                config_home / "hypr/colors.lua",
+            )
+        ),
+        hypr_colors_conf=Path(
+            os.environ.get(
+                "DREAMCODER_HYPR_COLORS_CONF",
+                config_home / "hypr/colors.conf",
             )
         ),
         waybar=Path(

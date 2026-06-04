@@ -5,6 +5,82 @@ from __future__ import annotations
 import json
 import re
 
+# ---------------------------------------------------------------------------
+# Dreamcoder → Material Design 3 (Matugen-compatible) color-role mapping.
+# ML4W 2.13+ requires colors.lua + colors.conf with these exact tokens.
+# ---------------------------------------------------------------------------
+
+
+def _hex_to_rgba_ff(hex_color: str) -> str:
+    """Convert #RRGGBB → rgba(RRGGBBff) for Matugen/Hyprland format."""
+    return f"rgba({hex_color[1:]}ff)"
+
+
+def _map_dc_to_material(c: dict[str, str]) -> dict[str, str]:
+    """Map Dreamcoder palette tokens to Material Design 3 color roles."""
+    h = _hex_to_rgba_ff
+    return {
+        # Core surfaces
+        "background": h(c["bg"]),
+        "surface": h(c["bg"]),
+        "surface_dim": h(c["bg_soft"]),
+        "surface_bright": h(c["surface0"]),
+        "surface_container_lowest": h(c["surface0"]),
+        "surface_container_low": h(c["surface0"]),
+        "surface_container": h(c["surface1"]),
+        "surface_container_high": h(c["surface1"]),
+        "surface_container_highest": h(c["surface2"]),
+        "surface_variant": h(c["surface1"]),
+        "surface_tint": h(c["accent"]),
+        # On-colors
+        "on_background": h(c["text"]),
+        "on_surface": h(c["text"]),
+        "on_surface_variant": h(c["muted"]),
+        # Primary
+        "primary": h(c["accent"]),
+        "on_primary": h(c["bg"]),
+        "primary_container": h(c["surface1"]),
+        "on_primary_container": h(c["text"]),
+        "primary_fixed": h(c["accent"]),
+        "primary_fixed_dim": h(c["accent_2"]),
+        "on_primary_fixed": h(c["bg"]),
+        "on_primary_fixed_variant": h(c["accent"]),
+        "inverse_primary": h(c["accent"]),
+        # Secondary
+        "secondary": h(c["accent_2"]),
+        "on_secondary": h(c["bg"]),
+        "secondary_container": h(c["surface1"]),
+        "on_secondary_container": h(c["text"]),
+        "secondary_fixed": h(c["accent_2"]),
+        "secondary_fixed_dim": h(c["accent_2"]),
+        "on_secondary_fixed": h(c["bg"]),
+        "on_secondary_fixed_variant": h(c["accent_2"]),
+        # Tertiary
+        "tertiary": h(c["diagnostic"]),
+        "on_tertiary": h(c["bg"]),
+        "tertiary_container": h(c["surface0"]),
+        "on_tertiary_container": h(c["text"]),
+        "tertiary_fixed": h(c["diagnostic"]),
+        "tertiary_fixed_dim": h(c["diagnostic"]),
+        "on_tertiary_fixed": h(c["bg"]),
+        "on_tertiary_fixed_variant": h(c["focus"]),
+        # Error
+        "error": h(c["error"]),
+        "on_error": h(c["bg"]),
+        "error_container": h(c["surface0"]),
+        "on_error_container": h(c["text"]),
+        # Outline
+        "outline": h(c["border"]),
+        "outline_variant": h(c["border_ui"]),
+        # Fixed
+        "shadow": "rgba(000000ff)",
+        "scrim": "rgba(000000ff)",
+        "source_color": h(c["accent"]),
+        # Inverse
+        "inverse_on_surface": h(c["surface0"]),
+        "inverse_surface": h(c["text"]),
+    }
+
 
 def _rgba_to_argb(value: str, default_alpha: str = "ff") -> str:
     """Convert rgba(r, g, b, a) to rgba(RRGGBBAA) for Hyprland."""
@@ -128,3 +204,21 @@ element selected {{
 element-text {{ text-color: @muted; }}
 element selected element-text {{ text-color: @foreground; }}
 """
+
+
+def hypr_colors_lua_content(c: dict[str, str]) -> str:
+    """Generate colors.lua in Matugen/Material-You format for ML4W Hyprland."""
+    m = _map_dc_to_material(c)
+    lines = []
+    for key in sorted(m.keys()):
+        lines.append(f'{key} = "{m[key]}"')
+    return "\n".join(lines) + "\n"
+
+
+def hypr_colors_conf_content(c: dict[str, str]) -> str:
+    """Generate colors.conf in Matugen/Material-You format for ML4W Hyprland."""
+    m = _map_dc_to_material(c)
+    lines = []
+    for key in sorted(m.keys()):
+        lines.append(f"${key} = {m[key]}")
+    return "\n".join(lines) + "\n"

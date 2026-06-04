@@ -8,6 +8,8 @@ from .renderers_cli import (
 )
 from .renderers_desktop import (
     antigravity_content,
+    hypr_colors_conf_content,
+    hypr_colors_lua_content,
     hypr_content,
     readme_content,
     rofi_content,
@@ -45,6 +47,8 @@ __all__ = [
     "firefox_content",
     "fzf_content",
     "ghostty_content",
+    "hypr_colors_conf_content",
+    "hypr_colors_lua_content",
     "hypr_content",
     "kitty_content",
     "kitty_ui_content",

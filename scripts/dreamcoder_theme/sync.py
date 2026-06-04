@@ -14,6 +14,8 @@ from .renderers import (
     firefox_content,
     fzf_content,
     ghostty_content,
+    hypr_colors_conf_content,
+    hypr_colors_lua_content,
     hypr_content,
     kitty_content,
     kitty_ui_content,
@@ -86,6 +88,12 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "cava": write_if_changed(paths.cava, cava_content(active)),
         # Desktop/WM targets
         "hyprland": write_if_changed(paths.hyprland, hypr_content(active)),
+        "hypr_colors_lua": write_if_changed(
+            paths.hypr_colors_lua, hypr_colors_lua_content(active)
+        ),
+        "hypr_colors_conf": write_if_changed(
+            paths.hypr_colors_conf, hypr_colors_conf_content(active)
+        ),
         "waybar": write_if_changed(paths.waybar, waybar_content(active)),
         "rofi": write_if_changed(paths.rofi, rofi_content(active)),
     }
@@ -187,6 +195,18 @@ def sync_repo_snippets(
             ROOT / "themes/dreamcoder/hyprland-light.conf",
             hypr_content(variants["light"]),
         )
+    )
+    repo_changes += write_variant_files(
+        ROOT / "themes/dreamcoder",
+        {k: f"hypr-colors-{v}.lua" for k, v in mode_names.items()},
+        hypr_colors_lua_content,
+        variants,
+    )
+    repo_changes += write_variant_files(
+        ROOT / "themes/dreamcoder",
+        {k: f"hypr-colors-{v}.conf" for k, v in mode_names.items()},
+        hypr_colors_conf_content,
+        variants,
     )
     repo_changes.append(
         write_if_changed(
@@ -368,6 +388,8 @@ def print_summary(
     print(f"Cava: {paths.cava}")
     # Desktop/WM targets
     print(f"Hyprland: {paths.hyprland}")
+    print(f"Hyprland colors.lua: {paths.hypr_colors_lua}")
+    print(f"Hyprland colors.conf: {paths.hypr_colors_conf}")
     print(f"Waybar: {paths.waybar}")
     print(f"Rofi: {paths.rofi}")
     print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
