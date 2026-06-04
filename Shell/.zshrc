@@ -4,7 +4,7 @@ set -euo pipefail
 
 export EDITOR="nvim" VISUAL="nvim" COLORTERM="${COLORTERM:-truecolor}"
 typeset -U path PATH
-path=("${HOME}/.local/bin" "${HOME}/.opencode/bin" "${HOME}/.cargo/bin" "${HOME}/.volta/bin" "${HOME}/.bun/bin" "${HOME}/.nix-profile/bin" "${HOME}/.config" "${path[@]}")
+path=("${HOME}/.local/bin" "${HOME}/.opencode/bin" "${HOME}/.cargo/bin" "${HOME}/.volta/bin" "${HOME}/.bun/bin" "${HOME}/.nix-profile/bin" "${path[@]}")
 BUN_INSTALL="${HOME}/.bun"
 [[ -s "${BUN_INSTALL}/_bun" ]] && source "${BUN_INSTALL}/_bun"
 [[ -d "${BUN_INSTALL}/bin" ]] && path=("${BUN_INSTALL}/bin" "${path[@]}")
@@ -12,7 +12,7 @@ export BUN_INSTALL
 
 # ── Dreamcoder Theme Hooks ─────────────────────────────────────
 # Source shell-level theme snippets based on current mode.
-_dc_mode="${DREAMCODER_THEME_MODE:-dark}"
+_dc_mode="${DREAMCODER_THEME_MODE:-light}"
 _dc_theme_dir="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}/themes/dreamcoder"
 
 [[ -f "${_dc_theme_dir}/ls-colors-dreamcoder-${_dc_mode}.sh" ]] && source "${_dc_theme_dir}/ls-colors-dreamcoder-${_dc_mode}.sh"
