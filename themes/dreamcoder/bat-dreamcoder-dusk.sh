@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Dreamcoder Dusk — Bat theme; install matching Codex-CLI tmTheme with bat cache --build.
-export BAT_THEME="Dreamcoder-Light"
-export BAT_STYLE="header,numbers,changes,grid"
+# Dreamcoder Dusk — Bat theme; run 'bat cache --build' after installing the tmTheme.
+export BAT_THEME="Dreamcoder-Dusk"
+export BAT_STYLE="auto,changes,header,grid"
+export BAT_PAGER="less -RF"
 export BAT_TABS="4"
