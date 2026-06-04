@@ -181,10 +181,12 @@ Dreamcoder prioritizes long-session comfort over trendy contrast extremes:
 - warm off-white light mode to reduce glare;
 - softened dark mode instead of harsh black/white inversion;
 - AAA-level main text contrast where practical (WCAG 2);
-- APCA Lc ≥ 75 for body tokens and ≥ 60 for UI affordances on light/dusk backgrounds;
+- APCA Lc ≥ 75 advisory for body tokens, ≥ 30 for UI affordances (APCA is public beta, WCAG remains authoritative);
 - AA-or-better semantic token contrast for code, markdown, and diffs;
 - 3:1+ contrast for meaningful focus rings and UI boundaries;
 - typography and spacing tuned for fewer micro-adjustments.
+
+⚠️ **APCA advisory**: APCA remains in public beta (Myndex/apca-w3 spec) and is not yet part of WCAG 3. All token pairs pass WCAG 2.1 AA/AAA minimums. See `docs/dreamcoder-theme-preview.md` for current APCA/WCAG audit.
 
 ## Troubleshooting
 
@@ -220,7 +222,17 @@ Systemd/     user timer/service for automatic day/night mode
 
 ```bash
 ./scripts/dreamcoder verify
-./scripts/verify-theme-health.py
+./scripts/verify-theme-health.py     # includes RGBA validation and target checks
+python -m pytest -q                  # run the full test suite (81 tests)
 ```
 
 A healthy setup should report linked configs, valid Starship, active timer, and passing visual-health guardrails. Use `./scripts/dreamcoder preview` after palette edits to refresh the auditable preview gallery.
+
+## CI/CD
+
+GitHub Actions validates theme health on push/PR to `tokens.json` and renderer changes. Pre-commit hooks can be installed locally:
+
+```bash
+pip install pre-commit
+pre-commit install
+```

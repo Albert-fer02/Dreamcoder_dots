@@ -1,0 +1,23 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: dreamcoder-theme-validate
+        name: Validate Dreamcoder theme tokens
+        entry: python scripts/verify-theme-health.py
+        language: system
+        files: ^(themes/dreamcoder/.*\.json|scripts/verify-theme-health\.py)$
+        pass_filenames: false
+      - id: dreamcoder-preview-regenerate
+        name: Regenerate theme preview
+        entry: python scripts/generate-theme-preview.py && git diff --quiet --exit-code docs/dreamcoder-theme-preview.md
+        language: system
+        files: ^themes/dreamcoder/.*\.json$
+        pass_filenames: false

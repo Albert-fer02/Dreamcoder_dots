@@ -115,17 +115,17 @@ Semantic tokens are intentionally distinct:
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 90.6 | ≥75 (body) |
-| `muted` | 71.0 | ≥75 (FAIL) |
-| `comment` | 63.0 | ≥75 (FAIL) |
-| `accent` | 59.2 | ≥75 (FAIL) |
-| `accent_2` | 44.2 | ≥75 (FAIL) |
-| `diagnostic` | 50.0 | ≥75 (FAIL) |
-| `sage` | 40.3 | ≥75 (FAIL) |
-| `error` | 56.8 | ≥75 (FAIL) |
-| `warning` | 73.3 | ≥75 (FAIL) |
-| `border_ui` | 33.2 | ≥60 (FAIL) |
-| `focus` | 59.2 | ≥60 (FAIL) |
+| `text` | 87.4 | ≥75 (body) |
+| `muted` | 65.3 | ≥75 (FAIL) |
+| `comment` | 56.5 | ≥75 (FAIL) |
+| `accent` | 52.5 | ≥75 (FAIL) |
+| `accent_2` | 36.8 | ≥75 (FAIL) |
+| `diagnostic` | 42.7 | ≥75 (FAIL) |
+| `sage` | 32.6 | ≥75 (FAIL) |
+| `error` | 50.1 | ≥75 (FAIL) |
+| `warning` | 68.0 | ≥75 (FAIL) |
+| `border_ui` | 25.1 | ≥60 (FAIL) |
+| `focus` | 52.5 | ≥60 (FAIL) |
 
 ### Dreamcoder Ember Noir OLED UI affordance contrast
 
@@ -153,17 +153,17 @@ Semantic tokens are intentionally distinct:
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 96.0 | ≥75 (body) |
-| `muted` | 87.3 | ≥75 (body) |
-| `comment` | 67.8 | ≥75 (FAIL) |
-| `accent` | 70.7 | ≥75 (FAIL) |
-| `accent_2` | 66.7 | ≥75 (FAIL) |
-| `diagnostic` | 79.2 | ≥75 (body) |
-| `sage` | 65.8 | ≥75 (FAIL) |
-| `error` | 76.9 | ≥75 (body) |
-| `warning` | 77.5 | ≥75 (body) |
-| `border_ui` | 73.1 | ≥60 (UI) |
-| `focus` | 70.4 | ≥60 (UI) |
+| `text` | 93.3 | ≥75 (body) |
+| `muted` | 88.0 | ≥75 (body) |
+| `comment` | 68.8 | ≥75 (FAIL) |
+| `accent` | 71.4 | ≥75 (FAIL) |
+| `accent_2` | 66.9 | ≥75 (FAIL) |
+| `diagnostic` | 79.9 | ≥75 (body) |
+| `sage` | 66.6 | ≥75 (FAIL) |
+| `error` | 77.2 | ≥75 (body) |
+| `warning` | 78.3 | ≥75 (body) |
+| `border_ui` | 74.1 | ≥60 (UI) |
+| `focus` | 71.0 | ≥60 (UI) |
 
 ### Dreamcoder Light UI affordance contrast
 
@@ -191,17 +191,17 @@ Semantic tokens are intentionally distinct:
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 91.1 | ≥75 (body) |
-| `muted` | 75.7 | ≥75 (body) |
-| `comment` | 68.7 | ≥75 (FAIL) |
-| `accent` | 64.4 | ≥75 (FAIL) |
-| `accent_2` | 67.2 | ≥75 (FAIL) |
-| `diagnostic` | 75.3 | ≥75 (body) |
-| `sage` | 64.1 | ≥75 (FAIL) |
-| `error` | 75.0 | ≥75 (body) |
-| `warning` | 75.3 | ≥75 (body) |
-| `border_ui` | 67.4 | ≥60 (UI) |
-| `focus` | 64.6 | ≥60 (UI) |
+| `text` | 89.0 | ≥75 (body) |
+| `muted` | 76.6 | ≥75 (body) |
+| `comment` | 69.5 | ≥75 (FAIL) |
+| `accent` | 64.9 | ≥75 (FAIL) |
+| `accent_2` | 67.4 | ≥75 (FAIL) |
+| `diagnostic` | 75.9 | ≥75 (body) |
+| `sage` | 64.8 | ≥75 (FAIL) |
+| `error` | 75.4 | ≥75 (body) |
+| `warning` | 75.9 | ≥75 (body) |
+| `border_ui` | 68.2 | ≥60 (UI) |
+| `focus` | 65.2 | ≥60 (UI) |
 
 ### Dreamcoder Dusk UI affordance contrast
 

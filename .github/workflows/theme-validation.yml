@@ -1,0 +1,36 @@
+name: Theme Validation
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'themes/dreamcoder/tokens.json'
+      - 'themes/dreamcoder/tokens.schema.json'
+      - 'scripts/verify-theme-health.py'
+      - 'scripts/generate-theme-preview.py'
+  pull_request:
+    paths:
+      - 'themes/dreamcoder/tokens.json'
+      - 'themes/dreamcoder/tokens.schema.json'
+      - 'scripts/verify-theme-health.py'
+      - 'scripts/generate-theme-preview.py'
+
+jobs:
+  validate-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install system deps
+        run: |
+          pip install --quiet pytest
+      - name: Run theme health check
+        run: python scripts/verify-theme-health.py
+      - name: Run test suite
+        run: python -m pytest tests/ -q
+      - name: Generate theme preview
+        run: python scripts/generate-theme-preview.py
+      - name: Check for uncommitted changes
+        run: |
+          git diff --exit-code docs/dreamcoder-theme-preview.md || (echo "::error::Theme preview not regenerated" && exit 1)
