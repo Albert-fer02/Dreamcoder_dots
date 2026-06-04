@@ -10,32 +10,36 @@ from .settings import PI_THEME_SCHEMA
 
 def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
     mode_name = "dark" if c["details"] == "darker" else "light"
-    keyword = guard(mix(c["accent"], c["warning"], 0.22), c["bg"], mode_name)
-    function = guard(c["diagnostic"], c["bg"], mode_name)
-    type_color = guard(c["lavender"], c["bg"], mode_name)
-    constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name)
+    # Use lower contrast minimum for syntax colors so they stay vibrant.
+    # 4.5 is for body text; syntax highlighting is decorative/auxiliary.
+    syntax_min = 3.0
+    keyword = guard(mix(c["accent"], c["warning"], 0.22), c["bg"], mode_name, minimum=syntax_min)
+    function = guard(c["diagnostic"], c["bg"], mode_name, minimum=syntax_min)
+    type_color = guard(c["lavender"], c["bg"], mode_name, minimum=syntax_min)
+    constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name, minimum=syntax_min)
     # Use surface2 for selection background in all modes - visible contrast
     sel_bg = c["surface2"]
     sel_fg = c["text"]
     return {
         "keyword": keyword,
         "function": function,
-        "method": guard(mix(function, c["lavender"], 0.16), c["bg"], mode_name),
-        "variable": c["text"],
-        "parameter": guard(mix(c["accent_2"], c["text"], 0.06), c["bg"], mode_name),
-        "property": guard(mix(c["diagnostic"], c["text"], 0.04), c["bg"], mode_name),
-        "field": guard(mix(c["sage"], c["text"], 0.05), c["bg"], mode_name),
-        "string": guard(c["sage"], c["bg"], mode_name),
-        "number": guard(c["accent_2"], c["bg"], mode_name),
+        "method": guard(mix(function, c["lavender"], 0.16), c["bg"], mode_name, minimum=syntax_min),
+        # Variables must be distinguishable from normal text — use muted tone
+        "variable": c["muted"],
+        "parameter": guard(mix(c["accent_2"], c["text"], 0.06), c["bg"], mode_name, minimum=syntax_min),
+        "property": guard(mix(c["diagnostic"], c["text"], 0.04), c["bg"], mode_name, minimum=syntax_min),
+        "field": guard(mix(c["sage"], c["text"], 0.05), c["bg"], mode_name, minimum=syntax_min),
+        "string": guard(c["sage"], c["bg"], mode_name, minimum=syntax_min),
+        "number": guard(c["accent_2"], c["bg"], mode_name, minimum=syntax_min),
         "constant": constant,
         "type": type_color,
-        "constructor": guard(mix(type_color, c["accent"], 0.18), c["bg"], mode_name),
-        "enum": guard(mix(type_color, c["sage"], 0.18), c["bg"], mode_name),
-        "operator": guard(c["mauve"], c["bg"], mode_name),
-        "punctuation": guard(c["muted"], c["bg"], mode_name),
-        "comment": guard(c["comment"], c["bg"], mode_name),
-        "todo": guard(mix(c["warning"], c["text"], 0.12), c["bg"], mode_name),
-        "deprecated": guard(mix(c["error"], c["muted"], 0.28), c["bg"], mode_name),
+        "constructor": guard(mix(type_color, c["accent"], 0.18), c["bg"], mode_name, minimum=syntax_min),
+        "enum": guard(mix(type_color, c["sage"], 0.18), c["bg"], mode_name, minimum=syntax_min),
+        "operator": guard(c["mauve"], c["bg"], mode_name, minimum=syntax_min),
+        "punctuation": guard(c["muted"], c["bg"], mode_name, minimum=syntax_min),
+        "comment": guard(c["comment"], c["bg"], mode_name, minimum=syntax_min),
+        "todo": guard(mix(c["warning"], c["text"], 0.12), c["bg"], mode_name, minimum=syntax_min),
+        "deprecated": guard(mix(c["error"], c["muted"], 0.28), c["bg"], mode_name, minimum=syntax_min),
         "code_bg": c["surface0"],
         "selection": sel_bg,
         "selection_fg": sel_fg,  # text color on selection

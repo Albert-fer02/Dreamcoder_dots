@@ -10,9 +10,8 @@ from .renderers_opencode import opencode_tokens
 
 def codex_tmtheme_content(c: dict[str, str]) -> str:
     t = opencode_tokens(c)
-    # Use surface1 for selection background in all modes - better visibility
-    selection = c["surface1"]
-    line_highlight = c["surface1"]
+    selection = t["selection"]
+    line_highlight = t["selection"]
     gutter = c["surface2"]
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
