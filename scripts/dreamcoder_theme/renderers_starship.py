@@ -7,11 +7,13 @@ from .palette import guard
 
 def starship_content(c: dict[str, str]) -> str:
     mode = "dark" if c["details"] == "darker" else "light"
+    # Prompt surfaces are powerline segment backgrounds — need aesthetic
+    # gradient, not text contrast. Use raw token values, not guard().
     prom_acc = guard(c["prompt_accent"], c["bg"], mode)
-    prom_s0 = guard(c["prompt_surface0"], c["bg"], mode)
-    prom_s1 = guard(c["prompt_surface1"], c["bg"], mode)
-    prom_s2 = guard(c["prompt_surface2"], c["bg"], mode)
-    prom_text = guard(c["prompt_text"], c["bg"], mode)
+    prom_s0 = c["prompt_surface0"]  # segment bg, no guard
+    prom_s1 = c["prompt_surface1"]  # segment bg, no guard
+    prom_s2 = c["prompt_surface2"]  # segment bg, no guard
+    prom_text = guard(c["prompt_text"], prom_s0, mode)  # text on darkest surface
     prom_muted = guard(c["prompt_muted"], c["bg"], mode)
     error = guard(c["error"], c["bg"], mode)
 
