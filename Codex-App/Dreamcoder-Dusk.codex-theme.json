@@ -21,6 +21,7 @@
     "backgroundElement": "#dfd5c4",
     "backgroundHover": "#e1d6c6",
     "backgroundSelected": "#1a1713",
+    "textSelected": "#ebe4d6",
     "backgroundCode": "#f1eadf",
     "backgroundSearch": "#c4b69a",
     "backgroundLine": "#f1eadf",
