@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Dreamcoder Ember Noir OLED — Bat theme; install matching Codex-CLI tmTheme with bat cache --build.
+# Dreamcoder Ember Noir OLED — Bat theme; run 'bat cache --build' after installing the tmTheme.
 export BAT_THEME="Dreamcoder-Dark"
-export BAT_STYLE="header,numbers,changes,grid"
+export BAT_STYLE="auto,changes,header,grid"
+export BAT_PAGER="less -RF"
 export BAT_TABS="4"

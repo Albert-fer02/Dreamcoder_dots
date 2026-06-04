@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
- "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>name</key><string>Dreamcoder</string>
+ <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+ <plist version="1.0">
+ <dict>
+   <key>name</key><string>Dreamcoder-Dark</string>
   <key>settings</key>
   <array>
     <dict><key>settings</key><dict>
@@ -11,8 +11,8 @@
       <key>foreground</key><string>#e8dfd0</string>
       <key>caret</key><string>#d99555</string>
       <key>selection</key><string>#2e241f</string>
-      <key>lineHighlight</key><string>#211c18</string>
-      <key>gutter</key><string>#2e241f</string>
+      <key>lineHighlight</key><string>#2e241f</string>
+      <key>gutter</key><string>#3e3129</string>
       <key>gutterForeground</key><string>#c7b9aa</string>
       <key>invisibles</key><string>#b8a99a</string>
     </dict></dict>
