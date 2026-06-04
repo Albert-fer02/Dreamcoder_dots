@@ -21,7 +21,7 @@
     hunk-header-style = "file line-number syntax"
     hunk-header-decoration-style = "yellow box"
     hunk-header-file-style = "#d99555"
-    hunk-header-line-number-style = "##c7b9aa"
+    hunk-header-line-number-style = "#c7b9aa"
     hunk-header-color = "#2d2925"
 
     # Commit decorations

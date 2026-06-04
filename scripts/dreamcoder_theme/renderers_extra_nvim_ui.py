@@ -15,6 +15,7 @@ def nvim_ui_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel
         hl("Normal", fg=fg, bg=normal_bg),
         hl("NormalFloat", fg=fg, bg=c["surface0"]),
         hl("FloatBorder", fg=c["border_ui"], bg=c["surface0"]),
+        hl("FloatTitle", fg=c["accent"], bold=True),
         hl("NonText", fg=c["subtle"]),
         hl("SpecialKey", fg=c["muted"]),
         hl("Whitespace", fg=c["border"]),

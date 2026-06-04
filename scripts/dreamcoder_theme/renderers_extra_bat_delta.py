@@ -5,10 +5,19 @@ from __future__ import annotations
 from .palette import guard, mix
 
 
+def _detect_mode(c: dict[str, str]) -> str:
+    """Detect dark/dusk/light from palette dict."""
+    if "dusk" in c["name"].lower():
+        return "dusk"
+    if c["details"] == "darker":
+        return "dark"
+    return "light"
+
+
 def bat_content(c: dict[str, str]) -> str:
     """Return a Bat theme config snippet with modern defaults."""
-    mode_name = "dark" if c["details"] == "darker" else "light"
-    theme = "Dreamcoder-Dark" if mode_name == "dark" else "Dreamcoder-Light"
+    mode_name = _detect_mode(c)
+    theme = f"Dreamcoder-{mode_name.title()}"
     return (
         "#!/usr/bin/env bash\n"
         "set -euo pipefail\n"
@@ -22,7 +31,7 @@ def bat_content(c: dict[str, str]) -> str:
 
 def delta_content(c: dict[str, str]) -> str:
     """Return a Git Delta config snippet with Dreamcoder colors."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = _detect_mode(c)
     bg = c["bg"]
 
     def g(color: str) -> str:
@@ -40,7 +49,7 @@ def delta_content(c: dict[str, str]) -> str:
 
 [delta]
     # Syntax highlighting theme for diff content
-    syntax-theme = Dreamcoder-{"Dark" if mode == "dark" else "Light"}
+    syntax-theme = Dreamcoder-{mode.title()}
 
     # Line colors
     plus-color = "{plus_bg}"
@@ -54,7 +63,7 @@ def delta_content(c: dict[str, str]) -> str:
     hunk-header-style = "file line-number syntax"
     hunk-header-decoration-style = "yellow box"
     hunk-header-file-style = "{g("accent")}"
-    hunk-header-line-number-style = "#{g("muted")}"
+    hunk-header-line-number-style = "{g("muted")}"
     hunk-header-color = "{mix(g("muted"), bg, 0.85)}"
 
     # Commit decorations

@@ -110,9 +110,9 @@ Dreamcoder themes are **generated from one canonical token set** (`themes/dreamc
 | **Kitty** | `kitty-dreamcoder-{mode}.conf` | `include` in kitty.conf |
 | **Ghostty** | `ghostty-dreamcoder-{mode}` | `theme = dreamcoder-{mode}` |
 | **Warp** | `Warp/.../Dreamcoder-{Mode}.yaml` | Warp theme picker |
-| **Hyprland** | `hyprland-{mode}.conf` | `source` from hyprland.conf |
-| **Waybar** | `waybar-{mode}.css` | `@import` in waybar style.css |
-| **Rofi** | `rofi-{mode}.rasi` | `@import` or `-theme` in rofi launch |
+| **Hyprland** | `hyprland-{mode}.conf`, `colors.lua`, `colors.conf` | `source` from hyprland.conf; colors written to `~/.config/hypr/` |
+| **Waybar** | `waybar-{mode}.css`, `colors.css` | `@import` in waybar style.css; colors written to `~/.config/waybar/` |
+| **Rofi** | `rofi-{mode}.rasi`, `colors.rasi` | `@import` or `-theme` in rofi launch; colors written to `~/.config/rofi/` |
 | **Starship** | `starship-{mode}.toml` | `STARSHIP_CONFIG` env var |
 | **Antigravity** | `Antigravity/Dreamcoder-{Mode}.json` | Antigravity theme selector |
 | **opencode** | `opencode/dreamcoder.json` | `theme: "dreamcoder"` in opencode config |
@@ -137,14 +137,21 @@ themes/dreamcoder/tokens.json            # canonical design tokens: colors + gua
 themes/dreamcoder/tokens.schema.json     # schema for the token contract
 scripts/dreamcoder                       # unified CLI entrypoint
 scripts/sync-dreamcoder-theme.py         # generator for core targets (terminals/opencode)
-scripts/dreamcoder_theme/renderers.py    # shared rendering helpers
-scripts/dreamcoder_theme/renderers_core.py   # core target renderers
-scripts/dreamcoder_theme/renderers_extra.py  # extra target renderers (neovim, fzf, bat, delta, etc.)
-scripts/dreamcoder_theme/renderers_desktop.py # desktop-UI renderers
-scripts/dreamcoder_theme/settings.py     # schema-based token settings
-scripts/dreamcoder_theme/sync.py         # stale-file cleanup & install orchestration
-scripts/apply-theme-mode.sh              # shared mode applier for all targets
-scripts/install-dreamcoder-hooks.sh      # one-time hook installer (symlinks, includes)
+scripts/dreamcoder_theme/renderers.py              # shared rendering helpers
+scripts/dreamcoder_theme/renderers_cli.py            # CLI targets (fzf, bat, delta, ls-colors, zsh-syntax)
+scripts/dreamcoder_theme/renderers_desktop.py        # desktop-UI renderers (dunst, gtk)
+scripts/dreamcoder_theme/renderers_hypr_waybar_rofi.py # Hyprland, Waybar, Rofi renderers
+scripts/dreamcoder_theme/renderers_terminal.py       # terminal targets (kitty, ghostty, warp)
+scripts/dreamcoder_theme/renderers_extra.py          # extra targets (neovim, fzf, bat, delta, etc.)
+scripts/dreamcoder_theme/renderers_opencode.py       # opencode/Codex CLI theme renderers
+scripts/dreamcoder_theme/renderers_codex.py          # Codex CLI tmTheme renderer
+scripts/dreamcoder_theme/renderers_starship.py       # Starship prompt renderer
+scripts/dreamcoder_theme/settings.py                 # schema-based token settings
+scripts/dreamcoder_theme/palette_tokens.py           # token palette definitions
+scripts/dreamcoder_theme/writers.py                  # file writer utilities
+scripts/dreamcoder_theme/sync.py                     # stale-file cleanup & install orchestration
+scripts/apply-theme-mode.sh                          # shared mode applier for all targets
+scripts/install-dreamcoder-hooks.sh                  # one-time hook installer (symlinks, includes) — manual only, not called by install flow
 scripts/theme-auto.sh                    # time-based light/dusk/dark selector
 scripts/wallpaper-hook.sh                # robust wallpaper + Dreamcoder refresh hook
 scripts/verify-theme-health.py           # contrast and eye-comfort guardrails

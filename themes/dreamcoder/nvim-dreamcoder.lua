@@ -55,6 +55,11 @@ end
     bg = "#fff7ea"
   })
 
+  vim.api.nvim_set_hl(0, "FloatTitle", {
+    fg = "#824f16",
+    bold = true
+  })
+
   vim.api.nvim_set_hl(0, "NonText", {
     fg = "#554638"
   })
@@ -1186,10 +1191,6 @@ end
     fg = "#7d3e64"
   })
 
-  vim.api.nvim_set_hl(0, "CmpItemKindKeyword", {
-    fg = "#824f16"
-  })
-
   vim.api.nvim_set_hl(0, "CmpItemKindColor", {
     fg = "#57478b"
   })
@@ -1220,5 +1221,47 @@ end
 
   vim.api.nvim_set_hl(0, "CmpItemKindCopied", {
     fg = "#3d723d"
+  })
+
+
+  -- ── GitSigns ────────────────────────────────────────
+  vim.api.nvim_set_hl(0, "GitSignsAdd", {
+    fg = "#3d723d"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsChange", {
+    fg = "#654300"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsDelete", {
+    fg = "#842f24"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsAddNr", {
+    fg = "#3d723d"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsChangeNr", {
+    fg = "#654300"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsDeleteNr", {
+    fg = "#842f24"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsAddLn", {
+    bg = "#e4e0cf"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsChangeLn", {
+    bg = "#e8ddca"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsDeleteLn", {
+    bg = "#eadbcd"
+  })
+
+  vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
+    fg = "#352e22"
   })
 

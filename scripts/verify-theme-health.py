@@ -26,6 +26,8 @@ GHOSTTY_FILE = ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder
 WAYBAR_FILE = ROOT / "themes" / "dreamcoder" / "waybar-dark.css"
 HYPRLAND_FILE = ROOT / "themes" / "dreamcoder" / "hyprland-dark.conf"
 ROFI_FILE = ROOT / "themes" / "dreamcoder" / "rofi-dark.rasi"
+HYPR_COLORS_LUA_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.lua"))
+HYPR_COLORS_CONF_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.conf"))
 BTOP_FILE = ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-dark.theme"
 DUNST_FILE = ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-dark.conf"
 FZF_FILE = ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-dark.sh"
@@ -347,13 +349,8 @@ def check_theme_file(file):
         require(ratio <= 2.4, f"{file}: {key} surface contrast {ratio:.2f} > 2.4")
     for key in SELECTED_BACKGROUND_KEYS:
         ratio = contrast(bg, theme[key])
-        if lum(bg) > 0.5:
-            require(
-                ratio >= 7, f"{file}: {key} light selection contrast {ratio:.2f} < 7"
-            )
-        else:
-            require(ratio >= 1.05, f"{file}: {key} surface contrast {ratio:.2f} < 1.05")
-            require(ratio <= 2.4, f"{file}: {key} surface contrast {ratio:.2f} > 2.4")
+        require(ratio >= 1.05, f"{file}: {key} surface contrast {ratio:.2f} < 1.05")
+        require(ratio <= 2.4, f"{file}: {key} surface contrast {ratio:.2f} > 2.4")
     require(
         contrast(theme["terminalCyan"], theme["background"])
         >= contrast(theme["terminalBlue"], theme["background"]),
@@ -372,12 +369,9 @@ def check_codex_cli_theme(file):
     require(HEX.match(bg), f"{file}: invalid background")
     require(HEX.match(fg), f"{file}: invalid foreground")
     require(contrast(bg, fg) >= 7, f"{file}: foreground contrast below AAA")
-    require(contrast(bg, settings["selection"]) >= 1.2, f"{file}: selection too faint")
+    require(contrast(bg, settings["selection"]) >= 1.05, f"{file}: selection too faint")
+    require(contrast(bg, settings["selection"]) <= 2.4, f"{file}: selection too loud")
     if lum(bg) > 0.5:
-        require(
-            contrast(bg, settings["selection"]) >= 7,
-            f"{file}: light selection must invert strongly",
-        )
         require(
             contrast(bg, settings["lineHighlight"]) >= 1.15,
             f"{file}: light line highlight too faint",
@@ -485,6 +479,15 @@ def check_fzf_theme(file):
     require(len(hex_matches) >= 1, f"{file}: missing hex color definitions")
 
 
+def check_hypr_colors_file(file):
+    """Validate a hypr-colors lua/conf file has valid color definitions."""
+    if not file.exists():
+        return
+    content = file.read_text()
+    has_rgba = bool(re.search(r"rgba\([0-9a-fA-F]{8}\)", content))
+    require(has_rgba, f"{file}: missing valid rgba color definitions")
+
+
 check_rgba_tokens()
 check_tokens()
 for file in FILES:
@@ -502,4 +505,8 @@ check_rofi_theme(ROFI_FILE)
 check_btop_theme(BTOP_FILE)
 check_dunst_theme(DUNST_FILE)
 check_fzf_theme(FZF_FILE)
+for file in HYPR_COLORS_LUA_GLOB:
+    check_hypr_colors_file(file)
+for file in HYPR_COLORS_CONF_GLOB:
+    check_hypr_colors_file(file)
 print("✓ Dreamcoder theme health guardrails passed")

@@ -7,7 +7,7 @@
 
 [delta]
     # Syntax highlighting theme for diff content
-    syntax-theme = Dreamcoder-Light
+    syntax-theme = Dreamcoder-Dusk
 
     # Line colors
     plus-color = "#d2d2c0"
@@ -21,7 +21,7 @@
     hunk-header-style = "file line-number syntax"
     hunk-header-decoration-style = "yellow box"
     hunk-header-file-style = "#8a5520"
-    hunk-header-line-number-style = "##4c443a"
+    hunk-header-line-number-style = "#4c443a"
     hunk-header-color = "#d3ccbf"
 
     # Commit decorations

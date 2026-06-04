@@ -5,7 +5,7 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 # shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 MODE="${1:-light}"
-WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-${WALLPAPER:-}}}"
+WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-}}"
 ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
 [[ "${MODE}" == "light" || "${MODE}" == "dark" || "${MODE}" == "dusk" ]] || { printf 'Invalid mode: %s\n' "${MODE}" >&2; exit 1; }
 if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
@@ -111,5 +111,11 @@ printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 # Only Dunst needs a symlink check since its config is a plain file in the repo.
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
-[[ -L "${DUNST_CONF}" && "$(readlink "${DUNST_CONF}")" == *"dunst-dreamcoder-dark.conf" ]] && \
-    ln -sf "${DOTS_DIR}/themes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
+if [[ -L "${DUNST_CONF}" ]]; then
+    target=$(readlink "${DUNST_CONF}")
+    case "${target}" in
+        *dunst-dreamcoder-dark.conf|*dunst-dreamcoder-light.conf|*dunst-dreamcoder-dusk.conf)
+            ln -sf "${DOTS_DIR}/themes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
+            ;;
+    esac
+fi

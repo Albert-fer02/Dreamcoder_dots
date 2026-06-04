@@ -129,7 +129,7 @@ blockquote {{
 .is-selected .search-result-file-matched-text,
 mark {{
   background-color: {mix(c["accent"], bg, 0.80)} !important;
-  color: {c["bg"]} !important;
+  color: {c["text"]} !important;
 }}
 
 /* Active line in edit mode */

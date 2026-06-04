@@ -21,6 +21,14 @@ printf 'opencode: '
 if command -v python3 >/dev/null; then CONFIG_HOME="${CONFIG_HOME}" python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["CONFIG_HOME"])/"opencode/tui.json"; print(json.loads(p.read_text()).get("theme","unset"))' 2>/dev/null || printf 'unknown
 '; else printf 'unknown
 '; fi
-for path in "${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/starship.toml"; do check_path "${path}"; done
+for path in "${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/starship.toml" \
+    "${CONFIG_HOME}/hypr/colors.lua" "${CONFIG_HOME}/hypr/colors.conf" \
+    "${CONFIG_HOME}/waybar/colors.css" "${CONFIG_HOME}/rofi/colors.rasi"; do check_path "${path}"; done
+if [[ -L "${CONFIG_HOME}/dunst/dreamcoder-dunst.conf" ]]; then
+    target=$(readlink "${CONFIG_HOME}/dunst/dreamcoder-dunst.conf")
+    printf '  dunst symlink → %s\n' "${target}"
+else
+    warn 'dunst/dreamcoder-dunst.conf missing or not a symlink'
+fi
 command -v systemctl >/dev/null && systemctl --user is-active --quiet dreamcoder-theme-auto.timer && ok 'timer active' || warn 'timer inactive'
 "${DREAMCODER_DOTS_DIR}/scripts/verify-theme-health.py"

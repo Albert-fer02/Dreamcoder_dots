@@ -114,7 +114,7 @@ blockquote {
 .is-selected .search-result-file-matched-text,
 mark {
   background-color: #3a2b1c !important;
-  color: #12100e !important;
+  color: #e8dfd0 !important;
 }
 
 /* Active line in edit mode */

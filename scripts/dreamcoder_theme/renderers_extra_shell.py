@@ -56,7 +56,7 @@ def ls_colors_content(c: dict[str, str]) -> str:
     g = lambda key: guard(c[key], bg, mode)
     common = {
         "di": _fg(g("accent")), "ex": _fg(g("accent_2")), "ln": _fg(g("diagnostic")),
-        "or": f"{_bg(bg)};{_fg(g('text'))}", "so": _fg(g("sage")), "pi": _fg(g("warning")),
+        "or": f"{_bg(c['warning'])};{_fg(g('text'))}", "so": _fg(g("sage")), "pi": _fg(g("warning")),
         "bd": _fg(g("error")), "cd": _fg(g("error")), "su": f"{_bg(bg)};{_fg(g('accent_2'))}",
         "sg": f"{_bg(bg)};{_fg(g('accent_2'))}", "tw": f"{_fg(g('accent'))};{_bg(c['surface0'])}",
         "ow": f"{_fg(g('accent'))};{_bg(c['surface0'])}", "st": f"{_fg(g('accent'))};{_bg(c['surface1'])}",
