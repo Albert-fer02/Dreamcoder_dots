@@ -31,3 +31,6 @@ __pycache__/
 
 # Local AI session metadata
 .atl/
+# Fish user files
+Shell/.config/fish/fish_variables
+Shell/.config/fish/functions/
