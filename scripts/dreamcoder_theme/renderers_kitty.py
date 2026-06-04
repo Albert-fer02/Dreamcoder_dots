@@ -9,34 +9,35 @@ from .renderers_core import ansi
 def kitty_content(c: dict[str, str]) -> str:
     p = ansi(c)
     invert = c.get("details") == "lighter"
-    sel_fg = c['bg'] if invert else c['text']
-    sel_bg = c['text'] if invert else c['selection']
+    sel_fg = c["bg"] if invert else c["text"]
+    # Dark mode: use surface1 instead of selection for better visibility
+    sel_bg = c["text"] if invert else c["surface1"]
     return f"""# ==========================================================
-#              {c['name']}
+#              {c["name"]}
 # ==========================================================
 # Color-only theme layer. Keep ML4W/Gentleman behavior elsewhere.
 
-foreground              {c['text']}
-background              {c['bg']}
+foreground              {c["text"]}
+background              {c["bg"]}
 selection_foreground    {sel_fg}
 selection_background    {sel_bg}
-url_color               {c['diagnostic']}
+url_color               {c["diagnostic"]}
 
-cursor                  {c['accent']}
-cursor_text_color       {c['bg']}
+cursor                  {c["accent"]}
+cursor_text_color       {c["bg"]}
 cursor_shape            block
 cursor_blink_interval   0.5
 cursor_stop_blinking_after 15.0
 
-active_tab_foreground   {c['bg']}
-active_tab_background   {c['accent']}
-inactive_tab_foreground {c['muted']}
-inactive_tab_background {c['bg']}
-tab_bar_background      {c['bg']}
+active_tab_foreground   {c["bg"]}
+active_tab_background   {c["accent"]}
+inactive_tab_foreground {c["muted"]}
+inactive_tab_background {c["bg"]}
+tab_bar_background      {c["bg"]}
 
-active_border_color     {c['accent']}
-inactive_border_color   {c['border']}
-bell_border_color       {c['error']}
+active_border_color     {c["accent"]}
+inactive_border_color   {c["border"]}
+bell_border_color       {c["error"]}
 
 color0  {p[0]}
 color1  {p[1]}
@@ -54,15 +55,15 @@ color12 {p[12]}
 color13 {p[13]}
 color14 {p[14]}
 color15 {p[15]}
-color16 {c['accent_2']}
-color17 {c['error']}
+color16 {c["accent_2"]}
+color17 {c["error"]}
 
-mark1_foreground        {c['bg']}
-mark1_background        {c['accent']}
-mark2_foreground        {c['bg']}
-mark2_background        {c['diagnostic']}
-mark3_foreground        {c['bg']}
-mark3_background        {c['mauve']}
+mark1_foreground        {c["bg"]}
+mark1_background        {c["accent"]}
+mark2_foreground        {c["bg"]}
+mark2_background        {c["diagnostic"]}
+mark3_foreground        {c["bg"]}
+mark3_background        {c["mauve"]}
 """
 
 

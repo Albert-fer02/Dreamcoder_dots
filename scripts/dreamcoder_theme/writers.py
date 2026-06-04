@@ -8,6 +8,7 @@ import re
 import subprocess
 from pathlib import Path
 
+
 def write_if_changed(path: Path, content: str) -> bool:
     old = path.read_text() if path.exists() else ""
     if old == content:
@@ -67,14 +68,19 @@ def ensure_pi_theme_settings(path: Path) -> bool:
     data["theme"] = "dreamcoder"
     return write_if_changed(path, json.dumps(data, indent=2) + "\n")
 
+
 def valid_starship(path: Path) -> bool:
-    return subprocess.run(
-        ["starship", "explain"],
-        env={**os.environ, "STARSHIP_CONFIG": str(path)},
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    ).returncode == 0
+    return (
+        subprocess.run(
+            ["starship", "explain"],
+            env={**os.environ, "STARSHIP_CONFIG": str(path)},
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        ).returncode
+        == 0
+    )
+
 
 def ensure_kitty_ui_include(path: Path) -> bool:
     line = "include dreamcoder-ui.conf"
@@ -83,8 +89,28 @@ def ensure_kitty_ui_include(path: Path) -> bool:
     content = path.read_text()
     if line in content:
         return False
-    path.write_text(content.rstrip() + "\n\n# Dreamcoder readability override\n" + line + "\n")
+    path.write_text(
+        content.rstrip() + "\n\n# Dreamcoder readability override\n" + line + "\n"
+    )
     return True
+
+
+def update_ghostty_theme(path: Path, mode: str) -> bool:
+    """Update Ghostty config to use the correct theme name."""
+    if not path.exists():
+        return False
+    content = path.read_text()
+    theme_name = f"dreamcoder-{mode}" if mode != "light" else "dreamcoder"
+    # Check if already correct
+    if re.search(rf"theme\s*=\s*{re.escape(theme_name)}", content):
+        return False
+    # Replace or add theme line
+    if re.search(r"theme\s*=", content):
+        updated = re.sub(r"theme\s*=.*", f"theme = {theme_name}", content)
+    else:
+        updated = content.rstrip() + f"\n\n# Theme\ntheme = {theme_name}\n"
+    return write_if_changed(path, updated)
+
 
 def write_variant_files(
     base: Path,

@@ -8,8 +8,9 @@ from .renderers_core import ansi
 
 def ghostty_content(c: dict[str, str]) -> str:
     invert = c.get("details") == "lighter"
-    sel_bg = c['text'] if invert else c['selection']
-    sel_fg = c['bg'] if invert else c['text']
+    # Dark mode: use surface1 instead of selection for better visibility
+    sel_bg = c["text"] if invert else c["surface1"]
+    sel_fg = c["bg"] if invert else c["text"]
     lines = [
         f"# {c['name']}",
         f"background = {c['bg']}",
@@ -28,12 +29,12 @@ def ghostty_content(c: dict[str, str]) -> str:
 
 def warp_content(c: dict[str, str]) -> str:
     p = ansi(c)
-    return f"""name: {c['name']}
-accent: '{c['accent']}'
-cursor: '{c['accent']}'
-background: '{c['bg']}'
-foreground: '{c['text']}'
-details: {c['details']}
+    return f"""name: {c["name"]}
+accent: '{c["accent"]}'
+cursor: '{c["accent"]}'
+background: '{c["bg"]}'
+foreground: '{c["text"]}'
+details: {c["details"]}
 terminal_colors:
   normal:
     black: '{p[0]}'
