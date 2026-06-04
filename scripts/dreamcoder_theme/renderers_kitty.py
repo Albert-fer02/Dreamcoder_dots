@@ -27,6 +27,7 @@ cursor_text_color       {c["bg"]}
 cursor_shape            block
 cursor_blink_interval   0.5
 cursor_stop_blinking_after 15.0
+cursor_text_color       {c["bg"]}
 
 active_tab_foreground   {c["bg"]}
 active_tab_background   {c["accent"]}
