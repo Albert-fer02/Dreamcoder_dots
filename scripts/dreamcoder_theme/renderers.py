@@ -13,7 +13,9 @@ from .renderers_desktop import (
     hypr_content,
     readme_content,
     rofi_content,
+    rofi_matugen_content,
     waybar_content,
+    waybar_matugen_content,
 )
 from .renderers_extra import (
     bat_content,
@@ -60,8 +62,10 @@ __all__ = [
     "pi_theme_content",
     "readme_content",
     "rofi_content",
+    "rofi_matugen_content",
     "starship_content",
     "warp_content",
     "waybar_content",
+    "waybar_matugen_content",
     "zsh_syntax_content",
 ]

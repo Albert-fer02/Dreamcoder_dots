@@ -105,22 +105,11 @@ fi
 
 printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 
-# --- Ensure Dreamcoder desktop theme symlinks survive matugen ---
-# matugen (above) overwrites waybar/colors.css and rofi/colors.rasi.
-# Re-link them so the Dreamcoder color layer always wins.
-# Note: Hyprland colors.lua/colors.conf are written directly by sync
-# (after matugen), so they don't need symlink protection here.
+# --- Post-sync: fix any stale symlinks ---
+# Waybar colors.css, Rofi colors.rasi, and Hyprland colors.lua/colors.conf
+# are written directly by sync-dreamcoder-theme.py (which runs AFTER matugen).
+# Only Dunst needs a symlink check since its config is a plain file in the repo.
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
-WAYBAR_CSS="${HOME}/.config/waybar/colors.css"
-ROFI_RASI="${HOME}/.config/rofi/colors.rasi"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
-
-for target in "${WAYBAR_CSS}" "${ROFI_RASI}"; do
-    [[ -L "${target}" ]] || { [[ -f "${target}" ]] && cp "${target}" "${target}.matugen.bak"; }
-    rm -f "${target}"
-done
-ln -sf "${DOTS_DIR}/themes/dreamcoder/waybar.css" "${WAYBAR_CSS}"
-ln -sf "${DOTS_DIR}/themes/dreamcoder/rofi.rasi" "${ROFI_RASI}"
-
 [[ -L "${DUNST_CONF}" && "$(readlink "${DUNST_CONF}")" == *"dunst-dreamcoder-dark.conf" ]] && \
     ln -sf "${DOTS_DIR}/themes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"

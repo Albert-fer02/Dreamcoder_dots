@@ -48,7 +48,9 @@ class ThemePaths:
     hypr_colors_lua: Path
     hypr_colors_conf: Path
     waybar: Path
+    waybar_matugen: Path
     rofi: Path
+    rofi_matugen: Path
 
 
 def theme_mode() -> str:
@@ -196,10 +198,22 @@ def theme_paths() -> ThemePaths:
                 dreamcoder_theme / "waybar.css",
             )
         ),
+        waybar_matugen=Path(
+            os.environ.get(
+                "DREAMCODER_WAYBAR_MATUGEN",
+                config_home / "waybar/colors.css",
+            )
+        ),
         rofi=Path(
             os.environ.get(
                 "DREAMCODER_ROFI_THEME",
                 dreamcoder_theme / "rofi.rasi",
+            )
+        ),
+        rofi_matugen=Path(
+            os.environ.get(
+                "DREAMCODER_ROFI_MATUGEN",
+                config_home / "rofi/colors.rasi",
             )
         ),
     )

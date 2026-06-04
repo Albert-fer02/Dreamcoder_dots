@@ -26,9 +26,11 @@ from .renderers import (
     pi_theme_content,
     readme_content,
     rofi_content,
+    rofi_matugen_content,
     starship_content,
     warp_content,
     waybar_content,
+    waybar_matugen_content,
     zsh_syntax_content,
 )
 from .settings import (
@@ -95,7 +97,13 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
             paths.hypr_colors_conf, hypr_colors_conf_content(active)
         ),
         "waybar": write_if_changed(paths.waybar, waybar_content(active)),
+        "waybar_matugen": write_if_changed(
+            paths.waybar_matugen, waybar_matugen_content(active)
+        ),
         "rofi": write_if_changed(paths.rofi, rofi_content(active)),
+        "rofi_matugen": write_if_changed(
+            paths.rofi_matugen, rofi_matugen_content(active)
+        ),
     }
 
 
@@ -391,7 +399,9 @@ def print_summary(
     print(f"Hyprland colors.lua: {paths.hypr_colors_lua}")
     print(f"Hyprland colors.conf: {paths.hypr_colors_conf}")
     print(f"Waybar: {paths.waybar}")
+    print(f"Waybar matugen: {paths.waybar_matugen}")
     print(f"Rofi: {paths.rofi}")
+    print(f"Rofi matugen: {paths.rofi_matugen}")
     print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
     print(f"Repo variant/snippet changes: {sum(repo_changes)}")
 
