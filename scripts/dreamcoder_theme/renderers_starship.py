@@ -7,8 +7,25 @@ from .renderers_core import ansi
 
 
 def starship_content(c: dict[str, str]) -> str:
-    return f'''add_newline = true
+    mode = "dark" if c.get("details") == "darker" else "light"
+    prom_acc = guard(c["prompt_accent"], c["bg"], mode)
+    prom_s0 = guard(c["prompt_surface0"], c["bg"], mode)
+    prom_s1 = guard(c["prompt_surface1"], c["bg"], mode)
+    prom_s2 = guard(c["prompt_surface2"], c["bg"], mode)
+    prom_text = guard(c["prompt_text"], c["bg"], mode)
+    prom_muted = guard(c["prompt_muted"], c["bg"], mode)
+    error = guard(c["error"], c["bg"], mode)
+
+    return f'''# ========================================================
+# {c["name"]} — Starship prompt
+# ========================================================
+# Modern two-line layout with powerline segments.
+# Line 1: context (directory, git)
+# Line 2: input character only (clean)
+
+add_newline = true
 palette = "dreamcoder"
+command_timeout = 500
 
 format = """
 [](fg:prompt_surface0)\\
@@ -20,27 +37,29 @@ $git_branch\\
 $git_status\\
 [](fg:prompt_accent)\\
 $fill\\
-$hostname\\
-$cmd_duration
+$cmd_duration\\
+$time
 $character"""
 
+right_format = ""
+
 [palettes.dreamcoder]
-bg = "{c['bg']}"
-text = "{c['text']}"
-muted = "{c['muted']}"
-prompt_bg = "{c['prompt_bg']}"
-prompt_surface0 = "{c['prompt_surface0']}"
-prompt_surface1 = "{c['prompt_surface1']}"
-prompt_surface2 = "{c['prompt_surface2']}"
-prompt_text = "{c['prompt_text']}"
-prompt_muted = "{c['prompt_muted']}"
-prompt_accent = "{c['prompt_accent']}"
-prompt_accent_2 = "{c['prompt_accent_2']}"
-sage = "{c['sage']}"
-diagnostic = "{c['diagnostic']}"
-lavender = "{c['lavender']}"
-mauve = "{c['mauve']}"
-error = "{c['error']}"
+bg = "{c["bg"]}"
+text = "{c["text"]}"
+muted = "{c["muted"]}"
+prompt_bg = "{c["prompt_bg"]}"
+prompt_surface0 = "{prom_s0}"
+prompt_surface1 = "{prom_s1}"
+prompt_surface2 = "{prom_s2}"
+prompt_text = "{prom_text}"
+prompt_muted = "{prom_muted}"
+prompt_accent = "{prom_acc}"
+prompt_accent_2 = "{c["prompt_accent_2"]}"
+sage = "{c["sage"]}"
+diagnostic = "{c["diagnostic"]}"
+lavender = "{c["lavender"]}"
+mauve = "{c["mauve"]}"
+error = "{error}"
 
 [username]
 show_always = true
@@ -48,16 +67,12 @@ style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
 format = "[  $user ]($style)"
 
-[hostname]
-ssh_only = true
-style = "fg:prompt_muted bold"
-format = "[ 󰣇 $hostname ]($style) "
-
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
 format = "[  $path ]($style)"
 truncation_length = 2
 truncate_to_repo = true
+home_symbol = ""
 
 [git_branch]
 symbol = ""
@@ -81,6 +96,22 @@ deleted = "✘${{count}} "
 [fill]
 symbol = " "
 
+[cmd_duration]
+min_time = 2500
+style = "fg:prompt_muted"
+format = "[  $duration ]($style)"
+
+[time]
+disabled = false
+format = "[ $time ]($style)"
+style = "fg:prompt_muted"
+
+[character]
+success_symbol = "[❯](bold fg:prompt_accent)"
+error_symbol = "[❯](bold fg:error)"
+vimcmd_symbol = "[❮](bold fg:sage)"
+
+# Runtime versions - show only when relevant, keep compact
 [bun]
 symbol = ""
 style = "fg:prompt_accent bold"
@@ -111,17 +142,4 @@ symbol = ""
 style = "fg:diagnostic bold"
 format = "[ $symbol $context]($style)"
 only_with_files = true
-
-[cmd_duration]
-min_time = 2500
-style = "fg:prompt_muted"
-format = "[  $duration ]($style) "
-
-[time]
-disabled = true
-
-[character]
-success_symbol = "[❯](bold fg:prompt_accent)"
-error_symbol = "[❯](bold fg:error)"
-vimcmd_symbol = "[❮](bold fg:sage)"
 '''
