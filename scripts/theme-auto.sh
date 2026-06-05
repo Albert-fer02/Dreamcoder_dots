@@ -2,8 +2,9 @@
 set -euo pipefail
 
 ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
-# shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
+# Ensure DREAMCODER_DOTS_DIR is set
+: "${DREAMCODER_DOTS_DIR:=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 LIGHT_START="${DREAMCODER_LIGHT_START:-7}"
 DARK_START="${DREAMCODER_DARK_START:-18}"
 HOUR="$(date +%H)"

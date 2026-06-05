@@ -13,6 +13,7 @@ DOTFILES_FALLBACKS=(
 # Try each fallback location
 for DOTFILES_DIR in "${DOTFILES_FALLBACKS[@]}"; do
     if [[ -n "${DOTFILES_DIR}" && -f "${DOTFILES_DIR}/scripts/theme-auto.sh" ]]; then
+        export DREAMCODER_DOTS_DIR="${DOTFILES_DIR}"
         exec "${DOTFILES_DIR}/scripts/theme-auto.sh" "$@"
     fi
 done
