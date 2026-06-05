@@ -36,3 +36,4 @@ fi
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 [[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
 unset _dc_mode _dc_theme_dir PATH_DIRS dir group file BUN_COMPLETION SHELL_DIR
+. "$HOME/.cargo/env"

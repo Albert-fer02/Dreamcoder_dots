@@ -36,7 +36,7 @@ VARIANTS = {
         'prompt_muted': '#dcc3aa',
         'prompt_accent': '#e6a15c',
         'prompt_accent_2': '#d66f50',
-        'sage': '#3d944e',
+        'sage': '#45a055',
         'lavender': '#c9a8dc',
         'mauve': '#d98aa9',
         'error': '#e98272',

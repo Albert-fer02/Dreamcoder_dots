@@ -38,7 +38,7 @@
     "terminal.foreground": "#e8dfd0",
     "terminal.ansiBlack": "#211c18",
     "terminal.ansiRed": "#e98272",
-    "terminal.ansiGreen": "#3d944e",
+    "terminal.ansiGreen": "#45a055",
     "terminal.ansiYellow": "#e8b866",
     "terminal.ansiBlue": "#d99555",
     "terminal.ansiMagenta": "#d98aa9",
@@ -84,7 +84,7 @@
         "punctuation.definition.string"
       ],
       "settings": {
-        "foreground": "#3d944e"
+        "foreground": "#45a055"
       }
     },
     {

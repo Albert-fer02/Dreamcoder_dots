@@ -54,7 +54,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
 
     # Mode-aware surface formulas
     if mode_name == "dark":
-        element_bg = mix(c["border_ui"], c["bg"], 0.08)
+        element_bg = mix(c["border_ui"], c["bg"], 0.20)
         hover_bg = mix(c["border_ui"], c["bg"], 0.12)
         line_bg = mix(c["border_ui"], c["bg"], 0.12)
         code_bg = mix(c["border_ui"], c["bg"], 0.18)
@@ -62,7 +62,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         user_bg = mix(c["accent"], c["bg"], 0.18)
         tool_bg = mix(c["lavender"], c["bg"], 0.18)
         accent_muted = mix(c["accent"], c["bg"], 0.25)
-        inline_code_bg = mix(c["sage"], c["bg"], 0.25)
+        inline_code_bg = mix(c["sage"], c["border_ui"], 0.45)
         mix_base = c["border_ui"]
     else:
         element_bg = c["bg_soft"]
@@ -114,7 +114,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "backgroundTool": "{tool_bg}",
     "text": "{c["text"]}",
     "textMuted": "{c["muted"]}",
-    "textSubtle": "{c["subtle"]}",
+    "textSubtle": "{guard(c["subtle"], c["bg"], mode_name, minimum=5.5)}",
     "textPlaceholder": "{c["comment"]}",
     "textAssistant": "{assistant}",
     "textUser": "{user}",

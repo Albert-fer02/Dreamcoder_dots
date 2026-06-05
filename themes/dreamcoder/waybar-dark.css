@@ -11,7 +11,7 @@
 @define-color accent-2 #c96a45;
 @define-color diagnostic #5f95ca;
 @define-color error #e98272;
-@define-color success #3d944e;
+@define-color success #45a055;
 @define-color warning #e8b866;
 
 window#waybar {

@@ -8,7 +8,7 @@ terminal_colors:
   normal:
     black: '#858280'
     red: '#e98272'
-    green: '#3d944e'
+    green: '#45a055'
     yellow: '#d99555'
     blue: '#5f95ca'
     magenta: '#d98aa9'

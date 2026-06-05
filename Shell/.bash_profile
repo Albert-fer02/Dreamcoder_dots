@@ -10,3 +10,4 @@ if [[ "${-}" == *i* ]]; then
     [[ -f "${BASHRC}" ]] && source "${BASHRC}"
 fi
 [[ -f "${CARGO_ENV}" ]] && source "${CARGO_ENV}"
+. "$HOME/.cargo/env"

@@ -13,7 +13,7 @@
   --background-modifier-border: #756052;
   --background-modifier-border-hover: #908070;
   --background-modifier-form-field: #211c18;
-  --background-modifier-success: #1d311e;
+  --background-modifier-success: #1f3420;
   --background-modifier-error: #482c27;
   --background-modifier-message: #2e241f;
 
@@ -25,7 +25,7 @@
   --text-accent-hover: #c96a45;
   --text-error: #e98272;
   --text-warning: #e8b866;
-  --text-success: #3d944e;
+  --text-success: #45a055;
   --text-selection: #201a16;
   --text-on-accent: #12100e;
 
@@ -34,7 +34,7 @@
   --interactive-hover: #3e3129;
   --interactive-accent: #d99555;
   --interactive-accent-hover: #c96a45;
-  --interactive-success: #3d944e;
+  --interactive-success: #45a055;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -48,7 +48,7 @@
   --code-keyword: #d99555;
   --code-operator: #c96a45;
   --code-function: #c96a45;
-  --code-string: #3d944e;
+  --code-string: #45a055;
   --code-number: #d98aa9;
   --code-tag: #d99555;
   --code-important: #e98272;
@@ -85,7 +85,7 @@
   --graph-node: #c7b9aa;
   --graph-node-focused: #d99555;
   --graph-node-tag: #5f95ca;
-  --graph-node-attachment: #3d944e;
+  --graph-node-attachment: #45a055;
 }
 
 /* Headings */
