@@ -92,6 +92,9 @@ printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 # Only Dunst needs a symlink check since its config is a plain file in the repo.
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
+WARP_THEME="${HOME}/.local/share/warp-terminal/themes/Dreamcoder.yaml"
+WARP_VARIANT="${DOTS_DIR}/Warp/.local/share/warp-terminal/themes/Dreamcoder-${MODE^}.yaml"
+
 if [[ -L "${DUNST_CONF}" ]]; then
     target=$(readlink "${DUNST_CONF}")
     case "${target}" in
@@ -100,3 +103,6 @@ if [[ -L "${DUNST_CONF}" ]]; then
             ;;
     esac
 fi
+
+# Warp: flip active theme symlink to mode-specific variant
+[[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"

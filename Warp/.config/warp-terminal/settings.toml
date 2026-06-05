@@ -32,7 +32,7 @@ override_opacity = 96
 [appearance.themes]
 theme = {
   custom = {
-    name = "Dreamcoder Light",
+    name = "Dreamcoder-Dark",
     path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder.yaml",
   },
 }
