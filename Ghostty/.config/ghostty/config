@@ -9,7 +9,7 @@ font-size = 14
 font-feature = -calt, -liga, -dlig
 
 # Theme — mode-tracking (sync writes here, follows light/dark)
-theme = dreamcoder
+theme = dreamcoder-dark
 
 # Shell
 command = fish --login
