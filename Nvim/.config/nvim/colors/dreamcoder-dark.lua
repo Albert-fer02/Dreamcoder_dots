@@ -987,7 +987,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", {
-    fg = "#756052"
+    fg = "#908070"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", {

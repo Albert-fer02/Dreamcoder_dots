@@ -87,7 +87,7 @@ def nvim_lsp_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, se
         hl("NvimTreeEmptyFolderName", fg=c["muted"]),
         hl("NvimTreeOpenedFolderName", fg=c["accent"]),
         hl("NvimTreeImageFile", fg=c["lavender"]),
-        hl("NvimTreeIndentMarker", fg=c["border"]),
+        hl("NvimTreeIndentMarker", fg=c["border_ui"]),
         hl("NvimTreeWinSeparator", fg=c["border_ui"], bg=bg),
         hl("NvimTreeCursorLine", bg=c["surface0"]),
         "",

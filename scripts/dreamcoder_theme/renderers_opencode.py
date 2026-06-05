@@ -41,7 +41,7 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
         "comment": guard(c["comment"], c["bg"], mode_name, minimum=syntax_min),
         "todo": guard(mix(c["warning"], c["text"], 0.12), c["bg"], mode_name, minimum=syntax_min),
         "deprecated": guard(mix(c["error"], c["muted"], 0.28), c["bg"], mode_name, minimum=syntax_min),
-        "code_bg": c["surface0"],
+        "code_bg": mix(c["border_ui"], c["bg"], 0.15),
         "selection": sel_bg,
         "selection_fg": sel_fg,  # text color on selection
         "search": mix(c["warning"], c["bg"], 0.42),
@@ -57,7 +57,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     added_bg = mix(c["sage"], mix_base, 0.35)
     removed_bg = mix(c["error"], mix_base, 0.35)
     hunk_bg = mix(c["lavender"], mix_base, 0.45)
-    line_bg = c["surface0"]
+    line_bg = mix(c["border_ui"], c["surface2"], 0.35)
     assistant = guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)
     user = guard(mix(c["accent"], c["text"], 0.15), c["bg"], mode_name)
     background = "none" if transparent_background else c["bg"]
@@ -81,7 +81,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
   "theme": {{
     "background": "{background}",
     "backgroundPanel": "{c["surface0"]}",
-    "backgroundElement": "{c["bg_soft"]}",
+    "backgroundElement": "{mix(c["border_ui"], c["surface2"], 0.35)}",
     "backgroundHover": "{mix(c["border_ui"], c["surface2"], 0.3)}",
     "backgroundSelected": "{t["selection"]}",
     "textSelected": "{t["selection_fg"]}",
@@ -143,7 +143,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "markdownImageText": "{c["text"]}",
     "markdownCodeBlock": "{c["text"]}",
     "markdownCodeBlockBg": "{t["code_bg"]}",
-    "markdownInlineCodeBg": "{mix(c["sage"], mix_base, 0.45)}",
+    "markdownInlineCodeBg": "{mix(c["sage"], c["border_ui"], 0.35)}",
     "syntaxComment": "{t["comment"]}",
     "syntaxKeyword": "{t["keyword"]}",
     "syntaxFunction": "{t["function"]}",
