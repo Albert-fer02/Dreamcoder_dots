@@ -10,10 +10,10 @@
   --background-primary-alt: #fff7ea;
   --background-secondary: #fff7ea;
   --background-secondary-alt: #decbb1;
-  --background-modifier-border: #8a7358;
+  --background-modifier-border: #7a6550;
   --background-modifier-border-hover: #66513b;
   --background-modifier-form-field: #fff7ea;
-  --background-modifier-success: #c6ccb4;
+  --background-modifier-success: #c4ccb3;
   --background-modifier-error: #d7bbae;
   --background-modifier-message: #decbb1;
 
@@ -25,7 +25,7 @@
   --text-accent-hover: #a7471c;
   --text-error: #842f24;
   --text-warning: #654300;
-  --text-success: #3d723d;
+  --text-success: #357037;
   --text-selection: #e8dac6;
   --text-on-accent: #f3eadc;
 
@@ -34,11 +34,11 @@
   --interactive-hover: #c8ad89;
   --interactive-accent: #824f16;
   --interactive-accent-hover: #a7471c;
-  --interactive-success: #3d723d;
+  --interactive-success: #357037;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: #8a7358;
+  --scrollbar-thumb-bg: #7a6550;
   --scrollbar-active-thumb-bg: #66513b;
 
   /* Code — syntax highlighting colors */
@@ -48,7 +48,7 @@
   --code-keyword: #824f16;
   --code-operator: #a7471c;
   --code-function: #a7471c;
-  --code-string: #3d723d;
+  --code-string: #357037;
   --code-number: #7d3e64;
   --code-tag: #824f16;
   --code-important: #842f24;
@@ -71,21 +71,21 @@
   /* Checkbox */
   --checkbox-color: #824f16;
   --checkbox-color-hover: #a7471c;
-  --checkbox-border-color: #8a7358;
+  --checkbox-border-color: #7a6550;
   --checkbox-mark-color: #f3eadc;
 
   /* Table */
   --table-header-background: #decbb1;
   --table-header-background-hover: #c8ad89;
   --table-row-background-hover: #fff7ea;
-  --table-border-color: #8a7358;
+  --table-border-color: #7a6550;
 
   /* Graph */
-  --graph-line: #8a7358;
+  --graph-line: #7a6550;
   --graph-node: #352e22;
   --graph-node-focused: #824f16;
   --graph-node-tag: #0d4a68;
-  --graph-node-attachment: #3d723d;
+  --graph-node-attachment: #357037;
 }
 
 /* Headings */

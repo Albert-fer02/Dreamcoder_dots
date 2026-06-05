@@ -10,9 +10,9 @@
     syntax-theme = Dreamcoder-Light
 
     # Line colors
-    plus-color = "#d8d8c4"
+    plus-color = "#d6d8c3"
     minus-color = "#e2cec0"
-    plus-emph-color = "#3d723d"
+    plus-emph-color = "#357037"
     minus-emph-color = "#842f24"
 
     # Diff UI
@@ -33,7 +33,7 @@
     line-numbers-left-style = "#352e22"
     line-numbers-right-style = "#352e22"
     line-numbers-minus-style = "#842f24"
-    line-numbers-plus-style = "#3d723d"
+    line-numbers-plus-style = "#357037"
 
     # Side-by-side
     side-by-side = true

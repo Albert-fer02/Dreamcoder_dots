@@ -7,24 +7,24 @@
     "activityBar.background": "#211c18",
     "activityBar.foreground": "#d99555",
     "activityBar.inactiveForeground": "#b8a99a",
-    "activityBar.border": "#806754",
+    "activityBar.border": "#908070",
     "sideBar.background": "#211c18",
     "sideBar.foreground": "#e8dfd0",
-    "sideBar.border": "#806754",
+    "sideBar.border": "#908070",
     "statusBar.background": "#12100e",
     "statusBar.foreground": "#e8dfd0",
-    "statusBar.border": "#806754",
+    "statusBar.border": "#908070",
     "editorGroupHeader.tabsBackground": "#211c18",
     "tab.activeBackground": "#12100e",
     "tab.activeForeground": "#d99555",
     "tab.inactiveBackground": "#211c18",
     "tab.inactiveForeground": "#b8a99a",
-    "tab.border": "#806754",
+    "tab.border": "#908070",
     "editor.lineHighlightBackground": "#211c18",
     "editorLineNumber.foreground": "#b8a99a",
     "editorLineNumber.activeForeground": "#d99555",
     "editorWidget.background": "#2e241f",
-    "editorWidget.border": "#806754",
+    "editorWidget.border": "#908070",
     "input.background": "#2e241f",
     "input.foreground": "#e8dfd0",
     "input.border": "#d99555",
@@ -38,7 +38,7 @@
     "terminal.foreground": "#e8dfd0",
     "terminal.ansiBlack": "#211c18",
     "terminal.ansiRed": "#e98272",
-    "terminal.ansiGreen": "#388c48",
+    "terminal.ansiGreen": "#3d944e",
     "terminal.ansiYellow": "#e8b866",
     "terminal.ansiBlue": "#d99555",
     "terminal.ansiMagenta": "#d98aa9",
@@ -84,7 +84,7 @@
         "punctuation.definition.string"
       ],
       "settings": {
-        "foreground": "#388c48"
+        "foreground": "#3d944e"
       }
     },
     {

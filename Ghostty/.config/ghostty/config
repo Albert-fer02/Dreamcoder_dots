@@ -9,7 +9,7 @@ font-shaping-break = cursor
 font-feature = -calt, -liga, -dlig
 
 # Theme
-theme = dreamcoder-dark
+theme = dreamcoder
 command = fish --login
 cursor-style = "block"
 cursor-style-blink = true

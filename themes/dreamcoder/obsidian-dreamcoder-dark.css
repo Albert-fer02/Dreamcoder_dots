@@ -10,10 +10,10 @@
   --background-primary-alt: #211c18;
   --background-secondary: #211c18;
   --background-secondary-alt: #2e241f;
-  --background-modifier-border: #594d46;
-  --background-modifier-border-hover: #806754;
+  --background-modifier-border: #756052;
+  --background-modifier-border-hover: #908070;
   --background-modifier-form-field: #211c18;
-  --background-modifier-success: #1c2f1c;
+  --background-modifier-success: #1d311e;
   --background-modifier-error: #482c27;
   --background-modifier-message: #2e241f;
 
@@ -25,7 +25,7 @@
   --text-accent-hover: #c96a45;
   --text-error: #e98272;
   --text-warning: #e8b866;
-  --text-success: #388c48;
+  --text-success: #3d944e;
   --text-selection: #201a16;
   --text-on-accent: #12100e;
 
@@ -34,12 +34,12 @@
   --interactive-hover: #3e3129;
   --interactive-accent: #d99555;
   --interactive-accent-hover: #c96a45;
-  --interactive-success: #388c48;
+  --interactive-success: #3d944e;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: #594d46;
-  --scrollbar-active-thumb-bg: #806754;
+  --scrollbar-thumb-bg: #756052;
+  --scrollbar-active-thumb-bg: #908070;
 
   /* Code — syntax highlighting colors */
   --code-normal: #e8dfd0;
@@ -48,7 +48,7 @@
   --code-keyword: #d99555;
   --code-operator: #c96a45;
   --code-function: #c96a45;
-  --code-string: #388c48;
+  --code-string: #3d944e;
   --code-number: #d98aa9;
   --code-tag: #d99555;
   --code-important: #e98272;
@@ -71,21 +71,21 @@
   /* Checkbox */
   --checkbox-color: #d99555;
   --checkbox-color-hover: #c96a45;
-  --checkbox-border-color: #594d46;
+  --checkbox-border-color: #756052;
   --checkbox-mark-color: #12100e;
 
   /* Table */
   --table-header-background: #2e241f;
   --table-header-background-hover: #3e3129;
   --table-row-background-hover: #211c18;
-  --table-border-color: #594d46;
+  --table-border-color: #756052;
 
   /* Graph */
-  --graph-line: #594d46;
+  --graph-line: #756052;
   --graph-node: #c7b9aa;
   --graph-node-focused: #d99555;
   --graph-node-tag: #5f95ca;
-  --graph-node-attachment: #388c48;
+  --graph-node-attachment: #3d944e;
 }
 
 /* Headings */

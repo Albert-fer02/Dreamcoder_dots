@@ -20,7 +20,7 @@
     <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#0d4a68</string></dict></dict>
     <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#352e22</string></dict></dict>
-    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
+    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#357037</string></dict></dict>
     <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#9d452d</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
     <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#7d3e64</string></dict></dict>

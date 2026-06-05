@@ -4,14 +4,14 @@
 @define-color surface #211c18;
 @define-color text #e8dfd0;
 @define-color muted #c7b9aa;
-@define-color border #594d46;
-@define-color border-ui #806754;
+@define-color border #756052;
+@define-color border-ui #908070;
 @define-color focus #d99555;
 @define-color accent #d99555;
 @define-color accent-2 #c96a45;
 @define-color diagnostic #5f95ca;
 @define-color error #e98272;
-@define-color success #388c48;
+@define-color success #3d944e;
 @define-color warning #e8b866;
 
 window#waybar {
