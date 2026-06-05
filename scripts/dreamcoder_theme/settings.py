@@ -116,7 +116,8 @@ def theme_paths() -> ThemePaths:
         bat_theme_dir=Path(os.environ.get("BAT_THEME_DIR", config_home / "bat/themes")),
         nvim=Path(
             os.environ.get(
-                "DREAMCODER_NVIM_THEME", dreamcoder_theme / "nvim-dreamcoder.lua"
+                "DREAMCODER_NVIM_THEME",
+                dreamcoder_theme.parent.parent / "Nvim/.config/nvim/colors/dreamcoder.lua",
             )
         ),
         zsh_syntax=Path(

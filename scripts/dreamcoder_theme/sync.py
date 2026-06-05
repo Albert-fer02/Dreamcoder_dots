@@ -283,14 +283,16 @@ def sync_repo_snippets(
             ROOT / "Antigravity/Dreamcoder.json", antigravity_content(active)
         )
     )
-    # New targets — variant snippets in themes/dreamcoder/
-    theme_dir = ROOT / "themes/dreamcoder"
+    # Nvim variant files go in Nvim/.config/nvim/colors/
+    nvim_dir = ROOT / "Nvim/.config/nvim/colors"
     repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"nvim-dreamcoder-{v}.lua" for k, v in mode_names.items()},
+        nvim_dir,
+        {k: f"dreamcoder-{v}.lua" for k, v in mode_names.items()},
         nvim_content,
         variants,
     )
+    # Other variant files stay in themes/dreamcoder/
+    theme_dir = ROOT / "themes/dreamcoder"
     repo_changes += write_variant_files(
         theme_dir,
         {
