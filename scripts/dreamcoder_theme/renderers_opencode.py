@@ -51,13 +51,34 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
 def opencode_content(c: dict[str, str], transparent_background: bool = False) -> str:
     t = opencode_tokens(c)
     mode_name = "dark" if c["details"] == "darker" else "light"
-    # Mode-aware mix base: in dark mode, surface1/surface2 are almost same as panel
-    # so we use surface2 + tint instead of mostly-dark mixes.
-    mix_base = c["surface2"] if mode_name == "dark" else c["bg"]
+
+    # Mode-aware surface formulas
+    if mode_name == "dark":
+        element_bg = mix(c["border_ui"], c["bg"], 0.08)
+        hover_bg = mix(c["border_ui"], c["bg"], 0.12)
+        line_bg = mix(c["border_ui"], c["bg"], 0.12)
+        code_bg = mix(c["border_ui"], c["bg"], 0.18)
+        assistant_bg = mix(c["diagnostic"], c["bg"], 0.18)
+        user_bg = mix(c["accent"], c["bg"], 0.18)
+        tool_bg = mix(c["lavender"], c["bg"], 0.18)
+        accent_muted = mix(c["accent"], c["bg"], 0.25)
+        inline_code_bg = mix(c["sage"], c["bg"], 0.25)
+        mix_base = c["border_ui"]
+    else:
+        element_bg = c["bg_soft"]
+        hover_bg = mix(c["surface1"], c["surface2"], 0.5)
+        line_bg = c["bg_soft"]
+        code_bg = c["surface0"]
+        assistant_bg = mix(c["diagnostic"], c["bg"], 0.12)
+        user_bg = mix(c["accent"], c["bg"], 0.15)
+        tool_bg = mix(c["lavender"], c["bg"], 0.12)
+        accent_muted = mix(c["accent"], c["bg"], 0.4)
+        inline_code_bg = mix(c["sage"], c["bg"], 0.18)
+        mix_base = c["bg"]
+
     added_bg = mix(c["sage"], mix_base, 0.35)
     removed_bg = mix(c["error"], mix_base, 0.35)
     hunk_bg = mix(c["lavender"], mix_base, 0.45)
-    line_bg = mix(c["border_ui"], c["surface2"], 0.35)
     assistant = guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)
     user = guard(mix(c["accent"], c["text"], 0.15), c["bg"], mode_name)
     background = "none" if transparent_background else c["bg"]
@@ -81,16 +102,16 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
   "theme": {{
     "background": "{background}",
     "backgroundPanel": "{c["surface0"]}",
-    "backgroundElement": "{mix(c["border_ui"], c["surface2"], 0.35)}",
-    "backgroundHover": "{mix(c["border_ui"], c["surface2"], 0.3)}",
+    "backgroundElement": "{element_bg}",
+    "backgroundHover": "{hover_bg}",
     "backgroundSelected": "{t["selection"]}",
     "textSelected": "{t["selection_fg"]}",
-    "backgroundCode": "{t["code_bg"]}",
+    "backgroundCode": "{code_bg}",
     "backgroundSearch": "{t["search"]}",
     "backgroundLine": "{line_bg}",
-    "backgroundAssistant": "{mix(c["diagnostic"], mix_base, 0.35)}",
-    "backgroundUser": "{mix(c["accent"], mix_base, 0.35)}",
-    "backgroundTool": "{mix(c["lavender"], mix_base, 0.35)}",
+    "backgroundAssistant": "{assistant_bg}",
+    "backgroundUser": "{user_bg}",
+    "backgroundTool": "{tool_bg}",
     "text": "{c["text"]}",
     "textMuted": "{c["muted"]}",
     "textSubtle": "{c["subtle"]}",
@@ -101,7 +122,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "primary": "{c["accent"]}",
     "secondary": "{c["accent_2"]}",
     "accent": "{c["accent"]}",
-    "accentMuted": "{mix(c["accent"], mix_base, 0.3)}",
+    "accentMuted": "{accent_muted}",
     "error": "{c["error"]}",
     "warning": "{c["warning"]}",
     "success": "{c["sage"]}",
@@ -125,7 +146,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "diffRemovedLineNumberBg": "{removed_bg}",
     "diffHunkHeaderBg": "{hunk_bg}",
     "diffFold": "{c["comment"]}",
-    "diffFoldBg": "{mix(c["border_ui"], c["surface2"], 0.3)}",
+    "diffFoldBg": "{line_bg}",
     "markdownText": "{c["text"]}",
     "markdownHeading": "{c["accent"]}",
     "markdownLink": "{c["diagnostic"]}",
@@ -142,8 +163,8 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "markdownImage": "{c["mauve"]}",
     "markdownImageText": "{c["text"]}",
     "markdownCodeBlock": "{c["text"]}",
-    "markdownCodeBlockBg": "{t["code_bg"]}",
-    "markdownInlineCodeBg": "{mix(c["sage"], c["border_ui"], 0.35)}",
+    "markdownCodeBlockBg": "{code_bg}",
+    "markdownInlineCodeBg": "{inline_code_bg}",
     "syntaxComment": "{t["comment"]}",
     "syntaxKeyword": "{t["keyword"]}",
     "syntaxFunction": "{t["function"]}",
