@@ -44,16 +44,19 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
         "code_bg": c["surface0"],
         "selection": sel_bg,
         "selection_fg": sel_fg,  # text color on selection
-        "search": mix(c["warning"], c["bg"], 0.72),
+        "search": mix(c["warning"], c["bg"], 0.42),
     }
 
 
 def opencode_content(c: dict[str, str], transparent_background: bool = False) -> str:
     t = opencode_tokens(c)
     mode_name = "dark" if c["details"] == "darker" else "light"
-    added_bg = mix(c["sage"], c["bg"], 0.82)
-    removed_bg = mix(c["error"], c["bg"], 0.84)
-    hunk_bg = mix(c["lavender"], c["bg"], 0.84)
+    # Mode-aware mix base: in dark mode, surface1/surface2 are almost same as panel
+    # so we use surface2 + tint instead of mostly-dark mixes.
+    mix_base = c["surface2"] if mode_name == "dark" else c["bg"]
+    added_bg = mix(c["sage"], mix_base, 0.35)
+    removed_bg = mix(c["error"], mix_base, 0.35)
+    hunk_bg = mix(c["lavender"], mix_base, 0.45)
     line_bg = c["surface0"]
     assistant = guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)
     user = guard(mix(c["accent"], c["text"], 0.15), c["bg"], mode_name)
@@ -79,15 +82,15 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "background": "{background}",
     "backgroundPanel": "{c["surface0"]}",
     "backgroundElement": "{c["bg_soft"]}",
-    "backgroundHover": "{mix(c["surface1"], c["surface2"], 0.85)}",
+    "backgroundHover": "{mix(c["border_ui"], c["surface2"], 0.3)}",
     "backgroundSelected": "{t["selection"]}",
     "textSelected": "{t["selection_fg"]}",
     "backgroundCode": "{t["code_bg"]}",
     "backgroundSearch": "{t["search"]}",
     "backgroundLine": "{line_bg}",
-    "backgroundAssistant": "{mix(c["diagnostic"], c["bg"], 0.84)}",
-    "backgroundUser": "{mix(c["accent"], c["bg"], 0.84)}",
-    "backgroundTool": "{mix(c["lavender"], c["bg"], 0.86)}",
+    "backgroundAssistant": "{mix(c["diagnostic"], mix_base, 0.35)}",
+    "backgroundUser": "{mix(c["accent"], mix_base, 0.35)}",
+    "backgroundTool": "{mix(c["lavender"], mix_base, 0.35)}",
     "text": "{c["text"]}",
     "textMuted": "{c["muted"]}",
     "textSubtle": "{c["subtle"]}",
@@ -98,7 +101,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "primary": "{c["accent"]}",
     "secondary": "{c["accent_2"]}",
     "accent": "{c["accent"]}",
-    "accentMuted": "{mix(c["accent"], c["bg"], 0.48)}",
+    "accentMuted": "{mix(c["accent"], mix_base, 0.3)}",
     "error": "{c["error"]}",
     "warning": "{c["warning"]}",
     "success": "{c["sage"]}",
@@ -122,7 +125,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "diffRemovedLineNumberBg": "{removed_bg}",
     "diffHunkHeaderBg": "{hunk_bg}",
     "diffFold": "{c["comment"]}",
-    "diffFoldBg": "{mix(c["surface1"], c["bg"], 0.82)}",
+    "diffFoldBg": "{mix(c["border_ui"], c["surface2"], 0.3)}",
     "markdownText": "{c["text"]}",
     "markdownHeading": "{c["accent"]}",
     "markdownLink": "{c["diagnostic"]}",
@@ -140,7 +143,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "markdownImageText": "{c["text"]}",
     "markdownCodeBlock": "{c["text"]}",
     "markdownCodeBlockBg": "{t["code_bg"]}",
-    "markdownInlineCodeBg": "{mix(c["sage"], c["bg"], 0.84)}",
+    "markdownInlineCodeBg": "{mix(c["sage"], mix_base, 0.45)}",
     "syntaxComment": "{t["comment"]}",
     "syntaxKeyword": "{t["keyword"]}",
     "syntaxFunction": "{t["function"]}",
