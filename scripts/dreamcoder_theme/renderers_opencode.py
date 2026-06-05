@@ -78,7 +78,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "background": "{background}",
     "backgroundPanel": "{c["surface0"]}",
     "backgroundElement": "{c["bg_soft"]}",
-    "backgroundHover": "{mix(c["surface1"], c["bg"], 0.45)}",
+    "backgroundHover": "{mix(c["surface1"], c["surface2"], 0.85)}",
     "backgroundSelected": "{t["selection"]}",
     "textSelected": "{t["selection_fg"]}",
     "backgroundCode": "{t["code_bg"]}",
