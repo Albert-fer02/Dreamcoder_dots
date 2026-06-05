@@ -69,7 +69,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Whitespace", {
-    fg = "#594d46"
+    fg = "#806754"
   })
 
   vim.api.nvim_set_hl(0, "EndOfBuffer", {
@@ -201,7 +201,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WinSeparator", {
-    fg = "#594d46"
+    fg = "#806754"
   })
 
 
@@ -345,7 +345,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Identifier", {
-    fg = "#e8dfd0"
+    fg = "#c7b9aa"
   })
 
   vim.api.nvim_set_hl(0, "Function", {
@@ -454,7 +454,7 @@ end
 
   -- ── Treesitter ────────────────────────────────────────
   vim.api.nvim_set_hl(0, "@variable", {
-    fg = "#e8dfd0"
+    fg = "#c7b9aa"
   })
 
   vim.api.nvim_set_hl(0, "@variable.builtin", {
@@ -466,7 +466,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@variable.member", {
-    fg = "#e8dfd0"
+    fg = "#c7b9aa"
   })
 
   vim.api.nvim_set_hl(0, "@constant", {
@@ -503,11 +503,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@string.regex", {
-    fg = "#c96a45"
+    fg = "#e8b866"
   })
 
   vim.api.nvim_set_hl(0, "@string.escape", {
-    fg = "#c96a45"
+    fg = "#e8b866"
   })
 
   vim.api.nvim_set_hl(0, "@character", {

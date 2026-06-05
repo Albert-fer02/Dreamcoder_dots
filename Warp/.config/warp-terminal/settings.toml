@@ -33,7 +33,7 @@ override_opacity = 96
 theme = {
   custom = {
     name = "Dreamcoder Light",
-    path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
+    path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder.yaml",
   },
 }
 system_theme = false
