@@ -33,10 +33,10 @@ case "${CMD}" in
     verify) exec "${DREAMCODER_DOTS_DIR}/scripts/verify.sh" "$@" ;;
     preview) exec "${DREAMCODER_DOTS_DIR}/scripts/generate-theme-preview.py" "$@" ;;
     auto) exec "${DREAMCODER_DOTS_DIR}/scripts/theme-auto.sh" "$@" ;;
-    light|dark|dusk) exec "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" "${CMD}" "$@" ;;
+    light|dark) exec "${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh" "${CMD}" "$@" ;;
     sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
     *)
-        printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|visual|installer|status|verify|preview|auto|light|dusk|dark|sync}\n' >&2
+        printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|visual|installer|status|verify|preview|auto|light|dark|sync}\n' >&2
         exit 2
         ;;
 esac

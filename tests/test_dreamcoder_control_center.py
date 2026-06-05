@@ -74,7 +74,7 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             self.assertEqual(schema_result.returncode, 0, schema_result.stderr)
             schema = json.loads(schema_result.stdout)
             self.assertEqual(schema["schema"], "dreamcoder.settings-schema.v1")
-            self.assertEqual(schema["settings"]["terminal.default_mode"]["enum"], ["light", "dusk", "dark"])
+            self.assertEqual(schema["settings"]["terminal.default_mode"]["enum"], ["light", "dark"])
 
             valid_result = run_control("settings", "validate", "--json", home=home)
             self.assertEqual(valid_result.returncode, 0, valid_result.stderr)

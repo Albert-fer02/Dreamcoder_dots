@@ -100,8 +100,6 @@ def detect_mode_from_file(path: Path) -> str:
     lowered = text.lower()
     if "dreamcoder light" in lowered:
         return "light"
-    if "dreamcoder dusk" in lowered:
-        return "dusk"
     if "dreamcoder dark" in lowered or "ember noir" in lowered:
         return "dark"
     return "unknown"

@@ -110,7 +110,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
 def sync_repo_snippets(
     variants: dict[str, dict[str, str]], active: dict[str, str]
 ) -> list[bool]:
-    mode_names = {"dark": "dark", "light": "light", "dusk": "dusk"}
+    mode_names = {"dark": "dark", "light": "light"}
     repo_changes: list[bool] = []
     repo_changes += write_variant_files(
         ROOT / "Kitty/.config/kitty",
@@ -237,22 +237,6 @@ def sync_repo_snippets(
             ROOT / "themes/dreamcoder/rofi-light.rasi", rofi_content(variants["light"])
         )
     )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/hyprland-dusk.conf",
-            hypr_content(variants["dusk"]),
-        )
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/waybar-dusk.css", waybar_content(variants["dusk"])
-        )
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/rofi-dusk.rasi", rofi_content(variants["dusk"])
-        )
-    )
     # Desktop/WM active files (no suffix — tracks current mode)
     repo_changes.append(
         write_if_changed(
@@ -360,7 +344,7 @@ def sync_repo_snippets(
 
 
 def sync_bat_theme_variants(paths, variants: dict[str, dict[str, str]]) -> list[bool]:
-    mode_names = {"dark": "dark", "light": "light", "dusk": "dusk"}
+    mode_names = {"dark": "dark", "light": "light"}
     return write_variant_files(
         paths.bat_theme_dir,
         {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()},

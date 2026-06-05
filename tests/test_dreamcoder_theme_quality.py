@@ -44,20 +44,9 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
         self.assertGreaterEqual(contrast(light["subtle"], light["bg"]), 4.5)
         self.assertGreaterEqual(contrast(light["comment"], light["bg"]), 4.5)
 
-    def test_dusk_is_not_a_duplicate_light_palette(self):
-        dusk = self.modes["dusk"]
-        self.assertEqual(dusk["surface0"], "#f1eadf")
-        self.assertEqual(dusk["surface2"], "#c6b6a0")
-        self.assertEqual(dusk["muted"], "#4c443a")
-        self.assertEqual(dusk["accent"], "#8a5520")
-
     def test_light_selection_uses_inverted_high_contrast_pair(self):
         light = self.modes["light"]
         self.assertEqual(light["selection"], light["text"])
-
-    def test_dusk_selection_uses_inverted_high_contrast_pair(self):
-        dusk = self.modes["dusk"]
-        self.assertEqual(dusk["selection"], dusk["text"])
 
 
 if __name__ == "__main__":

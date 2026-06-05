@@ -45,7 +45,7 @@ class TerminalParityTest(unittest.TestCase):
             "cursor": "cursor-color",
             "cursor_text_color": "cursor-text",
         }
-        for mode in ("light", "dusk", "dark"):
+        for mode in ("light", "dark"):
             with self.subTest(mode=mode):
                 kitty = parse_kitty(KITTY / f"colors-dreamcoder-{mode}.conf")
                 ghostty = parse_ghostty(GHOSTTY / f"dreamcoder-{mode}")

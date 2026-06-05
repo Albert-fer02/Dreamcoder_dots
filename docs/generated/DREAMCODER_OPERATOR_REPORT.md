@@ -20,7 +20,7 @@ Generated from current machine state and Control Center contracts.
 │ Motion: unknown Health: 5 ok / 1 warn / 4 fail │
 ├─────────────────────────────────────────────┤
 │ terminal.default_mode    = light      │
-│   Default terminal theme mode. (light, dusk│
+│   Default terminal theme mode. (light, dark│
 │ profile.active           = default    │
 │   Active machine profile name.             │
 │ motion.active            = balanced   │

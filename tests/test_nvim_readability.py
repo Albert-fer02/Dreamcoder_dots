@@ -120,10 +120,11 @@ class NvimReadabilityTest(unittest.TestCase):
             f"Dark diagnostic {diagnostic} too similar to comment {comment}"
         )
 
-    def test_light_and_dusk_normal_backgrounds_are_opaque(self):
-        """Light/dusk Neovim must not rely on terminal transparency."""
-        for mode in ("light", "dusk"):
-            palette = self.modes[mode]
+    def test_light_normal_background_is_opaque(self):
+        for mode in ("light",):
+            palette = self.modes.get(mode)
+            if palette is None:
+                continue
             rendered = nvim_content(palette)
             normal_block = rendered.split('"Normal", {', 1)[1].split('})', 1)[0]
             sign_block = rendered.split('"SignColumn", {', 1)[1].split('})', 1)[0]

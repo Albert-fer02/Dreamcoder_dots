@@ -14,8 +14,6 @@ This directory contains the Dreamcoder visual contract and generated color-only 
 - `tokens.schema.json`: machine-readable token contract.
 - `*-dark.*`: Dreamcoder Ember Noir mode with espresso glass, refined orange/red protagonists, and gold support accents.
 - `*-light.*`: paper-like daytime mode with flat surface ladder and distinct semantic tokens.
-- `*-dusk.*`: warm transitional mode (16:00–18:00) between light and dark.
-
 ## Color-only Snippets (Hooks)
 
 Hook these into your app configs after ML4W/Gentleman files:

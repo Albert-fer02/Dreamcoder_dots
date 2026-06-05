@@ -9,7 +9,7 @@ from .core import read_json, settings_path, write_json
 SETTINGS_SCHEMA: dict[str, dict[str, Any]] = {
     "terminal.default_mode": {
         "type": "string",
-        "enum": ["light", "dusk", "dark"],
+        "enum": ["light", "dark"],
         "default": "light",
         "description": "Default terminal theme mode.",
     },

@@ -6,9 +6,7 @@ from .palette import guard, mix
 
 
 def _detect_mode(c: dict[str, str]) -> str:
-    """Detect dark/dusk/light from palette dict."""
-    if "dusk" in c["name"].lower():
-        return "dusk"
+    """Detect dark/light from palette dict."""
     if c["details"] == "darker":
         return "dark"
     return "light"

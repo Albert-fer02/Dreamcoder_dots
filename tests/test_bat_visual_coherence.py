@@ -21,7 +21,6 @@ class BatVisualCoherenceTest(unittest.TestCase):
             "Dreamcoder.tmTheme": "Dreamcoder.tmTheme",
             "Dreamcoder-Light.tmTheme": "Dreamcoder-Light.tmTheme",
             "Dreamcoder-Dark.tmTheme": "Dreamcoder-Dark.tmTheme",
-            "Dreamcoder-Dusk.tmTheme": "Dreamcoder-Dusk.tmTheme",
         }
         for bat_name, codex_name in mapping.items():
             with self.subTest(theme=bat_name):

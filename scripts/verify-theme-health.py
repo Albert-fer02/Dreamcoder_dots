@@ -10,7 +10,6 @@ FILES = [
     ROOT / "Codex-App/Dreamcoder.codex-theme.json",
     ROOT / "Codex-App/Dreamcoder-Light.codex-theme.json",
     ROOT / "Codex-App/Dreamcoder-Dark.codex-theme.json",
-    ROOT / "Codex-App/Dreamcoder-Dusk.codex-theme.json",
 ]
 TOKEN_FILE = ROOT / "themes/dreamcoder/tokens.json"
 OPENCODE_THEME_DIR = ROOT / ".opencode/themes"
@@ -18,7 +17,6 @@ CODEX_CLI_FILES = [
     ROOT / "Codex-CLI/Dreamcoder.tmTheme",
     ROOT / "Codex-CLI/Dreamcoder-Light.tmTheme",
     ROOT / "Codex-CLI/Dreamcoder-Dark.tmTheme",
-    ROOT / "Codex-CLI/Dreamcoder-Dusk.tmTheme",
 ]
 KITTY_FILE = ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-dark.conf"
 STARSHIP_FILE = ROOT / "Shell" / ".config" / "starship-dark.toml"
@@ -314,7 +312,7 @@ def check_tokens():
             palette["accent"] != palette["accent_2"],
             f"tokens:{mode}: accent and accent_2 must differ",
         )
-        apca_ui = apca_ui_light if mode in {"light", "dusk"} else apca_ui_dark
+        apca_ui = apca_ui_light if mode == "light" else apca_ui_dark
         for key in TOKEN_UI_KEYS:
             require(key in palette, f"tokens:{mode}:{key}: missing UI token")
             value = palette[key]

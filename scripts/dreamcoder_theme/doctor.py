@@ -63,7 +63,7 @@ def doctor_checks() -> list[HealthCheck]:
     mode = detect_mode_from_file(ch / "kitty" / "colors-dreamcoder.conf")
     checks.append(HealthCheck(
         name="active theme mode",
-        status="ok" if mode in {"light", "dusk", "dark"} else "warn",
+        status="ok" if mode in {"light", "dark"} else "warn",
         detail=mode,
         repair="./scripts/dreamcoder auto",
     ))

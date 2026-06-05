@@ -72,7 +72,7 @@ def visual_audit() -> dict[str, Any]:
         "ghostty_config": (home / ".config/ghostty/config").exists(),
         "fish_icon_hook": (home / ".config/fish/conf.d/16-dreamcoder-icons.fish").exists(),
         "bat_themes": all((home / f".config/bat/themes/{name}").exists() for name in [
-            "Dreamcoder.tmTheme", "Dreamcoder-Light.tmTheme", "Dreamcoder-Dark.tmTheme", "Dreamcoder-Dusk.tmTheme"
+            "Dreamcoder.tmTheme", "Dreamcoder-Light.tmTheme", "Dreamcoder-Dark.tmTheme"
         ]),
     }
     ready = all(item["exists"] for item in sources) and all(item["exists"] for item in baselines) and all(runtime.values())

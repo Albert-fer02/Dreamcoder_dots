@@ -54,7 +54,7 @@ def nvim_content(c: dict[str, str]) -> str:
 
 vim.g.colors_name = "dreamcoder"
 
--- Glass blur stays dark-only; light/dusk need opaque paper backgrounds for readability.
+-- Glass blur stays dark-only; light needs opaque paper backgrounds for readability.
 vim.opt.winblend = 10
 vim.opt.pumblend = 10
 
@@ -85,7 +85,7 @@ local function h(name, opts)
 end
 
 -- ── Editor UI ────────────────────────────────────────────────
--- Normal background is opaque in light/dusk so dark terminal transparency cannot hide text.
+-- Normal background is opaque in light so dark terminal transparency cannot hide text.
 -- Dark mode keeps transparent Normal for Ember Noir glass.
 """,
     ]

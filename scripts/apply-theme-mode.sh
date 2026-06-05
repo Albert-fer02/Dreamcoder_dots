@@ -7,12 +7,12 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 MODE="${1:-light}"
 WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-}}"
 ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
-[[ "${MODE}" == "light" || "${MODE}" == "dark" || "${MODE}" == "dusk" ]] || { printf 'Invalid mode: %s\n' "${MODE}" >&2; exit 1; }
+[[ "${MODE}" == "light" || "${MODE}" == "dark" ]] || { printf 'Invalid mode: %s\n' "${MODE}" >&2; exit 1; }
 if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
 
 CURSOR_CLI_ENV="${CACHE_HOME:-${HOME}/.cache}/dreamcoder/cursor-cli.env"
 case "${MODE}" in
-    light|dusk) CLI_COLORFGBG="0;15" ;;
+    light) CLI_COLORFGBG="0;15" ;;
     dark) CLI_COLORFGBG="15;0" ;;
 esac
 mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
@@ -50,25 +50,6 @@ if command -v tmux >/dev/null 2>&1 && tmux list-sessions &>/dev/null 2>&1; then
                 tmux set-option -g @ukiyo-color-alert   "#654300" 2>/dev/null || true
                 tmux set-option -g @ukiyo-color-highlight "#0f6570" 2>/dev/null || true
                 tmux set-option -g @ukiyo-color-selection "#c8ad89" 2>/dev/null || true
-                # Restore default plugin color order (fg=bg_pane claro sobre bg=color)
-                tmux set-option -gu "@ukiyo-git-colors"        2>/dev/null || true
-                tmux set-option -gu "@ukiyo-cpu-usage-colors"  2>/dev/null || true
-                tmux set-option -gu "@ukiyo-ram-usage-colors"  2>/dev/null || true
-                ;;
-            dusk)
-                KANAGAWA_VARIANT="lotus"
-                # Override with Dreamcoder Dusk palette (warmer light)
-                tmux set-option -g @ukiyo-color-text    "#1a1713" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-bg-bar  "#dfd5c4" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-bg-pane "#ebe4d6" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-info    "#104b67" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-notice  "#96411e" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-accent  "#8a5520" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-muted   "#4c443a" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-error   "#773126" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-alert   "#604000" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-highlight "#216a73" 2>/dev/null || true
-                tmux set-option -g @ukiyo-color-selection "#c6b6a0" 2>/dev/null || true
                 # Restore default plugin color order (fg=bg_pane claro sobre bg=color)
                 tmux set-option -gu "@ukiyo-git-colors"        2>/dev/null || true
                 tmux set-option -gu "@ukiyo-cpu-usage-colors"  2>/dev/null || true
@@ -114,7 +95,7 @@ DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
 if [[ -L "${DUNST_CONF}" ]]; then
     target=$(readlink "${DUNST_CONF}")
     case "${target}" in
-        *dunst-dreamcoder-dark.conf|*dunst-dreamcoder-light.conf|*dunst-dreamcoder-dusk.conf)
+        *dunst-dreamcoder-dark.conf|*dunst-dreamcoder-light.conf)
             ln -sf "${DOTS_DIR}/themes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
             ;;
     esac

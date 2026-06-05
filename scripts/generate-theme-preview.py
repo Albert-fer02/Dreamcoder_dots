@@ -219,7 +219,6 @@ def main():
         "- `comment` is softer and lower-chroma than `subtle` (syntax vs UI chrome).",
         "- Dark `accent` (refined ember orange), `accent_2` (maple red), `error` (soft coral red), and `warning` (lúcuma gold) form the orange/red/gold signature.",
         "- `focus` follows the orange protagonist instead of a separate cyan ring; `diagnostic` stays warm amber so the palette remains autumnal.",
-        "- **Dusk** bridges daytime light and night dark for late-afternoon sessions on Arch.",
         "",
     ]
     parts += ["## Palette", ""]
@@ -241,7 +240,6 @@ def main():
         "```bash",
         "./scripts/dreamcoder auto",
         "./scripts/dreamcoder light",
-        "./scripts/dreamcoder dusk",
         "./scripts/dreamcoder dark",
         "./scripts/dreamcoder verify",
         "./scripts/dreamcoder preview",
@@ -253,7 +251,7 @@ def main():
         "",
         "- Main backgrounds avoid pure black and pure white.",
         "- Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.",
-        "- Cocoa/Lúcuma accents are identity colors in light/dusk; Ember Noir uses refined orange, maple red, soft coral, and gold for dark-mode personality.",
+        "- Cocoa/Lúcuma accents are identity colors in light; Ember Noir uses refined orange, maple red, soft coral, and gold for dark-mode personality.",
         "- UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.",
         "- opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.",
         "",
