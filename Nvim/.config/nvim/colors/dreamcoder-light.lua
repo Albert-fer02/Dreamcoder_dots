@@ -11,8 +11,8 @@ vim.opt.winblend = 10
 vim.opt.pumblend = 10
 
 local c = {
-  bg        = "#f3eadc",
-  surface0  = "#fff7ea",
+  bg        = "#fff7ea",
+  surface0  = "#f3eadc",
   surface1  = "#decbb1",
   surface2  = "#c8ad89",
   text      = "#17120d",
@@ -42,17 +42,17 @@ end
 
   vim.api.nvim_set_hl(0, "Normal", {
     fg = "#17120d",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "NormalFloat", {
     fg = "#17120d",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "FloatBorder", {
     fg = "#66513b",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "FloatTitle", {
@@ -77,17 +77,17 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Cursor", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
   vim.api.nvim_set_hl(0, "lCursor", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
   vim.api.nvim_set_hl(0, "CursorLine", {
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "CursorLineNr", {
@@ -100,15 +100,15 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CursorColumn", {
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "ColorColumn", {
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "SignColumn", {
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
 
@@ -124,22 +124,22 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Search", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
   vim.api.nvim_set_hl(0, "IncSearch", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#a7471c"
   })
 
   vim.api.nvim_set_hl(0, "CurSearch", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
   vim.api.nvim_set_hl(0, "Substitute", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#a7471c"
   })
 
@@ -156,7 +156,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "PmenuSel", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
@@ -177,7 +177,7 @@ end
 
   vim.api.nvim_set_hl(0, "StatusLineNC", {
     fg = "#352e22",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "StatusLineTerm", {
@@ -187,7 +187,7 @@ end
 
   vim.api.nvim_set_hl(0, "StatusLineTermNC", {
     fg = "#352e22",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "WinBar", {
@@ -197,7 +197,7 @@ end
 
   vim.api.nvim_set_hl(0, "WinBarNC", {
     fg = "#352e22",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "WinSeparator", {
@@ -208,7 +208,7 @@ end
   -- ── Tabline ────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "TabLine", {
     fg = "#352e22",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "TabLineSel", {
@@ -217,14 +217,14 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TabLineFill", {
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
 
   -- ── Folds ─────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "Folded", {
     fg = "#352e22",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "FoldColumn", {
@@ -234,19 +234,19 @@ end
 
   -- ── Diff ──────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "DiffAdd", {
-    bg = "#c2ceb4"
+    bg = "#bac5aa"
   })
 
   vim.api.nvim_set_hl(0, "DiffChange", {
-    bg = "#d1c1a4"
+    bg = "#c8b89a"
   })
 
   vim.api.nvim_set_hl(0, "DiffDelete", {
-    bg = "#dabbaf"
+    bg = "#d2b2a5"
   })
 
   vim.api.nvim_set_hl(0, "DiffText", {
-    bg = "#abc4bf"
+    bg = "#a3bbb6"
   })
 
 
@@ -309,7 +309,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TermCursor", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
@@ -439,7 +439,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Ignore", {
-    fg = "#f3eadc"
+    fg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "Error", {
@@ -861,19 +861,19 @@ end
 
   vim.api.nvim_set_hl(0, "LspInlayHint", {
     fg = "#725e4c",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
 
   -- ── Telescope ─────────────────────────────────────────
   vim.api.nvim_set_hl(0, "TelescopeNormal", {
     fg = "#17120d",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeBorder", {
     fg = "#66513b",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeTitle", {
@@ -883,12 +883,12 @@ end
 
   vim.api.nvim_set_hl(0, "TelescopePromptNormal", {
     fg = "#17120d",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
     fg = "#66513b",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptTitle", {
@@ -912,29 +912,29 @@ end
 
   vim.api.nvim_set_hl(0, "TelescopePreviewNormal", {
     fg = "#17120d",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePreviewBorder", {
     fg = "#66513b",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsNormal", {
     fg = "#17120d",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsBorder", {
     fg = "#66513b",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
 
   -- ── NvimTree ─────────────────────────────────────────
   vim.api.nvim_set_hl(0, "NvimTreeNormal", {
     fg = "#17120d",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeRootFolder", {
@@ -992,11 +992,11 @@ end
 
   vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", {
     fg = "#66513b",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeCursorLine", {
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
 
@@ -1024,7 +1024,7 @@ end
 
   vim.api.nvim_set_hl(0, "WhichKeyFloat", {
     fg = "#17120d",
-    bg = "#fff7ea"
+    bg = "#f3eadc"
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyBorder", {
@@ -1039,7 +1039,7 @@ end
   -- ── Lazy / Noice / Cmp ───────────────────────────────
   vim.api.nvim_set_hl(0, "LazyNormal", {
     fg = "#17120d",
-    bg = "#f3eadc"
+    bg = "#fff7ea"
   })
 
   vim.api.nvim_set_hl(0, "LazyReasonPlugin", {
@@ -1089,7 +1089,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "LazyButtonActive", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
@@ -1098,7 +1098,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NoiceCursor", {
-    fg = "#f3eadc",
+    fg = "#fff7ea",
     bg = "#824f16"
   })
 
@@ -1250,15 +1250,15 @@ end
   })
 
   vim.api.nvim_set_hl(0, "GitSignsAddLn", {
-    bg = "#e4e0cf"
+    bg = "#efecdc"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsChangeLn", {
-    bg = "#e8ddca"
+    bg = "#f3e9d7"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsDeleteLn", {
-    bg = "#eadbcd"
+    bg = "#f5e7da"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {

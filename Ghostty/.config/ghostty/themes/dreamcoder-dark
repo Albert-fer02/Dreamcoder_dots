@@ -3,12 +3,12 @@ background = #12100e
 foreground = #e8dfd0
 cursor-color = #d99555
 cursor-text = #12100e
-selection-background = #2e241f
+selection-background = #392b22
 selection-foreground = #e8dfd0
 minimum-contrast = 4.5
 background-opacity-cells = true
 
-palette = 0=#858280
+palette = 0=#898481
 palette = 1=#e98272
 palette = 2=#45a055
 palette = 3=#d99555

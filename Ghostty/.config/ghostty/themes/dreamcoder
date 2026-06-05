@@ -1,14 +1,14 @@
 # Dreamcoder Light
-background = #f3eadc
+background = #fff7ea
 foreground = #17120d
 cursor-color = #824f16
-cursor-text = #f3eadc
+cursor-text = #fff7ea
 selection-background = #decbb1
 selection-foreground = #17120d
 minimum-contrast = 4.5
 background-opacity-cells = true
 
-palette = 0=#5e5c57
+palette = 0=#6e6a63
 palette = 1=#842f24
 palette = 2=#357037
 palette = 3=#824f16

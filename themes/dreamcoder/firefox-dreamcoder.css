@@ -6,8 +6,8 @@
    in about:config. */
 
 :root {
-  --dreamcoder-bg: #f3eadc;
-  --dreamcoder-surface: #fff7ea;
+  --dreamcoder-bg: #fff7ea;
+  --dreamcoder-surface: #f3eadc;
   --dreamcoder-surface-1: #decbb1;
   --dreamcoder-text: #17120d;
   --dreamcoder-text-dim: #352e22;
@@ -20,8 +20,8 @@
   --dreamcoder-sage: #357037;
   --dreamcoder-input-bg: #decbb1;
   --dreamcoder-toolbar-bg: #e6d7c4;
-  --dreamcoder-hover: #e2d3be;
-  --dreamcoder-active: #d7c3aa;
+  --dreamcoder-hover: #ecdeca;
+  --dreamcoder-active: #e0cdb5;
 }
 
 /* Main window */

@@ -7,15 +7,15 @@
 .theme-dark {
   /* Base — raw palette colors for backgrounds and surfaces */
   --background-primary: #12100e;
-  --background-primary-alt: #211c18;
-  --background-secondary: #211c18;
-  --background-secondary-alt: #2e241f;
+  --background-primary-alt: #28201a;
+  --background-secondary: #28201a;
+  --background-secondary-alt: #392b22;
   --background-modifier-border: #756052;
   --background-modifier-border-hover: #968878;
-  --background-modifier-form-field: #211c18;
+  --background-modifier-form-field: #28201a;
   --background-modifier-success: #1f3420;
   --background-modifier-error: #482c27;
-  --background-modifier-message: #2e241f;
+  --background-modifier-message: #392b22;
 
   /* Text — guarded against background for accessibility */
   --text-normal: #e8dfd0;
@@ -26,12 +26,12 @@
   --text-error: #e98272;
   --text-warning: #e8b866;
   --text-success: #45a055;
-  --text-selection: #201a16;
+  --text-selection: #261e18;
   --text-on-accent: #12100e;
 
   /* Interactive */
-  --interactive-normal: #2e241f;
-  --interactive-hover: #3e3129;
+  --interactive-normal: #392b22;
+  --interactive-hover: #4d3b2d;
   --interactive-accent: #d99555;
   --interactive-accent-hover: #c96a45;
   --interactive-success: #45a055;
@@ -52,7 +52,7 @@
   --code-number: #d98aa9;
   --code-tag: #d99555;
   --code-important: #e98272;
-  --code-background: #211c18;
+  --code-background: #28201a;
 
   /* Heading */
   --h1-color: #d99555;
@@ -75,9 +75,9 @@
   --checkbox-mark-color: #12100e;
 
   /* Table */
-  --table-header-background: #2e241f;
-  --table-header-background-hover: #3e3129;
-  --table-row-background-hover: #211c18;
+  --table-header-background: #392b22;
+  --table-header-background-hover: #4d3b2d;
+  --table-row-background-hover: #28201a;
   --table-border-color: #756052;
 
   /* Graph */
@@ -119,25 +119,25 @@ mark {
 
 /* Active line in edit mode */
 .cm-active {
-  background-color: #211c18 !important;
+  background-color: #28201a !important;
 }
 
 /* Selection */
 ::selection {
-  background-color: #211b17 !important;
+  background-color: #271f19 !important;
 }
 
 /* Tooltip */
 .tooltip {
-  background-color: #2e241f !important;
+  background-color: #392b22 !important;
   color: #e8dfd0 !important;
 }
 
 /* Menu */
 .menu {
-  background-color: #211c18 !important;
+  background-color: #28201a !important;
 }
 
 .menu-item:hover {
-  background-color: #2e241f !important;
+  background-color: #392b22 !important;
 }

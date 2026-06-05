@@ -12,9 +12,9 @@ vim.opt.pumblend = 10
 
 local c = {
   bg        = "#12100e",
-  surface0  = "#211c18",
-  surface1  = "#2e241f",
-  surface2  = "#3e3129",
+  surface0  = "#28201a",
+  surface1  = "#392b22",
+  surface2  = "#4d3b2d",
   text      = "#e8dfd0",
   muted     = "#c7b9aa",
   subtle    = "#938274",
@@ -29,7 +29,7 @@ local c = {
   warning   = "#e8b866",
   border    = "#756052",
   border_ui = "#968878",
-  selection = "#2e241f",
+  selection = "#392b22",
 }
 
 local function h(name, opts)
@@ -47,12 +47,12 @@ end
 
   vim.api.nvim_set_hl(0, "NormalFloat", {
     fg = "#e8dfd0",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "FloatBorder", {
     fg = "#968878",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "FloatTitle", {
@@ -87,7 +87,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CursorLine", {
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "CursorLineNr", {
@@ -100,11 +100,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CursorColumn", {
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "ColorColumn", {
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "SignColumn", {
@@ -115,12 +115,12 @@ end
   -- ── Selection & Search ───────────────────────────────
   vim.api.nvim_set_hl(0, "Visual", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "VisualNOS", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "Search", {
@@ -152,7 +152,7 @@ end
   -- ── Popup Menu ────────────────────────────────────────
   vim.api.nvim_set_hl(0, "Pmenu", {
     fg = "#c7b9aa",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "PmenuSel", {
@@ -161,7 +161,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "PmenuSbar", {
-    bg = "#3e3129"
+    bg = "#4d3b2d"
   })
 
   vim.api.nvim_set_hl(0, "PmenuThumb", {
@@ -172,32 +172,32 @@ end
   -- ── Statusline & Winbar ───────────────────────────────
   vim.api.nvim_set_hl(0, "StatusLine", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "StatusLineNC", {
     fg = "#c7b9aa",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "StatusLineTerm", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "StatusLineTermNC", {
     fg = "#c7b9aa",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "WinBar", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "WinBarNC", {
     fg = "#c7b9aa",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "WinSeparator", {
@@ -208,12 +208,12 @@ end
   -- ── Tabline ────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "TabLine", {
     fg = "#c7b9aa",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "TabLineSel", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "TabLineFill", {
@@ -224,7 +224,7 @@ end
   -- ── Folds ─────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "Folded", {
     fg = "#c7b9aa",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "FoldColumn", {
@@ -234,19 +234,19 @@ end
 
   -- ── Diff ──────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "DiffAdd", {
-    bg = "#2c442a"
+    bg = "#31462c"
   })
 
   vim.api.nvim_set_hl(0, "DiffChange", {
-    bg = "#5d4b2f"
+    bg = "#624e31"
   })
 
   vim.api.nvim_set_hl(0, "DiffDelete", {
-    bg = "#5d3b33"
+    bg = "#623d34"
   })
 
   vim.api.nvim_set_hl(0, "DiffText", {
-    bg = "#61462d"
+    bg = "#425453"
   })
 
 
@@ -848,20 +848,20 @@ end
   })
 
   vim.api.nvim_set_hl(0, "LspReferenceText", {
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "LspReferenceRead", {
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "LspReferenceWrite", {
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "LspInlayHint", {
     fg = "#b8a99a",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
 
@@ -883,12 +883,12 @@ end
 
   vim.api.nvim_set_hl(0, "TelescopePromptNormal", {
     fg = "#e8dfd0",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
     fg = "#968878",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptTitle", {
@@ -898,7 +898,7 @@ end
 
   vim.api.nvim_set_hl(0, "TelescopeSelection", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeMultiSelection", {
@@ -912,12 +912,12 @@ end
 
   vim.api.nvim_set_hl(0, "TelescopePreviewNormal", {
     fg = "#e8dfd0",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "TelescopePreviewBorder", {
     fg = "#968878",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsNormal", {
@@ -996,7 +996,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeCursorLine", {
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
 
@@ -1024,7 +1024,7 @@ end
 
   vim.api.nvim_set_hl(0, "WhichKeyFloat", {
     fg = "#e8dfd0",
-    bg = "#211c18"
+    bg = "#28201a"
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyBorder", {
@@ -1085,7 +1085,7 @@ end
 
   vim.api.nvim_set_hl(0, "LazyButton", {
     fg = "#e8dfd0",
-    bg = "#2e241f"
+    bg = "#392b22"
   })
 
   vim.api.nvim_set_hl(0, "LazyButtonActive", {

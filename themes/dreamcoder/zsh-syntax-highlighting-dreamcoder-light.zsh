@@ -9,4 +9,4 @@ ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#357037'; ZSH_HIGHLIGHT_STYLES[
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[assign]='fg=#17120d'
 ZSH_HIGHLIGHT_STYLES[redirection]='fg=#a7471c'; ZSH_HIGHLIGHT_STYLES[comment]='fg=#725e4c,italic'; ZSH_HIGHLIGHT_STYLES[variable]='fg=#7d3e64'; ZSH_HIGHLIGHT_STYLES[mathvar]='fg=#7d3e64'
 ZSH_HIGHLIGHT_STYLES[null]='fg=#352e22'; ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=#824f16'; ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=#0d4a68'; ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=#357037'
-ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#57478b'; ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='fg=#f3eadc,bg=#824f16'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=#57478b'; ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]='fg=#fff7ea,bg=#824f16'

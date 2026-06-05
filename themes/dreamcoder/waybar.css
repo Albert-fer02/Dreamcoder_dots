@@ -1,7 +1,7 @@
 /* Dreamcoder color layer for Waybar. */
-@define-color bg #f3eadc;
+@define-color bg #fff7ea;
 @define-color bg-soft #e6d7c4;
-@define-color surface #fff7ea;
+@define-color surface #f3eadc;
 @define-color text #17120d;
 @define-color muted #352e22;
 @define-color border #7a6550;

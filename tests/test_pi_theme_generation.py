@@ -82,7 +82,7 @@ class PiThemeGenerationTest(unittest.TestCase):
             theme = json.loads(theme_path.read_text())["theme"]
 
             self.assertEqual(theme["background"], "none")
-            self.assertEqual(theme["backgroundPanel"], "#211c18")
+            self.assertEqual(theme["backgroundPanel"], "#28201a")
             self.assertEqual(theme["primary"], "#d99555")
             self.assertEqual(theme["secondary"], "#c96a45")
 

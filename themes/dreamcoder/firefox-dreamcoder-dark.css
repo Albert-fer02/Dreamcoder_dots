@@ -7,8 +7,8 @@
 
 :root {
   --dreamcoder-bg: #12100e;
-  --dreamcoder-surface: #211c18;
-  --dreamcoder-surface-1: #2e241f;
+  --dreamcoder-surface: #28201a;
+  --dreamcoder-surface-1: #392b22;
   --dreamcoder-text: #e8dfd0;
   --dreamcoder-text-dim: #c7b9aa;
   --dreamcoder-accent: #d99555;
@@ -18,8 +18,8 @@
   --dreamcoder-error: #e98272;
   --dreamcoder-warning: #e8b866;
   --dreamcoder-sage: #45a055;
-  --dreamcoder-input-bg: #211c18;
-  --dreamcoder-toolbar-bg: #211c18;
+  --dreamcoder-input-bg: #28201a;
+  --dreamcoder-toolbar-bg: #28201a;
   --dreamcoder-hover: #302419;
   --dreamcoder-active: #443120;
 }
