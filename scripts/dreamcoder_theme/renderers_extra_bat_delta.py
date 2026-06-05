@@ -35,8 +35,15 @@ def delta_content(c: dict[str, str]) -> str:
     def g(color: str) -> str:
         return guard(c[color], bg, mode)
 
-    plus_bg = mix(c["sage"], bg, 0.85)
-    minus_bg = mix(c["error"], bg, 0.85)
+    # Mode-aware diff backgrounds: surface1 base visible in both modes
+    if mode == "dark":
+        plus_bg = mix(c["sage"], c["surface1"], 0.45)
+        minus_bg = mix(c["error"], c["surface1"], 0.45)
+        hunk_bg = mix(c["muted"], c["surface1"], 0.35)
+    else:
+        plus_bg = mix(c["sage"], bg, 0.85)
+        minus_bg = mix(c["error"], bg, 0.85)
+        hunk_bg = mix(c["muted"], bg, 0.85)
 
     return f"""# ========================================================
 # {c["name"]} — Git Delta theme
@@ -62,7 +69,7 @@ def delta_content(c: dict[str, str]) -> str:
     hunk-header-decoration-style = "yellow box"
     hunk-header-file-style = "{g("accent")}"
     hunk-header-line-number-style = "{g("muted")}"
-    hunk-header-color = "{mix(g("muted"), bg, 0.85)}"
+    hunk-header-color = "{hunk_bg}"
 
     # Commit decorations
     commit-style = "{g("accent")} bold"

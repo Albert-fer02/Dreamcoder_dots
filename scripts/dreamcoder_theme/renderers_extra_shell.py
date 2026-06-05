@@ -77,11 +77,16 @@ def ls_colors_content(c: dict[str, str]) -> str:
 def fzf_content(c: dict[str, str]) -> str:
     """Return a compact FZF_DEFAULT_OPTS export."""
     fg = guard(c["text"], c["bg"], _mode(c))
+    mode = _mode(c)
+    # In dark mode, use surface1 for selected/preview backgrounds (visible)
+    bg_plus = c["surface1"] if mode == "dark" else c["surface0"]
+    gutter_bg = c["surface1"] if mode == "dark" else c["bg"]
+    preview_bg = c["surface1"] if mode == "dark" else c["bg"]
     parts = [
-        f"bg:{c['bg']}", f"bg+:{c['surface0']}", f"fg:{fg}", f"fg+:{fg}", f"hl:{c['accent']}",
+        f"bg:{c['bg']}", f"bg+:{bg_plus}", f"fg:{fg}", f"fg+:{fg}", f"hl:{c['accent']}",
         f"hl+:{c['accent']}", f"info:{c['diagnostic']}", f"marker:{c['sage']}", f"prompt:{c['accent']}",
         f"spinner:{c['lavender']}", f"pointer:{c['accent_2']}", f"header:{c['muted']}", f"border:{c['border']}",
-        f"label:{c['muted']}", f"query:{fg}", f"gutter:{c['bg']}", f"scrollbar:{c['border']}",
-        f"separator:{c['border']}", f"preview-bg:{c['bg']}", f"preview-border:{c['border']}",
+        f"label:{c['muted']}", f"query:{fg}", f"gutter:{gutter_bg}", f"scrollbar:{c['border']}",
+        f"separator:{c['border']}", f"preview-bg:{preview_bg}", f"preview-border:{c['border']}",
     ]
     return f"#!/usr/bin/env bash\nset -euo pipefail\n# {c['name']} — fzf\nexport FZF_DEFAULT_OPTS=\"${{FZF_DEFAULT_OPTS:-}} --color={','.join(parts)}\"\n"
