@@ -1,24 +1,27 @@
-# Adapted from Kitty config (kitty.conf and colors-dreamcoder.conf) to Ghostty
-# Original by DreamCoder 08
+# Dreamcoder Ghostty — Minimal, focused config.
+# Colors come from the theme file (~/.config/ghostty/themes/dreamcoder).
+# Keep global settings here; color-only settings belong in the theme.
 
 # Fonts
 font-family = "JetBrainsMono Nerd Font"
 font-family = "Symbols Nerd Font"
 font-size = 14
-font-shaping-break = cursor
 font-feature = -calt, -liga, -dlig
 
-# Theme
+# Theme — mode-tracking (sync writes here, follows light/dark)
 theme = dreamcoder
+
+# Shell
 command = fish --login
+shell-integration = fish
+shell-integration-features = no-cursor
+
+# Cursor
 cursor-style = "block"
 cursor-style-blink = true
 cursor-opacity = 0.96
 
-# Tab bar
-# Note: Ghostty does not support tab bar position configuration yet (always top), no fade style or min-tabs like Kitty, tabs show when >1
-
-# Window settings
+# Window
 window-padding-x = 20
 window-padding-y = 18
 window-padding-color = background
@@ -26,15 +29,16 @@ window-width = 1180
 window-height = 780
 window-decoration = client
 window-save-state = never
-# Note: disable restored tabs/scrollback so Fastfetch always renders the current Dreamcoder01 image on launch
 
-# Performance (Wayland)
-# Note: sync-to-monitor, input_delay and repaint_delay not configurable in Ghostty
+# Opacity
+background-opacity = 0.96
+background-blur = false
+unfocused-split-opacity = 0.92
 
-# IME
-# Note: ime not supported in Ghostty
+# Scrollback
+scrollback-limit = 10000
 
-# Keybindings (tabs)
+# Keybindings — tabs
 keybind = ctrl+t=new_tab
 keybind = ctrl+w=close_tab
 keybind = ctrl+tab=next_tab
@@ -50,79 +54,32 @@ keybind = ctrl+8=goto_tab:8
 keybind = ctrl+9=goto_tab:9
 keybind = ctrl+0=goto_tab:10
 
-# Keybindings (splits)
+# Keybindings — splits
 keybind = f5=new_split:right
 keybind = f6=new_split:down
 
-# Keybindings (zoom)
+# Keybindings — zoom
 keybind = ctrl+shift+equal=increase_font_size:1
 keybind = ctrl+minus=decrease_font_size:1
 
-# Keybindings (navigation)
+# Keybindings — navigation
 keybind = ctrl+shift+z=jump_to_prompt:-1
 keybind = ctrl+shift+x=jump_to_prompt:1
 keybind = ctrl+shift+r=reload_config
-
-# Custom - wallpaper colors
-# Ghostty does not expose a portable spawn action in current keybind docs.
-# Run ~/.dotfiles/scripts/auto-colors.sh from the shell when needed.
-# Note: ctrl+shift+p show_scrollback not supported (use toggle_command_palette), f1 open_url, f2 inspect not supported, f3 hints line not directly supported
-
-# Background opacity
-background-opacity = 0.98
-background-opacity-cells = true
-background-blur = false
-minimum-contrast = 4.5
-# Note: dynamic_background_opacity not supported in Ghostty
-
-# Scrollback
-scrollback-limit = 10000
-# Note: scrollback-pager not supported in Ghostty
-
-# Shell integration
-shell-integration = zsh
-shell-integration-features = no-cursor
-
-# Note: enabled_layouts not supported, Ghostty uses simple splits
-
-# Confirm close
-confirm-close-surface = false
-
-# Updates
-auto-update = off
 
 # Mouse
 mouse-hide-while-typing = true
 focus-follows-mouse = false
 
-# Bell
-# Note: bell not configurable in Ghostty
-
 # Links
 link-url = true
 copy-on-select = true
-# Note: link-style not supported
 
-# Term
-term = "xterm-ghostty"
-
-# Remote control
-# Note: allow_remote_control equivalent not found
-
-# Close on child death
-# Note: close-after-command not supported
-
-# Wayland margins (not directly supported)
+# Misc
+confirm-close-surface = false
+auto-update = off
 window-padding-balance = false
-unfocused-split-opacity = 0.92
-# =====================================================
-# ⚡ SHADERS (Dreamcoder Special Effects)
-# =====================================================
+
+# Shaders
 custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl
 custom-shader-animation = true
-# Uncomment one line below to replace the Dreamcoder Motion cursor pulse.
-# custom-shader = ~/.config/ghostty/shaders/bloom.glsl
-# custom-shader = ~/.config/ghostty/shaders/crt.glsl
-# custom-shader = ~/.config/ghostty/shaders/matrix-hallway.glsl
-# custom-shader = ~/.config/ghostty/shaders/animated-gradient-shader.glsl
-# custom-shader = ~/.config/ghostty/shaders/retro-terminal.glsl
