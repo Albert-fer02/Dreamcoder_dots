@@ -65,10 +65,10 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         inline_code_bg = mix(c["sage"], c["border_ui"], 0.45)
         mix_base = c["border_ui"]
     else:
-        element_bg = c["bg_soft"]
-        hover_bg = mix(c["surface1"], c["surface2"], 0.5)
+        element_bg = mix(c["bg_soft"], c["surface1"], 0.4)
+        hover_bg = c["surface2"]
         line_bg = c["bg_soft"]
-        code_bg = c["surface0"]
+        code_bg = mix(c["surface1"], c["border_ui"], 0.12)
         assistant_bg = mix(c["diagnostic"], c["bg"], 0.12)
         user_bg = mix(c["accent"], c["bg"], 0.15)
         tool_bg = mix(c["lavender"], c["bg"], 0.12)
