@@ -11,7 +11,8 @@ from .renderers_opencode import opencode_tokens
 def codex_tmtheme_content(c: dict[str, str]) -> str:
     t = opencode_tokens(c)
     selection = t["selection"]
-    line_highlight = t["selection"]
+    sel_fg = t["selection_fg"]
+    line_highlight = c["surface1"]  # subtle, not same as selection
     gutter = c["surface2"]
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
@@ -26,6 +27,7 @@ def codex_tmtheme_content(c: dict[str, str]) -> str:
       <key>foreground</key><string>{c["text"]}</string>
       <key>caret</key><string>{c["accent"]}</string>
       <key>selection</key><string>{selection}</string>
+      <key>selectionForeground</key><string>{sel_fg}</string>
       <key>lineHighlight</key><string>{line_highlight}</string>
       <key>gutter</key><string>{gutter}</string>
       <key>gutterForeground</key><string>{c["muted"]}</string>
@@ -39,6 +41,14 @@ def codex_tmtheme_content(c: dict[str, str]) -> str:
     <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>{t["constant"]}</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>{t["type"]}</string></dict></dict>
     <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>{t["operator"]}</string></dict></dict>
+    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>{t["string"]}</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>{t["keyword"]}</string></dict></dict>
+    <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>{t["property"]}</string></dict></dict>
+    <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>{c["error"]}</string></dict></dict>
+    <dict><key>scope</key><string>markup.heading, markup.bold</string><key>settings</key><dict><key>foreground</key><string>{c["accent"]}</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>markup.italic</string><key>settings</key><dict><key>foreground</key><string>{c["diagnostic"]}</string><key>fontStyle</key><string>italic</string></dict></dict>
+    <dict><key>scope</key><string>meta.diff, meta.diff.header</string><key>settings</key><dict><key>foreground</key><string>{c["lavender"]}</string></dict></dict>
+    <dict><key>scope</key><string>support.class, support.constant</string><key>settings</key><dict><key>foreground</key><string>{t["type"]}</string></dict></dict>
   </array>
 </dict>
 </plist>

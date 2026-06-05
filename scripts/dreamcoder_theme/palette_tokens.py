@@ -16,7 +16,7 @@ VARIANTS = {
         'subtle': '#938274',
         'comment': '#b8a99a',
         'border': '#756052',
-        'border_ui': '#908070',
+        'border_ui': '#968878',
         'border_hi': '#c8b195',
         'focus': '#d99555',
         'accent': '#d99555',
