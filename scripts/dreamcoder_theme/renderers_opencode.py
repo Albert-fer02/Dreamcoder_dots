@@ -25,20 +25,22 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
         "keyword": keyword,
         "function": function,
         "method": guard(mix(function, c["lavender"], 0.16), c["bg"], mode_name, minimum=syntax_min),
-        # Variables must be distinguishable from normal text — use muted tone
-        "variable": c["muted"],
+        # Variables deserve a real hue — lavender-blue tint, not brown.
+        "variable": guard(mix(c["lavender"], c["muted"], 0.25), c["bg"], mode_name, minimum=syntax_min),
         "parameter": guard(mix(c["accent_2"], c["text"], 0.06), c["bg"], mode_name, minimum=syntax_min),
         "property": guard(mix(c["diagnostic"], c["text"], 0.04), c["bg"], mode_name, minimum=syntax_min),
         "field": guard(mix(c["sage"], c["text"], 0.05), c["bg"], mode_name, minimum=syntax_min),
-        "string": guard(c["sage"], c["bg"], mode_name, minimum=syntax_min),
-        "number": guard(c["accent_2"], c["bg"], mode_name, minimum=syntax_min),
+        # Strings — lower guard for more vibrant green pop
+        "string": guard(c["sage"], c["bg"], mode_name, minimum=2.8),
+        # Numbers — warm orange (further from keyword brown)
+        "number": guard(mix(c["accent"], c["accent_2"], 0.35), c["bg"], mode_name, minimum=syntax_min),
         "constant": constant,
         "type": type_color,
         "constructor": guard(mix(type_color, c["accent"], 0.18), c["bg"], mode_name, minimum=syntax_min),
         "enum": guard(mix(type_color, c["sage"], 0.18), c["bg"], mode_name, minimum=syntax_min),
         "operator": guard(c["mauve"], c["bg"], mode_name, minimum=syntax_min),
         "punctuation": guard(c["muted"], c["bg"], mode_name, minimum=syntax_min),
-        "comment": guard(c["comment"], c["bg"], mode_name, minimum=syntax_min),
+        "comment": guard(c["comment"], c["bg"], mode_name, minimum=2.2),
         "todo": guard(mix(c["warning"], c["text"], 0.12), c["bg"], mode_name, minimum=syntax_min),
         "deprecated": guard(mix(c["error"], c["muted"], 0.28), c["bg"], mode_name, minimum=syntax_min),
         "code_bg": mix(c["border_ui"], c["bg"], 0.15),
