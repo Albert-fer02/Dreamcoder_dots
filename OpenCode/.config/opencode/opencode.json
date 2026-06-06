@@ -4,7 +4,7 @@
     "architect": {
       "description": "Software architect - scalability, clean architecture, design patterns",
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -24,7 +24,7 @@
       "color": "accent",
       "description": "Gentleman with full permissions - no restrictions, no questions asked",
       "mode": "primary",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": {
           "*": "allow",
@@ -65,7 +65,7 @@
       "description": "Gentle AI SDD Orchestrator - coordinates sub-agents, never does work inline",
       "hidden": false,
       "mode": "primary",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "delegate": "allow",
@@ -108,7 +108,7 @@
       "description": "Implement code changes from task definitions",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -132,7 +132,7 @@
       "description": "Archive completed change artifacts",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -157,7 +157,7 @@
       "description": "Create technical design from proposals",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -181,7 +181,7 @@
       "description": "Investigate codebase and think through ideas",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -206,7 +206,7 @@
       "description": "Bootstrap SDD context and project configuration",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -231,7 +231,7 @@
       "description": "Guide user through a complete SDD cycle using their real codebase",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -256,7 +256,7 @@
       "description": "Create change proposals from explorations",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -280,7 +280,7 @@
       "description": "Write detailed specifications from proposals",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -305,7 +305,7 @@
       "description": "Break down specs and designs into implementation tasks",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -330,7 +330,7 @@
       "description": "Validate implementation against specs",
       "hidden": true,
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -353,7 +353,7 @@
     "security-reviewer": {
       "description": "Security-focused code reviewer - OWASP Top 10, vulnerability scanning",
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -372,7 +372,7 @@
     "tester": {
       "description": "QA/Test engineer - test strategy, coverage, quality assurance",
       "mode": "subagent",
-      "model": "opencode/deepseek-v4-flash",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "bash": "allow",
         "edit": "allow",
@@ -694,7 +694,7 @@
       "type": "local"
     }
   },
-  "model": "opencode/deepseek-v4-flash",
+  "model": "deepseek/deepseek-v4-flash",
   "permission": {
     "bash": {
       "*": "allow",
@@ -1143,7 +1143,7 @@
     }
   },
   "share": "manual",
-  "small_model": "opencode/deepseek-v4-flash",
+  "small_model": "deepseek/deepseek-v4-flash",
   "snapshot": true,
   "tool_output": {
     "max_bytes": 131072,
