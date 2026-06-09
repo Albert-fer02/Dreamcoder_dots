@@ -16,10 +16,16 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
     function = guard(c["diagnostic"], c["bg"], mode_name, minimum=syntax_min)
     type_color = guard(c["lavender"], c["bg"], mode_name, minimum=syntax_min)
     constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name, minimum=syntax_min)
-    # Selection: inverted accent block for high visibility in all modes.
-    # surface2 blends into the warm palette — use accent for visible contrast.
-    sel_bg = c["accent"]
-    sel_fg = c["bg"]
+    # Selection: light bg with dark text for dark mode (accent is light);
+    # For light mode, accent is dark so syntax colors (also dark) become
+    # invisible on it. Use bg (lightest non-white) instead so ALL syntax
+    # colors remain legible even if OpenCode doesn't swap them on selection.
+    if mode_name == "dark":
+        sel_bg = c["accent"]
+        sel_fg = c["bg"]
+    else:
+        sel_bg = c["bg"]
+        sel_fg = c["text"]
     return {
         "keyword": keyword,
         "function": function,
