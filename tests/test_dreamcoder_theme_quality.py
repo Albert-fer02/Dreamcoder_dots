@@ -30,15 +30,15 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
     def test_dark_uses_refined_ember_noir_scale(self):
         dark = self.modes["dark"]
         self.assertEqual(dark["name"], "Dreamcoder Ember Noir OLED")
-        self.assertEqual(dark["surface0"], "#28201a")
-        self.assertEqual(dark["surface1"], "#392b22")
-        self.assertEqual(dark["surface2"], "#4d3b2d")
+        self.assertEqual(dark["surface0"], "#201b16")
+        self.assertEqual(dark["surface1"], "#2b231b")
+        self.assertEqual(dark["surface2"], "#392e21")
         self.assertEqual(dark["accent"], "#d99555")
         self.assertEqual(dark["accent_2"], "#c96a45")
 
     def test_light_has_stronger_editor_readability_tiers(self):
         light = self.modes["light"]
-        self.assertEqual(light["surface0"], "#f3eadc")
+        self.assertEqual(light["surface0"], "#fff7ea")
         self.assertEqual(light["surface2"], "#c8ad89")
         # Verify subtle has sufficient contrast against background
         self.assertGreaterEqual(contrast(light["subtle"], light["bg"]), 4.5)

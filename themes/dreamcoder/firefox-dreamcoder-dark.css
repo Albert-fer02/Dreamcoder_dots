@@ -6,22 +6,22 @@
    in about:config. */
 
 :root {
-  --dreamcoder-bg: #12100e;
-  --dreamcoder-surface: #28201a;
-  --dreamcoder-surface-1: #392b22;
+  --dreamcoder-bg: #100f0d;
+  --dreamcoder-surface: #201b16;
+  --dreamcoder-surface-1: #2b231b;
   --dreamcoder-text: #e8dfd0;
   --dreamcoder-text-dim: #c7b9aa;
   --dreamcoder-accent: #d99555;
   --dreamcoder-accent-2: #c96a45;
   --dreamcoder-border: #756052;
   --dreamcoder-border-ui: #968878;
-  --dreamcoder-error: #e98272;
+  --dreamcoder-error: #ed8a7a;
   --dreamcoder-warning: #e8b866;
-  --dreamcoder-sage: #45a055;
-  --dreamcoder-input-bg: #28201a;
-  --dreamcoder-toolbar-bg: #28201a;
-  --dreamcoder-hover: #302419;
-  --dreamcoder-active: #443120;
+  --dreamcoder-sage: #4db35f;
+  --dreamcoder-input-bg: #201b16;
+  --dreamcoder-toolbar-bg: #201b16;
+  --dreamcoder-hover: #2e2318;
+  --dreamcoder-active: #42301f;
 }
 
 /* Main window */

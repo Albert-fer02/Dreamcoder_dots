@@ -57,6 +57,9 @@
         "light_hours_default": {
           "type": "string"
         },
+        "dusk_hours_default": {
+          "type": "string"
+        },
         "minimum_apca_body": {
           "type": "number",
           "minimum": 60
@@ -91,7 +94,7 @@
     },
     "rgba_color": {
       "type": "string",
-      "pattern": "^rgba\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*(0|1|0?\\.?\\d+)\\s*\\)$"
+      "pattern": "^rgba\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*(0|1|0?\\.\\d+)\\s*\\)$"
     },
     "palette": {
       "type": "object",
@@ -109,58 +112,188 @@
         "border_ui",
         "focus"
       ],
-      "additionalProperties": {
-        "type": "string"
-      },
       "properties": {
+        "name": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        },
         "bg": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "text": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "muted": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "subtle": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "comment": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "accent": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "accent_2": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "diagnostic": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "sage": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "error": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "warning": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "border": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "border_ui": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "border_hi": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "focus": {
-          "$ref": "#/$defs/hex"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "selection": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "panel_rgba": {
-          "$ref": "#/$defs/rgba_color"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "module_rgba": {
-          "$ref": "#/$defs/rgba_color"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "active_rgba": {
-          "$ref": "#/$defs/rgba_color"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         },
         "inactive_border": {
-          "$ref": "#/$defs/rgba_color"
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_bg": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_surface0": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_surface1": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_surface2": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_text": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_muted": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_accent": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
+        },
+        "prompt_accent_2": {
+          "oneOf": [
+            { "$ref": "#/$defs/hex" },
+            { "$ref": "#/$defs/rgba_color" }
+          ]
         }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "$ref": "#/$defs/hex" },
+          { "$ref": "#/$defs/rgba_color" },
+          { "type": "string" }
+        ]
       }
     }
   }

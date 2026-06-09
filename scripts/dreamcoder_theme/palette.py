@@ -18,11 +18,11 @@ def load_variants(
     tokens = json.loads(tokens_file.read_text())
     modes = tokens.get("modes", {})
     merged = {key: value.copy() for key, value in defaults.items()}
-    for key in ("dark", "light"):
+    for key in ("dark", "light", "dusk"):
         if key in modes:
             merged[key].update(modes[key])
     # Reconcile: warn on silent divergence between defaults and tokens.json
-    for mode_key in ("dark", "light"):
+    for mode_key in ("dark", "light", "dusk"):
         if mode_key in modes and mode_key in defaults:
             for token_key in set(defaults[mode_key]) & set(modes[mode_key]):
                 d = defaults[mode_key][token_key]
@@ -40,7 +40,7 @@ def load_variants(
 
 
 def matugen_mode_name(mode_name: str) -> str:
-    return "light" if mode_name == "light" else "dark"
+    return "light" if mode_name in {"light", "dusk"} else "dark"
 
 
 def resolve_color(palette: dict[str, str], value: str) -> str:

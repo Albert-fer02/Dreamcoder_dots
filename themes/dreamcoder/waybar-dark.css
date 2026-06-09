@@ -1,21 +1,21 @@
 /* Dreamcoder color layer for Waybar. */
-@define-color bg #12100e;
-@define-color bg-soft #1b1612;
-@define-color surface #28201a;
+@define-color bg #100f0d;
+@define-color bg-soft #181512;
+@define-color surface #201b16;
 @define-color text #e8dfd0;
 @define-color muted #c7b9aa;
 @define-color border #756052;
 @define-color border-ui #968878;
-@define-color focus #72b6bd;
+@define-color focus #5f8f8f;
 @define-color accent #d99555;
 @define-color accent-2 #c96a45;
 @define-color diagnostic #5f95ca;
-@define-color error #e98272;
-@define-color success #45a055;
+@define-color error #ed8a7a;
+@define-color success #4db35f;
 @define-color warning #e8b866;
 
 window#waybar {
-  background: rgba(18, 16, 14, 0.76);
+  background: rgba(16, 15, 13, 0.78);
   color: @text;
   border-bottom: 1px solid alpha(@accent, 0.26);
 }

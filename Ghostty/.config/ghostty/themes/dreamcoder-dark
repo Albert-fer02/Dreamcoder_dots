@@ -1,20 +1,20 @@
 # Dreamcoder Ember Noir OLED
-background = #12100e
+background = #100f0d
 foreground = #e8dfd0
 cursor-color = #d99555
-cursor-text = #12100e
-selection-background = #392b22
+cursor-text = #100f0d
+selection-background = #2b231b
 selection-foreground = #e8dfd0
 minimum-contrast = 4.5
 background-opacity-cells = true
 
-palette = 0=#898481
-palette = 1=#e98272
-palette = 2=#45a055
+palette = 0=#84827e
+palette = 1=#ed8a7a
+palette = 2=#4db35f
 palette = 3=#d99555
 palette = 4=#5f95ca
-palette = 5=#d98aa9
-palette = 6=#c9a8dc
+palette = 5=#e29cb4
+palette = 6=#d4b4e6
 palette = 7=#c7b9aa
 palette = 8=#938274
 palette = 9=#e9a092
@@ -22,5 +22,5 @@ palette = 10=#75a579
 palette = 11=#e8b866
 palette = 12=#579ba4
 palette = 13=#846fc5
-palette = 14=#72b6bd
+palette = 14=#6fa5a5
 palette = 15=#e8dfd0

@@ -7,11 +7,11 @@
   <key>settings</key>
   <array>
     <dict><key>settings</key><dict>
-      <key>background</key><string>#fff7ea</string>
+      <key>background</key><string>#f3eadc</string>
       <key>foreground</key><string>#17120d</string>
       <key>caret</key><string>#824f16</string>
       <key>selection</key><string>#824f16</string>
-      <key>selectionForeground</key><string>#fff7ea</string>
+      <key>selectionForeground</key><string>#f3eadc</string>
       <key>lineHighlight</key><string>#decbb1</string>
       <key>gutter</key><string>#c8ad89</string>
       <key>gutterForeground</key><string>#352e22</string>
@@ -21,11 +21,11 @@
     <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#0d4a68</string></dict></dict>
     <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#4e4171</string></dict></dict>
-    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#357037</string></dict></dict>
+    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
     <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#9d452d</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
     <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#7d3e64</string></dict></dict>
-    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#357037</string></dict></dict>
+    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
     <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string></dict></dict>
     <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#0d4864</string></dict></dict>
     <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#842f24</string></dict></dict>
