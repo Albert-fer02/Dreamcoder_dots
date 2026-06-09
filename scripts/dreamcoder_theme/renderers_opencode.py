@@ -56,13 +56,13 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
 
     # Mode-aware surface formulas
     if mode_name == "dark":
-        element_bg = mix(c["border_ui"], c["bg"], 0.20)
-        hover_bg = mix(c["border_ui"], c["bg"], 0.12)
-        line_bg = mix(c["border_ui"], c["bg"], 0.12)
-        code_bg = mix(c["border_ui"], c["bg"], 0.18)
-        assistant_bg = mix(c["diagnostic"], c["bg"], 0.18)
-        user_bg = mix(c["accent"], c["bg"], 0.18)
-        tool_bg = mix(c["lavender"], c["bg"], 0.18)
+        element_bg = c["surface1"]
+        hover_bg = c["surface2"]
+        line_bg = mix(c["bg"], c["surface0"], 0.50)
+        code_bg = mix(c["surface0"], c["surface1"], 0.30)
+        assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
+        user_bg = mix(c["bg"], c["accent"], 0.12)
+        tool_bg = mix(c["bg"], c["lavender"], 0.12)
         accent_muted = mix(c["accent"], c["bg"], 0.25)
         inline_code_bg = mix(c["sage"], c["border_ui"], 0.45)
         mix_base = c["border_ui"]
