@@ -96,20 +96,55 @@ def ensure_kitty_ui_include(path: Path) -> bool:
 
 
 def update_ghostty_theme(path: Path, mode: str) -> bool:
-    """Update Ghostty config to use the correct theme name."""
+    """Update Ghostty config to use the correct theme name, opacity, and blur."""
     if not path.exists():
         return False
     content = path.read_text()
     theme_name = f"dreamcoder-{mode}" if mode != "light" else "dreamcoder"
-    # Check if already correct (use word boundary to avoid "dreamcoder-dark" matching "dreamcoder")
-    if re.search(rf"theme\s*=\s*{re.escape(theme_name)}(?:\s|$)", content):
-        return False
-    # Replace or add theme line
-    if re.search(r"theme\s*=", content):
-        updated = re.sub(r"theme\s*=.*", f"theme = {theme_name}", content)
+
+    # Mode-aware visual settings for glass coherence with Kitty
+    if mode == "dark":
+        opacity_val = "0.76"
+        blur_val = "20"
     else:
-        updated = content.rstrip() + f"\n\n# Theme\ntheme = {theme_name}\n"
-    return write_if_changed(path, updated)
+        opacity_val = "0.96"
+        blur_val = "false"
+
+    changed = False
+
+    # Theme line
+    if re.search(rf"theme\s*=\s*{re.escape(theme_name)}(?:\s|$)", content):
+        pass  # already correct
+    elif re.search(r"theme\s*=", content):
+        content = re.sub(r"theme\s*=.*", f"theme = {theme_name}", content)
+        changed = True
+    else:
+        content = content.rstrip() + f"\n\n# Theme\ntheme = {theme_name}\n"
+        changed = True
+
+    # background-opacity
+    op_re = re.compile(r"^background-opacity\s*=.*", re.MULTILINE)
+    op_line = f"background-opacity = {opacity_val}"
+    if op_re.search(content):
+        if op_re.search(content).group() != op_line:
+            content = op_re.sub(op_line, content)
+            changed = True
+    else:
+        content += f"\n{op_line}"
+        changed = True
+
+    # background-blur
+    bl_re = re.compile(r"^background-blur\s*=.*", re.MULTILINE)
+    bl_line = f"background-blur = {blur_val}"
+    if bl_re.search(content):
+        if bl_re.search(content).group() != bl_line:
+            content = bl_re.sub(bl_line, content)
+            changed = True
+    else:
+        content += f"\n{bl_line}"
+        changed = True
+
+    return write_if_changed(path, content) if changed else False
 
 
 def write_variant_files(
