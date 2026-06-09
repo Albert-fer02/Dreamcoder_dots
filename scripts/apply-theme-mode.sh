@@ -56,7 +56,12 @@ fi
 
 # --- tmux integration: propagate theme to running sessions ---
 KANAGAWA_DIR="${HOME}/.tmux/plugins/tmux-kanagawa"
-if command -v tmux >/dev/null 2>&1 && tmux list-sessions &>/dev/null 2>&1; then
+if command -v tmux >/dev/null 2>&1; then
+    # Start a headless server if none exists so options persist for new sessions
+    if ! tmux list-sessions &>/dev/null 2>&1; then
+        tmux start-server 2>/dev/null || true
+        sleep 0.1
+    fi
     # Update global environment so NEW panes/windows inherit the right vars
     tmux set-environment -g DREAMCODER_THEME_MODE "${MODE}" 2>/dev/null || true
     tmux set-environment -g COLORFGBG "${CLI_COLORFGBG}" 2>/dev/null || true
@@ -106,6 +111,12 @@ if command -v tmux >/dev/null 2>&1 && tmux list-sessions &>/dev/null 2>&1; then
         tmux set-option -g @ukiyo-theme "kanagawa/${KANAGAWA_VARIANT}" 2>/dev/null || true
         # Reload plugin to apply new theme colors immediately
         bash "${KANAGAWA_DIR}/ukiyo.tmux" 2>/dev/null || true
+    fi
+
+    # Source standalone tmux theme (pane borders, mode, bell colors)
+    TMUX_THEME="${HOME}/.config/tmux/tmux-dreamcoder.conf"
+    if [[ -f "${TMUX_THEME}" ]]; then
+        tmux source-file "${TMUX_THEME}" 2>/dev/null || true
     fi
 
     printf '  tmux environment and theme updated for %s mode\n' "${MODE}"
