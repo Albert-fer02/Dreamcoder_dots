@@ -10,7 +10,7 @@ from .renderers_extra_bat_delta import bat_content, delta_content
 from .renderers_extra_btop import btop_content
 from .renderers_extra_firefox import firefox_content
 from .renderers_extra_notify import cava_content, dunst_content
-from .renderers_extra_nvim import nvim_content
+from .renderers_extra_nvim import nvim_content, nvim_dispatcher_content
 from .renderers_extra_obsidian import obsidian_content
 from .renderers_extra_shell import fzf_content, ls_colors_content, zsh_syntax_content
 from .renderers_ghostty_warp import ghostty_content, warp_content
@@ -47,6 +47,7 @@ __all__ = [
     "kitty_ui_content",
     "ls_colors_content",
     "nvim_content",
+    "nvim_dispatcher_content",
     "obsidian_content",
     "opencode_content",
     "opencode_tokens",

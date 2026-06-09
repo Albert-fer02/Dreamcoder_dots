@@ -21,6 +21,7 @@ from .renderers import (
     kitty_ui_content,
     ls_colors_content,
     nvim_content,
+    nvim_dispatcher_content,
     obsidian_content,
     opencode_content,
     pi_theme_content,
@@ -77,7 +78,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
         # New targets
-        "nvim": write_if_changed(paths.nvim, nvim_content(active)),
+        "nvim": write_if_changed(paths.nvim, nvim_dispatcher_content()),
         "zsh_syntax": write_if_changed(paths.zsh_syntax, zsh_syntax_content(active)),
         "ls_colors": write_if_changed(paths.ls_colors, ls_colors_content(active)),
         "bat": write_if_changed(paths.bat, bat_content(active)),
@@ -273,6 +274,7 @@ def sync_repo_snippets(
         nvim_dir,
         {k: f"dreamcoder-{v}.lua" for k, v in mode_names.items()},
         nvim_content,
+    nvim_dispatcher_content,
         variants,
     )
     # Other variant files stay in themes/dreamcoder/
