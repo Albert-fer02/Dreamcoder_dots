@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 
 from .palette import guard, mix
-from .settings import PI_THEME_SCHEMA
 
 
 def opencode_tokens(c: dict[str, str]) -> dict[str, str]:

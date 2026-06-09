@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import Callable
 
-from .palette import mix
-
 
 Hl = Callable[..., str]
 

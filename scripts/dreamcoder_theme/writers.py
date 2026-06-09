@@ -77,6 +77,7 @@ def valid_starship(path: Path) -> bool:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             check=False,
+            timeout=10,
         ).returncode
         == 0
     )

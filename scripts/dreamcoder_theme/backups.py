@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import shutil
 import time
 from pathlib import Path
@@ -25,7 +26,7 @@ def path_backup_name(path: Path) -> Path:
 
 
 def create_backup(paths: list[Path], reason: str) -> dict[str, Any]:
-    backup_id = time.strftime("%Y%m%d-%H%M%S") + f"-{__import__('os').getpid()}"
+    backup_id = time.strftime("%Y%m%d-%H%M%S") + f"-{os.getpid()}"
     root = backup_root() / backup_id
     files_dir = root / "files"
     entries: list[dict[str, Any]] = []

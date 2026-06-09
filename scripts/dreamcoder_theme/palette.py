@@ -130,6 +130,7 @@ def matugen_scheme(path: Path, mode_name: str, adaptive: bool) -> dict[str, str]
         stderr=subprocess.DEVNULL,
         text=True,
         check=False,
+        timeout=30,
     )
     match = re.search(r"\{.*\}", result.stdout, flags=re.S)
     if not match:
@@ -199,3 +200,9 @@ def ansi(palette: dict[str, str]) -> list[str]:
         color = resolve_color(palette, key)
         safe.append(guard(color, palette["bg"], mode_name))
     return safe
+
+
+
+def detect_mode(palette: dict[str, str]) -> str:
+    """Return "dark" or "light" based on the palette's details key."""
+    return "dark" if palette.get("details") == "darker" else "light"

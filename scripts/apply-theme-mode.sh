@@ -22,9 +22,37 @@ printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport COLORTE
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && command -v matugen >/dev/null; then
     matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
 fi
+# --- Waybar: flip colors.css symlink to mode-specific variant BEFORE sync ---
+# This ensures the Python sync writes to the correct variant file
+# instead of overwriting the wrong one through a stale symlink.
+WAYBAR_COLORS="${HOME}/.config/waybar/colors.css"
+if [[ -L "${WAYBAR_COLORS}" ]]; then
+    ln -sf "colors-${MODE}.css" "${WAYBAR_COLORS}"
+fi
+# --- Rofi: same treatment for colors.rasi symlink ---
+ROFI_COLORS="${HOME}/.config/rofi/colors.rasi"
+if [[ -L "${ROFI_COLORS}" ]]; then
+    ln -sf "colors-${MODE}.rasi" "${ROFI_COLORS}"
+fi
+# --- Hyprland: flip colors.lua and colors.conf symlinks ---
+HYPR_LUA="${HOME}/.config/hypr/colors.lua"
+HYPR_CONF="${HOME}/.config/hypr/colors.conf"
+if [[ -L "${HYPR_LUA}" ]]; then
+    ln -sf "colors-${MODE}.lua" "${HYPR_LUA}"
+fi
+if [[ -L "${HYPR_CONF}" ]]; then
+    ln -sf "colors-${MODE}.conf" "${HYPR_CONF}"
+fi
+
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
     "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
 command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
+# Restart Waybar so it picks up the new colors.css immediately
+if command -v pkill >/dev/null; then
+    pkill waybar 2>/dev/null || true
+    sleep 0.3
+    "${HOME}/.config/waybar/launch.sh" 2>/dev/null || true
+fi
 
 # --- tmux integration: propagate theme to running sessions ---
 KANAGAWA_DIR="${HOME}/.tmux/plugins/tmux-kanagawa"
