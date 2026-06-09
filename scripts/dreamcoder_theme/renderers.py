@@ -28,6 +28,7 @@ from .renderers_opencode import opencode_content, opencode_tokens
 from .renderers_pi import pi_theme_content
 from .renderers_readme import readme_content
 from .renderers_starship import starship_content
+from .renderers_tmux import tmux_content
 
 __all__ = [
     "antigravity_content",
@@ -56,6 +57,7 @@ __all__ = [
     "rofi_content",
     "rofi_matugen_content",
     "starship_content",
+    "tmux_content",
     "warp_content",
     "waybar_content",
     "waybar_matugen_content",

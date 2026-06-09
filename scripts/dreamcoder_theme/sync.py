@@ -29,6 +29,7 @@ from .renderers import (
     rofi_content,
     rofi_matugen_content,
     starship_content,
+    tmux_content,
     warp_content,
     waybar_content,
     waybar_matugen_content,
@@ -79,6 +80,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "pi_theme": write_if_changed(paths.pi_theme, pi_theme_content(active)),
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
+        "tmux": write_if_changed(paths.tmux, tmux_content(active)),
         # New targets
         "nvim": write_if_changed(paths.nvim, nvim_dispatcher_content()),
         "zsh_syntax": write_if_changed(paths.zsh_syntax, zsh_syntax_content(active)),
@@ -341,6 +343,12 @@ def sync_repo_snippets(
         theme_dir,
         {k: f"cava-dreamcoder-{v}.config" for k, v in mode_names.items()},
         cava_content,
+        variants,
+    )
+    repo_changes += write_variant_files(
+        theme_dir,
+        {k: f"tmux-dreamcoder-{v}.conf" for k, v in mode_names.items()},
+        tmux_content,
         variants,
     )
     return repo_changes

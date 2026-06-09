@@ -70,9 +70,9 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         hover_bg = c["surface2"]
         line_bg = c["bg_soft"]
         code_bg = mix(c["surface1"], c["border_ui"], 0.12)
-        assistant_bg = mix(c["diagnostic"], c["bg"], 0.12)
-        user_bg = mix(c["accent"], c["bg"], 0.15)
-        tool_bg = mix(c["lavender"], c["bg"], 0.12)
+        assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
+        user_bg = mix(c["bg"], c["accent"], 0.15)
+        tool_bg = mix(c["bg"], c["lavender"], 0.12)
         accent_muted = mix(c["accent"], c["bg"], 0.4)
         inline_code_bg = mix(c["sage"], c["bg"], 0.18)
         mix_base = c["bg"]
@@ -195,21 +195,21 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "syntaxSpecial": "{c["warning"]}",
     "syntaxTodo": "{t["todo"]}",
     "syntaxDeprecated": "{t["deprecated"]}",
-    "terminalBlack": "{guard(c["surface0"], c["bg"], "dark" if c["details"] == "darker" else "light")}",
+    "terminalBlack": "{guard(c["surface0"], c["bg"], mode_name)}",
     "terminalRed": "{c["error"]}",
     "terminalGreen": "{c["sage"]}",
     "terminalYellow": "{c["warning"]}",
     "terminalBlue": "{c["diagnostic"]}",
     "terminalMagenta": "{c["mauve"]}",
-    "terminalCyan": "{guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
+    "terminalCyan": "{guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)}",
     "terminalWhite": "{c["text"]}",
     "terminalBrightBlack": "{c["subtle"]}",
-    "terminalBrightRed": "{guard(mix(c["error"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
-    "terminalBrightGreen": "{guard(mix(c["sage"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
-    "terminalBrightYellow": "{guard(mix(c["warning"], c["text"], 0.16), c["bg"], "dark" if c["details"] == "darker" else "light")}",
-    "terminalBrightBlue": "{guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
-    "terminalBrightMagenta": "{guard(mix(c["mauve"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
-    "terminalBrightCyan": "{guard(mix(c["lavender"], c["text"], 0.18), c["bg"], "dark" if c["details"] == "darker" else "light")}",
+    "terminalBrightRed": "{guard(mix(c["error"], c["text"], 0.18), c["bg"], mode_name)}",
+    "terminalBrightGreen": "{guard(mix(c["sage"], c["text"], 0.18), c["bg"], mode_name)}",
+    "terminalBrightYellow": "{guard(mix(c["warning"], c["text"], 0.16), c["bg"], mode_name)}",
+    "terminalBrightBlue": "{guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)}",
+    "terminalBrightMagenta": "{guard(mix(c["mauve"], c["text"], 0.18), c["bg"], mode_name)}",
+    "terminalBrightCyan": "{guard(mix(c["lavender"], c["text"], 0.18), c["bg"], mode_name)}",
     "terminalBrightWhite": "{c["text"]}"
   }}
 }}
