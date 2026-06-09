@@ -32,8 +32,8 @@ override_opacity = 96
 [appearance.themes]
 theme = {
   custom = {
-    name = "Dreamcoder Ember Noir OLED",
-    path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder.yaml",
+    name = "Dreamcoder Light",
+    path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
   },
 }
 system_theme = false

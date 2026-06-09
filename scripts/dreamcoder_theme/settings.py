@@ -22,6 +22,7 @@ class ThemePaths:
     ghostty_config: Path
     starship: Path
     warp: Path
+    warp_settings: Path
     opencode: Path
     opencode_tui: Path
     codex_theme: Path
@@ -88,6 +89,11 @@ def theme_paths() -> ThemePaths:
         warp=Path(
             os.environ.get(
                 "WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"
+            )
+        ),
+        warp_settings=Path(
+            os.environ.get(
+                "WARP_SETTINGS", data_home / "warp-terminal/settings.toml"
             )
         ),
         opencode=Path(

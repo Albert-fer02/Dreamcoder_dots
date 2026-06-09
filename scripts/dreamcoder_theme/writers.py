@@ -147,6 +147,44 @@ def update_ghostty_theme(path: Path, mode: str) -> bool:
     return write_if_changed(path, content) if changed else False
 
 
+def update_warp_settings(path: Path, mode: str) -> bool:
+    """Patch Warp settings.toml with mode-aware opacity/blur for glass coherence."""
+    if mode == "dark":
+        opacity_val = 76
+        blur_val = 20
+        blur_texture = True
+    else:
+        opacity_val = 96
+        blur_val = 1
+        blur_texture = False
+
+    section_header = "[appearance.window]"
+    expected = (
+        f"{section_header}\n"
+        f"override_opacity = {opacity_val}\n"
+        f"override_blur = {blur_val}\n"
+        f"override_blur_texture = {str(blur_texture).lower()}\n"
+    )
+
+    if path.exists():
+        content = path.read_text()
+        # Check if section exists and already correct
+        sec_re = re.compile(r"^\[appearance\.window\].*?(?=^\[|\Z)", re.MULTILINE | re.DOTALL)
+        existing_section = sec_re.search(content)
+        if existing_section and existing_section.group().strip() == expected.strip():
+            return False
+        # Replace or append section
+        if existing_section:
+            patched = content.replace(existing_section.group(), expected)
+        else:
+            patched = content.rstrip() + "\n\n" + expected
+    else:
+        patched = expected
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return write_if_changed(path, patched)
+
+
 def write_variant_files(
     base: Path,
     names: dict[str, str],

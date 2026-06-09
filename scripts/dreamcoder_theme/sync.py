@@ -48,6 +48,7 @@ from .writers import (
     ensure_pi_theme_settings,
     update_ghostty_theme,
     valid_starship,
+    update_warp_settings,
     write_if_changed,
     write_opencode_tui,
     write_variant_files,
@@ -62,6 +63,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "ghostty": write_if_changed(paths.ghostty, ghostty_content(active)),
         "ghostty_config": update_ghostty_theme(paths.ghostty_config, mode),
         "warp": write_if_changed(paths.warp, warp_content(active)),
+        "warp_settings": update_warp_settings(paths.warp_settings, mode),
         "opencode": write_if_changed(
             paths.opencode, opencode_content(active, transparent_background=True)
         ),
@@ -274,7 +276,6 @@ def sync_repo_snippets(
         nvim_dir,
         {k: f"dreamcoder-{v}.lua" for k, v in mode_names.items()},
         nvim_content,
-    nvim_dispatcher_content,
         variants,
     )
     # Other variant files stay in themes/dreamcoder/
