@@ -46,6 +46,15 @@ func RunCommandInteractive(name string, args ...string) error {
 
 // CopyFile copies a file from src to dst
 func CopyFile(src, dst string) error {
+	// Safety check: don't copy directories
+	info, err := os.Stat(src)
+	if err != nil {
+		return fmt.Errorf("failed to stat source: %w", err)
+	}
+	if info.IsDir() {
+		return fmt.Errorf("source is a directory, use CopyDir instead: %s", src)
+	}
+
 	sourceFile, err := os.Open(src)
 	if err != nil {
 		return fmt.Errorf("failed to open source: %w", err)
@@ -93,7 +102,22 @@ func CopyDir(src, dst string) error {
 			return err
 		}
 
+		// Skip root directory
+		if relPath == "." {
+			return os.MkdirAll(dst, info.Mode())
+		}
+
 		dstPath := filepath.Join(dst, relPath)
+
+		// Handle symlinks — os.Stat follows symlinks, Lstat doesn't
+		if info.Mode()&os.ModeSymlink != 0 {
+			target, err := os.Readlink(path)
+			if err != nil {
+				return fmt.Errorf("failed to read symlink: %w", err)
+			}
+			// Create the symlink at destination
+			return os.Symlink(target, dstPath)
+		}
 
 		if info.IsDir() {
 			return os.MkdirAll(dstPath, info.Mode())
