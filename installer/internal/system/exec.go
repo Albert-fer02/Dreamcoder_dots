@@ -1,6 +1,7 @@
 package system
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -103,10 +104,8 @@ func CopyDir(src, dst string) error {
 }
 
 // BackupConfig backs up an existing configuration
-func BackupConfig(backupDir, src string) (BackupEntry, error) {
-	entry := BackupEntry{
-		Source: src,
-	}
+func BackupConfig(backupDir, baseDir, src string) (BackupEntry, error) {
+	entry := BackupEntry{}
 
 	// Check if source exists
 	info, err := os.Stat(src)
@@ -117,8 +116,10 @@ func BackupConfig(backupDir, src string) (BackupEntry, error) {
 		return entry, fmt.Errorf("failed to stat source: %w", err)
 	}
 
+	entry.Source = src
+
 	// Calculate destination path in backup
-	relPath, err := filepath.Rel(os.Getenv("HOME"), src)
+	relPath, err := filepath.Rel(baseDir, src)
 	if err != nil {
 		return entry, fmt.Errorf("failed to calculate relative path: %w", err)
 	}
@@ -186,7 +187,7 @@ func CreateBackup(platform Platform, components []string) (string, BackupManifes
 	backupPaths := getBackupPaths(platform, components)
 
 	for _, src := range backupPaths {
-		entry, err := BackupConfig(backupDir, src)
+		entry, err := BackupConfig(backupDir, platform.HomeDir, src)
 		if err != nil {
 			fmt.Printf("Warning: failed to backup %s: %v\n", src, err)
 			continue
@@ -196,6 +197,16 @@ func CreateBackup(platform Platform, components []string) (string, BackupManifes
 		}
 	}
 
+	// Write manifest to backup directory
+	manifestPath := filepath.Join(backupDir, "manifest.json")
+	manifestData, err := json.MarshalIndent(manifest, "", "  ")
+	if err != nil {
+		return backupDir, manifest, fmt.Errorf("failed to marshal manifest: %w", err)
+	}
+	if err := os.WriteFile(manifestPath, manifestData, 0644); err != nil {
+		return backupDir, manifest, fmt.Errorf("failed to write manifest: %w", err)
+	}
+
 	return backupDir, manifest, nil
 }
 
@@ -203,36 +214,51 @@ func CreateBackup(platform Platform, components []string) (string, BackupManifes
 func RestoreBackup(backupDir string) error {
 	// Read manifest
 	manifestPath := filepath.Join(backupDir, "manifest.json")
-	if _, err := os.Stat(manifestPath); os.IsNotExist(err) {
+	data, err := os.ReadFile(manifestPath)
+	if os.IsNotExist(err) {
 		return fmt.Errorf("no manifest found in backup directory")
 	}
+	if err != nil {
+		return fmt.Errorf("failed to read manifest: %w", err)
+	}
 
-	// For now, restore all files in the backup
-	return filepath.Walk(backupDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
+	var manifest BackupManifest
+	if err := json.Unmarshal(data, &manifest); err != nil {
+		return fmt.Errorf("failed to parse manifest: %w", err)
+	}
+
+	// Restore each file from manifest
+	for _, entry := range manifest.Files {
+		if entry.Destination == "" {
+			continue
 		}
 
-		// Skip manifest and directories
-		if path == manifestPath || info.IsDir() {
-			return nil
+		// Remove current config
+		if entry.IsDir {
+			os.RemoveAll(entry.Source)
+		} else {
+			os.Remove(entry.Source)
 		}
 
-		// Calculate original path
-		relPath, err := filepath.Rel(backupDir, path)
-		if err != nil {
-			return err
+		// Create parent directory
+		if err := os.MkdirAll(filepath.Dir(entry.Source), 0755); err != nil {
+			fmt.Printf("Warning: failed to create dir for %s: %v\n", entry.Source, err)
+			continue
 		}
 
-		originalPath := filepath.Join(os.Getenv("HOME"), relPath)
-
-		// Restore file
-		if err := CopyFile(path, originalPath); err != nil {
-			fmt.Printf("Warning: failed to restore %s: %v\n", relPath, err)
+		// Copy from backup
+		if entry.IsDir {
+			if err := CopyDir(entry.Destination, entry.Source); err != nil {
+				fmt.Printf("Warning: failed to restore %s: %v\n", entry.Source, err)
+			}
+		} else {
+			if err := CopyFile(entry.Destination, entry.Source); err != nil {
+				fmt.Printf("Warning: failed to restore %s: %v\n", entry.Source, err)
+			}
 		}
+	}
 
-		return nil
-	})
+	return nil
 }
 
 // getBackupPaths returns paths to backup for given components
