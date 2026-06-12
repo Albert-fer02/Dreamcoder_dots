@@ -1,0 +1,8 @@
+// Dreamcoder Default Layout for Zellij
+layout {
+    pane borderless=true split_direction="vertical" {
+        pane size="20%"
+        pane
+    }
+    pane_session true
+}

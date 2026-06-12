@@ -1,0 +1,39 @@
+// Zellij configuration for Dreamcoder OS
+// https://github.com/dreamcoder08/dreamcoder-dots
+
+env {
+    CARGO_INCREMENTAL "0"
+}
+
+keybinds {
+    shared_except "locked" {
+        alt "n" { NewTab; }
+        alt "j" { MoveTabLeft; }
+        alt "k" { MoveTabRight; }
+        alt "1" { GoToTab 1; }
+        alt "2" { GoToTab 2; }
+        alt "3" { GoToTab 3; }
+        alt "4" { GoToTab 4; }
+        alt "5" { GoToTab 5; }
+        ctrl "t" { ToggleTab; }
+    }
+    shared_except "locked" "resize" {
+        ctrl "b" { SwitchToMode "Resize"; }
+    }
+    resize {
+        "k" { Resize "Up"; }
+        "j" { Resize "Down"; }
+        "h" { Resize "Left"; }
+        "l" { Resize "Right"; }
+        ctrl "b" { SwitchToMode "Locked"; }
+    }
+}
+
+plugins {
+    tab-bar { path "tab-bar"; }
+    status-bar { path "status-bar"; }
+    compact-bar { path "compact-bar"; }
+}
+
+// Theme
+theme "dreamcoder-dark"

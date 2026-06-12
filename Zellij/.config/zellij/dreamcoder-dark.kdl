@@ -1,0 +1,39 @@
+// Dreamcoder Dark Theme for Zellij
+// Auto-generated from tokens.json — do not edit manually
+
+themes {
+    dreamcoder-dark {
+        bg "#100f0d"
+        fg "#e8dfd0"
+        black "#100f0d"
+        red "#c96a45"
+        green "#7a9e6c"
+        yellow "#d99555"
+        blue "#5f95ca"
+        magenta "#a87cb5"
+        cyan "#5f95ca"
+        white "#e8dfd0"
+        orange "#d99555"
+        gray "#6b5f52"
+
+        // UI elements
+        border "#2a2520"
+        border_active "#d99555"
+        border_unfocused "#2a2520"
+
+        // Tab bar
+        tab_bar_bg "#1a1714"
+        tab_active_bg "#2a2520"
+        tab_active_fg "#d99555"
+        tab_inactive_bg "#1a1714"
+        tab_inactive_fg "#6b5f52"
+
+        // Pane frames
+        pane_frame_bg "#1a1714"
+        pane_frame_fg "#2a2520"
+
+        // Selection
+        selection_bg "#d99555"
+        selection_fg "#100f0d"
+    }
+}
