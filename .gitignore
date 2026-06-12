@@ -34,3 +34,7 @@ __pycache__/
 # Fish user files
 Shell/.config/fish/fish_variables
 Shell/.config/fish/functions/
+
+# Installer binaries
+installer/dreamcoder-dots
+installer/dreamcoder-dots-*
