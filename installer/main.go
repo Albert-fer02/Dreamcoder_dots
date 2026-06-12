@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/dreamcoder08/dreamcoder-dots/installer/cmd"
+	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui"
 	"github.com/dreamcoder08/dreamcoder-dots/installer/pkg/version"
 )
 
@@ -15,9 +16,7 @@ func main() {
 		Short:   "Dreamcoder OS - Token-governed visual operating layer",
 		Version: version.Version,
 		RunE: func(c *cobra.Command, args []string) error {
-			fmt.Println("🎨 Dreamcoder OS Installer")
-			fmt.Println("Run with --help to see available commands")
-			return nil
+			return tui.RunTUI()
 		},
 	}
 
