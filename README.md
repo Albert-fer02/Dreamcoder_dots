@@ -253,4 +253,4 @@ pre-commit install
 | [Dreamcoder08](https://github.com/Dreamcoder08) | Software Architect · GDE · MVP — Profile |
 | [DreamFolio](https://github.com/Dreamcoder08/DreamFolio) | High-performance portfolio — Astro, React, Tailwind |
 | [CleanSweep](https://github.com/Dreamcoder08/CleanSweep) | AI-assisted dotfile manager in Rust |
-| [ARKELYTEX](https://github.com/arkelythex) | Civic, Agri & Legal Tech for Peru |
+| [ARKELYTHEX](https://github.com/arkelythex) | Civic, Agri & Legal Tech for Peru |
