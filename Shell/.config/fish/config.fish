@@ -4,6 +4,9 @@ set -q COLORTERM; or set -gx COLORTERM truecolor
 set -q STARSHIP_CONFIG; or set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
 set -q DREAMCODER_THEME_MODE; or set -gx DREAMCODER_THEME_MODE light
 set -g fish_greeting ""
+
+# Pre-set TMUX_PLUGIN_MANAGER_PATH for plugins (Kanagawa, etc.) that need it
+set -q TMUX_PLUGIN_MANAGER_PATH; or set -gx TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
 set -q DREAMCODER_FASTFETCH_ON_START; or set -gx DREAMCODER_FASTFETCH_ON_START 1
 
 fish_add_path -g "$HOME/.local/bin" "$HOME/.cargo/bin"
