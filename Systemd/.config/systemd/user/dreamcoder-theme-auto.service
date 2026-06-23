@@ -3,9 +3,5 @@ Description=Apply Dreamcoder theme based on local time
 
 [Service]
 Type=oneshot
-# Prefer the installation-local env file so DREAMCODER_DOTS_DIR resolves correctly
-# regardless of whether this repo lives at ~/.dotfiles, ~/.config/dreamcoder-dots, etc.
 EnvironmentFile=-%h/.config/systemd/user/dreamcoder-env.conf
-EnvironmentFile=-%h/.dotfiles/scripts/dreamcoder-env.sh
-EnvironmentFile=-%h/.config/dreamcoder-dots/scripts/dreamcoder-env.sh
-ExecStart=${DREAMCODER_DOTS_DIR:-%h/.dotfiles}/scripts/theme-auto.sh
+ExecStart=%h/Documents/PROYECTOS/dreamcoder-dots/scripts/theme-auto.sh
