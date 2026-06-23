@@ -19,6 +19,9 @@ alias cat = "bat"
 alias find = "fd"
 alias grep = "rg"
 
+# Cargo
+source "~/.cargo/env.nu"
+
 # Custom completions
 def "nu-complete git branches" [] {
     ^git branch | lines | each { |line| $line | str replace '[\*\+] ' '' | str trim }
