@@ -49,7 +49,8 @@ def resolve_color(palette: dict[str, str], value: str) -> str:
 
 def hex_to_rgb(value: str) -> tuple[int, int, int]:
     value = value.lstrip("#")
-    return tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
+    parts = tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
+    return parts  # type: ignore[return-value]
 
 
 def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
@@ -59,7 +60,7 @@ def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
 def mix(left: str, right: str, amount: float) -> str:
     a = hex_to_rgb(left)
     b = hex_to_rgb(right)
-    return rgb_to_hex(tuple(round(x + (y - x) * amount) for x, y in zip(a, b)))
+    return rgb_to_hex(tuple(round(x + (y - x) * amount) for x, y in zip(a, b)))  # type: ignore[arg-type]
 
 
 def rel_luminance(value: str) -> float:
@@ -133,7 +134,7 @@ def matugen_scheme(path: Path, mode_name: str, adaptive: bool) -> dict[str, str]
     match = re.search(r"\{.*\}", result.stdout, flags=re.S)
     if not match:
         return {}
-    return json.loads(match.group(0)).get("colors", {}).get(matugen_mode_name(mode_name), {})
+    return json.loads(match.group(0)).get("colors", {}).get(matugen_mode_name(mode_name), {})  # type: ignore[no-any-return]
 
 
 def adaptive_palette(

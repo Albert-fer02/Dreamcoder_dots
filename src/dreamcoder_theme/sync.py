@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
+from typing import Any
+
 from .palette import adaptive_palette, load_variants
+from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
 from .renderers import (
     antigravity_content,
     bat_content,
@@ -58,7 +60,7 @@ from .writers import (
 )
 
 
-def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, bool]:
+def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[str, bool]:
     return {
         "kitty": write_if_changed(paths.kitty, kitty_content(active)),
         "kitty_ui": write_if_changed(paths.kitty_ui, kitty_ui_content(active)),
@@ -324,7 +326,7 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     return repo_changes
 
 
-def sync_bat_theme_variants(paths, variants: dict[str, dict[str, str]]) -> list[bool]:
+def sync_bat_theme_variants(paths: Any, variants: dict[str, dict[str, str]]) -> list[bool]:
     mode_names = {"dark": "dark", "light": "light"}
     return write_variant_files(
         paths.bat_theme_dir,
@@ -334,7 +336,9 @@ def sync_bat_theme_variants(paths, variants: dict[str, dict[str, str]]) -> list[
     )
 
 
-def print_summary(mode: str, paths, changed: dict[str, bool], repo_changes: list[bool]) -> None:
+def print_summary(
+    mode: str, paths: Any, changed: dict[str, bool], repo_changes: list[bool]
+) -> None:
     print(f"Synced Dreamcoder {mode} identity")
     print(f"Kitty: {paths.kitty}")
     print(f"Kitty UI: {paths.kitty_ui}")

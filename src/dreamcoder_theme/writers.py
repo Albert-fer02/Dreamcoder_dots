@@ -7,7 +7,9 @@ import os
 import re
 import shutil
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 
 def write_if_changed(path: Path, content: str) -> bool:
@@ -58,7 +60,7 @@ def ensure_codex_theme_config(path: Path) -> bool:
 
 
 def ensure_pi_theme_settings(path: Path) -> bool:
-    data: dict = {}
+    data: dict[str, Any] = {}
     if path.exists():
         try:
             data = json.loads(path.read_text())
@@ -127,8 +129,9 @@ def update_ghostty_theme(path: Path, mode: str) -> bool:
     # background-opacity
     op_re = re.compile(r"^background-opacity\s*=.*", re.MULTILINE)
     op_line = f"background-opacity = {opacity_val}"
-    if op_re.search(content):
-        if op_re.search(content).group() != op_line:
+    op_match = op_re.search(content)
+    if op_match:
+        if op_match.group() != op_line:
             content = op_re.sub(op_line, content)
             changed = True
     else:
@@ -138,8 +141,9 @@ def update_ghostty_theme(path: Path, mode: str) -> bool:
     # background-blur
     bl_re = re.compile(r"^background-blur\s*=.*", re.MULTILINE)
     bl_line = f"background-blur = {blur_val}"
-    if bl_re.search(content):
-        if bl_re.search(content).group() != bl_line:
+    bl_match = bl_re.search(content)
+    if bl_match:
+        if bl_match.group() != bl_line:
             content = bl_re.sub(bl_line, content)
             changed = True
     else:
@@ -209,7 +213,7 @@ def update_warp_settings(path: Path, mode: str) -> bool:
 def write_variant_files(
     base: Path,
     names: dict[str, str],
-    builder,
+    builder: Callable[..., str],
     variants: dict[str, dict[str, str]],
 ) -> list[bool]:
     return [

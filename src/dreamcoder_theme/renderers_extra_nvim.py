@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from .renderers_extra_nvim_lsp import nvim_lsp_groups
 from .renderers_extra_nvim_plugins import nvim_plugin_groups
 from .renderers_extra_nvim_syntax import nvim_syntax_groups
@@ -41,7 +43,7 @@ end
 def nvim_content(c: dict[str, str]) -> str:
     """Return a Neovim Lua colorscheme using the Dreamcoder palette."""
 
-    def hl(name, **kwargs):
+    def hl(name: str, **kwargs: Any) -> str:
         parts = []
         if "fg" in kwargs:
             parts.append(f'    fg = "{kwargs["fg"]}"')
