@@ -5,8 +5,8 @@ from __future__ import annotations
 import json
 
 from .palette import guard, mix
-from .settings import PI_THEME_SCHEMA
 from .renderers_opencode import opencode_tokens
+from .settings import PI_THEME_SCHEMA
 
 
 def pi_theme_content(c: dict[str, str]) -> str:
@@ -80,9 +80,7 @@ def pi_theme_content(c: dict[str, str]) -> str:
             "syntaxPunctuation": t["punctuation"],
             "thinkingOff": "comment",
             "thinkingMinimal": "borderUi",
-            "thinkingLow": guard(
-                mix(c["diagnostic"], c["text"], 0.12), c["bg"], mode_name
-            ),
+            "thinkingLow": guard(mix(c["diagnostic"], c["text"], 0.12), c["bg"], mode_name),
             "thinkingMedium": "diagnostic",
             "thinkingHigh": "mauve",
             "thinkingXhigh": "coral",

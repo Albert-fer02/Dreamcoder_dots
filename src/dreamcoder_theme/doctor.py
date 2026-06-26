@@ -41,45 +41,55 @@ def doctor_checks() -> list[HealthCheck]:
         "fish config": ch / "fish" / "config.fish",
     }
     for name, path in critical_paths.items():
-        checks.append(HealthCheck(
-            name=name,
-            status="ok" if path.exists() else "fail",
-            detail=str(path),
-            repair="./scripts/dreamcoder repair",
-        ))
+        checks.append(
+            HealthCheck(
+                name=name,
+                status="ok" if path.exists() else "fail",
+                detail=str(path),
+                repair="./scripts/dreamcoder repair",
+            )
+        )
 
     kitty_ui = ch / "kitty" / "dreamcoder-ui.conf"
     duplicate_include = kitty_ui.exists() and any(
         line.strip() == "include colors-dreamcoder.conf"
         for line in kitty_ui.read_text(errors="ignore").splitlines()
     )
-    checks.append(HealthCheck(
-        name="kitty duplicate color include",
-        status="fail" if duplicate_include else "ok",
-        detail="dreamcoder-ui.conf must not include colors-dreamcoder.conf after kitty.conf already does",
-        repair="./scripts/dreamcoder sync",
-    ))
+    checks.append(
+        HealthCheck(
+            name="kitty duplicate color include",
+            status="fail" if duplicate_include else "ok",
+            detail="dreamcoder-ui.conf must not include colors-dreamcoder.conf after kitty.conf already does",
+            repair="./scripts/dreamcoder sync",
+        )
+    )
 
     mode = detect_mode_from_file(ch / "kitty" / "colors-dreamcoder.conf")
-    checks.append(HealthCheck(
-        name="active theme mode",
-        status="ok" if mode in {"light", "dark"} else "warn",
-        detail=mode,
-        repair="./scripts/dreamcoder auto",
-    ))
+    checks.append(
+        HealthCheck(
+            name="active theme mode",
+            status="ok" if mode in {"light", "dark"} else "warn",
+            detail=mode,
+            repair="./scripts/dreamcoder auto",
+        )
+    )
 
-    checks.append(HealthCheck(
-        name="starship binary",
-        status="ok" if command_exists("starship") else "fail",
-        detail=shutil.which("starship") or "missing",
-        repair="Install starship, then run ./scripts/dreamcoder repair",
-    ))
-    checks.append(HealthCheck(
-        name="fish binary",
-        status="ok" if command_exists("fish") else "fail",
-        detail=shutil.which("fish") or "missing",
-        repair="Install fish, then run ./scripts/dreamcoder repair",
-    ))
+    checks.append(
+        HealthCheck(
+            name="starship binary",
+            status="ok" if command_exists("starship") else "fail",
+            detail=shutil.which("starship") or "missing",
+            repair="Install starship, then run ./scripts/dreamcoder repair",
+        )
+    )
+    checks.append(
+        HealthCheck(
+            name="fish binary",
+            status="ok" if command_exists("fish") else "fail",
+            detail=shutil.which("fish") or "missing",
+            repair="Install fish, then run ./scripts/dreamcoder repair",
+        )
+    )
 
     timer_status = "skip"
     timer_detail = "systemctl unavailable"
@@ -87,20 +97,24 @@ def doctor_checks() -> list[HealthCheck]:
         result = shell_stdout(["systemctl", "--user", "is-active", "dreamcoder-theme-auto.timer"])
         timer_detail = (result.stdout or result.stderr).strip() or "unknown"
         timer_status = "ok" if result.returncode == 0 and timer_detail == "active" else "warn"
-    checks.append(HealthCheck(
-        name="day/night timer",
-        status=timer_status,
-        detail=timer_detail,
-        repair="systemctl --user enable --now dreamcoder-theme-auto.timer",
-    ))
+    checks.append(
+        HealthCheck(
+            name="day/night timer",
+            status=timer_status,
+            detail=timer_detail,
+            repair="systemctl --user enable --now dreamcoder-theme-auto.timer",
+        )
+    )
 
     conflicts = installer_plan()["conflicts"]
-    checks.append(HealthCheck(
-        name="installer conflicts",
-        status="ok" if not conflicts else "warn",
-        detail=f"{len(conflicts)} conflict(s)",
-        repair="./scripts/dreamcoder installer plan --json",
-    ))
+    checks.append(
+        HealthCheck(
+            name="installer conflicts",
+            status="ok" if not conflicts else "warn",
+            detail=f"{len(conflicts)} conflict(s)",
+            repair="./scripts/dreamcoder installer plan --json",
+        )
+    )
     return checks
 
 

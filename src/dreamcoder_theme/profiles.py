@@ -56,12 +56,20 @@ def apply_profile_files(profile: dict[str, Any]) -> None:
     hypr = active_hyprland_conf()
     if hypr.exists():
         content = hypr.read_text()
-        content = replace_or_append_line(content, "repeat_rate", str(profile.get("repeat_rate", 40)))
-        content = replace_or_append_line(content, "repeat_delay", str(profile.get("repeat_delay", 300)))
+        content = replace_or_append_line(
+            content, "repeat_rate", str(profile.get("repeat_rate", 40))
+        )
+        content = replace_or_append_line(
+            content, "repeat_delay", str(profile.get("repeat_delay", 300))
+        )
         hypr.write_text(content)
     input_lua = active_hyprland_input_lua()
     if input_lua.exists():
         content = input_lua.read_text()
-        content = replace_or_append_line(content, "repeat_rate", str(profile.get("repeat_rate", 40)) + ",")
-        content = replace_or_append_line(content, "repeat_delay", str(profile.get("repeat_delay", 300)) + ",")
+        content = replace_or_append_line(
+            content, "repeat_rate", str(profile.get("repeat_rate", 40)) + ","
+        )
+        content = replace_or_append_line(
+            content, "repeat_delay", str(profile.get("repeat_delay", 300)) + ","
+        )
         input_lua.write_text(content)

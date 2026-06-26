@@ -20,19 +20,19 @@ def dunst_content(c: dict[str, str]) -> str:
     border_ui = c["border_ui"]
 
     return f"""# ========================================================
-# {c['name']} — Dunst theme
+# {c["name"]} — Dunst theme
 # ========================================================
 # Include from dunstrc:
 #   [include] dreamcoder-dunst.conf
 
 [urgency_low]
-    background = "{c['bg']}"
+    background = "{c["bg"]}"
     foreground = "{txt}"
     highlight = "{acc}"
     frame_color = "{border}"
 
 [urgency_normal]
-    background = "{c['surface0']}"
+    background = "{c["surface0"]}"
     foreground = "{txt}"
     highlight = "{acc}"
     frame_color = "{border_ui}"
@@ -44,35 +44,36 @@ def dunst_content(c: dict[str, str]) -> str:
     frame_color = "{err}"
 """
 
+
 def cava_content(c: dict[str, str]) -> str:
     """Return a Cava config snippet with Dreamcoder colors."""
     mode = "dark" if c["details"] == "darker" else "light"
     bg = c["bg"]
 
     return f"""# ========================================================
-# {c['name']} — Cava theme
+# {c["name"]} — Cava theme
 # ========================================================
 # Include from ~/.config/cava/config or place in
 # ~/.config/cava/dreamcoder-cava.config.
 
 [color]
 # Background
-background = '{c['bg']}'
+background = '{c["bg"]}'
 
 # Gradient mode for smooth transitions
 gradient = 1
 gradient_count = 8
 
 # Gradient colors (low to high frequency) — raw palette, muted at lower end
-gradient_color_1 = '{mix(c['diagnostic'], bg, 0.60)}'
-gradient_color_2 = '{mix(c['diagnostic'], bg, 0.40)}'
-gradient_color_3 = '{mix(c['accent'], bg, 0.50)}'
-gradient_color_4 = '{mix(c['accent'], bg, 0.30)}'
-gradient_color_5 = '{c['accent']}'
-gradient_color_6 = '{c['accent_2']}'
-gradient_color_7 = '{mix(c['error'], bg, 0.30)}'
-gradient_color_8 = '{c['error']}'
+gradient_color_1 = '{mix(c["diagnostic"], bg, 0.60)}'
+gradient_color_2 = '{mix(c["diagnostic"], bg, 0.40)}'
+gradient_color_3 = '{mix(c["accent"], bg, 0.50)}'
+gradient_color_4 = '{mix(c["accent"], bg, 0.30)}'
+gradient_color_5 = '{c["accent"]}'
+gradient_color_6 = '{c["accent_2"]}'
+gradient_color_7 = '{mix(c["error"], bg, 0.30)}'
+gradient_color_8 = '{c["error"]}'
 
 # Mono color (used when gradient = 0)
-foreground = '{c['accent']}'
+foreground = '{c["accent"]}'
 """

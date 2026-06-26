@@ -93,9 +93,7 @@ def ensure_kitty_ui_include(path: Path) -> bool:
     content = path.read_text()
     if line in content:
         return False
-    path.write_text(
-        content.rstrip() + "\n\n# Dreamcoder readability override\n" + line + "\n"
-    )
+    path.write_text(content.rstrip() + "\n\n# Dreamcoder readability override\n" + line + "\n")
     return True
 
 
@@ -150,6 +148,7 @@ def update_ghostty_theme(path: Path, mode: str) -> bool:
 
     return write_if_changed(path, content) if changed else False
 
+
 def update_zellij_config(path: Path, mode: str) -> bool:
     """Patch Zellij config.kdl to use the correct theme based on DREAMCODER_THEME_MODE."""
     if not path.exists():
@@ -157,10 +156,10 @@ def update_zellij_config(path: Path, mode: str) -> bool:
     content = path.read_text()
     theme_name = f"dreamcoder-{mode}"
 
-    new_line = 'theme "{}"'.format(theme_name)
+    new_line = f'theme "{theme_name}"'
     pattern = re.compile(r'^\s*theme\s+".*?"\s*$', re.MULTILINE)
     m = pattern.search(content)
-    if m and m.group().strip() == 'theme "{}"'.format(theme_name):
+    if m and m.group().strip() == f'theme "{theme_name}"':
         return False
     if m:
         content = pattern.sub(new_line, content, count=1)

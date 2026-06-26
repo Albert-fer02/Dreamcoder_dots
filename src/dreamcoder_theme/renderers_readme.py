@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import json
-
 
 def readme_content() -> str:
     return """# Dreamcoder Palette Layer

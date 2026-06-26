@@ -6,8 +6,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from dreamcoder_theme.backups import create_backup, list_backups, restore_backup
 from dreamcoder_theme.audit import audit_markdown, audit_report
+from dreamcoder_theme.backups import create_backup, list_backups, restore_backup
 from dreamcoder_theme.core import (
     active_ghostty_config,
     active_hyprland_conf,
@@ -33,7 +33,12 @@ from dreamcoder_theme.settings_store import (
     validate_settings,
 )
 from dreamcoder_theme.tui import tui_apply_setting, tui_model, tui_render
-from dreamcoder_theme.visual_regression import visual_audit, visual_audit_markdown, visual_markdown, visual_plan
+from dreamcoder_theme.visual_regression import (
+    visual_audit,
+    visual_audit_markdown,
+    visual_markdown,
+    visual_plan,
+)
 
 
 def handle_dashboard(args: argparse.Namespace) -> int:
@@ -135,7 +140,12 @@ def handle_profile(args: argparse.Namespace) -> int:
     result = {"dry_run": args.dry_run, "profile": profile, "planned_changes": planned}
     if not args.dry_run:
         manifest = create_backup(
-            [active_profile_path(), settings_path(), active_hyprland_conf(), active_hyprland_input_lua()],
+            [
+                active_profile_path(),
+                settings_path(),
+                active_hyprland_conf(),
+                active_hyprland_input_lua(),
+            ],
             f"profile apply {args.name}",
         )
         write_json(active_profile_path(), profile)
@@ -159,11 +169,15 @@ def handle_motion(args: argparse.Namespace) -> int:
     if args.motion_cmd == "show":
         emit({"preset": preset}, args.json)
         return 0
-    result = {"dry_run": args.dry_run, "preset": preset, "planned_changes": {
-        "kitty:cursor_trail": str(preset["kitty_cursor_trail"]),
-        "ghostty:cursor_shader": str(preset["ghostty_cursor_shader"]),
-        "hyprland:animation": str(preset["hyprland_animation"]),
-    }}
+    result = {
+        "dry_run": args.dry_run,
+        "preset": preset,
+        "planned_changes": {
+            "kitty:cursor_trail": str(preset["kitty_cursor_trail"]),
+            "ghostty:cursor_shader": str(preset["ghostty_cursor_shader"]),
+            "hyprland:animation": str(preset["hyprland_animation"]),
+        },
+    }
     if not args.dry_run:
         manifest = create_backup(
             [active_motion_path(), settings_path(), active_kitty_ui(), active_ghostty_config()],

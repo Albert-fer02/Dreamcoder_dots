@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
+from .palette import mix
 
 
 def obsidian_content(c: dict[str, str]) -> str:

@@ -7,7 +7,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from .palette_tokens import ANSI_KEYS, VARIANTS
+from .palette_tokens import ANSI_KEYS
 
 
 def load_variants(
@@ -65,9 +65,7 @@ def mix(left: str, right: str, amount: float) -> str:
 def rel_luminance(value: str) -> float:
     def channel(part: int) -> float:
         scaled = part / 255
-        return (
-            scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
-        )
+        return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
 
     r, g, b = (channel(part) for part in hex_to_rgb(value))
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
@@ -135,11 +133,7 @@ def matugen_scheme(path: Path, mode_name: str, adaptive: bool) -> dict[str, str]
     match = re.search(r"\{.*\}", result.stdout, flags=re.S)
     if not match:
         return {}
-    return (
-        json.loads(match.group(0))
-        .get("colors", {})
-        .get(matugen_mode_name(mode_name), {})
-    )
+    return json.loads(match.group(0)).get("colors", {}).get(matugen_mode_name(mode_name), {})
 
 
 def adaptive_palette(
@@ -185,9 +179,7 @@ def adaptive_palette(
         mode_name,
     )
     c["border"] = mix(c["border"], scheme.get("outline", c["border"]), 0.25)
-    c["selection"] = mix(
-        c["selection"], scheme.get("primary_container", c["selection"]), 0.18
-    )
+    c["selection"] = mix(c["selection"], scheme.get("primary_container", c["selection"]), 0.18)
     c["prompt_accent"] = c["accent"]
     c["prompt_accent_2"] = c["accent_2"]
     return c
@@ -200,7 +192,6 @@ def ansi(palette: dict[str, str]) -> list[str]:
         color = resolve_color(palette, key)
         safe.append(guard(color, palette["bg"], mode_name))
     return safe
-
 
 
 def detect_mode(palette: dict[str, str]) -> str:

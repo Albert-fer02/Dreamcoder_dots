@@ -54,7 +54,9 @@ class DreamcoderTuiTest(unittest.TestCase):
     def test_tui_set_dry_run_does_not_write_settings(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
-            result = run_control("tui", "set", "terminal.default_mode", "dark", "--dry-run", "--json", home=home)
+            result = run_control(
+                "tui", "set", "terminal.default_mode", "dark", "--dry-run", "--json", home=home
+            )
             self.assertEqual(result.returncode, 0, result.stderr)
             data = json.loads(result.stdout)
             self.assertEqual(data["schema"], "dreamcoder.tui-apply.v1")
@@ -64,12 +66,16 @@ class DreamcoderTuiTest(unittest.TestCase):
     def test_tui_set_applies_valid_setting_and_rejects_invalid_value(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
-            applied = run_control("tui", "set", "terminal.default_mode", "dark", "--json", home=home)
+            applied = run_control(
+                "tui", "set", "terminal.default_mode", "dark", "--json", home=home
+            )
             self.assertEqual(applied.returncode, 0, applied.stderr)
             settings = json.loads((home / ".config" / "dreamcoder" / "settings.json").read_text())
             self.assertEqual(settings["terminal"]["default_mode"], "dark")
 
-            invalid = run_control("tui", "set", "terminal.default_mode", "neon", "--json", home=home)
+            invalid = run_control(
+                "tui", "set", "terminal.default_mode", "neon", "--json", home=home
+            )
             self.assertEqual(invalid.returncode, 2)
             self.assertIn("terminal.default_mode must be one of", invalid.stderr)
 

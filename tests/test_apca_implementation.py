@@ -12,7 +12,6 @@ import ast
 import unittest
 from pathlib import Path
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -20,10 +19,7 @@ def _extract_function_source(relative_path: str, name: str) -> str:
     source = (REPO_ROOT / relative_path).read_text()
     tree = ast.parse(source)
     for node in ast.walk(tree):
-        if (
-            isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            and node.name == name
-        ):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == name:
             return ast.unparse(node)
     raise RuntimeError(f"function {name!r} not found in {relative_path}")
 

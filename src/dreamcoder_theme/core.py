@@ -92,7 +92,9 @@ def command_exists(name: str) -> bool:
 
 
 def shell_stdout(args: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+    return subprocess.run(
+        args, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False
+    )
 
 
 def detect_mode_from_file(path: Path) -> str:

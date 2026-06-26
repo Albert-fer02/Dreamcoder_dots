@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Callable
-
+from collections.abc import Callable
 
 Hl = Callable[..., str]
 
 
-def nvim_syntax_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str) -> list[str]:
+def nvim_syntax_groups(
+    hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str
+) -> list[str]:
     return [
         hl("Comment", fg=c["comment"], italic=True),
         hl("Constant", fg=c["mauve"]),

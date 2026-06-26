@@ -70,56 +70,28 @@ def theme_paths() -> ThemePaths:
     pi_agent_home = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi/agent"))
     dreamcoder_theme = ROOT / "themes/dreamcoder"
     return ThemePaths(
-        kitty=Path(
-            os.environ.get("KITTY_COLORS", config_home / "kitty/colors-dreamcoder.conf")
-        ),
-        kitty_config=Path(
-            os.environ.get("KITTY_CONFIG", config_home / "kitty/kitty.conf")
-        ),
+        kitty=Path(os.environ.get("KITTY_COLORS", config_home / "kitty/colors-dreamcoder.conf")),
+        kitty_config=Path(os.environ.get("KITTY_CONFIG", config_home / "kitty/kitty.conf")),
         kitty_ui=Path(
-            os.environ.get(
-                "KITTY_DREAMCODER_UI", config_home / "kitty/dreamcoder-ui.conf"
-            )
+            os.environ.get("KITTY_DREAMCODER_UI", config_home / "kitty/dreamcoder-ui.conf")
         ),
-        ghostty=Path(
-            os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dreamcoder")
-        ),
-        ghostty_config=Path(
-            os.environ.get("GHOSTTY_CONFIG", config_home / "ghostty/config")
-        ),
+        ghostty=Path(os.environ.get("GHOSTTY_THEME", config_home / "ghostty/themes/dreamcoder")),
+        ghostty_config=Path(os.environ.get("GHOSTTY_CONFIG", config_home / "ghostty/config")),
         starship=Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml")),
         tmux=Path(os.environ.get("TMUX_THEME", config_home / "tmux/tmux-dreamcoder.conf")),
-        zellij_config=Path(
-            os.environ.get("ZELLIJ_CONFIG", config_home / "zellij/config.kdl")
-        ),
-        warp=Path(
-            os.environ.get(
-                "WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"
-            )
-        ),
+        zellij_config=Path(os.environ.get("ZELLIJ_CONFIG", config_home / "zellij/config.kdl")),
+        warp=Path(os.environ.get("WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml")),
         warp_settings=Path(
-            os.environ.get(
-                "WARP_SETTINGS", data_home / "warp-terminal/settings.toml"
-            )
+            os.environ.get("WARP_SETTINGS", data_home / "warp-terminal/settings.toml")
         ),
         opencode=Path(
-            os.environ.get(
-                "OPENCODE_THEME", config_home / "opencode/themes/dreamcoder.json"
-            )
+            os.environ.get("OPENCODE_THEME", config_home / "opencode/themes/dreamcoder.json")
         ),
-        opencode_tui=Path(
-            os.environ.get("OPENCODE_TUI", config_home / "opencode/tui.json")
-        ),
-        codex_theme=Path(
-            os.environ.get("CODEX_THEME", codex_home / "themes/Dreamcoder.tmTheme")
-        ),
+        opencode_tui=Path(os.environ.get("OPENCODE_TUI", config_home / "opencode/tui.json")),
+        codex_theme=Path(os.environ.get("CODEX_THEME", codex_home / "themes/Dreamcoder.tmTheme")),
         codex_config=Path(os.environ.get("CODEX_CONFIG", codex_home / "config.toml")),
-        pi_theme=Path(
-            os.environ.get("PI_THEME", pi_agent_home / "themes/dreamcoder.json")
-        ),
-        pi_settings=Path(
-            os.environ.get("PI_SETTINGS", pi_agent_home / "settings.json")
-        ),
+        pi_theme=Path(os.environ.get("PI_THEME", pi_agent_home / "themes/dreamcoder.json")),
+        pi_settings=Path(os.environ.get("PI_SETTINGS", pi_agent_home / "settings.json")),
         wallpaper=Path(os.environ.get("DREAMCODER_WALLPAPER", "")),
         tokens_file=Path(
             os.environ.get("DREAMCODER_TOKENS", ROOT / "themes/dreamcoder/tokens.json")
@@ -144,36 +116,22 @@ def theme_paths() -> ThemePaths:
                 dreamcoder_theme / "ls-colors-dreamcoder.sh",
             )
         ),
-        bat=Path(
-            os.environ.get(
-                "DREAMCODER_BAT_THEME", dreamcoder_theme / "bat-dreamcoder.sh"
-            )
-        ),
+        bat=Path(os.environ.get("DREAMCODER_BAT_THEME", dreamcoder_theme / "bat-dreamcoder.sh")),
         delta=Path(
             os.environ.get(
                 "DREAMCODER_DELTA_THEME",
                 dreamcoder_theme / "delta-dreamcoder.gitconfig",
             )
         ),
-        fzf=Path(
-            os.environ.get(
-                "DREAMCODER_FZF_THEME", dreamcoder_theme / "fzf-dreamcoder.sh"
-            )
-        ),
+        fzf=Path(os.environ.get("DREAMCODER_FZF_THEME", dreamcoder_theme / "fzf-dreamcoder.sh")),
         btop=Path(
-            os.environ.get(
-                "DREAMCODER_BTOP_THEME", dreamcoder_theme / "btop-dreamcoder.theme"
-            )
+            os.environ.get("DREAMCODER_BTOP_THEME", dreamcoder_theme / "btop-dreamcoder.theme")
         ),
         dunst=Path(
-            os.environ.get(
-                "DREAMCODER_DUNST_THEME", dreamcoder_theme / "dunst-dreamcoder.conf"
-            )
+            os.environ.get("DREAMCODER_DUNST_THEME", dreamcoder_theme / "dunst-dreamcoder.conf")
         ),
         firefox=Path(
-            os.environ.get(
-                "DREAMCODER_FIREFOX_THEME", dreamcoder_theme / "firefox-dreamcoder.css"
-            )
+            os.environ.get("DREAMCODER_FIREFOX_THEME", dreamcoder_theme / "firefox-dreamcoder.css")
         ),
         obsidian=Path(
             os.environ.get(
@@ -182,9 +140,7 @@ def theme_paths() -> ThemePaths:
             )
         ),
         cava=Path(
-            os.environ.get(
-                "DREAMCODER_CAVA_THEME", dreamcoder_theme / "cava-dreamcoder.config"
-            )
+            os.environ.get("DREAMCODER_CAVA_THEME", dreamcoder_theme / "cava-dreamcoder.config")
         ),
         # Desktop/WM targets
         hyprland=Path(

@@ -62,7 +62,9 @@ def validate_settings(data: dict[str, Any] | None = None) -> dict[str, Any]:
     warnings: list[dict[str, str]] = []
     for key, value in flat.items():
         if key not in SETTINGS_SCHEMA:
-            warnings.append({"key": key, "message": "Unknown setting; preserved for forward compatibility"})
+            warnings.append(
+                {"key": key, "message": "Unknown setting; preserved for forward compatibility"}
+            )
             continue
         for message in validate_setting_value(key, value):
             errors.append({"key": key, "message": message})

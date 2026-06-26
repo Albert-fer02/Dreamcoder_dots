@@ -24,7 +24,9 @@ class BatVisualCoherenceTest(unittest.TestCase):
         }
         for bat_name, codex_name in mapping.items():
             with self.subTest(theme=bat_name):
-                self.assertEqual((BAT_THEMES / bat_name).read_text(), (CODEX_THEMES / codex_name).read_text())
+                self.assertEqual(
+                    (BAT_THEMES / bat_name).read_text(), (CODEX_THEMES / codex_name).read_text()
+                )
 
 
 if __name__ == "__main__":

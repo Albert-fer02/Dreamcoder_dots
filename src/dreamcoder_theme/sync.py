@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from .palette import VARIANTS as DEFAULT_VARIANTS, adaptive_palette, load_variants
+from .palette import VARIANTS as DEFAULT_VARIANTS
+from .palette import adaptive_palette, load_variants
 from .renderers import (
     antigravity_content,
     bat_content,
@@ -48,9 +49,9 @@ from .writers import (
     ensure_kitty_ui_include,
     ensure_pi_theme_settings,
     update_ghostty_theme,
+    update_warp_settings,
     update_zellij_config,
     valid_starship,
-    update_warp_settings,
     write_if_changed,
     write_opencode_tui,
     write_variant_files,
@@ -71,9 +72,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         ),
         "opencode_tui": write_opencode_tui(paths.opencode_tui),
         "opencode_cleanup": cleanup_opencode_themes(paths.opencode),
-        "codex_theme": write_if_changed(
-            paths.codex_theme, codex_tmtheme_content(active)
-        ),
+        "codex_theme": write_if_changed(paths.codex_theme, codex_tmtheme_content(active)),
         "bat_theme": write_if_changed(
             paths.bat_theme_dir / "Dreamcoder.tmTheme", codex_tmtheme_content(active)
         ),
@@ -97,26 +96,18 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "cava": write_if_changed(paths.cava, cava_content(active)),
         # Desktop/WM targets
         "hyprland": write_if_changed(paths.hyprland, hypr_content(active)),
-        "hypr_colors_lua": write_if_changed(
-            paths.hypr_colors_lua, hypr_colors_lua_content(active)
-        ),
+        "hypr_colors_lua": write_if_changed(paths.hypr_colors_lua, hypr_colors_lua_content(active)),
         "hypr_colors_conf": write_if_changed(
             paths.hypr_colors_conf, hypr_colors_conf_content(active)
         ),
         "waybar": write_if_changed(paths.waybar, waybar_content(active)),
-        "waybar_matugen": write_if_changed(
-            paths.waybar_matugen, waybar_matugen_content(active)
-        ),
+        "waybar_matugen": write_if_changed(paths.waybar_matugen, waybar_matugen_content(active)),
         "rofi": write_if_changed(paths.rofi, rofi_content(active)),
-        "rofi_matugen": write_if_changed(
-            paths.rofi_matugen, rofi_matugen_content(active)
-        ),
+        "rofi_matugen": write_if_changed(paths.rofi_matugen, rofi_matugen_content(active)),
     }
 
 
-def sync_repo_snippets(
-    variants: dict[str, dict[str, str]], active: dict[str, str]
-) -> list[bool]:
+def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
     mode_names = {"dark": "dark", "light": "light"}
     repo_changes: list[bool] = []
     repo_changes += write_variant_files(
@@ -126,9 +117,7 @@ def sync_repo_snippets(
         variants,
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "Kitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active)
-        )
+        write_if_changed(ROOT / "Kitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active))
     )
     repo_changes += write_variant_files(
         ROOT / "Ghostty/.config/ghostty/themes",
@@ -161,9 +150,7 @@ def sync_repo_snippets(
         variants,
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "Codex-CLI/Dreamcoder.tmTheme", codex_tmtheme_content(active)
-        )
+        write_if_changed(ROOT / "Codex-CLI/Dreamcoder.tmTheme", codex_tmtheme_content(active))
     )
     repo_changes += write_variant_files(
         ROOT / "Bat/.config/bat/themes",
@@ -178,9 +165,7 @@ def sync_repo_snippets(
         )
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "Codex-App/Dreamcoder.codex-theme.json", opencode_content(active)
-        )
+        write_if_changed(ROOT / "Codex-App/Dreamcoder.codex-theme.json", opencode_content(active))
     )
     repo_changes.append(
         write_if_changed(
@@ -195,9 +180,7 @@ def sync_repo_snippets(
         variants,
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "Pi/.pi/agent/themes/dreamcoder.json", pi_theme_content(active)
-        )
+        write_if_changed(ROOT / "Pi/.pi/agent/themes/dreamcoder.json", pi_theme_content(active))
     )
     repo_changes.append(
         write_if_changed(
@@ -235,9 +218,7 @@ def sync_repo_snippets(
         )
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/rofi-dark.rasi", rofi_content(variants["dark"])
-        )
+        write_if_changed(ROOT / "themes/dreamcoder/rofi-dark.rasi", rofi_content(variants["dark"]))
     )
     repo_changes.append(
         write_if_changed(
@@ -246,23 +227,15 @@ def sync_repo_snippets(
     )
     # Desktop/WM active files (no suffix — tracks current mode)
     repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/hyprland.conf", hypr_content(active)
-        )
+        write_if_changed(ROOT / "themes/dreamcoder/hyprland.conf", hypr_content(active))
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/waybar.css", waybar_content(active)
-        )
+        write_if_changed(ROOT / "themes/dreamcoder/waybar.css", waybar_content(active))
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "themes/dreamcoder/rofi.rasi", rofi_content(active)
-        )
+        write_if_changed(ROOT / "themes/dreamcoder/rofi.rasi", rofi_content(active))
     )
-    repo_changes.append(
-        write_if_changed(ROOT / "themes/dreamcoder/README.md", readme_content())
-    )
+    repo_changes.append(write_if_changed(ROOT / "themes/dreamcoder/README.md", readme_content()))
     repo_changes += write_variant_files(
         ROOT / "Antigravity",
         {k: f"Dreamcoder-{v.title()}.json" for k, v in mode_names.items()},
@@ -270,9 +243,7 @@ def sync_repo_snippets(
         variants,
     )
     repo_changes.append(
-        write_if_changed(
-            ROOT / "Antigravity/Dreamcoder.json", antigravity_content(active)
-        )
+        write_if_changed(ROOT / "Antigravity/Dreamcoder.json", antigravity_content(active))
     )
     # Nvim variant files go in Nvim/.config/nvim/colors/
     nvim_dir = ROOT / "Nvim/.config/nvim/colors"
@@ -286,10 +257,7 @@ def sync_repo_snippets(
     theme_dir = ROOT / "themes/dreamcoder"
     repo_changes += write_variant_files(
         theme_dir,
-        {
-            k: f"zsh-syntax-highlighting-dreamcoder-{v}.zsh"
-            for k, v in mode_names.items()
-        },
+        {k: f"zsh-syntax-highlighting-dreamcoder-{v}.zsh" for k, v in mode_names.items()},
         zsh_syntax_content,
         variants,
     )
@@ -366,9 +334,7 @@ def sync_bat_theme_variants(paths, variants: dict[str, dict[str, str]]) -> list[
     )
 
 
-def print_summary(
-    mode: str, paths, changed: dict[str, bool], repo_changes: list[bool]
-) -> None:
+def print_summary(mode: str, paths, changed: dict[str, bool], repo_changes: list[bool]) -> None:
     print(f"Synced Dreamcoder {mode} identity")
     print(f"Kitty: {paths.kitty}")
     print(f"Kitty UI: {paths.kitty_ui}")

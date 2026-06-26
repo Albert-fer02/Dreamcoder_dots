@@ -6,7 +6,9 @@ import argparse
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="dreamcoder-control", description="Dreamcoder Control Center")
+    parser = argparse.ArgumentParser(
+        prog="dreamcoder-control", description="Dreamcoder Control Center"
+    )
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     doctor = sub.add_parser("doctor", help="Run structured health checks")
@@ -34,7 +36,9 @@ def build_parser() -> argparse.ArgumentParser:
     docs_report.add_argument("--markdown", action="store_true")
     docs_report.add_argument("--write", action="store_true")
 
-    audit = sub.add_parser("audit", help="Compare Dreamcoder capabilities against dotfile baselines")
+    audit = sub.add_parser(
+        "audit", help="Compare Dreamcoder capabilities against dotfile baselines"
+    )
     audit_sub = audit.add_subparsers(dest="audit_cmd", required=True)
     audit_compare = audit_sub.add_parser("compare")
     audit_compare.add_argument("--json", action="store_true")

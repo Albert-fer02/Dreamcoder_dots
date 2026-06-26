@@ -36,7 +36,9 @@ class DreamcoderVisualRegressionTest(unittest.TestCase):
             data = json.loads(result.stdout)
             self.assertEqual(data["schema"], "dreamcoder.visual-regression-plan.v1")
             keys = {target["key"] for target in data["targets"]}
-            self.assertGreaterEqual(keys, {"neovim", "kitty", "ghostty", "waybar", "rofi", "codex-cli", "opencode"})
+            self.assertGreaterEqual(
+                keys, {"neovim", "kitty", "ghostty", "waybar", "rofi", "codex-cli", "opencode"}
+            )
             self.assertTrue(all(target["baseline"] for target in data["targets"]))
 
     def test_visual_plan_markdown_is_documented_and_actionable(self):
@@ -51,9 +53,9 @@ class DreamcoderVisualRegressionTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         data = json.loads(result.stdout)
         keys = {target["key"] for target in data["targets"]}
-        self.assertGreaterEqual(keys, {
-            "bat", "delta", "fzf", "btop", "dunst", "cava", "obsidian", "firefox"
-        })
+        self.assertGreaterEqual(
+            keys, {"bat", "delta", "fzf", "btop", "dunst", "cava", "obsidian", "firefox"}
+        )
 
     def test_visual_audit_reports_sources_baselines_and_runtime_contracts(self):
         with tempfile.TemporaryDirectory() as tmpdir:

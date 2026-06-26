@@ -67,7 +67,7 @@ mark3_background        {c["mauve"]}
 
 def kitty_ui_content(c: dict[str, str]) -> str:
     opacity = "0.98" if c["details"] == "lighter" else "0.76"
-    return """# Dreamcoder Kitty UI parity layer
+    return f"""# Dreamcoder Kitty UI parity layer
 # Loaded last so ML4W can keep behavior while Dreamcoder owns readability.
 
 font_family           JetBrainsMono Nerd Font
@@ -113,4 +113,4 @@ map ctrl+delete       send_text all \\ed
 
 # Dreamcoder Motion: ML4W-inspired cursor trail, kept local and portable.
 cursor_trail          1
-""".format(opacity=opacity)
+"""

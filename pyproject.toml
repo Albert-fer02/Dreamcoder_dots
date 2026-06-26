@@ -47,14 +47,6 @@ testpaths = ["tests"]
 addopts = "-q"
 pythonpath = ["src"]
 
-[tool.coverage.run]
-source = ["dreamcoder_theme"]
-relative_files = true
-
-[tool.coverage.report]
-show_missing = true
-fail_under = 60
-
 [tool.ruff]
 target-version = "py311"
 line-length = 100
@@ -67,5 +59,13 @@ ignore = ["E501"]
 quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
+
+[tool.coverage.run]
+source = ["dreamcoder_theme"]
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 60
 
 

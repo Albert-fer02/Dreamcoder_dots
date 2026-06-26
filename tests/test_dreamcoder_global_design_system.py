@@ -1,7 +1,5 @@
 import json
 import re
-import subprocess
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -77,9 +75,7 @@ def test_dark_body_diagnostics_meet_apca_floor():
     lc = apca_lc(dark["diagnostic"], dark["bg"])
     # APCA is public beta (Myndex/apca-w3), not a legal standard. Document, don't fail.
     # WCAG 2.1 contrast >= 4.5 is the authoritative check for now.
-    print(
-        f"APCA diagnostic dark: Lc {lc:.1f} (target ≥{floor}, WCAG {6.0:.1f}:1 passes)"
-    )
+    print(f"APCA diagnostic dark: Lc {lc:.1f} (target ≥{floor}, WCAG {6.0:.1f}:1 passes)")
     assert True, "APCA check is advisory only in 2026"
 
 

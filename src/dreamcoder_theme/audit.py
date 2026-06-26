@@ -12,8 +12,16 @@ from .repair_engine import repair_catalog, repair_plan
 from .settings_store import settings_schema
 
 
-def _criterion(key: str, status: str, evidence: str, baseline: str, next_step: str = "") -> dict[str, str]:
-    return {"key": key, "status": status, "evidence": evidence, "baseline": baseline, "next_step": next_step}
+def _criterion(
+    key: str, status: str, evidence: str, baseline: str, next_step: str = ""
+) -> dict[str, str]:
+    return {
+        "key": key,
+        "status": status,
+        "evidence": evidence,
+        "baseline": baseline,
+        "next_step": next_step,
+    }
 
 
 def audit_report() -> dict[str, Any]:
@@ -42,7 +50,9 @@ def audit_report() -> dict[str, Any]:
             "achieved" if len(catalog) >= 6 else "partial",
             f"{len(catalog)} safe repairs in catalog; current plan has {repair['summary']['actions']} actions / {safe_repairs} safe",
             "Repair usually means re-running install/stow scripts manually",
-            "" if len(catalog) >= 6 else "Add more deterministic safe repairs for timer, missing config, and theme drift",
+            ""
+            if len(catalog) >= 6
+            else "Add more deterministic safe repairs for timer, missing config, and theme drift",
         ),
         _criterion(
             "manifest-rollback",
@@ -109,17 +119,19 @@ def audit_markdown(report: dict[str, Any]) -> str:
         rows.append(
             f"| {item['key']} | `{item['status']}` | {item['evidence']} | {item['baseline']} | {item['next_step']} |"
         )
-    return "\n".join([
-        "# Dreamcoder Competitive Audit",
-        "",
-        "Baseline framing: ML4W/GentlemanDots-style dotfile distributions with mostly shell-driven setup.",
-        "",
-        f"- Score: `{summary['score']}`",
-        f"- Achieved: `{summary['achieved']}`",
-        f"- Partial: `{summary['partial']}`",
-        f"- Missing: `{summary['missing']}`",
-        f"- Completion ready: `{summary['completion_ready']}`",
-        "",
-        *rows,
-        "",
-    ])
+    return "\n".join(
+        [
+            "# Dreamcoder Competitive Audit",
+            "",
+            "Baseline framing: ML4W/GentlemanDots-style dotfile distributions with mostly shell-driven setup.",
+            "",
+            f"- Score: `{summary['score']}`",
+            f"- Achieved: `{summary['achieved']}`",
+            f"- Partial: `{summary['partial']}`",
+            f"- Missing: `{summary['missing']}`",
+            f"- Completion ready: `{summary['completion_ready']}`",
+            "",
+            *rows,
+            "",
+        ]
+    )

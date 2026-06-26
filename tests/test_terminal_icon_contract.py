@@ -13,14 +13,18 @@ class TerminalIconContractTest(unittest.TestCase):
         content = FISH_ICONS.read_text()
         self.assertIn("command -q eza", content)
         self.assertIn("alias ls='eza --icons=always --group-directories-first'", content)
-        self.assertIn("alias ll='eza --icons=always --group-directories-first --long --git'", content)
+        self.assertIn(
+            "alias ll='eza --icons=always --group-directories-first --long --git'", content
+        )
         self.assertIn("alias tree='eza --icons=always --group-directories-first --tree'", content)
 
     def test_posix_shells_use_eza_icons_when_available(self):
         content = SHELL_ALIASES.read_text()
         self.assertIn("command -v eza", content)
         self.assertIn("alias ls='eza --icons=always --group-directories-first'", content)
-        self.assertIn("alias ll='eza --icons=always --group-directories-first --long --git'", content)
+        self.assertIn(
+            "alias ll='eza --icons=always --group-directories-first --long --git'", content
+        )
         self.assertIn("alias tree='eza --icons=always --group-directories-first --tree'", content)
 
     def test_terminals_have_nerd_symbol_fallback(self):

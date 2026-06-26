@@ -57,7 +57,15 @@ class DreamcoderRepairCatalogTest(unittest.TestCase):
             self.assertIn("backup_id", data)
             self.assertTrue(target.is_symlink())
             self.assertTrue(target.resolve().is_dir())
-            manifest = home / ".local" / "share" / "dreamcoder" / "backups" / data["backup_id"] / "manifest.json"
+            manifest = (
+                home
+                / ".local"
+                / "share"
+                / "dreamcoder"
+                / "backups"
+                / data["backup_id"]
+                / "manifest.json"
+            )
             self.assertTrue(manifest.exists())
 
 

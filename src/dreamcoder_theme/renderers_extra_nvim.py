@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
-
 from .renderers_extra_nvim_lsp import nvim_lsp_groups
 from .renderers_extra_nvim_plugins import nvim_plugin_groups
 from .renderers_extra_nvim_syntax import nvim_syntax_groups
@@ -12,7 +10,7 @@ from .renderers_extra_nvim_ui import nvim_ui_groups
 
 def nvim_dispatcher_content() -> str:
     """Return a dispatcher that loads the correct variant based on vim.o.background."""
-    return f"""-- ========================================================
+    return """-- ========================================================
 -- Dreamcoder — auto-detect dispatcher
 -- ========================================================
 -- Usage: vim.cmd.colorscheme("dreamcoder")
@@ -51,17 +49,17 @@ def nvim_content(c: dict[str, str]) -> str:
             parts.append(f'    bg = "{kwargs["bg"]}"')
         if "sp" in kwargs:
             parts.append(f'    sp = "{kwargs["sp"]}"')
-        if "bold" in kwargs and kwargs["bold"]:
+        if kwargs.get("bold"):
             parts.append("    bold = true")
-        if "italic" in kwargs and kwargs["italic"]:
+        if kwargs.get("italic"):
             parts.append("    italic = true")
-        if "underline" in kwargs and kwargs["underline"]:
+        if kwargs.get("underline"):
             parts.append("    underline = true")
-        if "undercurl" in kwargs and kwargs["undercurl"]:
+        if kwargs.get("undercurl"):
             parts.append("    undercurl = true")
-        if "strikethrough" in kwargs and kwargs["strikethrough"]:
+        if kwargs.get("strikethrough"):
             parts.append("    strikethrough = true")
-        if "reverse" in kwargs and kwargs["reverse"]:
+        if kwargs.get("reverse"):
             parts.append("    reverse = true")
         inner = ",\n".join(parts)
         return f'  vim.api.nvim_set_hl(0, "{name}", {{\n{inner}\n  }})\n'

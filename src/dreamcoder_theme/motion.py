@@ -59,7 +59,9 @@ def apply_motion_files(preset: dict[str, Any]) -> None:
         value = str(preset.get("kitty_cursor_trail", 1))
         if "cursor_trail" in content:
             lines = [
-                f"cursor_trail          {value}" if line.strip().startswith("cursor_trail") else line
+                f"cursor_trail          {value}"
+                if line.strip().startswith("cursor_trail")
+                else line
                 for line in content.splitlines()
             ]
             kitty_ui.write_text("\n".join(lines) + "\n")
@@ -79,7 +81,9 @@ def apply_motion_files(preset: dict[str, Any]) -> None:
                 if shader != "off":
                     lines.append(f"custom-shader = ~/.config/ghostty/shaders/{shader}")
                 else:
-                    lines.append("# custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl")
+                    lines.append(
+                        "# custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl"
+                    )
             elif stripped.startswith("custom-shader-animation ="):
                 saw_animation = True
                 lines.append(f"custom-shader-animation = {'false' if shader == 'off' else 'true'}")

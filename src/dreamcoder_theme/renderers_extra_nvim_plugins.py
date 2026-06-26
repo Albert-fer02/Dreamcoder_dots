@@ -2,15 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
 
 from .palette import mix
-
 
 Hl = Callable[..., str]
 
 
-def nvim_plugin_groups(hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str) -> list[str]:
+def nvim_plugin_groups(
+    hl: Hl, c: dict[str, str], fg: str, bg: str, sel_fg: str, sel_bg: str
+) -> list[str]:
     return [
         hl("WhichKey", fg=c["accent"], bold=True),
         hl("WhichKeyGroup", fg=c["diagnostic"]),

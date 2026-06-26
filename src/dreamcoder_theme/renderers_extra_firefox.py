@@ -25,7 +25,7 @@ def firefox_content(c: dict[str, str]) -> str:
     toolbar_bg = surface0 if mode == "dark" else c["bg_soft"]
 
     return f"""/* ========================================================
-   {c['name']} — Firefox userChrome.css
+   {c["name"]} — Firefox userChrome.css
    ========================================================
    Place in ~/.mozilla/firefox/*.default-release/chrome/userChrome.css
    Requires toolkit.legacyUserProfileCustomizations.stylesheets = true
@@ -39,11 +39,11 @@ def firefox_content(c: dict[str, str]) -> str:
   --dreamcoder-text-dim: {mtd};
   --dreamcoder-accent: {acc};
   --dreamcoder-accent-2: {acc2};
-  --dreamcoder-border: {c['border']};
-  --dreamcoder-border-ui: {c['border_ui']};
-  --dreamcoder-error: {c['error']};
-  --dreamcoder-warning: {c['warning']};
-  --dreamcoder-sage: {c['sage']};
+  --dreamcoder-border: {c["border"]};
+  --dreamcoder-border-ui: {c["border_ui"]};
+  --dreamcoder-error: {c["error"]};
+  --dreamcoder-warning: {c["warning"]};
+  --dreamcoder-sage: {c["sage"]};
   --dreamcoder-input-bg: {input_bg};
   --dreamcoder-toolbar-bg: {toolbar_bg};
   --dreamcoder-hover: {hover_bg};

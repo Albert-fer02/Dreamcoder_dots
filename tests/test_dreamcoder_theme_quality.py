@@ -2,16 +2,17 @@ import json
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
 
 
 def rel_luminance(value: str) -> float:
     """Calculate relative luminance for WCAG contrast."""
+
     def channel(part: int) -> float:
         scaled = part / 255
         return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
+
     value = value.lstrip("#")
     r, g, b = (channel(int(value[i : i + 2], 16)) for i in (0, 2, 4))
     return 0.2126 * r + 0.7152 * g + 0.0722 * b

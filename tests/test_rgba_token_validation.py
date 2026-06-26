@@ -7,9 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOKENS_FILE = ROOT / "themes" / "dreamcoder" / "tokens.json"
 
 _HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
-_RGBA = re.compile(
-    r"^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0?\.\d+)\s*\)$"
-)
+_RGBA = re.compile(r"^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0?\.\d+)\s*\)$")
 _RGBA_KEYS = {"panel_rgba", "module_rgba", "active_rgba", "inactive_border"}
 
 
@@ -102,15 +100,9 @@ class RGBAValidationTest(unittest.TestCase):
                         int(match.group(2)),
                         int(match.group(3)),
                     )
-                    self.assertTrue(
-                        0 <= r <= 255, f"{mode_name}.{key} R={r} out of range"
-                    )
-                    self.assertTrue(
-                        0 <= g <= 255, f"{mode_name}.{key} G={g} out of range"
-                    )
-                    self.assertTrue(
-                        0 <= b <= 255, f"{mode_name}.{key} B={b} out of range"
-                    )
+                    self.assertTrue(0 <= r <= 255, f"{mode_name}.{key} R={r} out of range")
+                    self.assertTrue(0 <= g <= 255, f"{mode_name}.{key} G={g} out of range")
+                    self.assertTrue(0 <= b <= 255, f"{mode_name}.{key} B={b} out of range")
 
     def test_all_alpha_values_in_range_0_to_1(self):
         """All RGBA alpha values are in range 0.0-1.0."""

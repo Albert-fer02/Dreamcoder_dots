@@ -59,16 +59,16 @@ Generated from current machine state and Control Center contracts.
 
 ```text
 ┌──────────────────────── Dreamcoder Health ────────────────────────┐
-│ Theme: {status['theme_mode']:<8} Profile: {status['profile']:<18} │
-│ Motion: {status['motion']:<7} Health: {health['ok']} ok / {health['warn']} warn / {health['fail']} fail       │
-│ Installer conflicts: {status['installer_conflicts']:<3} Repair actions: {status['repair_actions']:<3}         │
+│ Theme: {status["theme_mode"]:<8} Profile: {status["profile"]:<18} │
+│ Motion: {status["motion"]:<7} Health: {health["ok"]} ok / {health["warn"]} warn / {health["fail"]} fail       │
+│ Installer conflicts: {status["installer_conflicts"]:<3} Repair actions: {status["repair_actions"]:<3}         │
 └───────────────────────────────────────────────────────────────────┘
 ```
 
 ## Terminal Settings TUI Preview
 
 ```text
-{report['tui_preview'].rstrip()}
+{report["tui_preview"].rstrip()}
 ```
 
 ## Safety Model
@@ -105,12 +105,12 @@ Generated from current machine state and Control Center contracts.
 
 ## Commands
 
-- Doctor: `{commands['doctor']}`
-- Repair plan: `{commands['repair_plan']}`
-- Profile preview: `{commands['profile']}`
-- Motion preview: `{commands['motion']}`
-- Installer plan: `{commands['installer']}`
-- Verify: `{commands['verify']}`
+- Doctor: `{commands["doctor"]}`
+- Repair plan: `{commands["repair_plan"]}`
+- Profile preview: `{commands["profile"]}`
+- Motion preview: `{commands["motion"]}`
+- Installer plan: `{commands["installer"]}`
+- Verify: `{commands["verify"]}`
 """
 
 

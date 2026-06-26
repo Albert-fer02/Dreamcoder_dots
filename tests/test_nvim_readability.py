@@ -5,7 +5,6 @@ import sys
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
@@ -15,6 +14,7 @@ from dreamcoder_theme.renderers_extra_nvim import nvim_content
 
 def rel_luminance(value: str) -> float:
     """Calculate relative luminance for WCAG contrast."""
+
     def channel(part: int) -> float:
         scaled = part / 255
         return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
@@ -38,6 +38,7 @@ def color_distance(left: str, right: str) -> float:
     right_rgb = tuple(int(right[i : i + 2], 16) for i in (0, 2, 4))
     return sum((a - b) ** 2 for a, b in zip(left_rgb, right_rgb)) ** 0.5
 
+
 class NvimReadabilityTest(unittest.TestCase):
     """Tests for Neovim syntax highlight readability."""
 
@@ -52,9 +53,7 @@ class NvimReadabilityTest(unittest.TestCase):
 
         # WCAG AA minimum
         self.assertGreaterEqual(
-            contrast(comment, bg),
-            4.5,
-            f"Dark comment {comment} vs bg {bg} lacks WCAG AA contrast"
+            contrast(comment, bg), 4.5, f"Dark comment {comment} vs bg {bg} lacks WCAG AA contrast"
         )
 
     def test_dark_comment_distinct_from_subtle(self):
@@ -65,9 +64,7 @@ class NvimReadabilityTest(unittest.TestCase):
 
         # Should have at least 1.5:1 contrast to be distinguishable
         self.assertGreaterEqual(
-            contrast(comment, subtle),
-            1.5,
-            f"Dark comment {comment} too similar to subtle {subtle}"
+            contrast(comment, subtle), 1.5, f"Dark comment {comment} too similar to subtle {subtle}"
         )
 
     def test_light_comment_distinct_from_muted(self):
@@ -78,9 +75,7 @@ class NvimReadabilityTest(unittest.TestCase):
 
         # Should have at least 2:1 contrast to be clearly distinguishable
         self.assertGreaterEqual(
-            contrast(comment, muted),
-            2.0,
-            f"Light comment {comment} too similar to muted {muted}"
+            contrast(comment, muted), 2.0, f"Light comment {comment} too similar to muted {muted}"
         )
 
     def test_dark_string_has_sufficient_contrast_against_background(self):
@@ -90,9 +85,7 @@ class NvimReadabilityTest(unittest.TestCase):
         sage = dark["sage"]
 
         self.assertGreaterEqual(
-            contrast(sage, bg),
-            4.5,
-            f"Dark string {sage} vs bg {bg} lacks WCAG AA contrast"
+            contrast(sage, bg), 4.5, f"Dark string {sage} vs bg {bg} lacks WCAG AA contrast"
         )
 
     def test_dark_string_distinct_from_comment(self):
@@ -105,7 +98,7 @@ class NvimReadabilityTest(unittest.TestCase):
         self.assertGreaterEqual(
             color_distance(sage, comment),
             80,
-            f"Dark string {sage} too similar to comment {comment}"
+            f"Dark string {sage} too similar to comment {comment}",
         )
 
     def test_dark_diagnostic_distinct_from_comment(self):
@@ -117,7 +110,7 @@ class NvimReadabilityTest(unittest.TestCase):
         self.assertGreaterEqual(
             color_distance(diagnostic, comment),
             80,
-            f"Dark diagnostic {diagnostic} too similar to comment {comment}"
+            f"Dark diagnostic {diagnostic} too similar to comment {comment}",
         )
 
     def test_light_normal_background_is_opaque(self):
@@ -126,14 +119,14 @@ class NvimReadabilityTest(unittest.TestCase):
             if palette is None:
                 continue
             rendered = nvim_content(palette)
-            normal_block = rendered.split('"Normal", {', 1)[1].split('})', 1)[0]
-            sign_block = rendered.split('"SignColumn", {', 1)[1].split('})', 1)[0]
+            normal_block = rendered.split('"Normal", {', 1)[1].split("})", 1)[0]
+            sign_block = rendered.split('"SignColumn", {', 1)[1].split("})", 1)[0]
             self.assertIn(f'bg = "{palette["bg"]}"', normal_block)
             self.assertIn(f'bg = "{palette["bg"]}"', sign_block)
 
     def test_dark_normal_background_stays_transparent(self):
         rendered = nvim_content(self.modes["dark"])
-        normal_block = rendered.split('"Normal", {', 1)[1].split('})', 1)[0]
+        normal_block = rendered.split('"Normal", {', 1)[1].split("})", 1)[0]
         self.assertIn('bg = "none"', normal_block)
 
 

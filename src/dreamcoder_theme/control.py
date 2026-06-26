@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from dreamcoder_theme.cli_handlers import (
-    handle_backup,
     handle_audit,
+    handle_backup,
     handle_dashboard,
     handle_docs,
     handle_installer,

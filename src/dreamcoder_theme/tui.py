@@ -5,7 +5,13 @@ from __future__ import annotations
 from typing import Any
 
 from .dashboard import dashboard_report
-from .settings_store import settings_get, settings_schema, settings_set, validate_setting_value, validate_settings
+from .settings_store import (
+    settings_get,
+    settings_schema,
+    settings_set,
+    validate_setting_value,
+    validate_settings,
+)
 
 
 def setting_rows() -> list[dict[str, Any]]:
@@ -16,14 +22,16 @@ def setting_rows() -> list[dict[str, Any]]:
         value: Any = current
         for part in key.split("."):
             value = value.get(part) if isinstance(value, dict) else None
-        rows.append({
-            "key": key,
-            "value": value if value is not None else spec.get("default"),
-            "default": spec.get("default"),
-            "type": spec.get("type"),
-            "enum": spec.get("enum", []),
-            "description": spec.get("description", ""),
-        })
+        rows.append(
+            {
+                "key": key,
+                "value": value if value is not None else spec.get("default"),
+                "default": spec.get("default"),
+                "type": spec.get("type"),
+                "enum": spec.get("enum", []),
+                "description": spec.get("description", ""),
+            }
+        )
     return rows
 
 
@@ -57,14 +65,16 @@ def tui_render(model: dict[str, Any]) -> str:
     ]
     for row in model["settings"]:
         allowed = f" ({', '.join(row['enum'])})" if row["enum"] else ""
-        lines.append(f"│ {row['key']:<24} = {str(row['value']):<10} │")
+        lines.append(f"│ {row['key']:<24} = {row['value']!s:<10} │")
         lines.append(f"│   {row['description']}{allowed}"[:45].ljust(45) + "│")
-    lines.extend([
-        "├─────────────────────────────────────────────┤",
-        "│ Apply: dreamcoder tui set <key> <value>     │",
-        "│ Safe: add --dry-run --json before applying  │",
-        "╰─────────────────────────────────────────────╯",
-    ])
+    lines.extend(
+        [
+            "├─────────────────────────────────────────────┤",
+            "│ Apply: dreamcoder tui set <key> <value>     │",
+            "│ Safe: add --dry-run --json before applying  │",
+            "╰─────────────────────────────────────────────╯",
+        ]
+    )
     return "\n".join(lines) + "\n"
 
 

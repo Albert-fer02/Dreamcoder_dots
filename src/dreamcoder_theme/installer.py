@@ -26,7 +26,10 @@ def managed_targets() -> list[dict[str, Any]]:
         {"module": "Shell", "path": str(home / ".inputrc")},
         {"module": "Bat", "path": str(ch / "bat")},
         {"module": "Warp", "path": str(dh / "warp-terminal" / "themes")},
-        {"module": "Systemd", "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.service")},
+        {
+            "module": "Systemd",
+            "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.service"),
+        },
         {"module": "Systemd", "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.timer")},
     ]
 

@@ -41,7 +41,9 @@ class DreamcoderControlCenterTest(unittest.TestCase):
     def test_profile_apply_dry_run_is_deterministic_and_non_destructive(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
-            result = run_control("profile", "apply", "asus-vivobook15", "--dry-run", "--json", home=home)
+            result = run_control(
+                "profile", "apply", "asus-vivobook15", "--dry-run", "--json", home=home
+            )
             self.assertEqual(result.returncode, 0, result.stderr)
             data = json.loads(result.stdout)
             self.assertTrue(data["dry_run"])
@@ -54,14 +56,19 @@ class DreamcoderControlCenterTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         data = json.loads(result.stdout)
         self.assertEqual(data["presets"]["fluid"]["kitty_cursor_trail"], 1)
-        self.assertLess(data["presets"]["battery"]["performance_cost"], data["presets"]["cinematic"]["performance_cost"])
+        self.assertLess(
+            data["presets"]["battery"]["performance_cost"],
+            data["presets"]["cinematic"]["performance_cost"],
+        )
 
     def test_settings_set_and_get_round_trip_in_config_home(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
             set_result = run_control("settings", "set", "terminal.default_mode", "light", home=home)
             self.assertEqual(set_result.returncode, 0, set_result.stderr)
-            get_result = run_control("settings", "get", "terminal.default_mode", "--json", home=home)
+            get_result = run_control(
+                "settings", "get", "terminal.default_mode", "--json", home=home
+            )
             self.assertEqual(get_result.returncode, 0, get_result.stderr)
             data = json.loads(get_result.stdout)
             self.assertEqual(data["key"], "terminal.default_mode")
@@ -83,7 +90,9 @@ class DreamcoderControlCenterTest(unittest.TestCase):
     def test_settings_validation_rejects_invalid_known_values(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
-            invalid_set = run_control("settings", "set", "terminal.default_mode", "neon", "--json", home=home)
+            invalid_set = run_control(
+                "settings", "set", "terminal.default_mode", "neon", "--json", home=home
+            )
             self.assertEqual(invalid_set.returncode, 2)
             self.assertIn("terminal.default_mode must be one of", invalid_set.stderr)
 
@@ -112,10 +121,14 @@ class DreamcoderControlCenterTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             home = Path(tmpdir)
             (home / ".config" / "dreamcoder").mkdir(parents=True)
-            (home / ".config" / "dreamcoder" / "settings.json").write_text(json.dumps({
-                "profile": {"active": "asus-vivobook15"},
-                "motion": {"active": "fluid"},
-            }))
+            (home / ".config" / "dreamcoder" / "settings.json").write_text(
+                json.dumps(
+                    {
+                        "profile": {"active": "asus-vivobook15"},
+                        "motion": {"active": "fluid"},
+                    }
+                )
+            )
             kitty_colors = home / ".config" / "kitty" / "colors-dreamcoder.conf"
             kitty_colors.parent.mkdir(parents=True)
             kitty_colors.write_text("# Dreamcoder Light\n")
@@ -153,7 +166,9 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             self.assertEqual(data["schema"], "dreamcoder.repair-plan.v1")
             safe_actions = {action["id"]: action for action in data["actions"] if action["safe"]}
             self.assertIn("kitty-remove-duplicate-color-include", safe_actions)
-            self.assertEqual(safe_actions["kitty-remove-duplicate-color-include"]["target"], str(kitty_ui))
+            self.assertEqual(
+                safe_actions["kitty-remove-duplicate-color-include"]["target"], str(kitty_ui)
+            )
 
     def test_repair_apply_removes_duplicate_include_with_backup(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -172,7 +187,17 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             self.assertEqual(data["schema"], "dreamcoder.repair-apply.v1")
             self.assertIn("backup_id", data)
             self.assertNotIn("include colors-dreamcoder.conf", kitty_ui.read_text())
-            self.assertTrue((home / ".local" / "share" / "dreamcoder" / "backups" / data["backup_id"] / "manifest.json").exists())
+            self.assertTrue(
+                (
+                    home
+                    / ".local"
+                    / "share"
+                    / "dreamcoder"
+                    / "backups"
+                    / data["backup_id"]
+                    / "manifest.json"
+                ).exists()
+            )
 
     def test_profile_apply_writes_state_and_backup_manifest(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -190,7 +215,17 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             settings = json.loads((home / ".config" / "dreamcoder" / "settings.json").read_text())
             self.assertEqual(settings["profile"]["active"], "asus-vivobook15")
             self.assertEqual(settings["terminal"]["default_mode"], "light")
-            self.assertTrue((home / ".local" / "share" / "dreamcoder" / "backups" / data["backup_id"] / "manifest.json").exists())
+            self.assertTrue(
+                (
+                    home
+                    / ".local"
+                    / "share"
+                    / "dreamcoder"
+                    / "backups"
+                    / data["backup_id"]
+                    / "manifest.json"
+                ).exists()
+            )
 
     def test_motion_apply_writes_state_and_can_be_rolled_back(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -203,7 +238,10 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             self.assertEqual(apply_result.returncode, 0, apply_result.stderr)
             data = json.loads(apply_result.stdout)
             self.assertIn("backup_id", data)
-            self.assertEqual(json.loads((home / ".config" / "dreamcoder" / "motion.json").read_text())["name"], "fluid")
+            self.assertEqual(
+                json.loads((home / ".config" / "dreamcoder" / "motion.json").read_text())["name"],
+                "fluid",
+            )
             self.assertIn("cursor_trail          1", kitty_ui.read_text())
 
             kitty_ui.write_text("broken\n")
@@ -264,7 +302,9 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             home = Path(tmpdir)
             target = home / ".local" / "share" / "warp-terminal" / "themes"
             target.mkdir(parents=True)
-            (target / "Dreamcoder.yaml").symlink_to(ROOT / "Warp" / ".local" / "share" / "warp-terminal" / "themes" / "Dreamcoder.yaml")
+            (target / "Dreamcoder.yaml").symlink_to(
+                ROOT / "Warp" / ".local" / "share" / "warp-terminal" / "themes" / "Dreamcoder.yaml"
+            )
 
             result = run_control("installer", "plan", "--json", home=home)
             self.assertEqual(result.returncode, 0, result.stderr)
