@@ -1,0 +1,3 @@
+# shellcheck config for dreamcoder-dots
+# SC3043: 'local' is not POSIX — we target bash, not sh
+disable=SC3043
