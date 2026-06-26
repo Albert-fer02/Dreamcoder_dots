@@ -27,10 +27,11 @@ jobs:
       - name: Run tests
         continue-on-error: true
         run: |
-          python -m pytest tests/ -v --tb=long; ec1=$?
-          echo "PYTEST_EXIT_CODE=$ec1"
-          python -m pytest tests/ -v --tb=short -q; ec2=$?
-          echo "PYTEST_SHORT_EXIT_CODE=$ec2"
+          python -m pytest tests/ -v --tb=short; exit_code=$?
+          echo "PYTEST_EXIT_CODE=$exit_code"
+          if [ "$exit_code" -ne 0 ]; then
+            python -m pytest tests/ --tb=long -k "error or fail" 2>&1 || true
+          fi
 
       - name: Run theme health check
         continue-on-error: true
