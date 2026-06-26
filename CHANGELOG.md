@@ -4,6 +4,19 @@
 
 ### Added
 
+- PEP 621 packaging: `pyproject.toml` with setuptools build backend, `__version__` in package.
+- `dreamcoder-theme` CLI entry point (`dreamcoder-theme sync|doctor|paths`).
+- `Makefile` with targets: install, test, coverage, build, clean, lint.
+- `CONTRIBUTING.md` with dev setup guide, test runner, and PR workflow.
+- PyPI trusted publisher CI workflow — auto-publishes on `v*` tag pushes.
+- CI test matrix: Python 3.11 + 3.12, coverage reporting, lint.
+
+### Changed
+
+- README restructured: PyPI package section added above dotfiles installation guide.
+
+### Added
+
 - Automated terminal readability guardrails for ANSI colors, cursor contrast, and selection contrast.
 - Design system governance documentation for Dreamcoder's product definition, token contract, component model, accessibility policy, and release readiness checklist.
 - Global design-system regression tests covering APCA dark diagnostic contrast, governance docs, README discoverability, and changelog discipline.
