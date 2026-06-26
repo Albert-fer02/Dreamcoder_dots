@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -70,6 +71,8 @@ def ensure_pi_theme_settings(path: Path) -> bool:
 
 
 def valid_starship(path: Path) -> bool:
+    if not shutil.which("starship"):
+        return True
     return (
         subprocess.run(
             ["starship", "explain"],
