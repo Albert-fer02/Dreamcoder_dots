@@ -44,3 +44,10 @@ installer/dreamcoder-dots-*
 *.egg-info/
 dist/
 build/
+
+# Coverage
+.coverage
+.coverage.*
+
+# uv
+uv.lock
