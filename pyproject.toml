@@ -60,6 +60,22 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 
+# Mypy strict mode — Phase 2 will address all type errors
+[tool.mypy]
+python_version = "3.11"
+strict = true
+show_error_codes = true
+warn_unreachable = true
+ignore_missing_imports = false
+
+[[tool.mypy.overrides]]
+module = "PyQt6.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "matugen.*"
+ignore_missing_imports = true
+
 [tool.coverage.run]
 source = ["dreamcoder_theme"]
 relative_files = true
@@ -67,5 +83,10 @@ relative_files = true
 [tool.coverage.report]
 show_missing = true
 fail_under = 60
+
+[dependency-groups]
+dev = [
+    "mypy>=2.1.0",
+]
 
 
