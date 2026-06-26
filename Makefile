@@ -1,4 +1,4 @@
-.PHONY: install test coverage build clean lint
+.PHONY: install test coverage build clean lint python-lint shell-lint type-check format adr
 
 install:
 	pip install -e ".[dev]"
@@ -13,7 +13,26 @@ build:
 	python -m build
 
 clean:
-	rm -rf dist/ build/ *.egg-info/
+	rm -rf dist/ build/ *.egg-info/ src/*.egg-info/
 
-lint:
-	ruff check src/dreamcoder_theme/ tests/
+lint: python-lint shell-lint type-check
+
+python-lint:
+	ruff check src/ tests/
+	ruff format --check src/ tests/
+
+shell-lint:
+	find scripts/ -name '*.sh' -exec shellcheck --shell=bash {} +
+
+type-check:
+	mypy src/
+
+format:
+	ruff format src/ tests/
+
+adr:
+	@echo "=== Architecture Decision Records ==="
+	@ls docs/adr/*.md | while read f; do \
+		echo "  $$(basename $$f) — $$(head -3 "$$f" | tail -1)"; \
+	done
+	@echo "Total: $$(ls docs/adr/*.md 2>/dev/null | wc -l) ADRs"
