@@ -22,6 +22,7 @@ class ThemePaths:
     ghostty_config: Path
     starship: Path
     tmux: Path
+    zellij_config: Path
     warp: Path
     warp_settings: Path
     opencode: Path
@@ -88,6 +89,9 @@ def theme_paths() -> ThemePaths:
         ),
         starship=Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml")),
         tmux=Path(os.environ.get("TMUX_THEME", config_home / "tmux/tmux-dreamcoder.conf")),
+        zellij_config=Path(
+            os.environ.get("ZELLIJ_CONFIG", config_home / "zellij/config.kdl")
+        ),
         warp=Path(
             os.environ.get(
                 "WARP_THEME", data_home / "warp-terminal/themes/Dreamcoder.yaml"

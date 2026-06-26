@@ -48,6 +48,7 @@ from .writers import (
     ensure_kitty_ui_include,
     ensure_pi_theme_settings,
     update_ghostty_theme,
+    update_zellij_config,
     valid_starship,
     update_warp_settings,
     write_if_changed,
@@ -81,6 +82,7 @@ def sync_active_targets(paths, active: dict[str, str], mode: str) -> dict[str, b
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
         "tmux": write_if_changed(paths.tmux, tmux_content(active)),
+        "zellij": update_zellij_config(paths.zellij_config, mode),
         # New targets
         "nvim": write_if_changed(paths.nvim, nvim_dispatcher_content()),
         "zsh_syntax": write_if_changed(paths.zsh_syntax, zsh_syntax_content(active)),
