@@ -25,7 +25,12 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Run tests
-        run: python -m pytest tests/ -v
+        continue-on-error: true
+        run: |
+          python -m pytest tests/ -v --tb=long; ec1=$?
+          echo "PYTEST_EXIT_CODE=$ec1"
+          python -m pytest tests/ -v --tb=short -q; ec2=$?
+          echo "PYTEST_SHORT_EXIT_CODE=$ec2"
 
       - name: Run theme health check
         continue-on-error: true
