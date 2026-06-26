@@ -39,13 +39,13 @@ Changelog = "https://github.com/Gentleman-Programming/dreamcoder-dots/blob/main/
 dreamcoder-theme = "dreamcoder_theme.control:main"
 
 [tool.setuptools.packages.find]
-where = ["scripts"]
+where = ["src"]
 include = ["dreamcoder_theme*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-pythonpath = ["scripts"]
+pythonpath = ["src"]
 
 [tool.coverage.run]
 source = ["dreamcoder_theme"]
