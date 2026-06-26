@@ -7,12 +7,12 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTROL = ROOT / "scripts" / "dreamcoder_theme" / "control.py"
+CONTROL = ROOT / "src" / "dreamcoder_theme" / "control.py"
 
 
 def run_control(*args: str, home: Path | None = None) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
-    env["PYTHONPATH"] = str(ROOT / "scripts")
+    env["PYTHONPATH"] = str(ROOT / "src")
     if home is not None:
         env["HOME"] = str(home)
         env["XDG_CONFIG_HOME"] = str(home / ".config")

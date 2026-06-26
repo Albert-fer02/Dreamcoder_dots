@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import VARIANTS as DEFAULT_VARIANTS
+from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
 from .palette import adaptive_palette, load_variants
 from .renderers import (
     antigravity_content,

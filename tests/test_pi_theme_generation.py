@@ -85,6 +85,7 @@ def run_sync(tmp: Path, mode: str = "dark") -> subprocess.CompletedProcess[str]:
             "OPENCODE_TUI": str(tmp / "opencode" / "tui.json"),
             "CODEX_THEME": str(tmp / "codex" / "themes" / "Dreamcoder.tmTheme"),
             "CODEX_CONFIG": str(tmp / "codex" / "config.toml"),
+            "PYTHONPATH": str(ROOT / "src"),
         }
     )
     return subprocess.run(
