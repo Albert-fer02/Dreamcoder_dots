@@ -38,3 +38,9 @@ Shell/.config/fish/functions/
 # Installer binaries
 installer/dreamcoder-dots
 installer/dreamcoder-dots-*
+.firecrawl/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
