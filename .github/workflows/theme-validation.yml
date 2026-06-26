@@ -24,8 +24,12 @@ jobs:
           pip install --upgrade pip
           pip install -e ".[dev]"
 
+      - name: Run tests
+        run: python -m pytest tests/ --tb=short -q
+
       - name: Run tests with coverage
-        run: python -m pytest tests/ --cov=dreamcoder_theme --cov-report=term-missing
+        run: python -m pytest tests/ --cov=dreamcoder_theme --cov-report=term-missing --tb=short -q
+        continue-on-error: true
 
       - name: Run theme health check
         run: python scripts/verify-theme-health.py
