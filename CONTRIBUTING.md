@@ -7,7 +7,7 @@ reports are welcome.
 ## Project Structure
 
 ```
-scripts/dreamcoder_theme/     # Python theme engine (pip-installable package)
+src/dreamcoder_theme/     # Python theme engine (pip-installable package)
   ├── palette.py              # Color math, adaptive palette derivation
   ├── palette_tokens.py       # Static design tokens (dark/light/dusk)
   ├── renderers_*.py          # Per-target format renderers
@@ -52,7 +52,7 @@ pytest tests/test_palette.py -v
 
 ```bash
 # ruff for Python
-ruff check scripts/dreamcoder_theme/
+ruff check src/dreamcoder_theme/
 ```
 
 ## Building

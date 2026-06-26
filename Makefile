@@ -16,4 +16,4 @@ clean:
 	rm -rf dist/ build/ *.egg-info/
 
 lint:
-	ruff check scripts/dreamcoder_theme/ tests/
+	ruff check src/dreamcoder_theme/ tests/
