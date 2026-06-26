@@ -22,7 +22,12 @@ def _bg(hex_color: str) -> str:
 def zsh_syntax_content(c: dict[str, str]) -> str:
     """Return a compact zsh-syntax-highlighting snippet."""
     mode, bg = _mode(c), c["bg"]
-    g = lambda key: guard(c[key], bg, mode)
+
+    def g(key: str) -> str:
+        val = guard(c[key], bg, mode)
+        assert val is not None
+        return val
+
     pairs = {
         "default": f"fg={g('text')}",
         "unknown-token": f"fg={g('error')}",
@@ -72,7 +77,12 @@ def zsh_syntax_content(c: dict[str, str]) -> str:
 def ls_colors_content(c: dict[str, str]) -> str:
     """Return a compact LS_COLORS/eza snippet."""
     mode, bg = _mode(c), c["bg"]
-    g = lambda key: guard(c[key], bg, mode)
+
+    def g(key: str) -> str:
+        val = guard(c[key], bg, mode)
+        assert val is not None
+        return val
+
     common = {
         "di": _fg(g("accent")),
         "ex": _fg(g("accent_2")),

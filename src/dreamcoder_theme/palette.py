@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import warnings
 from pathlib import Path
 
 from .palette_tokens import ANSI_KEYS
@@ -28,8 +29,6 @@ def load_variants(
                 d = defaults[mode_key][token_key]
                 t = modes[mode_key][token_key]
                 if d != t:
-                    import warnings
-
                     warnings.warn(
                         f"palette divergence: {mode_key}.{token_key} = {t!r} (tokens.json) "
                         f"overrides {d!r} (palette_tokens.py). "
@@ -49,8 +48,7 @@ def resolve_color(palette: dict[str, str], value: str) -> str:
 
 def hex_to_rgb(value: str) -> tuple[int, int, int]:
     value = value.lstrip("#")
-    parts = tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
-    return parts  # type: ignore[return-value]
+    return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
 
 
 def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
@@ -64,12 +62,17 @@ def mix(left: str, right: str, amount: float) -> str:
 
 
 def rel_luminance(value: str) -> float:
-    def channel(part: int) -> float:
-        scaled = part / 255
-        return scaled / 12.92 if scaled <= 0.03928 else ((scaled + 0.055) / 1.055) ** 2.4
-
-    r, g, b = (channel(part) for part in hex_to_rgb(value))
-    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+    r: int
+    g: int
+    b: int
+    r, g, b = hex_to_rgb(value)
+    sr = r / 255
+    sg = g / 255
+    sb = b / 255
+    lr = sr / 12.92 if sr <= 0.03928 else ((sr + 0.055) / 1.055) ** 2.4  # noqa: PLR2004
+    lg = sg / 12.92 if sg <= 0.03928 else ((sg + 0.055) / 1.055) ** 2.4  # noqa: PLR2004
+    lb = sb / 12.92 if sb <= 0.03928 else ((sb + 0.055) / 1.055) ** 2.4  # noqa: PLR2004
+    return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb  # type: ignore[no-any-return, unused-ignore]
 
 
 def contrast(left: str, right: str) -> float:
@@ -146,7 +149,7 @@ def adaptive_palette(
 
     c = dict(base)
     bg = mix(c["bg"], scheme.get("background", c["bg"]), 0.18)
-    if contrast(bg, c["text"]) >= 7:
+    if contrast(bg, c["text"]) >= 7:  # noqa: PLR2004
         c["bg"] = bg
     c["surface0"] = surface_guard(
         mix(c["surface0"], scheme.get("surface_container", c["surface0"]), 0.16),

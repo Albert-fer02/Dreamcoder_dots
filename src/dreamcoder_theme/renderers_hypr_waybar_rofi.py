@@ -232,11 +232,11 @@ def waybar_matugen_content(c: dict[str, str]) -> str:
     """
     m = _map_dc_to_material(c)
 
-    def _hex_to_rgb(hex_color):
+    def _hex_to_rgb(hex_color: str) -> str:
         hx = hex_color.lstrip("#")
         return f"{int(hx[0:2], 16)}, {int(hx[2:4], 16)}, {int(hx[4:6], 16)}"
 
-    def _raw_hex(k):
+    def _raw_hex(k: str) -> str:
         """Extract #RRGGBB from rgba(RRGGBBff)."""
         v = m[k]
         if v.startswith("rgba(") and v.endswith("ff)"):
@@ -268,12 +268,11 @@ def rofi_matugen_content(c: dict[str, str]) -> str:
     Uses Matugen's exact format: hyphenated names, #RRGGBB for most,
     rgba(r, g, b, a) for background.
     """
-    h = lambda x: x  # pass through #RRGGBB
 
-    def _rgb(r, g, b, a):
+    def _rgb(r: int, g: int, b: int, a: float) -> str:
         return f"rgba({r}, {g}, {b}, {a})"
 
-    def _hex_to_rgb_int(hex_color):
+    def _hex_to_rgb_int(hex_color: str) -> tuple[int, int, int]:
         hx = hex_color.lstrip("#")
         return (int(hx[0:2], 16), int(hx[2:4], 16), int(hx[4:6], 16))
 
