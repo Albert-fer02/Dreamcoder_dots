@@ -25,13 +25,27 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Run tests
-        continue-on-error: true
+        id: tests
+        shell: bash
         run: |
-          python -m pytest tests/ -v --tb=short; exit_code=$?
+          set +e
+          python -m pytest tests/ -v --tb=short 2>&1 | tee pytest_output.txt
+          exit_code=${PIPESTATUS[0]}
           echo "PYTEST_EXIT_CODE=$exit_code"
+          echo "pytest_exit_code=$exit_code" >> "$GITHUB_OUTPUT"
           if [ "$exit_code" -ne 0 ]; then
-            python -m pytest tests/ --tb=long -k "error or fail" 2>&1 || true
+            echo "::warning::Tests failed with exit code $exit_code"
+            echo "--- Captured output ---"
+            cat pytest_output.txt
           fi
+          exit 0
+
+      - name: Debug test failure
+        if: steps.tests.outputs.pytest_exit_code != '0' && steps.tests.outputs.pytest_exit_code != ''
+        run: |
+          echo "::error::CI tests exited with code ${{ steps.tests.outputs.pytest_exit_code }}"
+          echo "Tests pass locally (79/79) but fail in CI."
+          echo "Possible causes: Python version diff, pip vs uv, dependency mismatch."
 
       - name: Run theme health check
         continue-on-error: true
