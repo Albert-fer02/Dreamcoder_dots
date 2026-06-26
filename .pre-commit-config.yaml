@@ -34,7 +34,7 @@ repos:
     hooks:
       - id: dreamcoder-theme-validate
         name: Validate Dreamcoder theme tokens
-        entry: python scripts/verify-theme-health.py
+        entry: env PYTHONPATH=src python scripts/verify-theme-health.py
         language: system
         files: ^(themes/dreamcoder/.*\.json|scripts/verify-theme-health\.py)$
         pass_filenames: false
