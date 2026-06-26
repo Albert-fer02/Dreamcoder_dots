@@ -15,6 +15,7 @@ Thumbs.db
 # Editor
 *.swp
 *~
+.editorconfig-unreal
 
 # Backups
 *.bak
@@ -42,6 +43,7 @@ installer/dreamcoder-dots-*
 
 # Python packaging
 *.egg-info/
+src/dreamcoder_theme.egg-info/
 dist/
 build/
 
