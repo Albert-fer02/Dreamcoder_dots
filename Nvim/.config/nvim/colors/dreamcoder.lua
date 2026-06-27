@@ -3,9 +3,10 @@
 -- ========================================================
 -- Usage: vim.cmd.colorscheme("dreamcoder")
 -- Auto-loads the correct variant based on:
---   1. DREAMCODER_THEME_MODE env var
---   2. vim.o.background
---   3. Fallback: dark
+--   1. DREAMCODER_THEME_MODE env var (set by `dreamcoder light`)
+--   2. ~/.cache/dreamcoder/cursor-cli.env (persisted by apply-theme-mode.sh)
+--   3. vim.o.background (Neovim's own setting)
+--   4. Fallback: dark
 -- Direct variant access: colorscheme dreamcoder-dark / dreamcoder-light
 -- ========================================================
 
@@ -19,8 +20,24 @@ vim.opt.pumblend = 10
 local src = debug.getinfo(1, "S").source:match("@?(.*)")
 local theme_dir = src:match("^(.*[/\\])") or "."
 
--- Priority: env var → vim.o.background → dark
+-- Resolve theme mode: env var > cache file > vim.o.background > dark
 local mode = vim.env.DREAMCODER_THEME_MODE
+
+if not mode then
+  local cache_file = vim.fn.expand("~/.cache/dreamcoder/cursor-cli.env")
+  local f = io.open(cache_file, "r")
+  if f then
+    for line in f:lines() do
+      local m = line:match('^export DREAMCODER_THEME_MODE="(.-)"')
+      if m then
+        mode = m
+        break
+      end
+    end
+    f:close()
+  end
+end
+
 if not mode then
   mode = vim.o.background or "dark"
 end
