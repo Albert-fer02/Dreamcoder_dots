@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
+# shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 # Ensure DREAMCODER_DOTS_DIR is set
 : "${DREAMCODER_DOTS_DIR:=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"

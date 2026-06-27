@@ -7,7 +7,7 @@ ok() { printf '✓ %s
 ' "$*"; }
 warn() { printf '⚠ %s
 ' "$*"; }
-check_path() { [[ -e "${1}" ]] && ok "present: ${1}" || warn "missing: ${1}"; }
+check_path() { if [[ -e "${1}" ]]; then ok "present: ${1}"; else warn "missing: ${1}"; fi; }
 control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
 printf 'Dreamcoder Doctor
 Structured health:
@@ -15,7 +15,12 @@ Structured health:
 printf '
 Legacy checks:
 Mode: '; head -1 "${CONFIG_HOME}/ghostty/themes/dreamcoder" 2>/dev/null || warn 'ghostty theme missing'
-printf 'GTK: '; command -v gsettings >/dev/null && gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null || warn 'gsettings unavailable'
+printf 'GTK: '
+if command -v gsettings >/dev/null; then
+    gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null
+else
+    warn 'gsettings unavailable'
+fi
 printf 'Wallpaper: '; cat "${ML4W_CACHE_DIR}/current_wallpaper" 2>/dev/null || warn 'wallpaper cache missing'
 printf 'opencode: '
 if command -v python3 >/dev/null; then CONFIG_HOME="${CONFIG_HOME}" python3 -c 'import json,os,pathlib; p=pathlib.Path(os.environ["CONFIG_HOME"])/"opencode/tui.json"; print(json.loads(p.read_text()).get("theme","unset"))' 2>/dev/null || printf 'unknown
@@ -30,5 +35,9 @@ if [[ -L "${CONFIG_HOME}/dunst/dreamcoder-dunst.conf" ]]; then
 else
     warn 'dunst/dreamcoder-dunst.conf missing or not a symlink'
 fi
-command -v systemctl >/dev/null && systemctl --user is-active --quiet dreamcoder-theme-auto.timer && ok 'timer active' || warn 'timer inactive'
+if command -v systemctl >/dev/null && systemctl --user is-active --quiet dreamcoder-theme-auto.timer; then
+    ok 'timer active'
+else
+    warn 'timer inactive'
+fi
 "${DREAMCODER_DOTS_DIR}/scripts/verify-theme-health.py"
