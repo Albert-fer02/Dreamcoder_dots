@@ -1,0 +1,73 @@
+%% Theme Pipeline — How Dreamcoder tokens flow through renderers to produce
+%% target-specific theme files for every supported application.
+
+flowchart LR
+    subgraph Input["📥 Input Layer"]
+        direction TB
+        PT["palette_tokens.py<br/>Static design tokens<br/>(dark / light / dusk)"]
+        WP["Wallpaper image<br/>(adaptive mode)"]
+    end
+
+    subgraph Transform["⚙️ Transform Layer"]
+        direction TB
+        PL["palette.py<br/>load_variants()<br/>adaptive_palette()"]
+        ST["settings.py<br/>theme_mode()<br/>adaptive_enabled()"]
+    end
+
+    subgraph Render["🎨 Render Layer"]
+        direction TB
+        RENDER["renderers.py<br/>(import hub)"]
+        RK["renderers_kitty.py"]
+        RG["renderers_ghostty_warp.py"]
+        RC["renderers_codex.py"]
+        RN["renderers_extra_nvim.py"]
+        RH["renderers_hypr_waybar_rofi.py"]
+        RS["renderers_starship.py"]
+        RT["renderers_tmux.py"]
+        RO["renderers_opencode.py"]
+        RP["renderers_pi.py"]
+        RB["renderers_readme.py"]
+        RA["renderers_antigravity.py"]
+        RX["renderers_extra_*.py<br/>(bat, btop, cava, delta,<br/>dunst, firefox, fzf,<br/>obsidian, shell, notify)"]
+    end
+
+    subgraph Write["💾 Write Layer"]
+        direction TB
+        W["writers.py<br/>write_if_changed()<br/>write_variant_files()"]
+        CONF["Config updaters<br/>Ghostty, Zellij, Warp,<br/>Kitty, Codex, Pi"]
+    end
+
+    subgraph Output["📁 Output Layer"]
+        direction TB
+        APP["Per-app dirs<br/>Kitty/, Ghostty/, Nvim/,<br/>Warp/, Tmux/, Shell/..."]
+        THEME["themes/dreamcoder/<br/>Variant files<br/>(dark / light)"]
+        CONFIG["$HOME/.config/<br/>Active config files"]
+    end
+
+    PT --> PL
+    WP --> PL
+    ST --> PL
+    PL --> RENDER
+    RENDER --> RK
+    RENDER --> RG
+    RENDER --> RC
+    RENDER --> RN
+    RENDER --> RH
+    RENDER --> RS
+    RENDER --> RT
+    RENDER --> RO
+    RENDER --> RP
+    RENDER --> RB
+    RENDER --> RA
+    RENDER --> RX
+    RK & RG & RC & RN & RH & RS & RT & RO & RP & RB & RA & RX --> W
+    W --> APP
+    W --> THEME
+    W --> CONF
+    CONF --> CONFIG
+
+    style Input fill:#1a1a2e,stroke:#4a4a8a,color:#fff
+    style Transform fill:#2d1f3d,stroke:#7b4a8a,color:#fff
+    style Render fill:#1f3d2d,stroke:#4a8a6a,color:#fff
+    style Write fill:#3d2d1f,stroke:#8a6a4a,color:#fff
+    style Output fill:#2e1a1a,stroke:#8a4a4a,color:#fff

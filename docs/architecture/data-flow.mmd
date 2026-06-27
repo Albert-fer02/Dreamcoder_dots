@@ -1,0 +1,61 @@
+%% Data Flow — Complete path of `dreamcoder-theme sync` from palette tokens
+%% through renderers and writers to final theme files on disk.
+
+sequenceDiagram
+    participant User as User
+    participant CLI as control.py
+    participant Settings as settings.py
+    participant Palette as palette.py
+    participant Tokens as palette_tokens.py
+    participant Renderers as renderers.py
+    participant Writers as writers.py
+    participant Disk as File System
+
+    User->>CLI: dreamcoder-theme sync
+    CLI->>Settings: theme_paths()
+    Settings-->>CLI: Paths object
+    CLI->>Settings: theme_mode()
+    Settings-->>CLI: "dark" | "light" | "dusk"
+    CLI->>Palette: load_variants(DEFAULT_VARIANTS, tokens_file)
+    Palette->>Tokens: read VARIANTS dict
+    Tokens-->>Palette: dark / light / dusk tokens
+    Palette-->>CLI: variants dict
+
+    CLI->>Settings: adaptive_enabled()
+    Settings-->>CLI: bool
+    CLI->>Palette: adaptive_palette(variants[mode], wallpaper, adaptive)
+    alt Adaptive enabled
+        Palette->>Palette: Extract dominant colors from wallpaper
+        Palette->>Palette: Blend with static tokens
+    else Static mode
+        Palette->>Palette: Return raw variant dict
+    end
+    Palette-->>CLI: active palette dict
+
+    CLI->>Renderers: renderers.kitty_content(active)
+    Renderers-->>CLI: Kitty .conf string
+    CLI->>Renderers: renderers.ghostty_content(active)
+    Renderers-->>CLI: Ghostty config string
+    CLI->>Renderers: renderers.nvim_dispatcher_content()
+    Renderers-->>CLI: Nvim dispatcher string
+    CLI->>Renderers: renderers.*_content(active)
+    Note over CLI,Renderers: 28+ renderers called per sync
+    Renderers-->>CLI: Format-specific strings
+
+    CLI->>Writers: sync_active_targets(paths, active, mode)
+    Writers->>Disk: write_if_changed(kitty_path, content)
+    Writers->>Disk: write_if_changed(ghostty_path, content)
+    Writers->>Disk: write_if_changed(tmux_path, content)
+    Note over Writers,Disk: One write_if_changed per target
+
+    CLI->>Writers: sync_repo_snippets(variants, active)
+    Note over CLI,Writers: Generates dark/light variant pairs
+    Writers->>Disk: write_variant_files(...)
+    Writers->>Disk: Config updaters (Ghostty, Zellij, Warp, etc.)
+
+    Writers-->>CLI: dict of bool per target
+    CLI->>Writers: valid_starship(paths.starship)
+    Writers-->>CLI: bool
+    CLI->>CLI: print_summary()
+
+    CLI-->>User: Sync complete — changed: kitty=True, ghostty=False, ...

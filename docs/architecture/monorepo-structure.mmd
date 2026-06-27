@@ -1,0 +1,60 @@
+%% Monorepo Structure — Visual map of the dreamcoder-dots repository showing
+%% top-level directories and their relationships.
+
+flowchart TB
+    subgraph Root["📁 dreamcoder-dots (root)"]
+        direction TB
+
+        SRC["src/dreamcoder_theme/<br/>Python theme engine"]
+        SCRIPTS["scripts/<br/>Shell automation"]
+        TESTS["tests/<br/>Python pytest suite"]
+        SHELL_TESTS["shell-tests/<br/>bats test suite"]
+        DOCS["docs/<br/>Documentation hub"]
+        THEMES["themes/dreamcoder/<br/>Generated output files"]
+        PROFILES["profiles/<br/>ML4W profile files"]
+        GITHUB[".github/workflows/<br/>CI/CD pipelines"]
+        PRE_COMMIT[".pre-commit-config.yaml"]
+        PYPROJ["pyproject.toml"]
+        MAKEFILE["Makefile"]
+
+        subgraph Apps["📱 Per-app config dirs (GNU Stow)"]
+            KITTY["Kitty/"]
+            GHOSTTY["Ghostty/"]
+            NVIM["Nvim/"]
+            TMUX["Tmux/"]
+            SHELL["Shell/<br/>(zsh, bash, inputrc)"]
+            WARP["Warp/"]
+            CODE_CLI["Codex-CLI/"]
+            CODE_APP["Codex-App/"]
+            OPENCODE["OpenCode/"]
+            PI["Pi/"]
+            BAT["Bat/"]
+            FASTFETCH["Fastfetch/"]
+            GITCONFIG["gitconfig/"]
+            ANTIGRAVITY["Antigravity/"]
+            ALACRITTY["Alacritty/"]
+            NUSHELL["Nushell/"]
+            SYSTEMD["Systemd/"]
+            WALLPAPERS["Wallpapers/"]
+            HOME_TAP["homebrew-tap/"]
+            INFO["info/"]
+            INSTALLER["installer/"]
+        end
+    end
+
+    SRC --> SCRIPTS
+    SRC --> TESTS
+    SCRIPTS --> SHELL_TESTS
+    DOCS --> THEMES
+
+    Root --> Apps
+
+    style Root fill:#1a1a2e,stroke:#4a4a8a,color:#fff
+    style SRC fill:#2d1f3d,stroke:#7b4a8a,color:#fff
+    style SCRIPTS fill:#1f3d2d,stroke:#4a8a6a,color:#fff
+    style TESTS fill:#1f3d2d,stroke:#4a8a6a,color:#fff
+    style SHELL_TESTS fill:#1f3d2d,stroke:#4a8a6a,color:#fff
+    style DOCS fill:#3d2d1f,stroke:#8a6a4a,color:#fff
+    style THEMES fill:#3d2d1f,stroke:#8a6a4a,color:#fff
+    style PROFILES fill:#2e1a1a,stroke:#8a4a4a,color:#fff
+    style Apps fill:#1a2e1a,stroke:#4a8a4a,color:#fff
