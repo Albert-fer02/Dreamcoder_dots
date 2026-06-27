@@ -89,6 +89,12 @@ func (m WelcomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m WelcomeModel) View() string {
+	if m.width == 0 {
+		m.width = 80
+	}
+	if m.height == 0 {
+		m.height = 24
+	}
 	logo := `
    ╔═══════════════════════════════════════════════╗
    ║                                               ║
@@ -138,6 +144,7 @@ func (m WelcomeModel) View() string {
 		m.width, m.height,
 		lipgloss.Center, lipgloss.Center,
 		content,
+		lipgloss.WithWhitespaceBackground(styles.Primary),
 	)
 }
 

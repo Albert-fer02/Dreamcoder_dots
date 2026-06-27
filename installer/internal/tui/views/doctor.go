@@ -119,5 +119,6 @@ func (m DoctorModel) View() string {
 		m.width, m.height,
 		lipgloss.Center, lipgloss.Center,
 		content,
+		lipgloss.WithWhitespaceBackground(styles.Primary),
 	)
 }

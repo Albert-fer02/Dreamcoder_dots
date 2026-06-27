@@ -300,6 +300,7 @@ func (m InstallProgressModel) View() string {
 		m.width, m.height,
 		lipgloss.Center, lipgloss.Center,
 		lipgloss.JoinVertical(lipgloss.Center, content, "", footer),
+		lipgloss.WithWhitespaceBackground(styles.Primary),
 	)
 }
 
@@ -382,5 +383,6 @@ func (m SummaryModel) View() string {
 		m.width, m.height,
 		lipgloss.Center, lipgloss.Center,
 		content,
+		lipgloss.WithWhitespaceBackground(styles.Primary),
 	)
 }

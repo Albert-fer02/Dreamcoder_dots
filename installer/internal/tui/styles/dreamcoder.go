@@ -30,18 +30,22 @@ var (
 	TitleStyle = lipgloss.NewStyle().
 			Bold(true).
 			Foreground(Accent).
+			Background(Primary).
 			Padding(1, 2)
 
 	MenuItemStyle = lipgloss.NewStyle().
 			Foreground(Text).
+			Background(Primary).
 			Padding(0, 2)
 
 	DimItemStyle = lipgloss.NewStyle().
 			Foreground(Subtle).
+			Background(Primary).
 			Padding(0, 2)
 
 	SelectedStyle = lipgloss.NewStyle().
 			Foreground(Accent).
+			Background(Primary).
 			Bold(true).
 			Padding(0, 2)
 
@@ -51,26 +55,32 @@ var (
 			Padding(0, 1)
 
 	BoxStyle = lipgloss.NewStyle().
+			Background(Primary).
 			Border(lipgloss.RoundedBorder()).
 			BorderForeground(Border).
 			Padding(1, 2)
 
 	CommentStyle = lipgloss.NewStyle().
-			Foreground(Comment)
+			Foreground(Comment).
+			Background(Primary)
 
 	MutedStyle = lipgloss.NewStyle().
-			Foreground(Muted)
+			Foreground(Muted).
+			Background(Primary)
 
 	SuccessStyle = lipgloss.NewStyle().
 			Foreground(Success).
+			Background(Primary).
 			Padding(0, 2)
 
 	ErrorStyle = lipgloss.NewStyle().
 			Foreground(Error).
+			Background(Primary).
 			Padding(0, 2)
 
 	WarningStyle = lipgloss.NewStyle().
 			Foreground(Warning).
+			Background(Primary).
 			Padding(0, 2)
 
 	ProgressBarStyle = lipgloss.NewStyle().
@@ -79,5 +89,6 @@ var (
 
 	HelpStyle = lipgloss.NewStyle().
 			Foreground(Comment).
+			Background(Primary).
 			Italic(true)
 )
