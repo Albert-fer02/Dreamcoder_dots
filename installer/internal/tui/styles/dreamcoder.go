@@ -2,20 +2,28 @@ package styles
 
 import "github.com/charmbracelet/lipgloss"
 
-// Dreamcoder Dark palette
+// Dreamcoder Dark palette — matches palette_tokens.py exactly
+// for consistent legibility across all Dreamcoder surfaces.
 var (
-	Primary    = lipgloss.Color("#100f0d")
-	Secondary  = lipgloss.Color("#1a1714")
-	Surface    = lipgloss.Color("#2a2520")
-	Text       = lipgloss.Color("#e8dfd0")
-	Accent     = lipgloss.Color("#d99555")
-	Accent2    = lipgloss.Color("#c96a45")
-	Diagnostic = lipgloss.Color("#5f95ca")
-	Success    = lipgloss.Color("#4db35f")
-	Error      = lipgloss.Color("#ed8a7a")
-	Warning    = lipgloss.Color("#e8b866")
-	Comment    = lipgloss.Color("#6b5f52")
-	Border     = lipgloss.Color("#2a2520")
+	Primary    = lipgloss.Color("#100f0d")  // bg
+	Secondary  = lipgloss.Color("#181512")  // bg_soft
+	Surface    = lipgloss.Color("#2b231b")  // surface1
+	Text       = lipgloss.Color("#e8dfd0")  // text
+	Muted      = lipgloss.Color("#c7b9aa")  // muted
+	Subtle     = lipgloss.Color("#938274")  // subtle
+	Accent     = lipgloss.Color("#d99555")  // accent
+	Accent2    = lipgloss.Color("#c96a45")  // accent_2
+	Diagnostic = lipgloss.Color("#5f95ca")  // diagnostic
+	Sage       = lipgloss.Color("#4db35f")  // sage
+	Lavender   = lipgloss.Color("#d4b4e6")  // lavender
+	Mauve      = lipgloss.Color("#e29cb4")  // mauve
+	Success    = lipgloss.Color("#4db35f")  // sage (green)
+	Error      = lipgloss.Color("#ed8a7a")  // error
+	Warning    = lipgloss.Color("#e8b866")  // warning
+	Comment    = lipgloss.Color("#b8a99a")  // comment (was #6b5f52 — too dark!)
+	Border     = lipgloss.Color("#756052")  // border (was #2a2520 — invisible!)
+	BorderHi   = lipgloss.Color("#c8b195")  // border_hi
+	Focus      = lipgloss.Color("#5f8f8f")  // focus
 )
 
 var (
@@ -28,13 +36,17 @@ var (
 			Foreground(Text).
 			Padding(0, 2)
 
+	DimItemStyle = lipgloss.NewStyle().
+			Foreground(Subtle).
+			Padding(0, 2)
+
 	SelectedStyle = lipgloss.NewStyle().
 			Foreground(Accent).
 			Bold(true).
 			Padding(0, 2)
 
 	StatusBarStyle = lipgloss.NewStyle().
-			Foreground(Comment).
+			Foreground(Muted).
 			Background(Secondary).
 			Padding(0, 1)
 
@@ -45,6 +57,9 @@ var (
 
 	CommentStyle = lipgloss.NewStyle().
 			Foreground(Comment)
+
+	MutedStyle = lipgloss.NewStyle().
+			Foreground(Muted)
 
 	SuccessStyle = lipgloss.NewStyle().
 			Foreground(Success).

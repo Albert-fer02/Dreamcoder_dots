@@ -66,9 +66,13 @@ mark3_background        {c["mauve"]}
 
 
 def kitty_ui_content(c: dict[str, str]) -> str:
-    opacity = "0.98" if c["details"] == "lighter" else "0.76"
+    is_dark = c["details"] == "darker"
+    opacity = "0.76" if is_dark else "0.96"
+    blur = "24" if is_dark else "0"
     return f"""# Dreamcoder Kitty UI parity layer
 # Loaded last so ML4W can keep behavior while Dreamcoder owns readability.
+# Dark mode: glass blur (24px) with 76% opacity for depth.
+# Light mode: opaque paper (96%) for maximum text legibility.
 
 font_family           JetBrainsMono Nerd Font
 bold_font             auto
@@ -88,7 +92,7 @@ initial_window_width  1180
 initial_window_height 780
 background_opacity    {opacity}
 dynamic_background_opacity no
-background_blur       0
+background_blur       {blur}
 input_delay           0
 repaint_delay         1
 

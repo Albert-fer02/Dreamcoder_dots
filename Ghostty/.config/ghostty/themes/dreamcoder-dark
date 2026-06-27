@@ -5,8 +5,9 @@ cursor-color = #d99555
 cursor-text = #100f0d
 selection-background = #2b231b
 selection-foreground = #e8dfd0
+background-opacity = 0.76
+background-blur = true
 minimum-contrast = 4.5
-background-opacity-cells = true
 
 palette = 0=#84827e
 palette = 1=#ed8a7a
