@@ -1,10 +1,9 @@
 # test_helper.bash — common setup for bats tests
-# Source this in each test file: setup() { load test_helper; }
+# Source in each test file: setup() { load test_helper; }
 
-setup_file() {
-    export PROJECT_ROOT="$(cd "$(dirname "$BATS_TEST_FILENAME")/.." && pwd)"
-    export SCRIPTS_DIR="${PROJECT_ROOT}/scripts"
-}
+PROJECT_ROOT="$(cd "${BATS_TEST_FILENAME%/*}/.." && pwd)"
+SCRIPTS_DIR="${PROJECT_ROOT}/scripts"
+export PROJECT_ROOT SCRIPTS_DIR
 
 setup() {
     if [[ ! -d "$SCRIPTS_DIR" ]]; then
