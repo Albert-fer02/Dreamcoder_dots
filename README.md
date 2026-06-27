@@ -1,7 +1,30 @@
 # Dreamcoder OS
 
+[![CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
+[![Coverage](https://img.shields.io/badge/coverage-%3E40%25-brightgreen)]()
+[![PyPI](https://img.shields.io/pypi/v/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
+[![Python](https://img.shields.io/pypi/pyversions/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
+[![License](https://img.shields.io/pypi/l/dreamcoder-theme)](https://github.com/Gentleman-Programming/dreamcoder-dots/blob/main/LICENSE)
+
 Personal Arch Linux dotfiles for the **Dreamcoder** identity: a visual layer on top of
 ML4W/Gentleman Dots focused on readability, eye comfort, and a premium coding experience.
+
+```mermaid
+flowchart LR
+    subgraph Tokens["Design Tokens"]
+        PT["palette_tokens.py<br/>dark / light / dusk"]
+    end
+    subgraph Render["Renderers (28+ targets)"]
+        R["renderers.py<br/>hub → leaf modules"]
+    end
+    subgraph Write["Writers"]
+        W["writers.py<br/>write_if_changed()"]
+    end
+    subgraph Output["Theme Files"]
+        O["Kitty, Ghostty, Nvim,<br/>Tmux, Starship, Hyprland,<br/>Codex, OpenCode, Pi, ..."]
+    end
+    Tokens --> Render --> Write --> Output
+```
 
 ## Philosophy
 
@@ -14,16 +37,27 @@ Dreamcoder is not a neon rice. It is a workbench:
 
 ---
 
+## Quick Start
+
+| Comando | Descripción |
+|---------|-------------|
+| `pip install dreamcoder-theme` | Instalar el theme engine |
+| `dreamcoder-theme sync` | Renderizar todos los temas a los directorios de configuración |
+| `dreamcoder-theme doctor` | Verificar salud de los temas instalados |
+| `./scripts/dreamcoder install` | Instalación completa del dotfiles ecosystem (Hyprland, Waybar, etc.) |
+| `./scripts/dreamcoder repair` | Reparar después de actualizaciones de ML4W/Gentleman |
+| `./scripts/dreamcoder dark` | Forzar modo oscuro |
+| `./scripts/dreamcoder light` | Forzar modo claro |
+| `make lint` | Ejecutar ruff + shellcheck |
+| `make test` | Ejecutar pytest |
+| `make coverage` | Ejecutar pytest con cobertura |
+
+---
+
 ## `dreamcoder-theme` — Python Package
 
-[![PyPI](https://img.shields.io/pypi/v/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
-[![Tests](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
-[![Python](https://img.shields.io/pypi/pyversions/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
-[![License](https://img.shields.io/pypi/l/dreamcoder-theme)](https://github.com/Gentleman-Programming/dreamcoder-dots/blob/main/LICENSE)
-
-The theme engine behind Dreamcoder OS. Generates color themes for **20+ targets** —
-terminals, multiplexers, shells, editors, AI tools, desktop environments — from a
-single set of design tokens.
+The theme engine behind Dreamcoder OS. Generates color themes for **28+ targets** from a single
+set of design tokens.
 
 ### Installation
 
@@ -51,14 +85,14 @@ dreamcoder-theme --help
 
 ```python
 from dreamcoder_theme.palette import adaptive_palette
-from dreamcoder_theme.renderers import render_kitty, render_tmux
+from dreamcoder_theme.renderers import kitty_content, ghostty_content
 
 # Generate adaptive colors from a wallpaper
-palette = adaptive_palette(wallpaper="/path/to/wallpaper.jpg")
+active = adaptive_palette(variants["dark"], wallpaper="/path/to/wallpaper.jpg")
 
 # Render to specific formats
-kitty_conf = render_kitty(palette)
-tmux_conf = render_tmux(palette)
+kitty_conf = kitty_content(active)
+ghostty_conf = ghostty_content(active)
 ```
 
 ### What It Renders
@@ -68,10 +102,24 @@ tmux_conf = render_tmux(palette)
 | Terminals | Kitty, Ghostty, WezTerm, Alacritty, Warp |
 | Multiplexers | Tmux, Zellij |
 | Shell | Starship, zsh-syntax-highlighting, LS_COLORS, fzf, Bat, Delta |
-| AI Tools | OpenCode, Codex CLI, Pi CLI |
-| Editors | Neovim (LSP, syntax, UI, plugins), VS Code / Antigravity |
+| AI Tools | OpenCode, Codex CLI, Pi CLI, Antigravity |
+| Editors | Neovim (LSP, syntax, UI, plugins), VS Code |
 | Desktop/WM | Hyprland, Waybar, Rofi |
 | Apps | Firefox, Obsidian, Btop, Dunst, Cava |
+
+## Architecture
+
+El pipeline de generación de temas sigue un flujo de cuatro capas:
+
+1. **Input Layer** — `palette_tokens.py` define los tokens de diseño estáticos (variantes dark/light/dusk)
+2. **Transform Layer** — `palette.py` carga variantes, aplica paleta adaptativa desde wallpaper
+3. **Render Layer** — `renderers.py` importa funciones de módulos `renderers_*.py` que convierten tokens a formatos específicos
+4. **Write Layer** — `writers.py` escribe archivos via `write_if_changed()` y actualiza configuraciones de apps
+
+Cada renderer es una función pura: recibe un dict de colores y devuelve un string.
+No hay side effects hasta la capa de escritura.
+
+Ver [diagramas de arquitectura](docs/architecture/) y [documentación completa](docs/README.md).
 
 ---
 
@@ -119,4 +167,4 @@ theme, and runs verification.
 ## Development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, test runner, and
-pull request guidelines.
+pull request guidelines. Full documentation at [docs/README.md](docs/README.md).
