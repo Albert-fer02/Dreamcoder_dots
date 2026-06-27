@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/dotfiles"
 	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/system"
 )
 
@@ -26,46 +27,92 @@ func RunNonInteractive(config NonInteractiveConfig) error {
 	fmt.Println("🎨 Dreamcoder OS - Non-Interactive Installer")
 	fmt.Printf("Platform: %s/%s (%s)\n", platform.OS, platform.Arch, platform.Distro)
 
+	// Resolve dotfiles directory
+	dotfilesDir, err := dotfiles.FindDotfilesDir()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "⚠️  %v\n", err)
+		fmt.Fprintf(os.Stderr, "   Using default: %s\n", dotfiles.FindDotfilesDirOrDefault(platform.HomeDir))
+		dotfilesDir = dotfiles.FindDotfilesDirOrDefault(platform.HomeDir)
+	}
+	fmt.Printf("Dotfiles: %s\n", dotfilesDir)
+
+	// Check stow
+	if ok, ver := dotfiles.CheckStow(); ok {
+		fmt.Printf("Stow: %s\n", ver)
+	} else {
+		fmt.Fprintln(os.Stderr, "❌ GNU Stow is required but not installed.")
+		fmt.Fprintln(os.Stderr, "   Install: brew install stow  or  sudo apt install stow")
+		return fmt.Errorf("stow not found")
+	}
+
 	// Build component list from flags
-	var components []string
+	var components []dotfiles.Component
+
+	// Start with defaults, then override from flags
+	allComponents := dotfiles.KnownComponents()
+	componentMap := make(map[string]dotfiles.Component)
+	for _, c := range allComponents {
+		componentMap[c.Name] = c
+	}
 
 	if config.Terminal != "" && config.Terminal != "none" {
-		components = append(components, config.Terminal)
+		if c, ok := componentMap[config.Terminal]; ok {
+			c.Selected = true
+			components = append(components, c)
+		}
 	}
-
 	if config.Shell != "" && config.Shell != "none" {
-		components = append(components, config.Shell)
+		if c, ok := componentMap[config.Shell]; ok {
+			c.Selected = true
+			components = append(components, c)
+		}
 	}
-
 	if config.WM != "" && config.WM != "none" {
-		components = append(components, config.WM)
+		if c, ok := componentMap[config.WM]; ok {
+			c.Selected = true
+			components = append(components, c)
+		}
 	}
-
 	if config.Nvim {
-		components = append(components, "nvim")
+		if c, ok := componentMap["Neovim"]; ok {
+			c.Selected = true
+			components = append(components, c)
+		}
 	}
 
 	if len(components) == 0 {
 		fmt.Println("No components specified. Use --help for usage.")
+		fmt.Println("Example: dreamcoder-dots --non-interactive --terminal kitty --shell fish --nvim")
 		return nil
 	}
 
+	// Resolve modules
+	modules := dotfiles.ResolveSelectedModules(components)
 	fmt.Printf("Components: %v\n", components)
+	fmt.Printf("Stow modules: %v\n", modules)
 
 	// Backup existing configs if requested
 	if config.Backup {
 		fmt.Println("\n📦 Backing up existing configurations...")
-		backupDir, manifest, err := system.CreateBackup(platform, components)
+		backupDir, manifest, err := system.CreateBackup(platform, nil)
 		if err != nil {
-			return fmt.Errorf("backup failed: %w", err)
+			fmt.Fprintf(os.Stderr, "⚠️  Backup warning: %v\n", err)
+		} else {
+			fmt.Printf("Backup created: %s (%d files)\n", backupDir, len(manifest.Files))
 		}
-		fmt.Printf("Backup created: %s (%d files)\n", backupDir, len(manifest.Files))
 	}
 
 	if config.DryRun {
 		fmt.Println("\n🔍 Dry run - would install:")
 		for _, comp := range components {
-			fmt.Printf("  - %s\n", comp)
+			fmt.Printf("  - %s (%s)\n", comp.Name, comp.Description)
+		}
+		fmt.Println("\nStow dry-run output:")
+		output, err := dotfiles.StowDryRun(dotfilesDir, platform.HomeDir, modules)
+		if err != nil {
+			fmt.Printf("  Dry run result: %s\n", output)
+		} else {
+			fmt.Println(output)
 		}
 		return nil
 	}
@@ -73,40 +120,20 @@ func RunNonInteractive(config NonInteractiveConfig) error {
 	// Install components
 	fmt.Println("\n📦 Installing components...")
 	for _, comp := range components {
-		fmt.Printf("  Installing %s...\n", comp)
-		if err := installComponent(comp, platform); err != nil {
-			fmt.Fprintf(os.Stderr, "  ❌ Failed to install %s: %v\n", comp, err)
+		compModules := dotfiles.ResolveSelectedModules([]dotfiles.Component{comp})
+		if len(compModules) == 0 {
+			fmt.Fprintf(os.Stderr, "  ❌ Unknown component: %s\n", comp.Name)
 			continue
 		}
-		fmt.Printf("  ✅ %s installed\n", comp)
+		fmt.Printf("  Installing %s... ", comp.Name)
+		if err := dotfiles.Stow(dotfilesDir, platform.HomeDir, compModules); err != nil {
+			fmt.Fprintf(os.Stderr, "❌ Failed: %v\n", err)
+			continue
+		}
+		fmt.Println("✅")
 	}
 
 	fmt.Println("\n✅ Installation complete!")
+	fmt.Println("   Restart your terminal or run: source ~/.zshrc")
 	return nil
-}
-
-func installComponent(component string, platform system.Platform) error {
-	// Map component to stow module
-	moduleMap := map[string]string{
-		"kitty":     "Kitty",
-		"ghostty":   "Ghostty",
-		"wezterm":   "WezTerm",
-		"alacritty": "Alacritty",
-		"fish":      "Shell",
-		"zsh":       "Shell",
-		"nushell":   "Nushell",
-		"tmux":      "Tmux",
-		"zellij":    "Zellij",
-		"nvim":      "Nvim",
-	}
-
-	module, ok := moduleMap[component]
-	if !ok {
-		return fmt.Errorf("unknown component: %s", component)
-	}
-
-	// Run stow
-	dotfilesDir := fmt.Sprintf("%s/Documents/PROYECTOS/dreamcoder-dots", platform.HomeDir)
-	_, err := system.RunCommand("stow", "-d", dotfilesDir, "-t", platform.HomeDir, module)
-	return err
 }

@@ -2,9 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/dotfiles"
 	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/system"
 )
 
@@ -12,6 +16,9 @@ func RepairCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "repair",
 		Short: "Reapply symlinks after upstream updates",
+		Long: `Re-stow all detected Dreamcoder components after updates to ML4W,
+Gentleman Dots, or other upstream configs. Removes stale symlinks
+that point outside the dreamcoder-dots repository.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			green := color.New(color.FgGreen).SprintFunc()
 			yellow := color.New(color.FgYellow).SprintFunc()
@@ -27,6 +34,14 @@ func RepairCmd() *cobra.Command {
 				return fmt.Errorf("stow not found")
 			}
 
+			// Resolve dotfiles directory
+			dotfilesDir, err := dotfiles.FindDotfilesDir()
+			if err != nil {
+				fmt.Printf("  %s %v\n", yellow("⚠"), err)
+				dotfilesDir = dotfiles.FindDotfilesDirOrDefault(platform.HomeDir)
+			}
+			fmt.Printf("  Dotfiles: %s\n", dotfilesDir)
+
 			// Detect what's installed and re-stow
 			configs := system.DetectExistingConfigs(platform.HomeDir)
 			components := detectInstalledComponents(configs)
@@ -36,12 +51,27 @@ func RepairCmd() *cobra.Command {
 				return nil
 			}
 
-			fmt.Printf("  Detected components: %s\n", yellow(fmt.Sprintf("%v", components)))
+			fmt.Printf("  Detected: %s\n", yellow(fmt.Sprintf("%v", components)))
 
 			var repaired int
 			for _, comp := range components {
 				fmt.Printf("  Re-stowing %s... ", comp)
-				if err := repairComponent(comp, platform); err != nil {
+
+				compModules, _ := dotfiles.ResolveComponentModules([]string{comp})
+				if len(compModules) == 0 {
+					fmt.Printf("%s unknown module\n", red("✗"))
+					continue
+				}
+
+				// Remove stale symlinks that point to other repos
+				for _, mod := range compModules {
+					removeStaleSymlinks(dotfilesDir, mod)
+
+					// Delete then fresh stow
+					_, _ = system.RunCommand("stow", "-d", dotfilesDir, "-t", platform.HomeDir, "--delete", mod)
+				}
+
+				if err := dotfiles.Stow(dotfilesDir, platform.HomeDir, compModules); err != nil {
 					fmt.Printf("%s %v\n", red("✗"), err)
 					continue
 				}
@@ -55,53 +85,21 @@ func RepairCmd() *cobra.Command {
 	}
 }
 
-func repairComponent(comp string, platform system.Platform) error {
-	moduleMap := map[string]string{
-		"kitty":     "Kitty",
-		"ghostty":   "Ghostty",
-		"wezterm":   "WezTerm",
-		"alacritty": "Alacritty",
-		"fish":      "Shell",
-		"zsh":       "Shell",
-		"nushell":   "Nushell",
-		"tmux":      "Tmux",
-		"zellij":    "Zellij",
-		"nvim":      "Nvim",
-	}
-
-	module, ok := moduleMap[comp]
-	if !ok {
-		return fmt.Errorf("unknown component: %s", comp)
-	}
-
-	dotfilesDir := findDotfilesDir(platform.HomeDir)
-
-	// Remove stale symlinks that point to other repos (not stow-managed)
-	removeStaleSymlinks(dotfilesDir, module)
-
-	// Delete then fresh stow
-	_, _ = system.RunCommand("stow", "-d", dotfilesDir, "-t", platform.HomeDir, "--delete", module)
-	_, err := system.RunCommand("stow", "-d", dotfilesDir, "-t", platform.HomeDir, module)
-	return err
-}
-
 // removeStaleSymlinks finds and removes symlinks in target that point
 // outside our dotfiles directory (e.g., from gentleman-dots or other repos)
 func removeStaleSymlinks(dotfilesDir, module string) {
-	// Walk the stow module directory to find expected targets
-	_ = filepath.Walk(dotfilesDir+"/"+module, func(path string, info os.FileInfo, err error) error {
+	moduleDir := filepath.Join(dotfilesDir, module)
+	_ = filepath.Walk(moduleDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return nil
 		}
-		relPath, err := filepath.Rel(dotfilesDir+"/"+module, path)
-		if err != nil {
-			return nil
-		}
-		if relPath == "." {
+		relPath, err := filepath.Rel(moduleDir, path)
+		if err != nil || relPath == "." {
 			return nil
 		}
 
 		target := filepath.Join(dotfilesDir, "..", relPath)
+		target = filepath.Clean(target)
 		link, err := os.Readlink(target)
 		if err != nil {
 			return nil // not a symlink
@@ -111,14 +109,12 @@ func removeStaleSymlinks(dotfilesDir, module string) {
 		if !strings.Contains(link, dotfilesDir) {
 			os.Remove(target)
 		}
-
 		return nil
 	})
 }
 
 func detectInstalledComponents(configs system.ExistingConfigs) []string {
 	var components []string
-
 	if configs.Nvim {
 		components = append(components, "nvim")
 	}
@@ -149,6 +145,5 @@ func detectInstalledComponents(configs system.ExistingConfigs) []string {
 	if configs.Zellij {
 		components = append(components, "zellij")
 	}
-
 	return components
 }

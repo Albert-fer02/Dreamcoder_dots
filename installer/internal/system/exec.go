@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"time"
 )
 
@@ -311,4 +312,20 @@ func getBackupPaths(platform Platform, components []string) []string {
 	}
 
 	return paths
+}
+
+// UserHomeDir returns the current user's home directory.
+func UserHomeDir() (string, error) {
+	if runtime.GOOS == "windows" {
+		home := os.Getenv("USERPROFILE")
+		if home == "" {
+			return "", fmt.Errorf("USERPROFILE not set")
+		}
+		return home, nil
+	}
+	home := os.Getenv("HOME")
+	if home == "" {
+		return "", fmt.Errorf("HOME not set")
+	}
+	return home, nil
 }

@@ -11,6 +11,9 @@ var (
 	Accent     = lipgloss.Color("#d99555")
 	Accent2    = lipgloss.Color("#c96a45")
 	Diagnostic = lipgloss.Color("#5f95ca")
+	Success    = lipgloss.Color("#4db35f")
+	Error      = lipgloss.Color("#ed8a7a")
+	Warning    = lipgloss.Color("#e8b866")
 	Comment    = lipgloss.Color("#6b5f52")
 	Border     = lipgloss.Color("#2a2520")
 )
@@ -42,4 +45,24 @@ var (
 
 	CommentStyle = lipgloss.NewStyle().
 			Foreground(Comment)
+
+	SuccessStyle = lipgloss.NewStyle().
+			Foreground(Success).
+			Padding(0, 2)
+
+	ErrorStyle = lipgloss.NewStyle().
+			Foreground(Error).
+			Padding(0, 2)
+
+	WarningStyle = lipgloss.NewStyle().
+			Foreground(Warning).
+			Padding(0, 2)
+
+	ProgressBarStyle = lipgloss.NewStyle().
+				Foreground(Accent).
+				Background(Secondary)
+
+	HelpStyle = lipgloss.NewStyle().
+			Foreground(Comment).
+			Italic(true)
 )

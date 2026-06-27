@@ -30,12 +30,7 @@ zoom_level = 70
 override_opacity = 96
 
 [appearance.themes]
-theme = {
-  custom = {
-    name = "Dreamcoder Light",
-    path = "/home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
-  },
-}
+theme = { custom = { name = "Dreamcoder Light", path = "Dreamcoder-Light.yaml" } }
 system_theme = false
 selected_system_themes = {
   dark = "Dreamcoder-Dark",

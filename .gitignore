@@ -54,3 +54,4 @@ build/
 # uv
 uv.lock
 *.cover
+*.py,cover
