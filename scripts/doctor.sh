@@ -8,7 +8,7 @@ ok() { printf '✓ %s
 warn() { printf '⚠ %s
 ' "$*"; }
 check_path() { if [[ -e "${1}" ]]; then ok "present: ${1}"; else warn "missing: ${1}"; fi; }
-control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
+control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
 printf 'Dreamcoder Doctor
 Structured health:
 '; control doctor || true

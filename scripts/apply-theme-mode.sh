@@ -45,6 +45,7 @@ if [[ -L "${HYPR_CONF}" ]]; then
 fi
 
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
+    PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
     "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
 command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
 # Restart Waybar so it picks up the new colors.css immediately

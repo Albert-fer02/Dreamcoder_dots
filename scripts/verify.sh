@@ -9,7 +9,7 @@ ok() { printf '✓ %s
 fail() { printf '✗ %s
 ' "${*}" >&2; return 1; }
 check_path() { [[ -e "${1}" ]] || { fail "${1} is missing"; return; }; ok "${1}"; }
-control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "${@}"; }
+control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "${@}"; }
 command -v starship >/dev/null || fail 'Missing dependency: starship'
 for path in "${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/fastfetch" "${CONFIG_HOME}/starship.toml" "${CONFIG_HOME}/kitty/dreamcoder-ui.conf" "${DATA_HOME}/warp-terminal/themes" "${CONFIG_HOME}/hypr/colors.lua" "${CONFIG_HOME}/hypr/colors.conf" "${CONFIG_HOME}/waybar/colors.css" "${CONFIG_HOME}/rofi/colors.rasi"; do check_path "${path}"; done
 PI_AGENT_DIR="${PI_AGENT_DIR:-${HOME}/.pi/agent}"; check_path "${PI_AGENT_DIR}/themes/dreamcoder.json"
