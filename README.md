@@ -6,7 +6,9 @@
 [![Python](https://img.shields.io/pypi/pyversions/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
 [![License](https://img.shields.io/pypi/l/dreamcoder-theme)](https://github.com/Gentleman-Programming/dreamcoder-dots/blob/main/LICENSE)
 
-Personal Arch Linux dotfiles for the **Dreamcoder** identity: a visual layer on top of
+> Personal Arch Linux dotfiles — a visual layer on top of ML4W/Gentleman Dots focused on readability, eye comfort, and a premium coding experience.
+
+Personal Arch Linux dotfiles for the Dreamcoder identity: a visual layer on top of
 ML4W/Gentleman Dots focused on readability, eye comfort, and a premium coding experience.
 
 ```mermaid
@@ -26,46 +28,29 @@ flowchart LR
     Tokens --> Render --> Write --> Output
 ```
 
-## Philosophy
-
-Dreamcoder is not a neon rice. It is a workbench:
-
-- **health first**: no pure black/white primary backgrounds, strong contrast, low glare;
-- **daily comfort**: larger terminal type, calmer prompt density, automatic day/night mode;
-- **identity second**: Cocoa/Lúcuma warmth, diagnostic cyan, restrained editorial colors;
-- **ML4W-compatible**: Dreamcoder owns colors and hooks, ML4W/Gentleman can keep layout behavior.
-
 ---
 
-## Quick Start
+## Installation
 
-| Comando | Descripción |
-|---------|-------------|
-| `pip install dreamcoder-theme` | Instalar el theme engine |
-| `dreamcoder-theme sync` | Renderizar todos los temas a los directorios de configuración |
-| `dreamcoder-theme doctor` | Verificar salud de los temas instalados |
-| `./scripts/dreamcoder install` | Instalación completa del dotfiles ecosystem (Hyprland, Waybar, etc.) |
-| `./scripts/dreamcoder repair` | Reparar después de actualizaciones de ML4W/Gentleman |
-| `./scripts/dreamcoder dark` | Forzar modo oscuro |
-| `./scripts/dreamcoder light` | Forzar modo claro |
-| `make lint` | Ejecutar ruff + shellcheck |
-| `make test` | Ejecutar pytest |
-| `make coverage` | Ejecutar pytest con cobertura |
-
----
-
-## `dreamcoder-theme` — Python Package
-
-The theme engine behind Dreamcoder OS. Generates color themes for **28+ targets** from a single
-set of design tokens.
-
-### Installation
+### Theme Engine (Python package)
 
 ```bash
 pip install dreamcoder-theme
 ```
 
-### CLI Usage
+### Full Dotfiles
+
+```bash
+git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
+cd ~/Documents/PROYECTOS/dreamcoder-dots
+./scripts/dreamcoder install
+```
+
+---
+
+## Usage
+
+### CLI
 
 ```bash
 # Render all themes to your config dirs
@@ -76,12 +61,9 @@ dreamcoder-theme doctor
 
 # Inspect active theme paths
 dreamcoder-theme paths
-
-# See all available commands
-dreamcoder-theme --help
 ```
 
-### Library Usage
+### Library
 
 ```python
 from dreamcoder_theme.palette import adaptive_palette
@@ -95,76 +77,90 @@ kitty_conf = kitty_content(active)
 ghostty_conf = ghostty_content(active)
 ```
 
-### What It Renders
+### Script commands
 
-| Category | Targets |
-|---|---|
-| Terminals | Kitty, Ghostty, WezTerm, Alacritty, Warp |
-| Multiplexers | Tmux, Zellij |
-| Shell | Starship, zsh-syntax-highlighting, LS_COLORS, fzf, Bat, Delta |
-| AI Tools | OpenCode, Codex CLI, Pi CLI, Antigravity |
-| Editors | Neovim (LSP, syntax, UI, plugins), VS Code |
-| Desktop/WM | Hyprland, Waybar, Rofi |
-| Apps | Firefox, Obsidian, Btop, Dunst, Cava |
-
-## Architecture
-
-El pipeline de generación de temas sigue un flujo de cuatro capas:
-
-1. **Input Layer** — `palette_tokens.py` define los tokens de diseño estáticos (variantes dark/light/dusk)
-2. **Transform Layer** — `palette.py` carga variantes, aplica paleta adaptativa desde wallpaper
-3. **Render Layer** — `renderers.py` importa funciones de módulos `renderers_*.py` que convierten tokens a formatos específicos
-4. **Write Layer** — `writers.py` escribe archivos via `write_if_changed()` y actualiza configuraciones de apps
-
-Cada renderer es una función pura: recibe un dict de colores y devuelve un string.
-No hay side effects hasta la capa de escritura.
-
-Ver [diagramas de arquitectura](docs/architecture/) y [documentación completa](docs/README.md).
+| Command | Description |
+|---------|-------------|
+| `./scripts/dreamcoder install` | First install / full reapply |
+| `./scripts/dreamcoder repair` | After ML4W or Gentleman updates |
+| `./scripts/dreamcoder doctor` | Inspect current health/status |
+| `./scripts/dreamcoder dark` | Force dark mode |
+| `./scripts/dreamcoder light` | Force light mode |
+| `./scripts/dreamcoder preview` | Regenerate docs preview |
+| `./scripts/set-wallpaper.sh <file>` | Set wallpaper and refresh |
 
 ---
 
-## Full Dotfiles Installation
+## Architecture
 
-For the complete Dreamcoder OS desktop experience (Hyprland, Waybar, wallpapers,
-systemd services, and all terminal/shell configs):
+The theme generation pipeline follows a four-layer flow:
 
-```bash
-git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
-cd ~/Documents/PROYECTOS/dreamcoder-dots
-./scripts/dreamcoder install
+1. **Input Layer** — `palette_tokens.py` defines static design tokens (dark/light/dusk variants)
+2. **Transform Layer** — `palette.py` loads variants and applies adaptive palette from wallpaper
+3. **Render Layer** — `renderers.py` imports functions from `renderers_*.py` modules that convert tokens to target-specific formats
+4. **Write Layer** — `writers.py` writes files via `write_if_changed()` and updates app configurations
+
+Each renderer is a pure function: receives a color dict and returns a string. No side effects until the write layer.
+
+```
+dreamcoder-dots/
+├── src/
+│   ├── dreamcoder_theme/
+│   │   ├── palette_tokens.py    # Design tokens
+│   │   ├── palette.py           # Adaptive palette
+│   │   ├── renderers.py         # Render hub
+│   │   ├── renderers_kitty.py   # Kitty renderer
+│   │   ├── renderers_ghostty.py # Ghostty renderer
+│   │   └── ...
+│   └── ...
+├── scripts/                     # Install/repair/utility scripts
+├── docs/                        # Architecture docs and previews
+└── configs/                     # Default configuration files
 ```
 
-`install.sh` stows the Dreamcoder modules, installs ML4W/Waypaper hooks, enables the
-day/night timer, applies the current mode, and verifies the setup.
+---
 
-## Quick commands
+## Tech Stack
 
-```bash
-./scripts/dreamcoder install      # first install / full reapply
-./scripts/dreamcoder repair       # after ML4W or Gentleman updates
-./scripts/dreamcoder doctor       # inspect current health/status
-./scripts/dreamcoder verify       # symlinks + starship + theme health
-./scripts/dreamcoder preview      # regenerate docs/dreamcoder-theme-preview.md
-./scripts/dreamcoder auto         # apply light/dark for current time
-./scripts/dreamcoder light        # force light mode
-./scripts/dreamcoder dusk         # force dusk transitional mode
-./scripts/dreamcoder dark         # force dark mode
-./scripts/set-wallpaper.sh <file> # set wallpaper and refresh Dreamcoder
-```
+| Layer | Tech | Purpose |
+|-------|------|---------|
+| Language | Python 3 | Theme engine and CLI |
+| Rendering Targets | 28+ targets | Kitty, Ghostty, Nvim, Tmux, Hyprland, and more |
+| Design Tokens | Custom palette system | Dark/light/dusk variants |
+| Testing | pytest + ruff | Type-safe theme generation |
 
-## Post-update repair
+---
 
-After updating ML4W, Gentleman Dots, Waypaper, or Hyprland configs, run:
+## Philosophy
 
-```bash
-cd ~/Documents/PROYECTOS/dreamcoder-dots
-./scripts/dreamcoder repair
-```
+Dreamcoder is not a neon rice. It is a workbench:
 
-This reapplies hooks, restows modules, restarts the timer, refreshes the current
-theme, and runs verification.
+- **health first**: no pure black/white primary backgrounds, strong contrast, low glare;
+- **daily comfort**: larger terminal type, calmer prompt density, automatic day/night mode;
+- **identity second**: Cocoa/Lúcuma warmth, diagnostic cyan, restrained editorial colors;
+- **ML4W-compatible**: Dreamcoder owns colors and hooks, ML4W/Gentleman can keep layout behavior.
 
-## Development
+---
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, test runner, and
-pull request guidelines. Full documentation at [docs/README.md](docs/README.md).
+## Project Status
+
+**Status:** Active
+**Version:** 1.0
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Full documentation at [docs/README.md](docs/README.md).
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+## SDD
+
+This project sits within the [Dreamcoder08](https://github.com/Dreamcoder08) ecosystem. Documentation is maintained in the [SDD Maestro](../arkelythex/sdd/ecosystem-readme-sdd/00-README.md).
