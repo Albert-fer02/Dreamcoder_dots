@@ -48,25 +48,10 @@ release:
     ### Install
 
     ```bash
-    brew install Dreamcoder08/tap/dreamcoder-dots
+    # Download from this release
     ```
 
     ### Changes
 
   footer: |
     **Full Changelog**: https://github.com/Dreamcoder08/Dreamcoder_dots/compare/{{ .PreviousTag }}...{{ .Tag }}
-
-homebrew_casks:
-  - name: dreamcoder-dots
-    binaries:
-      - dreamcoder-dots
-    repository:
-      owner: Dreamcoder08
-      name: homebrew-tap
-      branch: main
-    homepage: "https://github.com/dreamcoder08/dreamcoder-dots"
-    description: "Dreamcoder OS - Token-governed visual operating layer"
-    license: "MIT"
-    commit_author:
-      name: dreamcoder-bot
-      email: bot@dreamcoder08.github.com
