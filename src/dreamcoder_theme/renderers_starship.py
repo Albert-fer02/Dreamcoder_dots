@@ -35,14 +35,14 @@ palette = "dreamcoder"
 command_timeout = 500
 
 format = """
-[\\uECA6](fg:prompt_surface0)\\
+[\\uE0B6](fg:prompt_surface0)\\
 $username\\
-[\\uECA0](bg:prompt_surface1 fg:prompt_surface0)\\
+[\\uE0B0](bg:prompt_surface1 fg:prompt_surface0)\\
 $directory\\
-[\\uECA0](bg:prompt_accent fg:prompt_surface1)\\
+[\\uE0B0](bg:prompt_accent fg:prompt_surface1)\\
 $git_branch\\
 $git_status\\
-[\\uECB4](fg:prompt_accent)\\
+[\\uE0B4](fg:prompt_accent)\\
 $fill\\
 $cmd_duration\\
 $time
@@ -76,7 +76,7 @@ link = "{c["link"]}"
 show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
-format = "[ \\uf007 $user ]($style)"
+format = "[ $user ]($style)"
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
