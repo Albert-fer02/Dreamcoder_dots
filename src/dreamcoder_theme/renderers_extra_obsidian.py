@@ -40,16 +40,16 @@ def obsidian_content(c: dict[str, str]) -> str:
   --text-accent-hover: {c["accent_2"]};
   --text-error: {c["error"]};
   --text-warning: {c["warning"]};
-  --text-success: {c["sage"]};
-  --text-selection: {mix(c["surface1"], bg, 0.5)};
-  --text-on-accent: {c["bg"]};
+  --text-success: {c["success"]};
+  --text-selection: {c["selection_bg"]};
+  --text-on-accent: {c["on_accent"]};
 
   /* Interactive */
   --interactive-normal: {c["surface1"]};
-  --interactive-hover: {c["surface2"]};
+  --interactive-hover: {c["hover"]};
   --interactive-accent: {c["accent"]};
   --interactive-accent-hover: {c["accent_2"]};
-  --interactive-success: {c["sage"]};
+  --interactive-success: {c["success"]};
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -70,18 +70,18 @@ def obsidian_content(c: dict[str, str]) -> str:
   --code-background: {c["surface0"]};
 
   /* Heading */
-  --h1-color: {c["accent"]};
-  --h2-color: {c["accent"]};
+  --h1-color: {c["text_heading"]};
+  --h2-color: {c["text_heading"]};
   --h3-color: {c["accent_2"]};
   --h4-color: {c["diagnostic"]};
   --h5-color: {c["muted"]};
   --h6-color: {c["subtle"]};
 
   /* Link */
-  --link-color: {c["accent"]};
-  --link-color-hover: {c["accent_2"]};
-  --link-external-color: {c["diagnostic"]};
-  --link-external-color-hover: {c["accent_2"]};
+  --link-color: {c["link"]};
+  --link-color-hover: {c["link_hover"]};
+  --link-external-color: {c["info"]};
+  --link-external-color-hover: {c["link_hover"]};
 
   /* Checkbox */
   --checkbox-color: {c["accent"]};

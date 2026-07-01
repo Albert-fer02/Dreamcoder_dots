@@ -2,7 +2,7 @@
 background = #f3eadc
 foreground = #17120d
 cursor-color = #824f16
-cursor-text = #f3eadc
+cursor-text = #fff7ea
 selection-background = #decbb1
 selection-foreground = #17120d
 background-opacity = 0.96
@@ -18,10 +18,10 @@ palette = 5=#7d3e64
 palette = 6=#57478b
 palette = 7=#352e22
 palette = 8=#554638
-palette = 9=#815850
-palette = 10=#4f6f51
+palette = 9=#702a20
+palette = 10=#366134
 palette = 11=#654300
-palette = 12=#3a686e
-palette = 13=#6c5ba2
-palette = 14=#4b6f6f
+palette = 12=#0f4058
+palette = 13=#4b3d74
+palette = 14=#10565e
 palette = 15=#17120d

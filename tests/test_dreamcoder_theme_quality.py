@@ -41,13 +41,22 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
         light = self.modes["light"]
         self.assertEqual(light["surface0"], "#fff7ea")
         self.assertEqual(light["surface2"], "#c8ad89")
-        # Verify subtle has sufficient contrast against background
         self.assertGreaterEqual(contrast(light["subtle"], light["bg"]), 4.5)
         self.assertGreaterEqual(contrast(light["comment"], light["bg"]), 4.5)
 
-    def test_light_selection_uses_inverted_high_contrast_pair(self):
+    def test_light_selection_uses_explicit_pair(self):
         light = self.modes["light"]
-        self.assertEqual(light["selection"], light["text"])
+        self.assertEqual(light["selection_bg"], "#decbb1")
+        self.assertEqual(light["selection_fg"], light["text"])
+        self.assertGreaterEqual(contrast(light["selection_fg"], light["selection_bg"]), 7.0)
+
+    def test_dark_has_text_heading_and_surface3(self):
+        dark = self.modes["dark"]
+        self.assertIn("text_heading", dark)
+        self.assertIn("surface3", dark)
+        self.assertGreater(
+            contrast(dark["text_heading"], dark["bg"]), contrast(dark["text"], dark["bg"])
+        )
 
 
 if __name__ == "__main__":

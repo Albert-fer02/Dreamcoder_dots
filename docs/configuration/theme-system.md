@@ -2,44 +2,60 @@
 
 ## Architecture
 
-```
-tokens.json → Theme Engine (Python) → 48 config files → 22 targets
-```
+Three-layer design system:
 
-## Token Schema
-
-All colors are defined in `themes/dreamcoder/tokens.json`:
-
-```json
-{
-  "dark": {
-    "background": "#100f0d",
-    "text": "#e8dfd0",
-    "accent": "#d99555",
-    "accent_2": "#c96a45",
-    "diagnostic": "#5f95ca"
-  },
-  "light": {
-    "background": "#f3eadc",
-    "text": "#17120d",
-    "accent": "#824f16",
-    "accent_2": "#b85c2a",
-    "diagnostic": "#3a7bc8"
-  }
-}
+```txt
+primitives (OKLCH ramps) → semantic tokens (tokens.json) → component themes (renderers)
 ```
 
-## Regenerating Themes
+Pipeline:
+
+```txt
+tokens.json → generate-palette-tokens.py → palette_tokens.py
+           → dreamcoder sync → 48+ config files → 22+ targets
+```
+
+## Canonical tokens
+
+Single source of truth: [`themes/dreamcoder/tokens.json`](../../themes/dreamcoder/tokens.json)
+
+Dark (**Ember Noir OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
+
+| Layer | Examples |
+| --- | --- |
+| Surfaces | `bg`, `bg_soft`, `surface0`–`surface3` |
+| Text | `text`, `text_heading`, `muted`, `subtle`, `comment` |
+| Brand | `accent`, `accent_2`, `link`, `link_hover` |
+| Feedback | `error`, `warning`, `success`, `info`, `diagnostic` |
+| On-colors | `on_surface`, `on_accent`, `on_error`, `on_focus` |
+| Interaction | `selection_bg`, `selection_fg`, `hover`, `pressed`, `disabled` |
+| Chrome | `border`, `border_ui`, `border_hi`, `focus`, `panel_rgba` |
+
+## Regenerating themes
 
 After editing `tokens.json`:
 
 ```bash
-./scripts/dreamcoder sync
+./scripts/generate-palette-tokens.py   # sync palette_tokens.py + derived tokens
+./scripts/dreamcoder sync              # propagate to all targets
+./scripts/verify-theme-health.py       # WCAG + APCA gates (light and dark)
 ```
 
-## Adding New Targets
+## Quality gates
 
-1. Create renderer in `scripts/dreamcoder_theme/renderers_<target>.py`
-2. Add token mapping
-3. Run `./scripts/dreamcoder sync`
-4. Files appear in `themes/dreamcoder/`
+- WCAG 2.2: body text ≥ 4.5:1 (main text ≥ 7:1)
+- APCA: body Lc ≥ 75 light / ≥ 50 dark; `on_accent` Lc ≥ 54 on filled accent
+- CI validates **both** light and dark Kitty, Starship, Ghostty, Waybar, Hypr, Rofi, Btop, Dunst, Fzf
+
+## Design decisions
+
+- **accent** = lúcuma/ember orange (identity, tabs, CTAs)
+- **focus** = teal ring (keyboard focus, inputs) — separate from brand orange on purpose
+- **adaptive/matugen** may tint surfaces but identity tokens win per `CLAUDE.md`
+
+## Adding new targets
+
+1. Create renderer in `src/dreamcoder_theme/renderers_<target>.py`
+2. Map semantic tokens (never raw hex in renderers)
+3. Register in `src/dreamcoder_theme/sync.py`
+4. Run `./scripts/dreamcoder sync`

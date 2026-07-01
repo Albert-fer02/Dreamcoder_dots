@@ -16,27 +16,33 @@ def starship_content(c: dict[str, str]) -> str:
     prom_text = guard(c["prompt_text"], prom_s0, mode)  # text on darkest surface
     prom_muted = guard(c["prompt_muted"], c["bg"], mode)
     error = guard(c["error"], c["bg"], mode)
+    warning = guard(c["warning"], c["bg"], mode)
+    focus_col = c["focus"]
+    diag = c["diagnostic"]
+    lavender_col = c["lavender"]
+    mauve_col = c["mauve"]
 
     return f'''# ========================================================
 # {c["name"]} — Starship prompt
 # ========================================================
 # Modern two-line layout with powerline segments.
-# Line 1: context (directory, git)
+# Line 1: context (directory, git), fill, cmd_duration, time
 # Line 2: input character only (clean)
+# Extra: status (exit code), AI session (hidden until active)
 
 add_newline = true
 palette = "dreamcoder"
 command_timeout = 500
 
 format = """
-[](fg:prompt_surface0)\\
+[\\uE0B6](fg:prompt_surface0)\\
 $username\\
-[](bg:prompt_surface1 fg:prompt_surface0)\\
+[\\uE0B0](bg:prompt_surface1 fg:prompt_surface0)\\
 $directory\\
-[](bg:prompt_accent fg:prompt_surface1)\\
+[\\uE0B0](bg:prompt_accent fg:prompt_surface1)\\
 $git_branch\\
 $git_status\\
-[](fg:prompt_accent)\\
+[\\uE0B4](fg:prompt_accent)\\
 $fill\\
 $cmd_duration\\
 $time
@@ -57,42 +63,53 @@ prompt_muted = "{prom_muted}"
 prompt_accent = "{prom_acc}"
 prompt_accent_2 = "{c["prompt_accent_2"]}"
 sage = "{c["sage"]}"
-diagnostic = "{c["diagnostic"]}"
-lavender = "{c["lavender"]}"
-mauve = "{c["mauve"]}"
+diagnostic = "{diag}"
+lavender = "{lavender_col}"
+mauve = "{mauve_col}"
 error = "{error}"
+warning = "{warning}"
+border = "{c["border_ui"]}"
+focus = "{focus_col}"
+link = "{c["link"]}"
 
 [username]
 show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
-format = "[  $user ]($style)"
+format = "[ \uf007 $user ]($style)"
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
-format = "[  $path ]($style)"
+format = "[ $path ]($style)"
 truncation_length = 2
 truncate_to_repo = true
 home_symbol = ""
 
 [git_branch]
-symbol = ""
+symbol = "\\uf418"
 style = "bg:prompt_accent fg:prompt_bg bold"
 format = "[ $symbol $branch ]($style)"
 
 [git_status]
 style = "bg:prompt_accent fg:prompt_bg bold"
 format = "[$all_status$ahead_behind ]($style)"
-conflicted = "${{count}} "
-ahead = "⇡${{count}} "
-behind = "⇣${{count}} "
-diverged = "⇕⇡${{ahead_count}}⇣${{behind_count}} "
+conflicted = "\\ue727${{count}} "
+ahead = "\\u21E1${{count}} "
+behind = "\\u21E3${{count}} "
+diverged = "\\u2195\\u21E1${{ahead_count}}\\u21E3${{behind_count}} "
 untracked = "?${{count}} "
-stashed = "󰏗${{count}} "
+stashed = "\\uf0CF${{count}} "
 modified = "~${{count}} "
 staged = "+${{count}} "
-renamed = "»${{count}} "
-deleted = "✘${{count}} "
+renamed = "\\u00BB${{count}} "
+deleted = "\\u2718${{count}} "
+
+[status]
+disabled = false
+format = "[$symbol]($style)"
+symbol = "\\u2717"
+style = "bg:error fg:prompt_bg bold"
+pipestatus = false
 
 [fill]
 symbol = " "
@@ -100,7 +117,7 @@ symbol = " "
 [cmd_duration]
 min_time = 2500
 style = "fg:prompt_muted"
-format = "[  $duration ]($style)"
+format = "[  \\uf552 $duration ]($style)"
 
 [time]
 disabled = false
@@ -108,39 +125,45 @@ format = "[ $time ]($style)"
 style = "fg:prompt_muted"
 
 [character]
-success_symbol = "[❯](bold fg:prompt_accent)"
-error_symbol = "[❯](bold fg:error)"
-vimcmd_symbol = "[❮](bold fg:sage)"
+success_symbol = "[\\u276F](bold fg:prompt_accent)"
+error_symbol = "[\\u276F](bold fg:error)"
+vimcmd_symbol = "[\\u276E](bold fg:sage)"
 
 # Runtime versions - show only when relevant, keep compact
 [bun]
-symbol = ""
+symbol = "\\uF5EF"
 style = "fg:prompt_accent bold"
 format = "[ $symbol $version]($style)"
 
 [nodejs]
-symbol = ""
+symbol = "\\uE718"
 style = "fg:sage bold"
 format = "[ $symbol $version]($style)"
 
 [python]
-symbol = ""
-style = "fg:diagnostic bold"
+symbol = "\\uE73C"
+style = "fg:diag bold"
 format = "[ $symbol $version]($style)"
 
 [golang]
-symbol = ""
-style = "fg:lavender bold"
+symbol = "\\uE627"
+style = "fg:diag bold"
 format = "[ $symbol $version]($style)"
 
 [rust]
-symbol = ""
+symbol = "\\uE7A8"
 style = "fg:mauve bold"
 format = "[ $symbol $version]($style)"
 
+[custom.ai_session]
+command = "cat ~/.cache/dreamcoder/ai-session.state 2>/dev/null || echo ''"
+when = """test -f ~/.cache/dreamcoder/ai-session.state"""
+format = "[\\uf5B5 $output]($style)"
+style = "fg:diag bold"
+
 [docker_context]
-symbol = ""
-style = "fg:diagnostic bold"
+symbol = "\\uf308"
+style = "fg:diag bold"
 format = "[ $symbol $context]($style)"
 only_with_files = true
 '''

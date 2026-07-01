@@ -1,0 +1,57 @@
+# GoReleaser configuration for dreamcoder-dots installer
+# https://goreleaser.com
+#
+# Trigger: git tag v* && git push --tags
+# Pipeline: build (4 platforms) → archive → release → homebrew cask
+
+version: 2
+
+project_name: dreamcoder-dots
+
+before:
+  hooks:
+    - sh -c "cd installer && go mod tidy"
+
+builds:
+  - id: dreamcoder-dots
+    dir: installer
+    main: .
+    binary: dreamcoder-dots
+    ldflags:
+      - -X github.com/dreamcoder08/dreamcoder-dots/installer/pkg/version.Version={{ .Version }}
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: default
+    formats: ["tar.gz"]
+    name_template: >-
+      {{ .ProjectName }}-{{ .Os }}-{{ .Arch }}
+    files:
+      - none*
+
+release:
+  github:
+    owner: Dreamcoder08
+    name: Dreamcoder_dots
+  header: |
+    ## Dreamcoder OS {{ .Version }}
+
+    > Token-governed visual operating layer.
+
+    ### Install
+
+    ```bash
+    # Download from this release
+    ```
+
+    ### Changes
+
+  footer: |
+    **Full Changelog**: https://github.com/Dreamcoder08/Dreamcoder_dots/compare/{{ .PreviousTag }}...{{ .Tag }}

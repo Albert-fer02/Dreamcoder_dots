@@ -22,7 +22,9 @@ ROLES = [
     "surface0",
     "surface1",
     "surface2",
+    "surface3",
     "text",
+    "text_heading",
     "muted",
     "subtle",
     "comment",
@@ -30,10 +32,18 @@ ROLES = [
     "accent_2",
     "diagnostic",
     "sage",
+    "success",
+    "info",
     "lavender",
     "mauve",
     "error",
     "warning",
+    "on_accent",
+    "on_error",
+    "link",
+    "link_hover",
+    "selection_bg",
+    "selection_fg",
     "border",
     "border_ui",
     "border_hi",
@@ -157,9 +167,7 @@ def contrast_table(name, palette):
     bg = palette["bg"]
     for key in TEXT_KEYS:
         ratio = contrast(bg, palette[key])
-        target = (
-            "AAA" if key == "text" and ratio >= 7 else "AA" if ratio >= 4.5 else "FAIL"
-        )
+        target = "AAA" if key == "text" and ratio >= 7 else "AA" if ratio >= 4.5 else "FAIL"
         rows.append(f"| `{key}` | {ratio:.2f}:1 | {target} |")
     return "\n".join(rows)
 
@@ -218,8 +226,8 @@ def main():
         "",
         "- `comment` is softer and lower-chroma than `subtle` (syntax vs UI chrome).",
         "- Dark `accent` (refined ember orange), `accent_2` (maple red), `error` (soft coral red), and `warning` (lúcuma gold) form the orange/red/gold signature.",
-        "- `focus` follows the orange protagonist instead of a separate cyan ring; `diagnostic` stays warm amber so the palette remains autumnal.",
-        "",
+        "- `accent` carries brand CTAs and active chrome; `focus` is teal for keyboard/input affordance (WCAG ring).",
+        "- `on_accent`, `on_error`, and `selection_bg`/`selection_fg` are explicit pairs validated in CI.",
     ]
     parts += ["## Palette", ""]
     for mode, palette in tokens["modes"].items():

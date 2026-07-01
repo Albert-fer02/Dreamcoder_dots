@@ -1,0 +1,17 @@
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git \
+    golang-go \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY . .
+
+RUN go build -o dreamcoder-dots .
+RUN ./dreamcoder-dots --version
+RUN ./dreamcoder-dots doctor
+RUN ./dreamcoder-dots install --dry-run
+
+CMD ["echo", "All tests passed"]

@@ -33,12 +33,12 @@ class TerminalReadabilityTest(unittest.TestCase):
         cursor_min = self.guardrails["minimum_terminal_cursor_contrast"]
         selection_min = self.guardrails["minimum_terminal_selection_contrast"]
         for mode, palette in self.modes.items():
-            invert = palette.get("details") == "lighter"
-            sel_fg = palette["bg"] if invert else palette["text"]
-            sel_bg = palette["text"] if invert else palette["selection"]
             with self.subTest(mode=mode):
                 self.assertGreaterEqual(contrast(palette["accent"], palette["bg"]), cursor_min)
-                self.assertGreaterEqual(contrast(sel_fg, sel_bg), selection_min)
+                self.assertGreaterEqual(
+                    contrast(palette["selection_fg"], palette["selection_bg"]),
+                    selection_min,
+                )
 
 
 if __name__ == "__main__":

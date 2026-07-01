@@ -708,17 +708,17 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@markup.link", {
-    fg = "#5f95ca",
+    fg = "#d99555",
     underline = true
   })
 
   vim.api.nvim_set_hl(0, "@markup.link.label", {
-    fg = "#5f95ca",
+    fg = "#d99555",
     underline = true
   })
 
   vim.api.nvim_set_hl(0, "@markup.link.url", {
-    fg = "#938274",
+    fg = "#c96a45",
     underline = true
   })
 

@@ -37,3 +37,9 @@ for dir in $PATH
     end
 end
 set -gx PATH $clean_path
+
+# Zen Browser - Profile aliases
+alias zp="zen-browser -P Personal"
+alias zd="zen-browser -P Dev"
+alias zf="zen-browser -P Founder"
+fish_add_path /home/dreamcoder08/.local/share/npm-global/bin

@@ -7,9 +7,8 @@ from .palette import ansi
 
 def kitty_content(c: dict[str, str]) -> str:
     p = ansi(c)
-    # Use surface1 for selection background in all modes - better visibility
-    sel_fg = c["text"]
-    sel_bg = c["surface1"]
+    sel_fg = c["selection_fg"]
+    sel_bg = c["selection_bg"]
     return f"""# ==========================================================
 #              {c["name"]}
 # ==========================================================
@@ -19,15 +18,15 @@ foreground              {c["text"]}
 background              {c["bg"]}
 selection_foreground    {sel_fg}
 selection_background    {sel_bg}
-url_color               {c["diagnostic"]}
+url_color               {c["link"]}
 
 cursor                  {c["accent"]}
-cursor_text_color       {c["bg"]}
+cursor_text_color       {c["on_accent"]}
 cursor_shape            block
 cursor_blink_interval   0.5
 cursor_stop_blinking_after 15.0
 
-active_tab_foreground   {c["bg"]}
+active_tab_foreground   {c["on_accent"]}
 active_tab_background   {c["accent"]}
 inactive_tab_foreground {c["muted"]}
 inactive_tab_background {c["bg"]}
@@ -56,11 +55,11 @@ color15 {p[15]}
 color16 {c["accent_2"]}
 color17 {c["error"]}
 
-mark1_foreground        {c["bg"]}
+mark1_foreground        {c["on_accent"]}
 mark1_background        {c["accent"]}
-mark2_foreground        {c["bg"]}
+mark2_foreground        {c["on_surface"]}
 mark2_background        {c["diagnostic"]}
-mark3_foreground        {c["bg"]}
+mark3_foreground        {c["on_surface"]}
 mark3_background        {c["mauve"]}
 """
 

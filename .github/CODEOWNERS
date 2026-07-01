@@ -1,0 +1,28 @@
+# Dreamcoder Dots — CODEOWNERS
+# Defines who is responsible for reviewing changes to each area.
+
+* @Dreamcoder08
+
+# Python theme engine
+/src/dreamcoder_theme/ @Dreamcoder08
+
+# Go installer
+/installer/ @Dreamcoder08
+
+# CI/CD and GitHub config
+/.github/ @Dreamcoder08
+
+# Documentation
+/docs/ @Dreamcoder08
+
+# Shell scripts
+/scripts/*.sh @Dreamcoder08
+
+# Shell configs
+/Shell/ @Dreamcoder08
+
+# Terminal configs
+/Kitty/ @Dreamcoder08
+/Ghostty/ @Dreamcoder08
+/Tmux/ @Dreamcoder08
+/Zellij/ @Dreamcoder08

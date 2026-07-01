@@ -46,7 +46,79 @@ if status is-interactive
         echo "🎨 Shell theme reloaded: $DREAMCODER_THEME_MODE mode"
     end
 
-    function mkcd --description 'Create a directory and enter it'
-        mkdir -p -- $argv[1]; and cd -- $argv[1]
+    ## ─── Git shortcuts ────────────────────────────────────
+    alias g='git'
+    alias gs='git status'
+    alias gp='git push'
+    alias gl='git log --oneline --graph --all'
+    alias gd='git diff'
+    alias gc='git commit'
+    alias gco='git checkout'
+    alias gb='git branch'
+    alias ga='git add'
+    alias gpl='git pull'
+    alias gst='git stash'
+    alias glg='git log --oneline --graph --all --decorate'
+    alias gundo='git reset --soft HEAD~1'
+    alias gcleanup='git branch --merged | grep -v "\*\|main\|master" | xargs -r git branch -d'
+    alias gconflicts='git diff --name-only --diff-filter=U'
+    alias groot='git rev-parse --show-toplevel'
+
+    ## ─── Modern CLI replacements ──────────────────────────
+    # eza (better ls)
+    if command -q eza
+        alias ll='eza -la --icons --group-directories-first'
+        alias la='eza -a --icons --group-directories-first'
+        alias lt='eza -T --icons --group-directories-first'
+        alias l1='eza -1 --icons'
+    else
+        alias ll='ls -lahF'
+        alias la='ls -A'
+        alias lt='tree -C 2>/dev/null; or ls -R'
     end
+
+    # bat (better cat)
+    if command -q bat
+        alias cat='bat --paging=never'
+    end
+
+    # fd (better find)
+    if command -q fd
+        alias find='fd'
+    end
+
+    # rg (better grep)
+    if command -q rg
+        alias grep='rg'
+    end
+
+    # zoxide (better cd)
+    if command -q zoxide
+        alias cd='z'
+        alias cdi='zi'
+    end
+
+    # Modern replacements (graceful fallback)
+    if command -q procs
+        alias ps='procs'
+    end
+    if command -q btm
+        alias top='btm'
+    end
+    if command -q dua
+        alias du='dua'
+    end
+    if command -q duf
+        alias df='duf'
+    end
+    if command -q sd
+        alias sed='sd'
+    end
+
+    ## ─── Quick navigation ─────────────────────────────────
+    alias home='cd ~'
+    alias ..='cd ..'
+    alias ...='cd ../..'
+    alias ....='cd ../../..'
+    alias docs='cd $DREAMCODER_DOTS_DIR/docs'
 end

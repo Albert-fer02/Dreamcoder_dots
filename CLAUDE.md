@@ -20,7 +20,8 @@ wallpaper-derived palettes unless explicitly requested.
 ## Important commands
 
 ```bash
-./scripts/sync-dreamcoder-theme.py
+./scripts/dreamcoder sync
+./scripts/generate-palette-tokens.py
 bash -n scripts/update-colors.sh
 ghostty +validate-config
 STARSHIP_CONFIG=Shell/.config/starship.toml starship explain
@@ -39,23 +40,39 @@ fish -n Shell/.config/fish/config.fish
 
 ## Dreamcoder identity
 
-Official daily palette:
+Canonical palettes (see `themes/dreamcoder/tokens.json`):
+
+**Dark — Ember Noir OLED**
 
 ```txt
-background  #19120c
-foreground  #eee0d5
-accent      #fbb974
-error       #ffb4ab
-opacity     0.60
+bg          #100f0d
+text        #e8dfd0
+accent      #d99555
+accent_2    #c96a45
+error       #ed8a7a
+focus       #5f8f8f
+opacity     0.76
+```
+
+**Light — Cocoa/Lúcuma**
+
+```txt
+bg          #f3eadc
+text        #17120d
+accent      #824f16
+accent_2    #a7471c
+error       #842f24
+focus       #0f6570
+opacity     0.96
 ```
 
 Rules:
 
 - visible theme name is `Dreamcoder`
+- edit colors only in `themes/dreamcoder/tokens.json`, then `./scripts/dreamcoder sync`
 - Starship palette is `dreamcoder`
-- Ghostty theme is `dreamcoder`
+- Ghostty theme is `dreamcoder` / `dreamcoder-dark` / `dreamcoder-light`
 - Fastfetch logo is `Dreamcoder01.jpg`
-- do not reintroduce `Codex-App/`
 - do not commit secrets or tokens
 
 ## GitHub MCP
