@@ -10,7 +10,7 @@ project_name: dreamcoder-dots
 
 before:
   hooks:
-    - cd installer && go mod tidy
+    - sh -c "cd installer && go mod tidy"
 
 builds:
   - id: dreamcoder-dots
