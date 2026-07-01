@@ -1,5 +1,5 @@
 # ========================================================
-# Dreamcoder Light — Starship prompt
+# Dreamcoder Ember Noir OLED — Starship prompt
 # ========================================================
 # Modern two-line layout with powerline segments.
 # Line 1: context (directory, git), fill, cmd_duration, time
@@ -27,36 +27,36 @@ $character"""
 right_format = ""
 
 [palettes.dreamcoder]
-bg = "#f3eadc"
-text = "#17120d"
-muted = "#352e22"
-prompt_bg = "#f3eadc"
-prompt_surface0 = "#fff0d8"
-prompt_surface1 = "#d6ac72"
-prompt_surface2 = "#b87c40"
-prompt_text = "#20150c"
-prompt_muted = "#53402e"
-prompt_accent = "#8a5520"
-prompt_accent_2 = "#a7471c"
-sage = "#3d723d"
-diagnostic = "#0d4a68"
-lavender = "#57478b"
-mauve = "#7d3e64"
-error = "#842f24"
-warning = "#654300"
-border = "#66513b"
-focus = "#0f6570"
-link = "#824f16"
+bg = "#100f0d"
+text = "#e8dfd0"
+muted = "#c7b9aa"
+prompt_bg = "#18100c"
+prompt_surface0 = "#2a1c14"
+prompt_surface1 = "#4a2c18"
+prompt_surface2 = "#6a3e1e"
+prompt_text = "#fff0df"
+prompt_muted = "#dcc3aa"
+prompt_accent = "#e6a15c"
+prompt_accent_2 = "#d66f50"
+sage = "#4db35f"
+diagnostic = "#5f95ca"
+lavender = "#d4b4e6"
+mauve = "#e29cb4"
+error = "#ed8a7a"
+warning = "#e8b866"
+border = "#968878"
+focus = "#5f8f8f"
+link = "#d99555"
 
 [username]
 show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
-format = "[ $user ]($style)"
+format = "[  $user ]($style)"
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
-format = "[ \uf0F7 $path ]($style)"
+format = "[ $path ]($style)"
 truncation_length = 2
 truncate_to_repo = true
 home_symbol = ""
