@@ -55,6 +55,15 @@ line-length = 100
 select = ["E", "F", "I", "N", "W", "UP", "YTT", "ASYNC", "SIM", "PL", "RUF"]
 ignore = ["E501"]
 
+[tool.ruff.lint.per-file-ignores]
+"scripts/verify-theme-health.py" = ["PLR2004", "SIM108", "PLR0912", "PLR0915", "PLC0415"]
+"scripts/generate-theme-preview.py" = ["PLR2004", "SIM108"]
+"tests/test_*.py" = ["E402", "PLR2004"]
+"src/dreamcoder_theme/palette.py" = ["PLR0912", "PLR2004", "SIM102"]
+"src/dreamcoder_theme/renderers_starship.py" = ["RUF001"]
+"src/dreamcoder_theme/sync.py" = ["PLC0415"]
+"src/dreamcoder_theme/renderers_extra_nvim_lsp.py" = ["PLR0913"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"

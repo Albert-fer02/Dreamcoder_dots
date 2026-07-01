@@ -26,12 +26,12 @@
   --text-error: #842f24;
   --text-warning: #654300;
   --text-success: #3d723d;
-  --text-selection: #e8dac6;
-  --text-on-accent: #f3eadc;
+  --text-selection: #decbb1;
+  --text-on-accent: #fff7ea;
 
   /* Interactive */
   --interactive-normal: #decbb1;
-  --interactive-hover: #c8ad89;
+  --interactive-hover: #decbb1;
   --interactive-accent: #824f16;
   --interactive-accent-hover: #a7471c;
   --interactive-success: #3d723d;
@@ -55,8 +55,8 @@
   --code-background: #fff7ea;
 
   /* Heading */
-  --h1-color: #824f16;
-  --h2-color: #824f16;
+  --h1-color: #100c07;
+  --h2-color: #100c07;
   --h3-color: #a7471c;
   --h4-color: #0d4a68;
   --h5-color: #352e22;

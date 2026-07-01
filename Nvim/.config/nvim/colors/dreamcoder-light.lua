@@ -708,17 +708,17 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@markup.link", {
-    fg = "#0d4a68",
+    fg = "#824f16",
     underline = true
   })
 
   vim.api.nvim_set_hl(0, "@markup.link.label", {
-    fg = "#0d4a68",
+    fg = "#824f16",
     underline = true
   })
 
   vim.api.nvim_set_hl(0, "@markup.link.url", {
-    fg = "#554638",
+    fg = "#a7471c",
     underline = true
   })
 
@@ -1261,4 +1261,3 @@ end
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     fg = "#352e22"
   })
-

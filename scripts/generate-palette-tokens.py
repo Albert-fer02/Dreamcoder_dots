@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+"""Generate palette_tokens.py from themes/dreamcoder/tokens.json."""
+
+from __future__ import annotations
+
+import json
+import math
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+TOKENS_FILE = ROOT / "themes" / "dreamcoder" / "tokens.json"
+OUTPUT = ROOT / "src" / "dreamcoder_theme" / "palette_tokens.py"
+
+ANSI_KEY_NAMES = [
+    "surface0",
+    "error",
+    "sage",
+    "accent",
+    "diagnostic",
+    "mauve",
+    "lavender",
+    "muted",
+    "subtle",
+    "error_bright",
+    "sage_bright",
+    "warning",
+    "diagnostic_bright",
+    "lavender_bright",
+    "focus_bright",
+    "text",
+]
+
+
+def hex_to_rgb(value: str) -> tuple[float, float, float]:
+    value = value.lstrip("#")
+    return (
+        int(value[0:2], 16) / 255,
+        int(value[2:4], 16) / 255,
+        int(value[4:6], 16) / 255,
+    )
+
+
+def rgb_to_hex(rgb: tuple[float, float, float]) -> str:
+    return "#" + "".join(f"{max(0, min(255, round(c * 255))):02x}" for c in rgb)
+
+
+_SRGB_BREAK = 0.04045
+_SRGB_LINEAR_BREAK = 0.0031308
+
+
+def srgb_to_linear(c: float) -> float:
+    return c / 12.92 if c <= _SRGB_BREAK else ((c + 0.055) / 1.055) ** 2.4
+
+
+def linear_to_srgb(c: float) -> float:
+    return 12.92 * c if c <= _SRGB_LINEAR_BREAK else 1.055 * (c ** (1 / 2.4)) - 0.055
+
+
+def hex_to_oklch(value: str) -> tuple[float, float, float]:
+    r, g, b = hex_to_rgb(value)
+    lr, lg, lb = srgb_to_linear(r), srgb_to_linear(g), srgb_to_linear(b)
+    lms_l = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb
+    lms_m = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb
+    lms_s = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb
+    lms_l_ = lms_l ** (1 / 3)
+    lms_m_ = lms_m ** (1 / 3)
+    lms_s_ = lms_s ** (1 / 3)
+    lightness = 0.2104542553 * lms_l_ + 0.7936177850 * lms_m_ - 0.0040720468 * lms_s_
+    a = 1.9779984951 * lms_l_ - 2.4285922050 * lms_m_ + 0.4505937099 * lms_s_
+    b_ = 0.0259040371 * lms_l_ + 0.7827717662 * lms_m_ - 0.8086757660 * lms_s_
+    chroma = math.hypot(a, b_)
+    hue = math.degrees(math.atan2(b_, a)) % 360
+    return lightness, chroma, hue
+
+
+def oklch_to_hex(lightness: float, chroma: float, hue: float) -> str:
+    h_rad = math.radians(hue)
+    a = chroma * math.cos(h_rad)
+    b_ = chroma * math.sin(h_rad)
+    l_ = lightness + 0.3963377774 * a + 0.2158037573 * b_
+    m_ = lightness - 0.1055613458 * a - 0.0638541728 * b_
+    s_ = lightness - 0.0894841775 * a - 1.2914855480 * b_
+    l_c = l_**3
+    m_c = m_**3
+    s_c = s_**3
+    lr = +4.0767416621 * l_c - 3.3077115913 * m_c + 0.2309699292 * s_c
+    lg = -1.2684380046 * l_c + 2.6097574011 * m_c - 0.3413193965 * s_c
+    lb = -0.0041960863 * l_c - 0.7034186147 * m_c + 1.7076147010 * s_c
+    return rgb_to_hex(
+        (
+            linear_to_srgb(max(0, min(1, lr))),
+            linear_to_srgb(max(0, min(1, lg))),
+            linear_to_srgb(max(0, min(1, lb))),
+        )
+    )
+
+
+def mix_hex(left: str, right: str, amount: float) -> str:
+    a = hex_to_rgb(left)
+    b = hex_to_rgb(right)
+    return rgb_to_hex(tuple(x + (y - x) * amount for x, y in zip(a, b)))
+
+
+def ramp_step(base: str, target_l_delta: float) -> str:
+    lightness, chroma, hue = hex_to_oklch(base)
+    return oklch_to_hex(max(0, min(1, lightness + target_l_delta)), chroma, hue)
+
+
+def rgba_from_hex(hex_color: str, alpha: float) -> str:
+    r, g, b = hex_to_rgb(hex_color)
+    return f"rgba({round(r * 255)}, {round(g * 255)}, {round(b * 255)}, {alpha:.2f})"
+
+
+def enrich_mode(mode: dict[str, str]) -> dict[str, str]:
+    """Fill derived semantic tokens; preserve authored anchors."""
+    c = dict(mode)
+    is_dark = c.get("details") == "darker"
+    bg = c["bg"]
+    text = c["text"]
+
+    c.setdefault("success", c["sage"])
+    c.setdefault("info", c["diagnostic"])
+    c.setdefault("text_heading", ramp_step(text, 0.04 if is_dark else -0.03))
+    c.setdefault("surface3", ramp_step(c["surface2"], -0.04 if is_dark else -0.05))
+
+    c.setdefault("selection_bg", c.get("surface1", c["bg"]))
+    c.setdefault("selection_fg", text)
+    c["selection"] = c["selection_bg"]
+
+    on_light = c.get("surface0", "#ffffff")
+    on_dark = c.get("prompt_text", bg)
+    c.setdefault("on_surface", text)
+    c.setdefault("on_accent", on_dark if is_dark else on_light)
+    c.setdefault("on_error", c["on_accent"])
+    c.setdefault("on_focus", c["on_accent"])
+
+    c.setdefault("link", c["accent"])
+    c.setdefault("link_hover", c["accent_2"])
+    c.setdefault("disabled", mix_hex(c["muted"], bg, 0.35))
+    c.setdefault("hover", c["surface1"])
+    c.setdefault("pressed", c["surface2"])
+    c.setdefault("overlay", rgba_from_hex(bg, 0.52 if is_dark else 0.40))
+    c.setdefault("scrim", "rgba(0, 0, 0, 0.58)" if is_dark else "rgba(26, 18, 12, 0.42)")
+
+    if "panel_rgba" not in c:
+        c["panel_rgba"] = rgba_from_hex(bg, 0.78 if is_dark else 0.96)
+    if "module_rgba" not in c:
+        fg = mix_hex(text, bg, 0.08 if is_dark else 0.0)
+        c["module_rgba"] = rgba_from_hex(fg, 0.08 if is_dark else 0.80)
+    if "active_rgba" not in c:
+        c["active_rgba"] = rgba_from_hex(c["accent"], 0.24 if is_dark else 0.34)
+    if "inactive_border" not in c:
+        c["inactive_border"] = rgba_from_hex(c["border"], 0.50 if is_dark else 0.93)
+
+    return c
+
+
+def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
+    lines = [
+        '"""Static palette token data for Dreamcoder themes.',
+        "",
+        "AUTO-GENERATED from themes/dreamcoder/tokens.json — do not edit by hand.",
+        "Run: ./scripts/generate-palette-tokens.py",
+        '"""',
+        "",
+        "from __future__ import annotations",
+        "",
+        "VARIANTS = " + json.dumps(variants, indent=4) + "",
+        "",
+        "ANSI_KEY_NAMES = " + json.dumps(ANSI_KEY_NAMES, indent=4) + "",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def main() -> int:
+    tokens = json.loads(TOKENS_FILE.read_text())
+    modes = tokens.get("modes", {})
+    enriched: dict[str, dict[str, str]] = {}
+    for name, palette in modes.items():
+        enriched[name] = enrich_mode(palette)
+
+    tokens["modes"] = enriched
+    tokens["guardrails"].setdefault("minimum_apca_on_accent", 60)
+    tokens["guardrails"].setdefault("minimum_apca_heading_light", 60)
+    tokens["guardrails"].setdefault("minimum_apca_heading_dark", 45)
+    TOKENS_FILE.write_text(json.dumps(tokens, indent=2) + "\n")
+
+    subset = {k: enriched[k] for k in ("dark", "light", "dusk") if k in enriched}
+    OUTPUT.write_text(render_palette_tokens(subset))
+    print(f"✓ Updated {TOKENS_FILE.relative_to(ROOT)}")
+    print(f"✓ Generated {OUTPUT.relative_to(ROOT)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

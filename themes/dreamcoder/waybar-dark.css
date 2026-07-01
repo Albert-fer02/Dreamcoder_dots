@@ -2,17 +2,25 @@
 @define-color bg #100f0d;
 @define-color bg-soft #181512;
 @define-color surface #201b16;
+@define-color surface-2 #392e21;
+@define-color surface-3 #4a3b2a;
 @define-color text #e8dfd0;
+@define-color text-heading #f4ecdd;
 @define-color muted #c7b9aa;
+@define-color subtle #938274;
+@define-color comment #b8a99a;
 @define-color border #756052;
 @define-color border-ui #968878;
 @define-color focus #5f8f8f;
 @define-color accent #d99555;
 @define-color accent-2 #c96a45;
 @define-color diagnostic #5f95ca;
+@define-color lavender #d4b4e6;
 @define-color error #ed8a7a;
 @define-color success #4db35f;
 @define-color warning #e8b866;
+@define-color link #d99555;
+@define-color link-hover #c96a45;
 
 window#waybar {
   background: rgba(16, 15, 13, 0.78);

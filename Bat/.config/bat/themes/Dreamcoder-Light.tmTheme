@@ -10,7 +10,7 @@
       <key>background</key><string>#f3eadc</string>
       <key>foreground</key><string>#17120d</string>
       <key>caret</key><string>#824f16</string>
-      <key>selection</key><string>#f3eadc</string>
+      <key>selection</key><string>#decbb1</string>
       <key>selectionForeground</key><string>#17120d</string>
       <key>lineHighlight</key><string>#decbb1</string>
       <key>gutter</key><string>#c8ad89</string>

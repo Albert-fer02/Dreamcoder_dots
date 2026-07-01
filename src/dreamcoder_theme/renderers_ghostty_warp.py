@@ -6,10 +6,9 @@ from .palette import ansi
 
 
 def ghostty_content(c: dict[str, str]) -> str:
-    # Use surface1 for selection background in all modes - better visibility
     is_dark = c["details"] == "darker"
-    sel_bg = c["surface1"]
-    sel_fg = c["text"]
+    sel_bg = c["selection_bg"]
+    sel_fg = c["selection_fg"]
     opacity = "0.76" if is_dark else "0.96"
     blur = "true" if is_dark else "false"
     lines = [
@@ -17,7 +16,7 @@ def ghostty_content(c: dict[str, str]) -> str:
         f"background = {c['bg']}",
         f"foreground = {c['text']}",
         f"cursor-color = {c['accent']}",
-        f"cursor-text = {c['bg']}",
+        f"cursor-text = {c['on_accent']}",
         f"selection-background = {sel_bg}",
         f"selection-foreground = {sel_fg}",
         f"background-opacity = {opacity}",

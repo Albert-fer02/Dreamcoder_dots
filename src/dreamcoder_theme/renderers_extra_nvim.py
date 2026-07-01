@@ -102,9 +102,8 @@ def nvim_content(c: dict[str, str]) -> str:
     normal_bg = bg if invert else "none"
     text = c["text"]
     fg = text
-    # Use surface1 for selection background in all modes - better visibility
-    sel_bg = c["surface1"]
-    sel_fg = c["text"]
+    sel_bg = c["selection_bg"]
+    sel_fg = c["selection_fg"]
 
     lines = [
         f"""-- ========================================================

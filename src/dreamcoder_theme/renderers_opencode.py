@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
+from .palette import guard, mix, surface_guard
 
 
 def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
@@ -14,16 +14,8 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
     function = guard(c["diagnostic"], c["bg"], mode_name, minimum=syntax_min)
     type_color = guard(c["lavender"], c["bg"], mode_name, minimum=syntax_min)
     constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name, minimum=syntax_min)
-    # Selection: light bg with dark text for dark mode (accent is light);
-    # For light mode, accent is dark so syntax colors (also dark) become
-    # invisible on it. Use bg (lightest non-white) instead so ALL syntax
-    # colors remain legible even if OpenCode doesn't swap them on selection.
-    if mode_name == "dark":
-        sel_bg = c["accent"]
-        sel_fg = c["bg"]
-    else:
-        sel_bg = c["bg"]
-        sel_fg = c["text"]
+    sel_bg = c["selection_bg"]
+    sel_fg = c["selection_fg"]
     return {
         "keyword": keyword,
         "function": function,
@@ -72,7 +64,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     # Mode-aware surface formulas
     if mode_name == "dark":
         element_bg = c["surface1"]
-        hover_bg = c["surface2"]
+        hover_bg = c["hover"]
         line_bg = mix(c["bg"], c["surface0"], 0.50)
         code_bg = mix(c["surface0"], c["surface1"], 0.30)
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
@@ -83,7 +75,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         mix_base = c["border_ui"]
     else:
         element_bg = mix(c["bg_soft"], c["surface1"], 0.4)
-        hover_bg = c["surface2"]
+        hover_bg = c["hover"]
         line_bg = c["bg_soft"]
         code_bg = mix(c["surface1"], c["border_ui"], 0.12)
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
@@ -93,13 +85,18 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         inline_code_bg = mix(c["sage"], c["bg"], 0.18)
         mix_base = c["bg"]
 
-    added_bg = mix(c["sage"], mix_base, 0.35)
-    removed_bg = mix(c["error"], mix_base, 0.35)
-    hunk_bg = mix(c["lavender"], mix_base, 0.45)
+    diff_mix = 0.35 if mode_name == "dark" else 0.58
+    added_bg = surface_guard(mix(c["sage"], mix_base, diff_mix), c["bg"], mode_name)
+    removed_bg = surface_guard(mix(c["error"], mix_base, diff_mix), c["bg"], mode_name)
+    hunk_bg = surface_guard(
+        mix(c["lavender"], mix_base, 0.45 if mode_name == "dark" else 0.62),
+        c["bg"],
+        mode_name,
+    )
     assistant = guard(mix(c["diagnostic"], c["text"], 0.18), c["bg"], mode_name)
     user = guard(mix(c["accent"], c["text"], 0.15), c["bg"], mode_name)
     background = "none" if transparent_background else c["bg"]
-    return f'''{{
+    return f"""{{
   "$schema": "https://opencode.ai/theme.json",
   "defs": {{
     "dreamBackground": "{c["bg"]}",
@@ -229,4 +226,4 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     "terminalBrightWhite": "{c["text"]}"
   }}
 }}
-'''
+"""

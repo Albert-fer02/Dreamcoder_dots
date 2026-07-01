@@ -42,6 +42,10 @@ diagnostic = "#5f95ca"
 lavender = "#d4b4e6"
 mauve = "#e29cb4"
 error = "#ed8a7a"
+warning = "#e8b866"
+border = "#968878"
+focus = "#5f8f8f"
+link = "#d99555"
 
 [username]
 show_always = true

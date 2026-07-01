@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import subprocess
+import sys
 from typing import Any
 
 from .palette import adaptive_palette, load_variants
@@ -376,6 +378,9 @@ def print_summary(
 
 
 def main() -> None:
+    gen = ROOT / "scripts" / "generate-palette-tokens.py"
+    if gen.is_file():
+        subprocess.run([sys.executable, str(gen)], check=True)
     paths = theme_paths()
     mode = theme_mode()
     variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)

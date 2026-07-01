@@ -16,6 +16,7 @@ def starship_content(c: dict[str, str]) -> str:
     prom_text = guard(c["prompt_text"], prom_s0, mode)  # text on darkest surface
     prom_muted = guard(c["prompt_muted"], c["bg"], mode)
     error = guard(c["error"], c["bg"], mode)
+    warning = guard(c["warning"], c["bg"], mode)
 
     return f'''# ========================================================
 # {c["name"]} — Starship prompt
@@ -61,6 +62,10 @@ diagnostic = "{c["diagnostic"]}"
 lavender = "{c["lavender"]}"
 mauve = "{c["mauve"]}"
 error = "{error}"
+warning = "{warning}"
+border = "{c["border_ui"]}"
+focus = "{c["focus"]}"
+link = "{c["link"]}"
 
 [username]
 show_always = true

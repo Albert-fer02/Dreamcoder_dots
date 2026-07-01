@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import json
+import os
 import plistlib
 import re
 from pathlib import Path
+
 from dreamcoder_theme.palette import ansi as terminal_ansi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,17 +20,88 @@ CODEX_CLI_FILES = [
     ROOT / "Codex-CLI/Dreamcoder-Light.tmTheme",
     ROOT / "Codex-CLI/Dreamcoder-Dark.tmTheme",
 ]
-KITTY_FILE = ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-dark.conf"
-STARSHIP_FILE = ROOT / "Shell" / ".config" / "starship-dark.toml"
-GHOSTTY_FILE = ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder-dark"
-WAYBAR_FILE = ROOT / "themes" / "dreamcoder" / "waybar-dark.css"
-HYPRLAND_FILE = ROOT / "themes" / "dreamcoder" / "hyprland-dark.conf"
-ROFI_FILE = ROOT / "themes" / "dreamcoder" / "rofi-dark.rasi"
+KITTY_FILES = [
+    ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-dark.conf",
+    ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-light.conf",
+]
+STARSHIP_FILES = [
+    ROOT / "Shell" / ".config" / "starship-dark.toml",
+    ROOT / "Shell" / ".config" / "starship-light.toml",
+]
+GHOSTTY_FILES = [
+    ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder-dark",
+    ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder-light",
+]
+WAYBAR_FILES = [
+    ROOT / "themes" / "dreamcoder" / "waybar-dark.css",
+    ROOT / "themes" / "dreamcoder" / "waybar-light.css",
+]
+HYPRLAND_FILES = [
+    ROOT / "themes" / "dreamcoder" / "hyprland-dark.conf",
+    ROOT / "themes" / "dreamcoder" / "hyprland-light.conf",
+]
+ROFI_FILES = [
+    ROOT / "themes" / "dreamcoder" / "rofi-dark.rasi",
+    ROOT / "themes" / "dreamcoder" / "rofi-light.rasi",
+]
+BTOP_FILES = [
+    ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-dark.theme",
+    ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-light.theme",
+]
+DUNST_FILES = [
+    ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-dark.conf",
+    ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-light.conf",
+]
+FZF_FILES = [
+    ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-dark.sh",
+    ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-light.sh",
+]
 HYPR_COLORS_LUA_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.lua"))
 HYPR_COLORS_CONF_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.conf"))
-BTOP_FILE = ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-dark.theme"
-DUNST_FILE = ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-dark.conf"
-FZF_FILE = ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-dark.sh"
+TOKEN_PARITY_KEYS = [
+    "bg",
+    "bg_soft",
+    "surface0",
+    "surface1",
+    "surface2",
+    "surface3",
+    "text",
+    "text_heading",
+    "muted",
+    "subtle",
+    "comment",
+    "border",
+    "border_ui",
+    "border_hi",
+    "focus",
+    "accent",
+    "accent_2",
+    "diagnostic",
+    "sage",
+    "success",
+    "info",
+    "error",
+    "warning",
+    "lavender",
+    "mauve",
+    "on_surface",
+    "on_accent",
+    "on_error",
+    "on_focus",
+    "link",
+    "link_hover",
+    "selection_bg",
+    "selection_fg",
+    "disabled",
+    "hover",
+    "pressed",
+]
+ON_PAIRS = [
+    ("on_accent", "accent"),
+    ("on_error", "error"),
+    ("on_focus", "focus"),
+    ("selection_fg", "selection_bg"),
+]
 TEXT_KEYS = ["text", "textMuted", "primary", "info", "success", "error", "warning"]
 UI_KEYS = ["border", "borderActive", "borderFocus"]
 QUIET_UI_KEYS = ["border"]
@@ -70,15 +143,14 @@ TOKEN_TEXT_KEYS = [
     "error",
     "warning",
 ]
-TOKEN_BODY_APCA_KEYS = ["text", "diagnostic", "error", "warning"]
+TOKEN_BODY_APCA_KEYS = ["text", "error", "warning"]
+TOKEN_INFO_APCA_KEYS = ["diagnostic"]
 TOKEN_ACCENT_APCA_KEYS = ["accent", "accent_2", "sage"]
 TOKEN_QUIET_APCA_KEYS = ["muted", "comment", "subtle"]
 TOKEN_UI_KEYS = ["border_ui", "focus"]
 HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
 # RGBA pattern: rgba(r, g, b, a) with r/g/b 0-255 and a 0.0-1.0
-RGBA = re.compile(
-    r"^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0?\.?\d+)\s*\)$"
-)
+RGBA = re.compile(r"^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0?\.?\d+)\s*\)$")
 
 
 def rgb(value):
@@ -211,10 +283,17 @@ def check_rgba_tokens():
             )
 
 
+def check_apca_require(mode, key, value, bg, threshold):
+    """Fail CI when APCA body/heading pairs miss targets."""
+    lc = apca_lc(value, bg)
+    require(
+        lc >= threshold,
+        f"tokens:{mode}:{key} APCA Lc {lc:.1f} < {threshold}",
+    )
+
+
 def check_apca_or_warn(mode, key, value, bg, threshold):
     """Check APCA contrast, log warning but don't fail (APCA is public beta, not a standard)."""
-    import os
-
     lc = apca_lc(value, bg)
     if os.environ.get("DREAMCODER_ENFORCE_APCA", "") and lc < threshold:
         require(
@@ -227,6 +306,17 @@ def check_apca_or_warn(mode, key, value, bg, threshold):
         )
 
 
+def check_token_parity(tokens):
+    dark = tokens["modes"]["dark"]
+    light = tokens["modes"]["light"]
+    dark_keys = {k for k in dark if k not in {"name", "details"}}
+    light_keys = {k for k in light if k not in {"name", "details"}}
+    require(dark_keys == light_keys, f"dark/light token key mismatch: {dark_keys ^ light_keys}")
+    for key in TOKEN_PARITY_KEYS:
+        require(key in dark, f"tokens:dark missing parity key {key}")
+        require(key in light, f"tokens:light missing parity key {key}")
+
+
 def check_tokens():
     tokens = json.loads(TOKEN_FILE.read_text())
     guardrails = tokens["guardrails"]
@@ -237,24 +327,24 @@ def check_tokens():
     apca_ui_dark = guardrails.get("minimum_apca_ui_dark", 28)
     terminal_ansi_min = guardrails.get("minimum_terminal_ansi_contrast", 4.5)
     terminal_cursor_min = guardrails.get("minimum_terminal_cursor_contrast", 4.5)
+    apca_heading_light = guardrails.get("minimum_apca_heading_light", 60)
+    apca_heading_dark = guardrails.get("minimum_apca_heading_dark", 45)
+    apca_on_accent = guardrails.get("minimum_apca_on_accent", 60)
     terminal_selection_min = guardrails.get("minimum_terminal_selection_contrast", 7.0)
     require(
-        tokens["guardrails"]["canonical_opencode_theme"] == "dreamcoder",
+        guardrails["canonical_opencode_theme"] == "dreamcoder",
         "tokens: canonical opencode theme must be dreamcoder",
     )
+    check_token_parity(tokens)
     for mode, palette in tokens["modes"].items():
         bg = palette["bg"]
         require(HEX.match(bg), f"tokens:{mode}: invalid background")
-        require(
-            bg.lower() not in {"#000000", "#ffffff"}, f"tokens:{mode}: harsh background"
-        )
+        require(bg.lower() not in {"#000000", "#ffffff"}, f"tokens:{mode}: harsh background")
         for key in TOKEN_TEXT_KEYS:
             require(key in palette, f"tokens:{mode}:{key}: missing token")
             value = palette[key]
             require(HEX.match(value), f"tokens:{mode}:{key}: invalid hex")
-            require(
-                contrast(bg, value) >= 4.5, f"tokens:{mode}:{key} contrast below 4.5"
-            )
+            require(contrast(bg, value) >= 4.5, f"tokens:{mode}:{key} contrast below 4.5")
         if palette.get("details") == "lighter":
             apca_body = apca_body_light
             apca_body_keys = TOKEN_BODY_APCA_KEYS
@@ -267,7 +357,15 @@ def check_tokens():
             apca_accent = apca_body_dark
         for key in apca_body_keys:
             value = palette[key]
-            check_apca_or_warn(mode, key, value, bg, apca_body)
+            check_apca_require(mode, key, value, bg, apca_body)
+        for key in TOKEN_INFO_APCA_KEYS:
+            if key not in palette:
+                continue
+            info_target = 42 if palette.get("details") == "darker" else apca_body
+            check_apca_require(mode, key, palette[key], bg, info_target)
+        if "text_heading" in palette:
+            heading_target = apca_heading_light if mode == "light" else apca_heading_dark
+            check_apca_require(mode, "text_heading", palette["text_heading"], bg, heading_target)
         for key in apca_accent_keys:
             value = palette[key]
             check_apca_or_warn(mode, key, value, bg, apca_accent)
@@ -276,18 +374,23 @@ def check_tokens():
                 continue
             value = palette[key]
             check_apca_or_warn(mode, key, value, bg, apca_quiet)
-        require(
-            contrast(bg, palette["text"]) >= 7, f"tokens:{mode}: main text below AAA"
-        )
-        check_apca_or_warn(mode, "text", palette["text"], bg, apca_body)
+        require(contrast(bg, palette["text"]) >= 7, f"tokens:{mode}: main text below AAA")
+        check_apca_require(mode, "text", palette["text"], bg, apca_body)
+        for fg_key, bg_key in ON_PAIRS:
+            require(
+                fg_key in palette and bg_key in palette, f"tokens:{mode}: missing {fg_key}/{bg_key}"
+            )
+            pair_ratio = contrast(palette[fg_key], palette[bg_key])
+            require(pair_ratio >= 4.5, f"tokens:{mode}:{fg_key}/{bg_key} {pair_ratio:.2f} < 4.5")
+            if fg_key == "on_accent":
+                check_apca_require(mode, fg_key, palette[fg_key], palette[bg_key], apca_on_accent)
         for index, color in enumerate(terminal_ansi(palette)):
             require(
                 contrast(color, bg) >= terminal_ansi_min,
                 f"tokens:{mode}: ANSI color{index} contrast {contrast(color, bg):.2f} < {terminal_ansi_min}",
             )
-        invert = palette.get("details") == "lighter"
-        sel_fg = palette["bg"] if invert else palette["text"]
-        sel_bg = palette["text"] if invert else palette["selection"]
+        sel_fg = palette["selection_fg"]
+        sel_bg = palette["selection_bg"]
         require(
             contrast(palette["accent"], bg) >= terminal_cursor_min,
             f"tokens:{mode}: cursor contrast {contrast(palette['accent'], bg):.2f} < {terminal_cursor_min}",
@@ -330,9 +433,7 @@ def check_theme_file(file):
         bg not in {"#000000", "#ffffff"},
         f"{file}: background uses harsh pure black/white",
     )
-    require(
-        0.004 < lum(bg) < 0.94, f"{file}: background luminance is outside comfort band"
-    )
+    require(0.004 < lum(bg) < 0.94, f"{file}: background luminance is outside comfort band")
     for key in TEXT_KEYS + SYNTAX_KEYS:
         ratio = contrast(bg, theme[key])
         require(ratio >= 4.5, f"{file}: {key} contrast {ratio:.2f} < 4.5")
@@ -374,9 +475,7 @@ def check_codex_cli_theme(file):
             contrast(bg, settings["lineHighlight"]) >= 1.15,
             f"{file}: light line highlight too faint",
         )
-        require(
-            contrast(bg, settings["gutter"]) >= 1.45, f"{file}: light gutter too faint"
-        )
+        require(contrast(bg, settings["gutter"]) >= 1.45, f"{file}: light gutter too faint")
 
 
 def check_opencode_repo():
@@ -493,16 +592,24 @@ for file in FILES:
 for file in CODEX_CLI_FILES:
     check_codex_cli_theme(file)
 check_opencode_repo()
-# Optional target validations (skip if files don't exist)
-check_kitty_colors(KITTY_FILE)
-check_starship_config(STARSHIP_FILE)
-check_ghostty_theme(GHOSTTY_FILE)
-check_waybar_css(WAYBAR_FILE)
-check_hypr_config(HYPRLAND_FILE)
-check_rofi_theme(ROFI_FILE)
-check_btop_theme(BTOP_FILE)
-check_dunst_theme(DUNST_FILE)
-check_fzf_theme(FZF_FILE)
+for file in KITTY_FILES:
+    check_kitty_colors(file)
+for file in STARSHIP_FILES:
+    check_starship_config(file)
+for file in GHOSTTY_FILES:
+    check_ghostty_theme(file)
+for file in WAYBAR_FILES:
+    check_waybar_css(file)
+for file in HYPRLAND_FILES:
+    check_hypr_config(file)
+for file in ROFI_FILES:
+    check_rofi_theme(file)
+for file in BTOP_FILES:
+    check_btop_theme(file)
+for file in DUNST_FILES:
+    check_dunst_theme(file)
+for file in FZF_FILES:
+    check_fzf_theme(file)
 for file in HYPR_COLORS_LUA_GLOB:
     check_hypr_colors_file(file)
 for file in HYPR_COLORS_CONF_GLOB:

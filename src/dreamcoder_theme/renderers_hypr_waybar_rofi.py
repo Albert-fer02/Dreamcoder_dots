@@ -32,12 +32,12 @@ def _map_dc_to_material(c: dict[str, str]) -> dict[str, str]:
         "surface_variant": h(c["surface1"]),
         "surface_tint": h(c["accent"]),
         # On-colors
-        "on_background": h(c["text"]),
-        "on_surface": h(c["text"]),
+        "on_background": h(c["on_surface"]),
+        "on_surface": h(c["on_surface"]),
         "on_surface_variant": h(c["muted"]),
         # Primary
         "primary": h(c["accent"]),
-        "on_primary": h(c["bg"]),
+        "on_primary": h(c["on_accent"]),
         "primary_container": h(c["surface1"]),
         "on_primary_container": h(c["text"]),
         "primary_fixed": h(c["accent"]),
@@ -47,7 +47,7 @@ def _map_dc_to_material(c: dict[str, str]) -> dict[str, str]:
         "inverse_primary": h(c["accent"]),
         # Secondary
         "secondary": h(c["accent_2"]),
-        "on_secondary": h(c["bg"]),
+        "on_secondary": h(c["on_accent"]),
         "secondary_container": h(c["surface1"]),
         "on_secondary_container": h(c["text"]),
         "secondary_fixed": h(c["accent_2"]),
@@ -56,7 +56,7 @@ def _map_dc_to_material(c: dict[str, str]) -> dict[str, str]:
         "on_secondary_fixed_variant": h(c["accent_2"]),
         # Tertiary
         "tertiary": h(c["diagnostic"]),
-        "on_tertiary": h(c["bg"]),
+        "on_tertiary": h(c["on_accent"]),
         "tertiary_container": h(c["surface0"]),
         "on_tertiary_container": h(c["text"]),
         "tertiary_fixed": h(c["diagnostic"]),
@@ -65,7 +65,7 @@ def _map_dc_to_material(c: dict[str, str]) -> dict[str, str]:
         "on_tertiary_fixed_variant": h(c["focus"]),
         # Error
         "error": h(c["error"]),
-        "on_error": h(c["bg"]),
+        "on_error": h(c["on_error"]),
         "error_container": h(c["surface0"]),
         "on_error_container": h(c["text"]),
         # Outline
@@ -115,17 +115,25 @@ def waybar_content(c: dict[str, str]) -> str:
 @define-color bg {c["bg"]};
 @define-color bg-soft {c["bg_soft"]};
 @define-color surface {c["surface0"]};
+@define-color surface-2 {c["surface2"]};
+@define-color surface-3 {c["surface3"]};
 @define-color text {c["text"]};
+@define-color text-heading {c["text_heading"]};
 @define-color muted {c["muted"]};
+@define-color subtle {c["subtle"]};
+@define-color comment {c["comment"]};
 @define-color border {c["border"]};
 @define-color border-ui {c["border_ui"]};
 @define-color focus {c["focus"]};
 @define-color accent {c["accent"]};
 @define-color accent-2 {c["accent_2"]};
 @define-color diagnostic {c["diagnostic"]};
+@define-color lavender {c["lavender"]};
 @define-color error {c["error"]};
-@define-color success {c["sage"]};
+@define-color success {c["success"]};
 @define-color warning {c["warning"]};
+@define-color link {c["link"]};
+@define-color link-hover {c["link_hover"]};
 
 window#waybar {{
   background: {c["panel_rgba"]};
@@ -285,15 +293,15 @@ def rofi_matugen_content(c: dict[str, str]) -> str:
     primary: {c["accent"]};
     primary-fixed: {c["accent"]};
     primary-fixed-dim: {c["accent_2"]};
-    on-primary: {c["bg"]};
-    on-primary-fixed: {c["bg"]};
+    on-primary: {c["on_accent"]};
+    on-primary-fixed: {c["on_accent"]};
     on-primary-fixed-variant: {c["accent"]};
     primary-container: {c["surface1"]};
     on-primary-container: {c["text"]};
     secondary: {c["accent_2"]};
     secondary-fixed: {c["accent_2"]};
     secondary-fixed-dim: {c["accent_2"]};
-    on-secondary: {c["bg"]};
+    on-secondary: {c["on_accent"]};
     on-secondary-fixed: {c["bg"]};
     on-secondary-fixed-variant: {c["accent_2"]};
     secondary-container: {c["surface1"]};
@@ -307,7 +315,7 @@ def rofi_matugen_content(c: dict[str, str]) -> str:
     tertiary-container: {c["surface0"]};
     on-tertiary-container: {c["text"]};
     error: {c["error"]};
-    on-error: {c["bg"]};
+    on-error: {c["on_error"]};
     error-container: {c["surface0"]};
     on-error-container: {c["text"]};
     surface: {c["bg"]};

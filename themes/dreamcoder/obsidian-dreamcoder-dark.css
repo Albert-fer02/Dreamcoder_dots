@@ -26,12 +26,12 @@
   --text-error: #ed8a7a;
   --text-warning: #e8b866;
   --text-success: #4db35f;
-  --text-selection: #1e1914;
+  --text-selection: #2b231b;
   --text-on-accent: #100f0d;
 
   /* Interactive */
   --interactive-normal: #2b231b;
-  --interactive-hover: #392e21;
+  --interactive-hover: #2b231b;
   --interactive-accent: #d99555;
   --interactive-accent-hover: #c96a45;
   --interactive-success: #4db35f;
@@ -55,8 +55,8 @@
   --code-background: #201b16;
 
   /* Heading */
-  --h1-color: #d99555;
-  --h2-color: #d99555;
+  --h1-color: #f4ecdd;
+  --h2-color: #f4ecdd;
   --h3-color: #c96a45;
   --h4-color: #5f95ca;
   --h5-color: #c7b9aa;
