@@ -19,16 +19,16 @@ def starship_content(c: dict[str, str]) -> str:
     warning = guard(c["warning"], c["bg"], mode)
     focus_col = c["focus"]
     diag = c["diagnostic"]
-    accent = c["accent"]
     lavender_col = c["lavender"]
     mauve_col = c["mauve"]
 
     return f'''# ========================================================
 # {c["name"]} — Starship prompt
 # ========================================================
-# Two-line powerline layout with context-aware modules.
-# Line 1: username, directory, git + fill + battery/k8s/terraform/cmd/time
-# Line 2: character (with exit code indicator on error)
+# Modern two-line layout with powerline segments.
+# Line 1: context (directory, git), fill, cmd_duration, time
+# Line 2: input character only (clean)
+# Extra: status (exit code), AI session (hidden until active)
 
 add_newline = true
 palette = "dreamcoder"
@@ -44,9 +44,6 @@ $git_branch\\
 $git_status\\
 [\\uECB4](fg:prompt_accent)\\
 $fill\\
-$battery\\
-$kubernetes\\
-$terraform\\
 $cmd_duration\\
 $time
 $character"""
@@ -114,25 +111,6 @@ symbol = "\\u2717"
 style = "bg:error fg:prompt_bg bold"
 pipestatus = false
 
-[battery]
-disabled = false
-display = [
-    {{threshold = 20, style = "fg:error bold", discharging_symbol = "\\uf244 "}},
-]
-
-[kubernetes]
-format = '[$symbol$context( \\($namespace\\))]($style)'
-style = "fg:diagnostic bold"
-symbol = "\\uF3B2 "
-disabled = false
-detect_env_vars = ["KUBECONFIG", "KUBERNETES_SERVICE_HOST", "KUBERNETES_PORT"]
-
-[terraform]
-format = "[$symbol$workspace]($style)"
-style = "fg:lavender bold"
-symbol = "\\uFD31 "
-disabled = false
-
 [fill]
 symbol = " "
 
@@ -169,23 +147,13 @@ format = "[ $symbol $version]($style)"
 
 [golang]
 symbol = "\\uE627"
-style = "fg:lavender bold"
+style = "fg:diag bold"
 format = "[ $symbol $version]($style)"
 
 [rust]
 symbol = "\\uE7A8"
 style = "fg:mauve bold"
 format = "[ $symbol $version]($style)"
-
-[java]
-symbol = "\\uE204"
-style = "fg:lavender bold"
-format = "[ $symbol $version]($style)"
-
-[container]
-format = "[$symbol \\uf48B $name]($style)"
-style = "fg:warning bold"
-symbol = "\\uf4E6"
 
 [custom.ai_session]
 command = "cat ~/.cache/dreamcoder/ai-session.state 2>/dev/null || echo ''"
