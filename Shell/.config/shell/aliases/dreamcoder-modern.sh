@@ -22,13 +22,13 @@ alias groot='cd "$(git rev-parse --show-toplevel 2>/dev/null)"'
 ## ─── Modern CLI replacements ──────────────────────────
 # eza (better ls)
 if command -v eza &>/dev/null; then
-    alias ll='eza -la --icons --group-directories-first'
-    alias la='eza -a --icons --group-directories-first'
-    alias lt='eza -T --icons --group-directories-first'
-    alias l1='eza -1 --icons'
+  alias ll='eza -la --icons --group-directories-first'
+  alias la='eza -a --icons --group-directories-first'
+  alias lt='eza -T --icons --group-directories-first'
+  alias l1='eza -1 --icons'
 else
-    alias ll='ls -lahF'
-    alias la='ls -A'
+  alias ll='ls -lahF'
+  alias la='ls -A'
 fi
 
 # bat (better cat)
@@ -60,23 +60,26 @@ alias docs='cd "${DREAMCODER_DOTS_DIR:-$HOME/Documents/PROYECTOS/dreamcoder-dots
 
 ## ─── Extract function ─────────────────────────────────
 extract() {
-    if [ $# -eq 0 ]; then
-        echo "Usage: extract <archive> [output_dir]"
-        return 1
-    fi
-    local file="$1" dir="${2:-${file%.*}}"
-    case "$file" in
-        *.tar.gz|*.tgz) tar -xzf "$file" -C "$(dirname "$file")" 2>/dev/null || tar -xzf "$file" ;;
-        *.tar.bz2|*.tbz2) tar -xjf "$file" ;;
-        *.tar.xz|*.txz) tar -xJf "$file" ;;
-        *.tar.zst) tar --zstd -xf "$file" ;;
-        *.tar) tar -xf "$file" ;;
-        *.gz) gunzip -k "$file" ;;
-        *.bz2) bunzip2 -k "$file" ;;
-        *.xz) unxz -k "$file" ;;
-        *.zip) unzip "$file" -d "$dir" ;;
-        *.rar) unrar x "$file" "$dir" ;;
-        *.7z) 7z x "$file" "-o$dir" ;;
-        *) echo "extract: unknown archive: $file" >&2; return 1 ;;
-    esac
+  if [ $# -eq 0 ]; then
+    echo "Usage: extract <archive> [output_dir]"
+    return 1
+  fi
+  local file="$1" dir="${2:-${file%.*}}"
+  case "$file" in
+  *.tar.gz | *.tgz) tar -xzf "$file" -C "$(dirname "$file")" 2>/dev/null || tar -xzf "$file" ;;
+  *.tar.bz2 | *.tbz2) tar -xjf "$file" ;;
+  *.tar.xz | *.txz) tar -xJf "$file" ;;
+  *.tar.zst) tar --zstd -xf "$file" ;;
+  *.tar) tar -xf "$file" ;;
+  *.gz) gunzip -k "$file" ;;
+  *.bz2) bunzip2 -k "$file" ;;
+  *.xz) unxz -k "$file" ;;
+  *.zip) unzip "$file" -d "$dir" ;;
+  *.rar) unrar x "$file" "$dir" ;;
+  *.7z) 7z x "$file" "-o$dir" ;;
+  *)
+    echo "extract: unknown archive: $file" >&2
+    return 1
+    ;;
+  esac
 }

@@ -1,1 +1,38 @@
-{}
+{
+	"subagents": {
+		"agentOverrides": {
+			"context-builder": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "low"
+			},
+			"delegate": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "medium"
+			},
+			"oracle": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "high"
+			},
+			"planner": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "medium"
+			},
+			"researcher": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "medium"
+			},
+			"reviewer": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "high"
+			},
+			"scout": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "low"
+			},
+			"worker": {
+				"model": "deepseek-1m/deepseek-v4-flash",
+				"thinking": "high"
+			}
+		}
+	}
+}
