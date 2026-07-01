@@ -50,18 +50,18 @@ cd ~/Documents/PROYECTOS/dreamcoder-dots
 
 ## ¿Por qué Dreamcoder?
 
-| Feature | Gentleman.Dots | ML4W | **dreamcoder-dots** |
-|---------|---------------|------|---------------------|
-| **Theme Engine** | ❌ Catppuccin | ✅ Matugen | ✅ **Token-based + WCAG/APCA** |
-| **Light/Dark/Dusk** | ❌ | ✅ | ✅ **+ Dusk transition** |
-| **AI Session Prompt** | ❌ | ❌ | ✅ **Bleeding edge** |
-| **Accesibilidad** | ❌ | ❌ | ✅ **WCAG 4.5:1 + APCA 75** |
-| **Neovim** | ✅ 29 plugins | ❌ | 🔶 Dreamcoder colorscheme |
-| **Hyprland** | ❌ | ✅ Completo | 🔶 Color overlay |
-| **Shell Configs** | ✅ Fish/Zsh/Nushell | ✅ Fish/Bash | 🔶 Aliases + functions |
-| **Ghostty Shaders** | ✅ 45+ GLSL | ❌ | 🔶 Usa los de Gentleman |
-| **Installer** | ✅ Go TUI | ✅ bash | ✅ **Go TUI + Vim Trainer** |
-| **Prompt** | ❌ Básico | ❌ Básico | ✅ **Starship 23 módulos** |
+| Feature               | Gentleman.Dots      | ML4W         | **dreamcoder-dots**            |
+| --------------------- | ------------------- | ------------ | ------------------------------ |
+| **Theme Engine**      | ❌ Catppuccin       | ✅ Matugen   | ✅ **Token-based + WCAG/APCA** |
+| **Light/Dark/Dusk**   | ❌                  | ✅           | ✅ **+ Dusk transition**       |
+| **AI Session Prompt** | ❌                  | ❌           | ✅ **Bleeding edge**           |
+| **Accesibilidad**     | ❌                  | ❌           | ✅ **WCAG 4.5:1 + APCA 75**    |
+| **Neovim**            | ✅ 29 plugins       | ❌           | 🔶 Dreamcoder colorscheme      |
+| **Hyprland**          | ❌                  | ✅ Completo  | 🔶 Color overlay               |
+| **Shell Configs**     | ✅ Fish/Zsh/Nushell | ✅ Fish/Bash | 🔶 Aliases + functions         |
+| **Ghostty Shaders**   | ✅ 45+ GLSL         | ❌           | 🔶 Usa los de Gentleman        |
+| **Installer**         | ✅ Go TUI           | ✅ bash      | ✅ **Go TUI + Vim Trainer**    |
+| **Prompt**            | ❌ Básico           | ❌ Básico    | ✅ **Starship 23 módulos**     |
 
 > ✅ = lo tiene completo · 🔶 = dreamcoder aporta overlay · ❌ = no lo tiene
 
@@ -153,12 +153,12 @@ Dreamcoder no es un rice neon. Es un banco de trabajo:
 
 ## Projecto
 
-| Aspecto | Detalle |
-|---------|---------|
-| **Estado** | Active |
-| **Versión** | 1.0 |
-| **Licencia** | MIT |
-| **Docs** | [docs/README.md](docs/README.md) |
+| Aspecto        | Detalle                            |
+| -------------- | ---------------------------------- |
+| **Estado**     | Active                             |
+| **Versión**    | 1.0                                |
+| **Licencia**   | MIT                                |
+| **Docs**       | [docs/README.md](docs/README.md)   |
 | **Contribuir** | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 ---

@@ -2,7 +2,7 @@
 # Dreamcoder Light — Starship prompt
 # ========================================================
 # Two-line powerline layout with context-aware modules.
-# Line 1: ssh_context, directory, git + fill + battery/k8s/terraform/cmd/time
+# Line 1: username, directory, git + fill + battery/k8s/terraform/cmd/time
 # Line 2: character (with exit code indicator on error)
 
 add_newline = true
@@ -11,7 +11,7 @@ command_timeout = 500
 
 format = """
 [\uECA6](fg:prompt_surface0)\
-$ssh_context\
+$username\
 [\uECA0](bg:prompt_surface1 fg:prompt_surface0)\
 $directory\
 [\uECA0](bg:prompt_accent fg:prompt_surface1)\
@@ -50,17 +50,11 @@ border = "#66513b"
 focus = "#0f6570"
 link = "#824f16"
 
-[ssh_context]
-format = "[$ssh_connection$user@$host]($style)"
-style = "bg:prompt_surface0 fg:prompt_text bold"
-ssh_only = false
-
 [username]
-show_always = false
+show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
-format = "[ \uf081 $user ]($style)"
-detect_env_vars = ["SSH_CONNECTION", "SSH_CLIENT", "SSH_TTY"]
+format = "[ \uf007 $user ]($style)"
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
@@ -98,11 +92,11 @@ pipestatus = false
 [battery]
 disabled = false
 display = [
-    {threshold = 20, style = "fg:error bold", symbol = "\uf244 "},
+    {threshold = 20, style = "fg:error bold", discharging_symbol = "\uf244 "},
 ]
 
 [kubernetes]
-format = "[$symbol$context( \($namespace\))]($style)"
+format = '[$symbol$context( \($namespace\))]($style)'
 style = "fg:diagnostic bold"
 symbol = "\uF3B2 "
 disabled = false
