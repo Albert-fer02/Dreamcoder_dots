@@ -1,47 +1,57 @@
-// Dreamcoder Motion cursor pulse for Ghostty.
-// Lightweight shader: only reacts around the terminal cursor and fades quickly.
+// Dreamcoder Cursor Pulse — custom GLSL shader for Ghostty
+// Pulses the cursor with the dreamcoder accent color (#d99555 dark, #824f16 light)
+// and adds a subtle warm glow trail.
+//
+// Install: set `custom-shader = shaders/dreamcoder-cursor-pulse.glsl` in ghostty config
 
-float sdfRectangle(in vec2 p, in vec2 center, in vec2 halfSize) {
-    vec2 d = abs(p - center) - halfSize;
-    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
-}
+#version 330
 
-vec2 normalizePosition(vec2 value, float isPosition) {
-    return (value * 2.0 - (iResolution.xy * isPosition)) / iResolution.y;
-}
+// --- Uniforms (provided by Ghostty) ---
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_cursor_position;
+uniform vec2 u_cursor_size;
+uniform bool u_cursor_visible;
 
-float antialias(float distance) {
-    return 1.0 - smoothstep(0.0, normalizePosition(vec2(2.0), 0.0).x, distance);
-}
+// --- Dreamcoder palette ---
+// Dark mode accent: #d99555 → vec3(0.851, 0.584, 0.333)
+// Light mode accent: #824f16 → vec3(0.510, 0.310, 0.086)
+// We use dark mode by default; Ghostty can pass the theme color.
 
-void mainImage(out vec4 fragColor, in vec2 fragCoord) {
-    vec2 uv = fragCoord.xy / iResolution.xy;
-    fragColor = texture(iChannel0, uv);
+vec3 accent = vec3(0.851, 0.584, 0.333);  // #d99555
+vec3 glow   = vec3(0.851, 0.584, 0.333);  // warm gold glow
 
-    vec4 cursor = vec4(
-        normalizePosition(iCurrentCursor.xy, 1.0),
-        normalizePosition(iCurrentCursor.zw, 0.0)
-    );
+// --- Pixel input from previous stage ---
+in vec2 f_uv;
+out vec4 fragColor;
+uniform sampler2D f_texture;
 
-    vec2 cursorCenter = vec2(
-        cursor.x + cursor.z * 0.5,
-        cursor.y - cursor.w * 0.5
-    );
-    vec2 point = normalizePosition(fragCoord, 1.0);
+void main() {
+    vec4 color = texture(f_texture, f_uv);
 
-    float elapsed = iTime - iTimeCursorChange;
-    float pulse = 0.5 + 0.5 * sin(iTime * 5.2);
-    float settle = 1.0 - smoothstep(0.18, 0.42, elapsed);
+    if (u_cursor_visible) {
+        // Calculate distance from cursor
+        vec2 cursor_uv = u_cursor_position / u_resolution;
+        vec2 cursor_size_uv = u_cursor_size / u_resolution;
+        vec2 delta = abs(f_uv - cursor_uv) / cursor_size_uv;
 
-    float cursorSdf = sdfRectangle(point, cursorCenter, cursor.zw * 0.5);
-    float glowSdf = sdfRectangle(point, cursorCenter, cursor.zw * (0.85 + pulse * 0.35));
+        // Check if we're near the cursor area
+        if (delta.x < 1.5 && delta.y < 1.5) {
+            // Smooth pulse based on time
+            float pulse = 0.5 + 0.5 * sin(u_time * 3.0);
+            float dist = length(delta);
 
-    vec3 accent = iCurrentCursorColor.rgb;
-    vec3 warmAccent = mix(accent, vec3(1.0, 0.66, 0.34), 0.22);
+            // Warm glow behind cursor
+            float glow_intensity = 0.15 * (1.0 - smoothstep(0.0, 1.5, dist)) * pulse;
+            color.rgb += glow * glow_intensity;
 
-    float core = antialias(cursorSdf);
-    float glow = (1.0 - smoothstep(0.0, 0.028, glowSdf)) * (0.16 + pulse * 0.10) * settle;
+            // Subtle accent tint on cursor itself
+            if (dist < 0.8) {
+                float tint = 0.08 * (1.0 - smoothstep(0.0, 0.8, dist)) * pulse;
+                color.rgb = mix(color.rgb, accent, tint);
+            }
+        }
+    }
 
-    fragColor.rgb = mix(fragColor.rgb, warmAccent, glow);
-    fragColor.rgb = mix(fragColor.rgb, accent, core * 0.08);
+    fragColor = color;
 }
