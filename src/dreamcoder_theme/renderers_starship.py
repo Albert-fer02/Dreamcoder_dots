@@ -76,11 +76,11 @@ link = "{c["link"]}"
 show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
-format = "[ $user ]($style)"
+format = "[ \uf007 $user ]($style)"
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
-format = "[ \\uf0F7 $path ]($style)"
+format = "[ $path ]($style)"
 truncation_length = 2
 truncate_to_repo = true
 home_symbol = ""
