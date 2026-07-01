@@ -7,32 +7,32 @@
   <key>settings</key>
   <array>
     <dict><key>settings</key><dict>
-      <key>background</key><string>#f3eadc</string>
-      <key>foreground</key><string>#17120d</string>
-      <key>caret</key><string>#824f16</string>
-      <key>selection</key><string>#decbb1</string>
-      <key>selectionForeground</key><string>#17120d</string>
-      <key>lineHighlight</key><string>#decbb1</string>
-      <key>gutter</key><string>#c8ad89</string>
-      <key>gutterForeground</key><string>#352e22</string>
-      <key>invisibles</key><string>#725e4c</string>
+      <key>background</key><string>#100f0d</string>
+      <key>foreground</key><string>#e8dfd0</string>
+      <key>caret</key><string>#d99555</string>
+      <key>selection</key><string>#2b231b</string>
+      <key>selectionForeground</key><string>#e8dfd0</string>
+      <key>lineHighlight</key><string>#2b231b</string>
+      <key>gutter</key><string>#392e21</string>
+      <key>gutterForeground</key><string>#c7b9aa</string>
+      <key>invisibles</key><string>#b8a99a</string>
     </dict></dict>
-    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#725e4c</string><key>fontStyle</key><string>italic</string></dict></dict>
-    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string><key>fontStyle</key><string>bold</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#0d4a68</string></dict></dict>
-    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#4e4171</string></dict></dict>
-    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
-    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#9d452d</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
-    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#7d3e64</string></dict></dict>
-    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#7c4c11</string></dict></dict>
-    <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#0d4864</string></dict></dict>
-    <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#842f24</string></dict></dict>
-    <dict><key>scope</key><string>markup.heading, markup.bold</string><key>settings</key><dict><key>foreground</key><string>#824f16</string><key>fontStyle</key><string>bold</string></dict></dict>
-    <dict><key>scope</key><string>markup.italic</string><key>settings</key><dict><key>foreground</key><string>#0d4a68</string><key>fontStyle</key><string>italic</string></dict></dict>
-    <dict><key>scope</key><string>meta.diff, meta.diff.header</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
-    <dict><key>scope</key><string>support.class, support.constant</string><key>settings</key><dict><key>foreground</key><string>#57478b</string></dict></dict>
+    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#b8a99a</string><key>fontStyle</key><string>italic</string></dict></dict>
+    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#dc9d59</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string></dict></dict>
+    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#d1b5d7</string></dict></dict>
+    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#4db35f</string></dict></dict>
+    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#cf7660</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
+    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#e29cb4</string></dict></dict>
+    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#4db35f</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#dc9d59</string></dict></dict>
+    <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#6498ca</string></dict></dict>
+    <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#ed8a7a</string></dict></dict>
+    <dict><key>scope</key><string>markup.heading, markup.bold</string><key>settings</key><dict><key>foreground</key><string>#d99555</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>markup.italic</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string><key>fontStyle</key><string>italic</string></dict></dict>
+    <dict><key>scope</key><string>meta.diff, meta.diff.header</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
+    <dict><key>scope</key><string>support.class, support.constant</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
   </array>
 </dict>
 </plist>
