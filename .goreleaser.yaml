@@ -30,7 +30,7 @@ builds:
 
 archives:
   - id: default
-    formats: ["tar.gz"]
+    formats: ['tar.gz']
     name_template: >-
       {{ .ProjectName }}-{{ .Os }}-{{ .Arch }}
     files:

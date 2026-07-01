@@ -9,9 +9,7 @@ description = "Dreamcoder OS — personal Arch Linux dotfiles with a premium col
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [
-  { name = "Dreamcoder" },
-]
+authors = [{ name = "Dreamcoder" }]
 keywords = ["dotfiles", "theme", "arch-linux", "colorscheme", "hyprland"]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -24,9 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Desktop Environment",
 ]
-dependencies = [
-  "jinja2>=3.0",
-]
+dependencies = ["jinja2>=3.0"]
 [project.optional-dependencies]
 dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.7", "mypy>=1.15"]
 
@@ -56,7 +52,13 @@ select = ["E", "F", "I", "N", "W", "UP", "YTT", "ASYNC", "SIM", "PL", "RUF"]
 ignore = ["E501"]
 
 [tool.ruff.lint.per-file-ignores]
-"scripts/verify-theme-health.py" = ["PLR2004", "SIM108", "PLR0912", "PLR0915", "PLC0415"]
+"scripts/verify-theme-health.py" = [
+  "PLR2004",
+  "SIM108",
+  "PLR0912",
+  "PLR0915",
+  "PLC0415",
+]
 "scripts/generate-theme-preview.py" = ["PLR2004", "SIM108"]
 "tests/test_*.py" = ["E402", "PLR2004"]
 "src/dreamcoder_theme/palette.py" = ["PLR0912", "PLR2004", "SIM102"]
@@ -94,6 +96,4 @@ show_missing = true
 fail_under = 40
 
 [dependency-groups]
-dev = [
-    "mypy>=2.1.0",
-]
+dev = ["mypy>=2.1.0"]
