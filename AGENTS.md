@@ -29,10 +29,10 @@
 
 ## Available Skills
 
-| Skill | Description | Path |
-|-------|-------------|------|
-| `dreamcoder-theme-engine` | Python theme engine: tokens, renderers, writers | [SKILL.md](skills/dreamcoder-theme-engine/SKILL.md) |
-| `dreamcoder-palette-tokens` | Token schema, WCAG/APCA guardrails, modes | [SKILL.md](skills/dreamcoder-palette-tokens/SKILL.md) |
+| Skill                       | Description                                     | Path                                                  |
+| --------------------------- | ----------------------------------------------- | ----------------------------------------------------- |
+| `dreamcoder-theme-engine`   | Python theme engine: tokens, renderers, writers | [SKILL.md](skills/dreamcoder-theme-engine/SKILL.md)   |
+| `dreamcoder-palette-tokens` | Token schema, WCAG/APCA guardrails, modes       | [SKILL.md](skills/dreamcoder-palette-tokens/SKILL.md) |
 
 ## Auto-invoke
 

@@ -288,7 +288,7 @@ class TestUpdateGhosttyTheme:
     def test_no_change_when_correct(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
         path.write_text(
-            "theme = dreamcoder-dark\n" "background-opacity = 0.76\n" "background-blur = 20\n"
+            "theme = dreamcoder-dark\nbackground-opacity = 0.76\nbackground-blur = 20\n"
         )
         assert update_ghostty_theme(path, "dark") is False
 
@@ -301,7 +301,7 @@ class TestUpdateGhosttyTheme:
     def test_replaces_different_opacity(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
         path.write_text(
-            "theme = dreamcoder-dark\n" "background-opacity = 1.00\n" "background-blur = 30\n"
+            "theme = dreamcoder-dark\nbackground-opacity = 1.00\nbackground-blur = 30\n"
         )
         assert update_ghostty_theme(path, "dark") is True
         content = path.read_text()
@@ -311,9 +311,7 @@ class TestUpdateGhosttyTheme:
 
     def test_replaces_different_opacity_light(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
-        path.write_text(
-            "theme = dreamcoder\n" "background-opacity = 0.50\n" "background-blur = false\n"
-        )
+        path.write_text("theme = dreamcoder\nbackground-opacity = 0.50\nbackground-blur = false\n")
         assert update_ghostty_theme(path, "light") is True
         content = path.read_text()
         assert "background-opacity = 0.96" in content
@@ -395,7 +393,7 @@ class TestUpdateWarpSettings:
 
     def test_preserves_other_sections(self, tmp_path: Path) -> None:
         path = tmp_path / "settings.toml"
-        path.write_text("[other]\n" "key = true\n")
+        path.write_text("[other]\nkey = true\n")
         assert update_warp_settings(path, "dark") is True
         content = path.read_text()
         assert "[other]" in content
