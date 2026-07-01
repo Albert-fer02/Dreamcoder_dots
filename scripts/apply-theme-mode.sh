@@ -119,11 +119,16 @@ if command -v tmux >/dev/null 2>&1; then
     bash "${KANAGAWA_DIR}/ukiyo.tmux" 2>/dev/null || true
   fi
 
-  # Source standalone tmux theme (pane borders, mode, bell colors)
-  TMUX_THEME="${HOME}/.config/tmux/tmux-dreamcoder.conf"
-  if [[ -f "${TMUX_THEME}" ]]; then
-    tmux source-file "${TMUX_THEME}" 2>/dev/null || true
-  fi
+      # Source standalone tmux theme (pane borders, mode, bell colors)
+      # When kanagawa is active, skip status-bar lines to preserve kanagawa layout
+      TMUX_THEME="${HOME}/.config/tmux/tmux-dreamcoder.conf"
+      if [[ -f "${TMUX_THEME}" && ! -d "${KANAGAWA_DIR}" ]]; then
+        tmux source-file "${TMUX_THEME}" 2>/dev/null || true
+      elif [[ -f "${TMUX_THEME}" && -d "${KANAGAWA_DIR}" ]]; then
+        # Kanagawa active: only source color lines, skip status-bar layout
+        grep -vE '^(set -g status-(left|right|position|interval|justify)|setw -g window-status-(format|current-format|separator))' \
+          "${TMUX_THEME}" | tmux source-file /dev/stdin 2>/dev/null || true
+      fi
 
   printf '  tmux environment and theme updated for %s mode\n' "${MODE}"
 fi
