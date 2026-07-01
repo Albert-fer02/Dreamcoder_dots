@@ -80,7 +80,6 @@ show_always = true
 style_user = "bg:prompt_surface0 fg:prompt_text bold"
 style_root = "bg:prompt_surface0 fg:error bold"
 format = "[ \\uf007 $user ]($style)"
-detect_env_vars = ["SSH_CONNECTION", "SSH_CLIENT", "SSH_TTY"]
 
 [directory]
 style = "bg:prompt_surface1 fg:prompt_text bold"
@@ -118,7 +117,7 @@ pipestatus = false
 [battery]
 disabled = false
 display = [
-    {{threshold = 20, style = "fg:error bold", symbol = "\\uf244 "}},
+    {{threshold = 20, style = "fg:error bold", discharging_symbol = "\\uf244 "}},
 ]
 
 [kubernetes]
