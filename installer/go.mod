@@ -1,6 +1,6 @@
 module github.com/dreamcoder08/dreamcoder-dots/installer
 
-go 1.26.4
+go 1.24
 
 require (
 	github.com/charmbracelet/bubbletea v1.3.10
