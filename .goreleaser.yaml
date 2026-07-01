@@ -30,7 +30,7 @@ builds:
 
 archives:
   - id: default
-    formats: ["tar.gz"]
+    formats: ['tar.gz']
     name_template: >-
       {{ .ProjectName }}-{{ .Os }}-{{ .Arch }}
     files:
@@ -63,9 +63,9 @@ brews:
       name: homebrew-tap
       branch: main
     directory: Formula
-    homepage: "https://github.com/dreamcoder08/dreamcoder-dots"
-    description: "Dreamcoder OS - Token-governed visual operating layer"
-    license: "MIT"
+    homepage: 'https://github.com/dreamcoder08/dreamcoder-dots'
+    description: 'Dreamcoder OS - Token-governed visual operating layer'
+    license: 'MIT'
     test: |
       assert_match "dreamcoder-dots", shell_output("\#{bin}/dreamcoder-dots --version")
     install: |
