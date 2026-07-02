@@ -99,7 +99,13 @@ def oklch_to_hex(lightness: float, chroma: float, hue: float) -> str:
 def mix_hex(left: str, right: str, amount: float) -> str:
     a = hex_to_rgb(left)
     b = hex_to_rgb(right)
-    return rgb_to_hex((a[0] + (b[0] - a[0]) * amount, a[1] + (b[1] - a[1]) * amount, a[2] + (b[2] - a[2]) * amount))
+    return rgb_to_hex(
+        (
+            a[0] + (b[0] - a[0]) * amount,
+            a[1] + (b[1] - a[1]) * amount,
+            a[2] + (b[2] - a[2]) * amount,
+        )
+    )
 
 
 def ramp_step(base: str, target_l_delta: float) -> str:

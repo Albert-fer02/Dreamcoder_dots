@@ -303,7 +303,13 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             target = home / ".local" / "share" / "warp-terminal" / "themes"
             target.mkdir(parents=True)
             (target / "Dreamcoder.yaml").symlink_to(
-                ROOT / "DreamcoderWarp" / ".local" / "share" / "warp-terminal" / "themes" / "Dreamcoder.yaml"
+                ROOT
+                / "DreamcoderWarp"
+                / ".local"
+                / "share"
+                / "warp-terminal"
+                / "themes"
+                / "Dreamcoder.yaml"
             )
 
             result = run_control("installer", "plan", "--json", home=home)
