@@ -212,7 +212,7 @@ def main():
     parts = [
         "# Dreamcoder Theme Preview",
         "",
-        "Generated from `themes/dreamcoder/tokens.json`.",
+        "Generated from `DreamcoderThemes/dreamcoder/tokens.json`.",
         "",
     ]
     parts += [

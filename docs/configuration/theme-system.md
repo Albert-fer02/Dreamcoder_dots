@@ -21,15 +21,15 @@ Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../Dreamc
 
 Dark (**Ember Noir OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
 
-| Layer | Examples |
-| --- | --- |
-| Surfaces | `bg`, `bg_soft`, `surface0`–`surface3` |
-| Text | `text`, `text_heading`, `muted`, `subtle`, `comment` |
-| Brand | `accent`, `accent_2`, `link`, `link_hover` |
-| Feedback | `error`, `warning`, `success`, `info`, `diagnostic` |
-| On-colors | `on_surface`, `on_accent`, `on_error`, `on_focus` |
+| Layer       | Examples                                                       |
+| ----------- | -------------------------------------------------------------- |
+| Surfaces    | `bg`, `bg_soft`, `surface0`–`surface3`                         |
+| Text        | `text`, `text_heading`, `muted`, `subtle`, `comment`           |
+| Brand       | `accent`, `accent_2`, `link`, `link_hover`                     |
+| Feedback    | `error`, `warning`, `success`, `info`, `diagnostic`            |
+| On-colors   | `on_surface`, `on_accent`, `on_error`, `on_focus`              |
 | Interaction | `selection_bg`, `selection_fg`, `hover`, `pressed`, `disabled` |
-| Chrome | `border`, `border_ui`, `border_hi`, `focus`, `panel_rgba` |
+| Chrome      | `border`, `border_ui`, `border_hi`, `focus`, `panel_rgba`      |
 
 ## Regenerating themes
 

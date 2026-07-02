@@ -28,15 +28,15 @@ Required contract:
 
 Dreamcoder components are cross-application interaction primitives rather than React-style widgets.
 
-| Component | Token roles | Applies to |
-| --- | --- | --- |
-| Workspace background | `bg`, `bg_soft`, `panel_rgba` | Kitty, Ghostty, Warp, opencode, Codex, Neovim |
-| Raised surface | `surface0`, `surface1`, `surface2`, `module_rgba` | panels, prompts, popups, Waybar, Rofi |
-| Primary text | `text`, `muted`, `subtle`, `comment` | editors, prompts, CLIs, docs |
-| Selection | `selection`, `text`, `bg` | terminals, Codex CLI, Neovim visual mode |
-| Focus affordance | `focus`, `border_ui`, `border_hi` | active panes, Rofi, Waybar, Neovim floating windows |
-| Diagnostics | `diagnostic`, `error`, `warning`, `sage` | LSP, diffs, shell syntax, status modules |
-| Motion profile | profile and motion settings | terminal cursor, Hyprland animation intent |
+| Component            | Token roles                                       | Applies to                                          |
+| -------------------- | ------------------------------------------------- | --------------------------------------------------- |
+| Workspace background | `bg`, `bg_soft`, `panel_rgba`                     | Kitty, Ghostty, Warp, opencode, Codex, Neovim       |
+| Raised surface       | `surface0`, `surface1`, `surface2`, `module_rgba` | panels, prompts, popups, Waybar, Rofi               |
+| Primary text         | `text`, `muted`, `subtle`, `comment`              | editors, prompts, CLIs, docs                        |
+| Selection            | `selection`, `text`, `bg`                         | terminals, Codex CLI, Neovim visual mode            |
+| Focus affordance     | `focus`, `border_ui`, `border_hi`                 | active panes, Rofi, Waybar, Neovim floating windows |
+| Diagnostics          | `diagnostic`, `error`, `warning`, `sage`          | LSP, diffs, shell syntax, status modules            |
+| Motion profile       | profile and motion settings                       | terminal cursor, Hyprland animation intent          |
 
 Every new target must map these primitives explicitly. If a target lacks one primitive, document the fallback.
 

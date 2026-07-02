@@ -71,7 +71,7 @@ if command -v tmux >/dev/null 2>&1; then
   tmux set-environment -g COLORFGBG "${CLI_COLORFGBG}" 2>/dev/null || true
 
   # Switch tmux-kanagawa theme variant to match Dreamcoder mode
-  # SOURCE OF TRUTH: colors MUST match themes/dreamcoder/tokens.json
+  # SOURCE OF TRUTH: colors MUST match DreamcoderThemes/dreamcoder/tokens.json
   # When updating tokens, update BOTH light AND dark sections here.
   if [[ -d "${KANAGAWA_DIR}" ]]; then
     case "${MODE}" in

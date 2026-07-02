@@ -15,7 +15,7 @@ def managed_targets() -> list[dict[str, Any]]:
     dh = data_home()
     home = Path.home()
     return [
-{"module": "DreamcoderKitty", "path": str(ch / "kitty")},
+        {"module": "DreamcoderKitty", "path": str(ch / "kitty")},
         {"module": "DreamcoderGhostty", "path": str(ch / "ghostty")},
         {"module": "DreamcoderFastfetch", "path": str(ch / "fastfetch")},
         {"module": "DreamcoderFastfetch", "path": str(ch / "dreamcoder")},
@@ -74,7 +74,15 @@ def installer_plan() -> dict[str, Any]:
     target_args = " ".join(json.dumps(item["path"]) for item in targets)
     return {
         "schema": "dreamcoder.install-plan.v1",
-        "modules": ["DreamcoderShell", "DreamcoderKitty", "DreamcoderGhostty", "DreamcoderFastfetch", "DreamcoderWarp", "DreamcoderBat", "DreamcoderSystemd"],
+        "modules": [
+            "DreamcoderShell",
+            "DreamcoderKitty",
+            "DreamcoderGhostty",
+            "DreamcoderFastfetch",
+            "DreamcoderWarp",
+            "DreamcoderBat",
+            "DreamcoderSystemd",
+        ],
         "targets": targets,
         "conflicts": conflicts,
         "backup_command": f"./scripts/dreamcoder backup create {target_args} --reason install-preflight --json",

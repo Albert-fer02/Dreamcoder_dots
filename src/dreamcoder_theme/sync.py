@@ -121,7 +121,9 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         variants,
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderKitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active))
+        write_if_changed(
+            ROOT / "DreamcoderKitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active)
+        )
     )
     repo_changes += write_variant_files(
         ROOT / "DreamcoderGhostty/.config/ghostty/themes",
@@ -154,7 +156,9 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         variants,
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme", codex_tmtheme_content(active))
+        write_if_changed(
+            ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme", codex_tmtheme_content(active)
+        )
     )
     repo_changes += write_variant_files(
         ROOT / "DreamcoderBat/.config/bat/themes",
@@ -169,7 +173,9 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         )
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json", opencode_content(active))
+        write_if_changed(
+            ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json", opencode_content(active)
+        )
     )
     repo_changes.append(
         write_if_changed(
@@ -178,13 +184,15 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         )
     )
     repo_changes += write_variant_files(
-ROOT / "DreamcoderPi/.pi/agent/themes",
+        ROOT / "DreamcoderPi/.pi/agent/themes",
         {k: f"dreamcoder-{v}.json" for k, v in mode_names.items()},
         pi_theme_content,
         variants,
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderPi/.pi/agent/themes/dreamcoder.json", pi_theme_content(active))
+        write_if_changed(
+            ROOT / "DreamcoderPi/.pi/agent/themes/dreamcoder.json", pi_theme_content(active)
+        )
     )
     repo_changes.append(
         write_if_changed(
@@ -199,7 +207,7 @@ ROOT / "DreamcoderPi/.pi/agent/themes",
         )
     )
     repo_changes += write_variant_files(
-ROOT / "DreamcoderThemes/dreamcoder",
+        ROOT / "DreamcoderThemes/dreamcoder",
         {k: f"hypr-colors-{v}.lua" for k, v in mode_names.items()},
         hypr_colors_lua_content,
         variants,
@@ -222,7 +230,9 @@ ROOT / "DreamcoderThemes/dreamcoder",
         )
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi-dark.rasi", rofi_content(variants["dark"]))
+        write_if_changed(
+            ROOT / "DreamcoderThemes/dreamcoder/rofi-dark.rasi", rofi_content(variants["dark"])
+        )
     )
     repo_changes.append(
         write_if_changed(
@@ -239,17 +249,21 @@ ROOT / "DreamcoderThemes/dreamcoder",
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi.rasi", rofi_content(active))
     )
-    repo_changes.append(write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/README.md", readme_content()))
+    repo_changes.append(
+        write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/README.md", readme_content())
+    )
     repo_changes += write_variant_files(
-ROOT / "DreamcoderAntigravity",
+        ROOT / "DreamcoderAntigravity",
         {k: f"Dreamcoder-{v.title()}.json" for k, v in mode_names.items()},
         antigravity_content,
         variants,
     )
     repo_changes.append(
-        write_if_changed(ROOT / "DreamcoderAntigravity/Dreamcoder.json", antigravity_content(active))
+        write_if_changed(
+            ROOT / "DreamcoderAntigravity/Dreamcoder.json", antigravity_content(active)
+        )
     )
-    # Nvim variant files go in Nvim/.config/nvim/colors/
+    # Nvim variant files go in DreamcoderNvim/.config/nvim/colors/
     nvim_dir = ROOT / "DreamcoderNvim/.config/nvim/colors"
     repo_changes += write_variant_files(
         nvim_dir,

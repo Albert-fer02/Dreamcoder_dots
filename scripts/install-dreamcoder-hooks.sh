@@ -23,12 +23,24 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 THEME_DIR="${ROOT}/DreamcoderThemes/dreamcoder"
 
 # ---- helpers ----
-info()  { printf '  ✓ %s\n' "$*"; }
-warn()  { printf '  ⚠ %s\n' "$*" >&2; }
-skip()  { printf '  – %s\n' "$*"; }
-dry()   { [[ "${DRY_RUN}" != "true" ]] && return 0; printf '  ~ would: %s\n' "$*"; }
-run()   { dry "$@"; [[ "${DRY_RUN}" == "true" ]] && return 0; "$@" || warn "failed: $*"; }
-ln_sf() { local src="$1" dst="$2"; mkdir -p "$(dirname "${dst}")" 2>/dev/null || true; run ln -sf "${src}" "${dst}"; info "${dst} → ${src}"; }
+info() { printf '  ✓ %s\n' "$*"; }
+warn() { printf '  ⚠ %s\n' "$*" >&2; }
+skip() { printf '  – %s\n' "$*"; }
+dry() {
+  [[ "${DRY_RUN}" != "true" ]] && return 0
+  printf '  ~ would: %s\n' "$*"
+}
+run() {
+  dry "$@"
+  [[ "${DRY_RUN}" == "true" ]] && return 0
+  "$@" || warn "failed: $*"
+}
+ln_sf() {
+  local src="$1" dst="$2"
+  mkdir -p "$(dirname "${dst}")" 2>/dev/null || true
+  run ln -sf "${src}" "${dst}"
+  info "${dst} → ${src}"
+}
 
 # ---- Detect mode ----
 DC_MODE="${DREAMCODER_THEME_MODE:-dark}"
@@ -57,7 +69,7 @@ if [[ -d "${NVIM_DIR}" ]]; then
       echo ""
       echo "-- Dreamcoder colorscheme"
       echo 'vim.cmd.colorscheme("dreamcoder")'
-    } >> "${NVIM_DIR}/init.lua"
+    } >>"${NVIM_DIR}/init.lua"
     info "Added vim.cmd.colorscheme('dreamcoder') to init.lua"
   elif [[ -f "${NVIM_DIR}/init.lua" ]]; then
     info "Neovim already uses dreamcoder colorscheme."

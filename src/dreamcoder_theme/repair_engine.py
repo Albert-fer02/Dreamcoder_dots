@@ -19,7 +19,7 @@ SAFE_REPAIR_CATALOG = {
 }
 
 MANAGED_RESTORE_TARGETS = {
-"kitty config": ROOT / "DreamcoderKitty" / ".config" / "kitty",
+    "kitty config": ROOT / "DreamcoderKitty" / ".config" / "kitty",
     "ghostty config": ROOT / "DreamcoderGhostty" / ".config" / "ghostty",
     "starship config": ROOT / "DreamcoderShell" / ".config" / "starship.toml",
     "fish config": ROOT / "DreamcoderShell" / ".config" / "fish" / "config.fish",

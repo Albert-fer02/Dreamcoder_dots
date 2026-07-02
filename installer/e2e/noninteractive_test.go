@@ -8,9 +8,9 @@ import (
 
 func TestNonInteractiveConfig_Validation(t *testing.T) {
 	tests := []struct {
-		name     string
-		config   tui.NonInteractiveConfig
-		wantErr  bool
+		name    string
+		config  tui.NonInteractiveConfig
+		wantErr bool
 	}{
 		{
 			name: "valid with terminal",
@@ -23,7 +23,7 @@ func TestNonInteractiveConfig_Validation(t *testing.T) {
 		{
 			name: "valid with shell",
 			config: tui.NonInteractiveConfig{
-				Shell: "fish",
+				Shell:  "fish",
 				Backup: true,
 			},
 			wantErr: false,
@@ -43,8 +43,8 @@ func TestNonInteractiveConfig_Validation(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "empty config",
-			config: tui.NonInteractiveConfig{},
+			name:    "empty config",
+			config:  tui.NonInteractiveConfig{},
 			wantErr: false, // Should just print help
 		},
 	}

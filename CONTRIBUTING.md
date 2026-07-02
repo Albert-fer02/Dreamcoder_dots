@@ -125,18 +125,18 @@ pre-commit install
 
 After installation, the following checks run automatically before each commit:
 
-| Hook | Tool | Description |
-|------|------|-------------|
-| trailing-whitespace | pre-commit-hooks | Remove trailing whitespace |
-| end-of-file-fixer | pre-commit-hooks | Ensure files end with newline |
-| check-yaml | pre-commit-hooks | Validate YAML syntax |
-| check-json | pre-commit-hooks | Validate JSON syntax |
-| ruff | ruff-pre-commit | Lint + auto-fix Python |
-| ruff-format | ruff-pre-commit | Format Python with ruff |
-| mypy | mypy | Type check (strict mode) |
-| shellcheck | shellcheck-py | Static analysis for shell scripts |
-| dreamcoder-theme-validate | custom | Validate theme token health |
-| dreamcoder-preview-regenerate | custom | Regenerate theme preview |
+| Hook                          | Tool             | Description                       |
+| ----------------------------- | ---------------- | --------------------------------- |
+| trailing-whitespace           | pre-commit-hooks | Remove trailing whitespace        |
+| end-of-file-fixer             | pre-commit-hooks | Ensure files end with newline     |
+| check-yaml                    | pre-commit-hooks | Validate YAML syntax              |
+| check-json                    | pre-commit-hooks | Validate JSON syntax              |
+| ruff                          | ruff-pre-commit  | Lint + auto-fix Python            |
+| ruff-format                   | ruff-pre-commit  | Format Python with ruff           |
+| mypy                          | mypy             | Type check (strict mode)          |
+| shellcheck                    | shellcheck-py    | Static analysis for shell scripts |
+| dreamcoder-theme-validate     | custom           | Validate theme token health       |
+| dreamcoder-preview-regenerate | custom           | Regenerate theme preview          |
 
 Run all hooks manually at any time:
 

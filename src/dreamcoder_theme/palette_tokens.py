@@ -60,7 +60,7 @@ VARIANTS = {
         "hover": "#2b231b",
         "pressed": "#392e21",
         "overlay": "rgba(16, 15, 13, 0.52)",
-        "scrim": "rgba(0, 0, 0, 0.58)",
+        "scrim": "rgba(0, 0, 0, 0.58)"
     },
     "light": {
         "name": "Dreamcoder Light",
@@ -115,7 +115,7 @@ VARIANTS = {
         "hover": "#decbb1",
         "pressed": "#c8ad89",
         "overlay": "rgba(243, 234, 220, 0.40)",
-        "scrim": "rgba(26, 18, 12, 0.42)",
+        "scrim": "rgba(26, 18, 12, 0.42)"
     },
     "dusk": {
         "name": "Dreamcoder Dusk",
@@ -170,8 +170,8 @@ VARIANTS = {
         "hover": "#d8cbb8",
         "pressed": "#c6b6a0",
         "overlay": "rgba(235, 228, 214, 0.40)",
-        "scrim": "rgba(26, 18, 12, 0.42)",
-    },
+        "scrim": "rgba(26, 18, 12, 0.42)"
+    }
 }
 
 ANSI_KEY_NAMES = [
@@ -190,5 +190,5 @@ ANSI_KEY_NAMES = [
     "diagnostic_bright",
     "lavender_bright",
     "focus_bright",
-    "text",
+    "text"
 ]

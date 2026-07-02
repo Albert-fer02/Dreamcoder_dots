@@ -18,11 +18,30 @@
 # Shell scripts
 /scripts/*.sh @Dreamcoder08
 
-# Shell configs
-/DreamcoderShell/ @Dreamcoder08
-
-# Terminal configs
-/DreamcoderKitty/ @Dreamcoder08
+# Tool configs
+/DreamcoderAlacritty/ @Dreamcoder08
+/DreamcoderBat/ @Dreamcoder08
+/DreamcoderFastfetch/ @Dreamcoder08
 /DreamcoderGhostty/ @Dreamcoder08
+/DreamcoderGit/ @Dreamcoder08
+/DreamcoderKitty/ @Dreamcoder08
+/DreamcoderNushell/ @Dreamcoder08
+/DreamcoderNvim/ @Dreamcoder08
+/DreamcoderShell/ @Dreamcoder08
+/DreamcoderSystemd/ @Dreamcoder08
 /DreamcoderTmux/ @Dreamcoder08
+/DreamcoderWarp/ @Dreamcoder08
+/DreamcoderWezTerm/ @Dreamcoder08
 /DreamcoderZellij/ @Dreamcoder08
+
+# AI agent configs
+/DreamcoderAntigravity/ @Dreamcoder08
+/DreamcoderCodexApp/ @Dreamcoder08
+/DreamcoderCodexCLI/ @Dreamcoder08
+/DreamcoderOpenCode/ @Dreamcoder08
+/DreamcoderPi/ @Dreamcoder08
+
+# Assets
+/DreamcoderThemes/ @Dreamcoder08
+/DreamcoderWallpapers/ @Dreamcoder08
+/DreamcoderProfiles/ @Dreamcoder08
