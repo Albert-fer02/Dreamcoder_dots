@@ -2,7 +2,7 @@
 
 > **Goal:** Elevate the dreamcoder Starship prompt to be among the best in the world, learning from top references while keeping the dreamcoder visual identity and cross-shell consistency.
 > **References:** seifscape/macos-dot-files (AI session state in prompt), Powerlevel10k (instant prompt), devterm-kit (auto-setup), JaKooLit (multi-distro), alohays/dotfiles (agent-friendly)
-> **Target files:** `Shell/.config/starship.toml`, `starship-dark.toml`, `starship-light.toml`, `conf.d/20-dreamcoder-prompt.fish`, `.zshrc`, `.bashrc`
+> **Target files:** `DreamcoderShell/.config/starship.toml`, `starship-dark.toml`, `starship-light.toml`, `conf.d/20-dreamcoder-prompt.fish`, `.zshrc`, `.bashrc`
 > **Priority:** 🔴 CRITICAL — the prompt is what the user sees every single command
 > **Estimated diff:** ~400 lines across 6 files
 
@@ -170,4 +170,4 @@ This is bleeding edge. Nobody else ships this as a dotfile feature.
 - Current integration: `conf.d/20-dreamcoder-prompt.fish`
 - seifscape/macos-dot-files: AI session in prompt (reference only)
 - Starship docs: <https://starship.rs/config/>
-- Tokens: `themes/dreamcoder/tokens.json` (accent, diagnostic, error colors)
+- Tokens: `DreamcoderThemes/dreamcoder/tokens.json` (accent, diagnostic, error colors)

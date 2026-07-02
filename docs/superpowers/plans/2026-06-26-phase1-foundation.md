@@ -13,7 +13,7 @@
 - Ruff target-version = "py311", line-length = 100
 - Mypy strict = true, python_version = "3.11", ignore-missing-imports for PyQt6
 - shellcheck level = style, disable SC3043
-- EditorConfig: *.py indent 4, *.sh indent 2, *.yml indent 2, Makefile tabs
+- EditorConfig: _.py indent 4,_.sh indent 2, \*.yml indent 2, Makefile tabs
 - No code changes to dreamcoder_theme internals — pure structural move
 - No shell script rewrites — only add `.sh` extension where missing
 - All paths in pyproject.toml must reference `src/` after the move
@@ -26,11 +26,13 @@
 ### Task 1: EditorConfig + .gitignore updates
 
 **Files:**
+
 - Create: `.editorconfig`
 - Modify: `.gitignore`
 - Verify: no runtime tests needed
 
 **Interfaces:**
+
 - Consumes: nothing
 - Produces: `.editorconfig` root config, updated `.gitignore`
 
@@ -96,12 +98,14 @@ git commit -m "chore: add EditorConfig and update gitignore for new layout"
 ### Task 2: Move dreamcoder_theme to src/ + update pyproject.toml
 
 **Files:**
+
 - Move: `scripts/dreamcoder_theme/` → `src/dreamcoder_theme/`
 - Modify: `pyproject.toml` — update package find paths, pytest pythonpath
 - Delete: no forced delete, but ensure old path isn't referenced
 - Verify: `python -c "from dreamcoder_theme.control import main; print('OK')"`
 
 **Interfaces:**
+
 - Consumes: nothing
 - Produces: `src/dreamcoder_theme/` with all files, updated `pyproject.toml`
 
@@ -153,10 +157,12 @@ git commit -m "refactor: move dreamcoder_theme from scripts/ to src/"
 ### Task 3: Configure Ruff in pyproject.toml
 
 **Files:**
+
 - Modify: `pyproject.toml` — add `[tool.ruff]` sections
 - Verify: `ruff check src/ tests/` and `ruff format --check src/ tests/`
 
 **Interfaces:**
+
 - Consumes: `pyproject.toml` (updated in Task 2)
 - Produces: Ruff linter + formatter config
 
@@ -200,11 +206,13 @@ ruff format --check src/ tests/
 ```
 
 If there are formatting issues:
+
 ```bash
 ruff format src/ tests/
 ```
 
 Then re-check:
+
 ```bash
 ruff format --check src/ tests/
 ```
@@ -223,10 +231,12 @@ git commit -m "chore: configure Ruff linter and formatter"
 ### Task 4: Configure Mypy with strict mode
 
 **Files:**
+
 - Modify: `pyproject.toml` — add `[tool.mypy]` section
 - Verify: `mypy src/`
 
 **Interfaces:**
+
 - Consumes: `pyproject.toml` (updated in Task 2)
 - Produces: Mypy strict mode config
 
@@ -281,10 +291,12 @@ git commit -m "chore: configure Mypy strict mode"
 ### Task 5: Configure shellcheck
 
 **Files:**
+
 - Create: `.shellcheckrc`
 - Verify: `find scripts/ -name '*.sh' -exec shellcheck --shell=bash {} +` (once scripts are identified)
 
 **Interfaces:**
+
 - Consumes: nothing
 - Produces: `.shellcheckrc`
 
@@ -336,10 +348,12 @@ git commit -m "chore: configure shellcheck"
 ### Task 6: Full pre-commit configuration
 
 **Files:**
+
 - Modify: `.pre-commit-config.yaml`
 - Verify: `pre-commit run --all-files`
 
 **Interfaces:**
+
 - Consumes: Ruff (Task 3), Mypy (Task 4), shellcheck (Task 5) — configurations exist in pyproject.toml and .shellcheckrc
 - Produces: Complete `.pre-commit-config.yaml`
 
@@ -377,7 +391,7 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-        args: ["--shell=bash"]
+        args: ['--shell=bash']
         files: ^scripts/.*\.sh$
 
   - repo: local
@@ -386,13 +400,13 @@ repos:
         name: Validate Dreamcoder theme tokens
         entry: python scripts/verify-theme-health.py
         language: system
-        files: ^(themes/dreamcoder/.*\.json|scripts/verify-theme-health\.py)$
+        files: ^(DreamcoderThemes/dreamcoder/.*\.json|scripts/verify-theme-health\.py)$
         pass_filenames: false
       - id: dreamcoder-preview-regenerate
         name: Regenerate theme preview
         entry: python scripts/generate-theme-preview.py && git diff --quiet --exit-code docs/dreamcoder-theme-preview.md
         language: system
-        files: ^themes/dreamcoder/.*\.json$
+        files: ^DreamcoderThemes/dreamcoder/.*\.json$
         pass_filenames: false
 ```
 
@@ -426,12 +440,14 @@ git commit -m "chore: update pre-commit config with Ruff, Mypy, shellcheck"
 ### Task 7: tests/ + shell-tests/ scaffolding
 
 **Files:**
+
 - Modify: `tests/conftest.py` — update to work with `src/` layout
 - Create: `shell-tests/` directory
 - Create: `shell-tests/test_helper.bash`
 - Verify: `python -m pytest tests/ -q` (should still pass all 17 tests)
 
 **Interfaces:**
+
 - Consumes: `pyproject.toml` (Task 2 — pythonpath points to `src/`)
 - Produces: Working test scaffolding for both Python and shell
 
@@ -502,11 +518,13 @@ git commit -m "chore: update test scaffolding for new layout"
 ### Task 8: ADR-001 and ADR-002
 
 **Files:**
+
 - Create: `docs/adr/0001-project-structure.md`
 - Create: `docs/adr/0002-toolchain-selection.md`
 - Verify: `cat docs/adr/0001-project-structure.md` — reads correctly
 
 **Interfaces:**
+
 - Consumes: nothing
 - Produces: Two ADRs documenting key decisions
 
@@ -517,6 +535,7 @@ sudo pacman -S adr-tools
 ```
 
 If not available:
+
 ```bash
 yay -S adr-tools
 ```
@@ -550,14 +569,16 @@ source code, tests, and tooling.
 We restructure the repository to follow a standard monorepo layout:
 
 ```
-src/                    # Python source packages
-  dreamcoder_theme/     # Main theme engine package
-scripts/                # Shell scripts only
-tests/                  # Python tests
-shell-tests/            # bats tests for shell scripts
-docs/                   # Documentation
-  adr/                  # Architecture Decision Records
-  superpowers/          # Design docs and implementation plans
+
+src/ # Python source packages
+dreamcoder_theme/ # Main theme engine package
+scripts/ # Shell scripts only
+tests/ # Python tests
+shell-tests/ # bats tests for shell scripts
+docs/ # Documentation
+adr/ # Architecture Decision Records
+superpowers/ # Design docs and implementation plans
+
 ```
 
 Key decisions:
@@ -674,10 +695,12 @@ git commit -m "docs: add ADR-001 (project structure) and ADR-002 (toolchain)"
 ### Task 9: Makefile updates
 
 **Files:**
+
 - Modify: `Makefile`
 - Verify: `make lint` (should run all checks)
 
 **Interfaces:**
+
 - Consumes: All toolchain configs from Tasks 2-5
 - Produces: Updated Makefile with lint, python-lint, shell-lint, type-check, format, adr targets
 
@@ -689,41 +712,41 @@ Replace the current content:
 .PHONY: install test coverage build clean lint python-lint shell-lint type-check format adr
 
 install:
-	pip install -e ".[dev]"
+ pip install -e ".[dev]"
 
 test:
-	python -m pytest tests/ -v
+ python -m pytest tests/ -v
 
 coverage:
-	python -m pytest tests/ --cov=dreamcoder_theme --cov-report=term-missing
+ python -m pytest tests/ --cov=dreamcoder_theme --cov-report=term-missing
 
 build:
-	python -m build
+ python -m build
 
 clean:
-	rm -rf dist/ build/ *.egg-info/ src/*.egg-info/
+ rm -rf dist/ build/ *.egg-info/ src/*.egg-info/
 
 lint: python-lint shell-lint type-check
 
 python-lint:
-	ruff check src/ tests/
-	ruff format --check src/ tests/
+ ruff check src/ tests/
+ ruff format --check src/ tests/
 
 shell-lint:
-	find scripts/ -name '*.sh' -exec shellcheck --shell=bash {} +
+ find scripts/ -name '*.sh' -exec shellcheck --shell=bash {} +
 
 type-check:
-	mypy src/
+ mypy src/
 
 format:
-	ruff format src/ tests/
+ ruff format src/ tests/
 
 adr:
-	@echo "=== Architecture Decision Records ==="
-	@ls docs/adr/*.md | while read f; do \
-		echo "  $$(basename $$f) — $$(head -3 "$$f" | tail -1)"; \
-	done
-	@echo "Total: $$(ls docs/adr/*.md 2>/dev/null | wc -l) ADRs"
+ @echo "=== Architecture Decision Records ==="
+ @ls docs/adr/*.md | while read f; do \
+  echo "  $$(basename $$f) — $$(head -3 "$$f" | tail -1)"; \
+ done
+ @echo "Total: $$(ls docs/adr/*.md 2>/dev/null | wc -l) ADRs"
 ```
 
 - [ ] **Step 2: Verify Makefile targets**
@@ -785,6 +808,7 @@ make adr
 ```
 
 Expected:
+
 ```
 === Architecture Decision Records ===
   0001-project-structure.md — ## Status

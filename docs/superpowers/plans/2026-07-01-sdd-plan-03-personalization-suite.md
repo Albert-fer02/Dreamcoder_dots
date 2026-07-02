@@ -131,7 +131,7 @@ alias cdi='zi'        # zoxide interactive
 ### Task 2: Zsh Enhancements
 
 - Same aliases in `.zshrc`
-- Create `Shell/.config/zsh/functions/` directory
+- Create `DreamcoderShell/.config/zsh/functions/` directory
 - Source functions from `.zshrc`
 - Ensure p10k users can use dreamcoder colors
 
@@ -169,7 +169,7 @@ alias cdi='zi'        # zoxide interactive
 
 ## References
 
-- Existing shell configs: `Shell/.config/fish/*.fish`, `Shell/.bashrc`, `Shell/.zshrc`
-- Existing Tmux config: `Tmux/.tmux.conf`
+- Existing shell configs: `DreamcoderShell/.config/fish/*.fish`, `DreamcoderShell/.bashrc`, `DreamcoderShell/.zshrc`
+- Existing Tmux config: `DreamcoderTmux/.tmux.conf`
 - Existing scripts: `scripts/doctor.sh`, `repair.sh`, `status.sh`, `dreamcoder.sh`
 - Modern CLI alternatives: `eza`, `bat`, `fd`, `rg`, `procs`, `btm`, `dua`, `gping`, `duf`, `sd`, `tldr`, `zoxide`

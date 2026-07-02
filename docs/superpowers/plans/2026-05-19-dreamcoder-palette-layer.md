@@ -4,7 +4,7 @@
 
 **Goal:** Add a Dreamcoder palette layer with dark and light variants while preserving ML4W/Gentleman Dots behavior.
 
-**Architecture:** Keep compositor/window-manager behavior untouched and centralize color output in `scripts/sync-dreamcoder-theme.py`. Generate active terminal/prompt themes plus sibling light/dark variants and portable ML4W-style snippets under `themes/dreamcoder/`.
+**Architecture:** Keep compositor/window-manager behavior untouched and centralize color output in `scripts/sync-dreamcoder-theme.py`. Generate active terminal/prompt themes plus sibling light/dark variants and portable ML4W-style snippets under `DreamcoderThemes/dreamcoder/`.
 
 **Tech Stack:** Python theme generator, Ghostty, Kitty, Warp, Starship, CSS/Rasi/Hyprland snippets.
 
@@ -13,8 +13,9 @@
 ### Task 1: Centralize Dreamcoder semantic palettes
 
 **Files:**
+
 - Modify: `scripts/sync-dreamcoder-theme.py`
-- Create: `themes/dreamcoder/README.md`
+- Create: `DreamcoderThemes/dreamcoder/README.md`
 
 - [x] Define dark palette inspired by Warp Terminal AI dark glass.
 - [x] Define light palette inspired by OpenAI/Codex App neutral UI.
@@ -23,14 +24,15 @@
 ### Task 2: Generate app themes without rewriting app behavior
 
 **Files:**
-- Modify: `Ghostty/.config/ghostty/themes/dreamcoder`
-- Create: `Ghostty/.config/ghostty/themes/dreamcoder-light`
-- Modify: `Kitty/.config/kitty/colors-dreamcoder.conf`
-- Create: `Kitty/.config/kitty/colors-dreamcoder-light.conf`
-- Modify: `Warp/.local/share/warp-terminal/themes/Dreamcoder.yaml`
-- Create: `Warp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml`
-- Modify: `Shell/.config/starship.toml`
-- Create: `Shell/.config/starship-light.toml`
+
+- Modify: `DreamcoderGhostty/.config/ghostty/themes/dreamcoder`
+- Create: `DreamcoderGhostty/.config/ghostty/themes/dreamcoder-light`
+- Modify: `DreamcoderKitty/.config/kitty/colors-dreamcoder.conf`
+- Create: `DreamcoderKitty/.config/kitty/colors-dreamcoder-light.conf`
+- Modify: `DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder.yaml`
+- Create: `DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml`
+- Modify: `DreamcoderShell/.config/starship.toml`
+- Create: `DreamcoderShell/.config/starship-light.toml`
 
 - [x] Make dark active by default.
 - [x] Generate light variants as opt-in files.
@@ -39,12 +41,13 @@
 ### Task 3: Add ML4W/Gentleman-compatible snippets
 
 **Files:**
-- Create: `themes/dreamcoder/hyprland-dark.conf`
-- Create: `themes/dreamcoder/hyprland-light.conf`
-- Create: `themes/dreamcoder/waybar-dark.css`
-- Create: `themes/dreamcoder/waybar-light.css`
-- Create: `themes/dreamcoder/rofi-dark.rasi`
-- Create: `themes/dreamcoder/rofi-light.rasi`
+
+- Create: `DreamcoderThemes/dreamcoder/hyprland-dark.conf`
+- Create: `DreamcoderThemes/dreamcoder/hyprland-light.conf`
+- Create: `DreamcoderThemes/dreamcoder/waybar-dark.css`
+- Create: `DreamcoderThemes/dreamcoder/waybar-light.css`
+- Create: `DreamcoderThemes/dreamcoder/rofi-dark.rasi`
+- Create: `DreamcoderThemes/dreamcoder/rofi-light.rasi`
 
 - [x] Provide color-only snippets.
 - [x] Avoid keybind/layout/wallpaper logic changes.
@@ -52,6 +55,7 @@
 ### Task 4: Verify generated files
 
 **Files:**
+
 - Verify: generated TOML/YAML/JSON/script syntax.
 
 - [x] Run Python compilation.

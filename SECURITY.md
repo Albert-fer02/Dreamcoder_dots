@@ -68,6 +68,6 @@ Useful checks:
 bash -n scripts/update-colors.sh
 python3 -m py_compile scripts/sync-dreamcoder-theme.py
 ghostty +validate-config
-STARSHIP_CONFIG=Shell/.config/starship.toml starship explain
-fish -n Shell/.config/fish/config.fish
+STARSHIP_CONFIG=DreamcoderShell/.config/starship.toml starship explain
+fish -n DreamcoderShell/.config/fish/config.fish
 ```

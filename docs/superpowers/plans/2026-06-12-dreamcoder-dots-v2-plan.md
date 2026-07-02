@@ -17,15 +17,16 @@ Each task follows the same pattern: create config files + add renderer to theme 
 ### Task 1: Tmux Config + Theme Renderer
 
 **Files:**
-- Create: `Tmux/.tmux.conf`
-- Create: `Tmux/.config/tmux/dreamcoder-dark.conf` (generated)
-- Create: `Tmux/.config/tmux/dreamcoder-light.conf` (generated)
+
+- Create: `DreamcoderTmux/.tmux.conf`
+- Create: `DreamcoderTmux/.config/tmux/dreamcoder-dark.conf` (generated)
+- Create: `DreamcoderTmux/.config/tmux/dreamcoder-light.conf` (generated)
 - Modify: `scripts/dreamcoder_theme/renderers_tmux.py` (extend existing)
 
 - [ ] **Step 1: Create base tmux.conf**
 
 ```bash
-mkdir -p Tmux/.config/tmux
+mkdir -p DreamcoderTmux/.config/tmux
 ```
 
 ```conf
@@ -145,16 +146,16 @@ setw -g window-status-bell-style "bg=#b85c2a,fg=#f3eadc"
 
 - [ ] **Step 4: Test theme files exist and are valid**
 
-Run: `cat Tmux/.config/tmux/dreamcoder-dark.conf | head -5`
+Run: `cat DreamcoderTmux/.config/tmux/dreamcoder-dark.conf | head -5`
 Expected: Shows Dreamcoder Dark Theme header
 
-Run: `cat Tmux/.config/tmux/dreamcoder-light.conf | head -5`
+Run: `cat DreamcoderTmux/.config/tmux/dreamcoder-light.conf | head -5`
 Expected: Shows Dreamcoder Light Theme header
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Tmux/
+git add DreamcoderTmux/
 git commit -m "feat(tmux): add tmux config with dreamcoder dark/light themes"
 ```
 
@@ -163,15 +164,16 @@ git commit -m "feat(tmux): add tmux config with dreamcoder dark/light themes"
 ### Task 2: Zellij Config + Theme Renderer
 
 **Files:**
-- Create: `Zellij/.config/zellij/config.kdl`
-- Create: `Zellij/.config/zellij/dreamcoder-dark.kdl`
-- Create: `Zellij/.config/zellij/dreamcoder-light.kdl`
-- Create: `Zellij/.config/zellij/layouts/dreamcoder.kdl`
+
+- Create: `DreamcoderZellij/.config/zellij/config.kdl`
+- Create: `DreamcoderZellij/.config/zellij/dreamcoder-dark.kdl`
+- Create: `DreamcoderZellij/.config/zellij/dreamcoder-light.kdl`
+- Create: `DreamcoderZellij/.config/zellij/layouts/dreamcoder.kdl`
 
 - [ ] **Step 1: Create base config.kdl**
 
 ```bash
-mkdir -p Zellij/.config/zellij/layouts
+mkdir -p DreamcoderZellij/.config/zellij/layouts
 ```
 
 ```kdl
@@ -320,7 +322,7 @@ layout {
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Zellij/
+git add DreamcoderZellij/
 git commit -m "feat(zellij): add zellij config with dreamcoder dark/light themes"
 ```
 
@@ -329,15 +331,16 @@ git commit -m "feat(zellij): add zellij config with dreamcoder dark/light themes
 ### Task 3: Nushell Config + Theme Renderer
 
 **Files:**
-- Create: `Nushell/.config/nushell/config.nu`
-- Create: `Nushell/.config/nushell/env.nu`
-- Create: `Nushell/.config/nushell/dreamcoder-dark.nu`
-- Create: `Nushell/.config/nushell/dreamcoder-light.nu`
+
+- Create: `DreamcoderNushell/.config/nushell/config.nu`
+- Create: `DreamcoderNushell/.config/nushell/env.nu`
+- Create: `DreamcoderNushell/.config/nushell/dreamcoder-dark.nu`
+- Create: `DreamcoderNushell/.config/nushell/dreamcoder-light.nu`
 
 - [ ] **Step 1: Create env.nu**
 
 ```bash
-mkdir -p Nushell/.config/nushell
+mkdir -p DreamcoderNushell/.config/nushell
 ```
 
 ```nu
@@ -523,7 +526,7 @@ $env.config = {
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Nushell/
+git add DreamcoderNushell/
 git commit -m "feat(nushell): add nushell config with dreamcoder dark/light themes"
 ```
 
@@ -532,14 +535,15 @@ git commit -m "feat(nushell): add nushell config with dreamcoder dark/light them
 ### Task 4: WezTerm Config + Theme Renderer
 
 **Files:**
-- Create: `WezTerm/.wezterm.lua`
-- Create: `WezTerm/.config/wezterm/dreamcoder-dark.lua`
-- Create: `WezTerm/.config/wezterm/dreamcoder-light.lua`
+
+- Create: `DreamcoderWezTerm/.wezterm.lua`
+- Create: `DreamcoderWezTerm/.config/wezterm/dreamcoder-dark.lua`
+- Create: `DreamcoderWezTerm/.config/wezterm/dreamcoder-light.lua`
 
 - [ ] **Step 1: Create base .wezterm.lua**
 
 ```bash
-mkdir -p WezTerm/.config/wezterm
+mkdir -p DreamcoderWezTerm/.config/wezterm
 ```
 
 ```lua
@@ -719,7 +723,7 @@ return M
 - [ ] **Step 4: Commit**
 
 ```bash
-git add WezTerm/
+git add DreamcoderWezTerm/
 git commit -m "feat(wezterm): add wezterm config with dreamcoder dark/light themes"
 ```
 
@@ -728,14 +732,15 @@ git commit -m "feat(wezterm): add wezterm config with dreamcoder dark/light them
 ### Task 5: Alacritty Config + Theme Renderer
 
 **Files:**
-- Create: `Alacritty/.config/alacritty/alacritty.toml`
-- Create: `Alacritty/.config/alacritty/dreamcoder-dark.toml`
-- Create: `Alacritty/.config/alacritty/dreamcoder-light.toml`
+
+- Create: `DreamcoderAlacritty/.config/alacritty/alacritty.toml`
+- Create: `DreamcoderAlacritty/.config/alacritty/dreamcoder-dark.toml`
+- Create: `DreamcoderAlacritty/.config/alacritty/dreamcoder-light.toml`
 
 - [ ] **Step 1: Create base alacritty.toml**
 
 ```bash
-mkdir -p Alacritty/.config/alacritty
+mkdir -p DreamcoderAlacritty/.config/alacritty
 ```
 
 ```toml
@@ -858,7 +863,7 @@ white = "#f3eadc"
 - [ ] **Step 4: Commit**
 
 ```bash
-git add Alacritty/
+git add DreamcoderAlacritty/
 git commit -m "feat(alacritty): add alacritty config with dreamcoder dark/light themes"
 ```
 
@@ -869,6 +874,7 @@ git commit -m "feat(alacritty): add alacritty config with dreamcoder dark/light 
 ### Task 6: Go Project Setup
 
 **Files:**
+
 - Create: `installer/go.mod`
 - Create: `installer/main.go`
 - Create: `installer/Makefile`
@@ -888,33 +894,33 @@ go mod init github.com/dreamcoder08/dreamcoder-dots/installer
 package main
 
 import (
-	"fmt"
-	"os"
+ "fmt"
+ "os"
 
-	"github.com/spf13/cobra"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/cmd"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/pkg/version"
+ "github.com/spf13/cobra"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/cmd"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/pkg/version"
 )
 
 func main() {
-	rootCmd := &cobra.Command{
-		Use:     "dreamcoder-dots",
-		Short:   "Dreamcoder OS - Token-governed visual operating layer",
-		Version: version.Version,
-		RunE: func(c *cobra.Command, args []string) error {
-			// Launch TUI by default
-			return cmd.RunTUI()
-		},
-	}
+ rootCmd := &cobra.Command{
+  Use:     "dreamcoder-dots",
+  Short:   "Dreamcoder OS - Token-governed visual operating layer",
+  Version: version.Version,
+  RunE: func(c *cobra.Command, args []string) error {
+   // Launch TUI by default
+   return cmd.RunTUI()
+  },
+ }
 
-	rootCmd.AddCommand(cmd.InstallCmd())
-	rootCmd.AddCommand(cmd.RepairCmd())
-	rootCmd.AddCommand(cmd.DoctorCmd())
+ rootCmd.AddCommand(cmd.InstallCmd())
+ rootCmd.AddCommand(cmd.RepairCmd())
+ rootCmd.AddCommand(cmd.DoctorCmd())
 
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
+ if err := rootCmd.Execute(); err != nil {
+  fmt.Fprintln(os.Stderr, err)
+  os.Exit(1)
+ }
 }
 ```
 
@@ -937,23 +943,23 @@ LDFLAGS := -ldflags "-X github.com/dreamcoder08/dreamcoder-dots/installer/pkg/ve
 .PHONY: build build-all release clean
 
 build:
-	go build $(LDFLAGS) -o $(BINARY_NAME) .
+ go build $(LDFLAGS) -o $(BINARY_NAME) .
 
 build-all:
-	@echo "Building for linux/amd64..."
-	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY_NAME)-linux-amd64 .
-	@echo "Building for linux/arm64..."
-	GOOS=linux GOARCH=arm64 go build $(LDFLAGS) -o $(BINARY_NAME)-linux-arm64 .
-	@echo "Building for darwin/amd64..."
-	GOOS=darwin GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY_NAME)-darwin-amd64 .
-	@echo "Building for darwin/arm64..."
-	GOOS=darwin GOARCH=arm64 go build $(LDFLAGS) -o $(BINARY_NAME)-darwin-arm64 .
+ @echo "Building for linux/amd64..."
+ GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY_NAME)-linux-amd64 .
+ @echo "Building for linux/arm64..."
+ GOOS=linux GOARCH=arm64 go build $(LDFLAGS) -o $(BINARY_NAME)-linux-arm64 .
+ @echo "Building for darwin/amd64..."
+ GOOS=darwin GOARCH=amd64 go build $(LDFLAGS) -o $(BINARY_NAME)-darwin-amd64 .
+ @echo "Building for darwin/arm64..."
+ GOOS=darwin GOARCH=arm64 go build $(LDFLAGS) -o $(BINARY_NAME)-darwin-arm64 .
 
 release: build-all
-	gh release create $(VERSION) $(BINARY_NAME)-* --title "v$(VERSION)" --generate-notes
+ gh release create $(VERSION) $(BINARY_NAME)-* --title "v$(VERSION)" --generate-notes
 
 clean:
-	rm -f $(BINARY_NAME) $(BINARY_NAME)-*
+ rm -f $(BINARY_NAME) $(BINARY_NAME)-*
 ```
 
 - [ ] **Step 5: Create .gitignore**
@@ -982,6 +988,7 @@ git commit -m "feat(installer): initialize Go project with Cobra CLI"
 ### Task 7: Go TUI Core (Bubbletea)
 
 **Files:**
+
 - Create: `installer/internal/tui/app.go`
 - Create: `installer/internal/tui/views/welcome.go`
 - Create: `installer/internal/tui/views/components.go`
@@ -1005,46 +1012,46 @@ import "github.com/charmbracelet/lipgloss"
 
 // Dreamcoder Dark palette
 var (
-	Primary   = lipgloss.Color("#100f0d")
-	Secondary = lipgloss.Color("#1a1714")
-	Surface   = lipgloss.Color("#2a2520")
-	Text      = lipgloss.Color("#e8dfd0")
-	Accent    = lipgloss.Color("#d99555")
-	Accent2   = lipgloss.Color("#c96a45")
-	Diagnostic = lipgloss.Color("#5f95ca")
-	Comment   = lipgloss.Color("#6b5f52")
-	Border    = lipgloss.Color("#2a2520")
+ Primary   = lipgloss.Color("#100f0d")
+ Secondary = lipgloss.Color("#1a1714")
+ Surface   = lipgloss.Color("#2a2520")
+ Text      = lipgloss.Color("#e8dfd0")
+ Accent    = lipgloss.Color("#d99555")
+ Accent2   = lipgloss.Color("#c96a45")
+ Diagnostic = lipgloss.Color("#5f95ca")
+ Comment   = lipgloss.Color("#6b5f52")
+ Border    = lipgloss.Color("#2a2520")
 )
 
 var (
-	TitleStyle = lipgloss.NewStyle().
-			Bold(true).
-			Foreground(Accent).
-			Padding(1, 2)
+ TitleStyle = lipgloss.NewStyle().
+   Bold(true).
+   Foreground(Accent).
+   Padding(1, 2)
 
-	MenuItemStyle = lipgloss.NewStyle().
-			Foreground(Text).
-			Padding(0, 2)
+ MenuItemStyle = lipgloss.NewStyle().
+   Foreground(Text).
+   Padding(0, 2)
 
-	SelectedStyle = lipgloss.NewStyle().
-			Foreground(Accent).
-			Bold(true).
-			Padding(0, 2)
+ SelectedStyle = lipgloss.NewStyle().
+   Foreground(Accent).
+   Bold(true).
+   Padding(0, 2)
 
-	StatusBarStyle = lipgloss.NewStyle().
-			Foreground(Comment).
-			Background(Secondary).
-			Padding(0, 1)
+ StatusBarStyle = lipgloss.NewStyle().
+   Foreground(Comment).
+   Background(Secondary).
+   Padding(0, 1)
 
-	BoxStyle = lipgloss.NewStyle().
-			Border(lipgloss.RoundedBorder()).
-			BorderForeground(Border).
-			Padding(1, 2)
+ BoxStyle = lipgloss.NewStyle().
+   Border(lipgloss.RoundedBorder()).
+   BorderForeground(Border).
+   Padding(1, 2)
 )
 
 func Init() {
-	// Force dark theme for now
-	lipgloss.SetBorderProfile(lipgloss.RoundedBorder())
+ // Force dark theme for now
+ lipgloss.SetBorderProfile(lipgloss.RoundedBorder())
 }
 ```
 
@@ -1054,44 +1061,44 @@ func Init() {
 package views
 
 import (
-	"fmt"
+ "fmt"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
+ tea "github.com/charmbracelet/bubbletea"
+ "github.com/charmbracelet/lipgloss"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
 )
 
 type WelcomeModel struct {
-	width  int
-	height int
+ width  int
+ height int
 }
 
 func NewWelcomeModel() WelcomeModel {
-	return WelcomeModel{}
+ return WelcomeModel{}
 }
 
 func (m WelcomeModel) Init() tea.Cmd {
-	return nil
+ return nil
 }
 
 func (m WelcomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "enter":
-			return NewComponentsModel(), nil
-		case "q", "ctrl+c":
-			return m, tea.Quit
-		}
-	}
-	return m, nil
+ switch msg := msg.(type) {
+ case tea.WindowSizeMsg:
+  m.width = msg.Width
+  m.height = msg.Height
+ case tea.KeyMsg:
+  switch msg.String() {
+  case "enter":
+   return NewComponentsModel(), nil
+  case "q", "ctrl+c":
+   return m, tea.Quit
+  }
+ }
+ return m, nil
 }
 
 func (m WelcomeModel) View() string {
-	logo := `
+ logo := `
    ╔═══════════════════════════════════════╗
    ║                                       ║
    ║   🎨 DREAMCODER OS                    ║
@@ -1101,30 +1108,30 @@ func (m WelcomeModel) View() string {
    ║                                       ║
    ╚═══════════════════════════════════════╝
 `
-	platform := fmt.Sprintf("Platform: %s/%s", detectOS(), detectArch())
-	hint := "Press Enter to continue, q to quit"
+ platform := fmt.Sprintf("Platform: %s/%s", detectOS(), detectArch())
+ hint := "Press Enter to continue, q to quit"
 
-	return lipgloss.Place(
-		m.width, m.height,
-		lipgloss.Center, lipgloss.Center,
-		lipgloss.JoinVertical(
-			lipgloss.Center,
-			styles.TitleStyle.Render(logo),
-			styles.MenuItemStyle.Render(platform),
-			"",
-			styles.CommentStyle.Render(hint),
-		),
-	)
+ return lipgloss.Place(
+  m.width, m.height,
+  lipgloss.Center, lipgloss.Center,
+  lipgloss.JoinVertical(
+   lipgloss.Center,
+   styles.TitleStyle.Render(logo),
+   styles.MenuItemStyle.Render(platform),
+   "",
+   styles.CommentStyle.Render(hint),
+  ),
+ )
 }
 
 func detectOS() string {
-	// TODO: implement runtime.GOOS
-	return "linux"
+ // TODO: implement runtime.GOOS
+ return "linux"
 }
 
 func detectArch() string {
-	// TODO: implement runtime.GOARCH
-	return "amd64"
+ // TODO: implement runtime.GOARCH
+ return "amd64"
 }
 ```
 
@@ -1134,104 +1141,104 @@ func detectArch() string {
 package views
 
 import (
-	"fmt"
+ "fmt"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
+ tea "github.com/charmbracelet/bubbletea"
+ "github.com/charmbracelet/lipgloss"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
 )
 
 type Component struct {
-	Name        string
-	Description string
-	Selected    bool
-	Category    string
+ Name        string
+ Description string
+ Selected    bool
+ Category    string
 }
 
 type ComponentsModel struct {
-	components []Component
-	cursor    int
-	width     int
-	height    int
+ components []Component
+ cursor    int
+ width     int
+ height    int
 }
 
 func NewComponentsModel() ComponentsModel {
-	components := []Component{
-		{Name: "Kitty", Description: "GPU-accelerated terminal", Category: "Terminals", Selected: true},
-		{Name: "Ghostty", Description: "Fast, feature-rich terminal", Category: "Terminals", Selected: false},
-		{Name: "WezTerm", Description: "Cross-platform terminal", Category: "Terminals", Selected: false},
-		{Name: "Alacritty", Description: "Minimal GPU terminal", Category: "Terminals", Selected: false},
-		{Name: "Fish", Description: "Friendly interactive shell", Category: "Shells", Selected: true},
-		{Name: "Zsh", Description: "Z shell", Category: "Shells", Selected: false},
-		{Name: "Nushell", Description: "Modern structured shell", Category: "Shells", Selected: false},
-		{Name: "Tmux", Description: "Terminal multiplexer", Category: "Multiplexers", Selected: false},
-		{Name: "Zellij", Description: "Terminal workspace", Category: "Multiplexers", Selected: false},
-		{Name: "Neovim", Description: "Hyperextensible editor", Category: "Editor", Selected: true},
-	}
+ components := []Component{
+  {Name: "Kitty", Description: "GPU-accelerated terminal", Category: "Terminals", Selected: true},
+  {Name: "Ghostty", Description: "Fast, feature-rich terminal", Category: "Terminals", Selected: false},
+  {Name: "WezTerm", Description: "Cross-platform terminal", Category: "Terminals", Selected: false},
+  {Name: "Alacritty", Description: "Minimal GPU terminal", Category: "Terminals", Selected: false},
+  {Name: "Fish", Description: "Friendly interactive shell", Category: "Shells", Selected: true},
+  {Name: "Zsh", Description: "Z shell", Category: "Shells", Selected: false},
+  {Name: "Nushell", Description: "Modern structured shell", Category: "Shells", Selected: false},
+  {Name: "Tmux", Description: "Terminal multiplexer", Category: "Multiplexers", Selected: false},
+  {Name: "Zellij", Description: "Terminal workspace", Category: "Multiplexers", Selected: false},
+  {Name: "Neovim", Description: "Hyperextensible editor", Category: "Editor", Selected: true},
+ }
 
-	return ComponentsModel{components: components}
+ return ComponentsModel{components: components}
 }
 
 func (m ComponentsModel) Init() tea.Cmd {
-	return nil
+ return nil
 }
 
 func (m ComponentsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "up", "k":
-			if m.cursor > 0 {
-				m.cursor--
-			}
-		case "down", "j":
-			if m.cursor < len(m.components)-1 {
-				m.cursor++
-			}
-		case " ":
-			m.components[m.cursor].Selected = !m.components[m.cursor].Selected
-		case "enter":
-			// Go to theme preview
-			return NewThemePreviewModel(), nil
-		case "q", "ctrl+c":
-			return m, tea.Quit
-		case "esc":
-			return NewWelcomeModel(), nil
-		}
-	}
-	return m, nil
+ switch msg := msg.(type) {
+ case tea.WindowSizeMsg:
+  m.width = msg.Width
+  m.height = msg.Height
+ case tea.KeyMsg:
+  switch msg.String() {
+  case "up", "k":
+   if m.cursor > 0 {
+    m.cursor--
+   }
+  case "down", "j":
+   if m.cursor < len(m.components)-1 {
+    m.cursor++
+   }
+  case " ":
+   m.components[m.cursor].Selected = !m.components[m.cursor].Selected
+  case "enter":
+   // Go to theme preview
+   return NewThemePreviewModel(), nil
+  case "q", "ctrl+c":
+   return m, tea.Quit
+  case "esc":
+   return NewWelcomeModel(), nil
+  }
+ }
+ return m, nil
 }
 
 func (m ComponentsModel) View() string {
-	title := styles.TitleStyle.Render("📦 Select Components")
+ title := styles.TitleStyle.Render("📦 Select Components")
 
-	var items []string
-	for i, comp := range m.components {
-		checkbox := "[ ]"
-		if comp.Selected {
-			checkbox = "[✓]"
-		}
+ var items []string
+ for i, comp := range m.components {
+  checkbox := "[ ]"
+  if comp.Selected {
+   checkbox = "[✓]"
+  }
 
-		style := styles.MenuItemStyle
-		if i == m.cursor {
-			style = styles.SelectedStyle
-		}
+  style := styles.MenuItemStyle
+  if i == m.cursor {
+   style = styles.SelectedStyle
+  }
 
-		item := fmt.Sprintf("%s %s — %s", checkbox, comp.Name, comp.Description)
-		items = append(items, style.Render(item))
-	}
+  item := fmt.Sprintf("%s %s — %s", checkbox, comp.Name, comp.Description)
+  items = append(items, style.Render(item))
+ }
 
-	list := lipgloss.JoinVertical(lipgloss.Left, items...)
-	hint := styles.CommentStyle.Render("Space to select, Enter to continue, Esc to go back")
+ list := lipgloss.JoinVertical(lipgloss.Left, items...)
+ hint := styles.CommentStyle.Render("Space to select, Enter to continue, Esc to go back")
 
-	return lipgloss.Place(
-		m.width, m.height,
-		lipgloss.Center, lipgloss.Center,
-		lipgloss.JoinVertical(lipgloss.Center, title, "", list, "", hint),
-	)
+ return lipgloss.Place(
+  m.width, m.height,
+  lipgloss.Center, lipgloss.Center,
+  lipgloss.JoinVertical(lipgloss.Center, title, "", list, "", hint),
+ )
 }
 ```
 
@@ -1241,16 +1248,16 @@ func (m ComponentsModel) View() string {
 package tui
 
 import (
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/views"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
+ tea "github.com/charmbracelet/bubbletea"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/views"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
 )
 
 func RunTUI() error {
-	styles.Init()
-	p := tea.NewProgram(views.NewWelcomeModel(), tea.WithAltScreen())
-	_, err := p.Run()
-	return err
+ styles.Init()
+ p := tea.NewProgram(views.NewWelcomeModel(), tea.WithAltScreen())
+ _, err := p.Run()
+ return err
 }
 ```
 
@@ -1260,12 +1267,12 @@ func RunTUI() error {
 package cmd
 
 import (
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui"
+ tea "github.com/charmbracelet/bubbletea"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui"
 )
 
 func RunTUI() error {
-	return tui.RunTUI()
+ return tui.RunTUI()
 }
 ```
 
@@ -1286,6 +1293,7 @@ git commit -m "feat(installer): add TUI with welcome and component selector scre
 ### Task 8: Install Logic + Platform Detection
 
 **Files:**
+
 - Create: `installer/internal/installer/installer.go`
 - Create: `installer/internal/installer/platforms.go`
 - Create: `installer/internal/installer/stow.go`
@@ -1299,68 +1307,68 @@ git commit -m "feat(installer): add TUI with welcome and component selector scre
 package installer
 
 import (
-	"os"
-	"os/exec"
-	"runtime"
+ "os"
+ "os/exec"
+ "runtime"
 )
 
 type Platform struct {
-	OS      string
-	Arch    string
-	Distro  string
-	HasStow bool
-	HasGit  bool
+ OS      string
+ Arch    string
+ Distro  string
+ HasStow bool
+ HasGit  bool
 }
 
 func DetectPlatform() Platform {
-	p := Platform{
-		OS:      runtime.GOOS,
-		Arch:    runtime.GOARCH,
-		Distro:  detectDistro(),
-		HasStow: commandExists("stow"),
-		HasGit:  commandExists("git"),
-	}
-	return p
+ p := Platform{
+  OS:      runtime.GOOS,
+  Arch:    runtime.GOARCH,
+  Distro:  detectDistro(),
+  HasStow: commandExists("stow"),
+  HasGit:  commandExists("git"),
+ }
+ return p
 }
 
 func detectDistro() string {
-	if _, err := os.ReadFile("/etc/os-release"); err == nil {
-		// Parse os-release
-		data, _ := os.ReadFile("/etc/os-release")
-		content := string(data)
-		if contains(content, "Arch") || contains(content, "arch") {
-			return "arch"
-		}
-		if contains(content, "Fedora") || contains(content, "fedora") {
-			return "fedora"
-		}
-		if contains(content, "Ubuntu") || contains(content, "ubuntu") || contains(content, "Debian") {
-			return "debian"
-		}
-	}
-	// macOS
-	if runtime.GOOS == "darwin" {
-		return "macos"
-	}
-	return "unknown"
+ if _, err := os.ReadFile("/etc/os-release"); err == nil {
+  // Parse os-release
+  data, _ := os.ReadFile("/etc/os-release")
+  content := string(data)
+  if contains(content, "Arch") || contains(content, "arch") {
+   return "arch"
+  }
+  if contains(content, "Fedora") || contains(content, "fedora") {
+   return "fedora"
+  }
+  if contains(content, "Ubuntu") || contains(content, "ubuntu") || contains(content, "Debian") {
+   return "debian"
+  }
+ }
+ // macOS
+ if runtime.GOOS == "darwin" {
+  return "macos"
+ }
+ return "unknown"
 }
 
 func commandExists(cmd string) bool {
-	_, err := exec.LookPath(cmd)
-	return err == nil
+ _, err := exec.LookPath(cmd)
+ return err == nil
 }
 
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsHelper(s, substr))
+ return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsHelper(s, substr))
 }
 
 func containsHelper(s, substr string) bool {
-	for i := 0; i <= len(s)-len(substr); i++ {
-		if s[i:i+len(substr)] == substr {
-			return true
-		}
-	}
-	return false
+ for i := 0; i <= len(s)-len(substr); i++ {
+  if s[i:i+len(substr)] == substr {
+   return true
+  }
+ }
+ return false
 }
 ```
 
@@ -1370,75 +1378,75 @@ func containsHelper(s, substr string) bool {
 package installer
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
-	"path/filepath"
+ "fmt"
+ "os"
+ "os/exec"
+ "path/filepath"
 )
 
 type Installer struct {
-	Platform   Platform
-	Components []string
-	ThemeMode  string
-	DotfilesDir string
+ Platform   Platform
+ Components []string
+ ThemeMode  string
+ DotfilesDir string
 }
 
 func NewInstaller(platform Platform, components []string, themeMode string) *Installer {
-	home, _ := os.UserHomeDir()
-	return &Installer{
-		Platform:    platform,
-		Components:  components,
-		ThemeMode:   themeMode,
-		DotfilesDir: filepath.Join(home, "Documents", "PROYECTOS", "dreamcoder-dots"),
-	}
+ home, _ := os.UserHomeDir()
+ return &Installer{
+  Platform:    platform,
+  Components:  components,
+  ThemeMode:   themeMode,
+  DotfilesDir: filepath.Join(home, "Documents", "PROYECTOS", "dreamcoder-dots"),
+ }
 }
 
 func (i *Installer) Install(progressFunc func(component string, status string)) error {
-	for _, comp := range i.Components {
-		progressFunc(comp, "installing")
-		
-		if err := i.installComponent(comp); err != nil {
-			progressFunc(comp, "error: "+err.Error())
-			return fmt.Errorf("failed to install %s: %w", comp, err)
-		}
-		
-		progressFunc(comp, "done")
-	}
-	return nil
+ for _, comp := range i.Components {
+  progressFunc(comp, "installing")
+
+  if err := i.installComponent(comp); err != nil {
+   progressFunc(comp, "error: "+err.Error())
+   return fmt.Errorf("failed to install %s: %w", comp, err)
+  }
+
+  progressFunc(comp, "done")
+ }
+ return nil
 }
 
 func (i *Installer) installComponent(component string) error {
-	switch component {
-	case "kitty":
-		return i.stow("Kitty")
-	case "ghostty":
-		return i.stow("Ghostty")
-	case "wezterm":
-		return i.stow("WezTerm")
-	case "alacritty":
-		return i.stow("Alacritty")
-	case "fish":
-		return i.stow("Shell")
-	case "zsh":
-		return i.stow("Shell")
-	case "nushell":
-		return i.stow("Nushell")
-	case "tmux":
-		return i.stow("Tmux")
-	case "zellij":
-		return i.stow("Zellij")
-	case "nvim":
-		return i.stow("Nvim")
-	default:
-		return fmt.Errorf("unknown component: %s", component)
-	}
+ switch component {
+ case "kitty":
+  return i.stow("Kitty")
+ case "ghostty":
+  return i.stow("Ghostty")
+ case "wezterm":
+  return i.stow("WezTerm")
+ case "alacritty":
+  return i.stow("Alacritty")
+ case "fish":
+  return i.stow("Shell")
+ case "zsh":
+  return i.stow("Shell")
+ case "nushell":
+  return i.stow("Nushell")
+ case "tmux":
+  return i.stow("Tmux")
+ case "zellij":
+  return i.stow("Zellij")
+ case "nvim":
+  return i.stow("Nvim")
+ default:
+  return fmt.Errorf("unknown component: %s", component)
+ }
 }
 
 func (i *Installer) stow(module string) error {
-	cmd := exec.Command("stow", "-d", i.DotfilesDir, "-t", os.Getenv("HOME"), module)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+ cmd := exec.Command("stow", "-d", i.DotfilesDir, "-t", os.Getenv("HOME"), module)
+ cmd.Stdout = os.Stdout
+ cmd.Stderr = os.Stderr
+ return cmd.Run()
 }
 ```
 
@@ -1448,42 +1456,42 @@ func (i *Installer) stow(module string) error {
 package installer
 
 import (
-	"encoding/json"
-	"os"
-	"path/filepath"
-	"time"
+ "encoding/json"
+ "os"
+ "path/filepath"
+ "time"
 )
 
 type BackupEntry struct {
-	Source      string    `json:"source"`
-	Destination string    `json:"destination"`
-	Timestamp   time.Time `json:"timestamp"`
+ Source      string    `json:"source"`
+ Destination string    `json:"destination"`
+ Timestamp   time.Time `json:"timestamp"`
 }
 
 type BackupManifest struct {
-	Entries []BackupEntry `json:"entries"`
+ Entries []BackupEntry `json:"entries"`
 }
 
 func BackupFile(source, dest string) error {
-	home, _ := os.UserHomeDir()
-	manifestPath := filepath.Join(home, ".config", "dreamcoder", "backup-manifest.json")
-	
-	// Read existing manifest
-	var manifest BackupManifest
-	if data, err := os.ReadFile(manifestPath); err == nil {
-		json.Unmarshal(data, &manifest)
-	}
-	
-	// Add new entry
-	manifest.Entries = append(manifest.Entries, BackupEntry{
-		Source:      source,
-		Destination: dest,
-		Timestamp:   time.Now(),
-	})
-	
-	// Write manifest
-	data, _ := json.MarshalIndent(manifest, "", "  ")
-	return os.WriteFile(manifestPath, data, 0644)
+ home, _ := os.UserHomeDir()
+ manifestPath := filepath.Join(home, ".config", "dreamcoder", "backup-manifest.json")
+
+ // Read existing manifest
+ var manifest BackupManifest
+ if data, err := os.ReadFile(manifestPath); err == nil {
+  json.Unmarshal(data, &manifest)
+ }
+
+ // Add new entry
+ manifest.Entries = append(manifest.Entries, BackupEntry{
+  Source:      source,
+  Destination: dest,
+  Timestamp:   time.Now(),
+ })
+
+ // Write manifest
+ data, _ := json.MarshalIndent(manifest, "", "  ")
+ return os.WriteFile(manifestPath, data, 0644)
 }
 ```
 
@@ -1493,42 +1501,42 @@ func BackupFile(source, dest string) error {
 package cmd
 
 import (
-	"fmt"
-	"os"
+ "fmt"
+ "os"
 
-	"github.com/spf13/cobra"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/installer"
+ "github.com/spf13/cobra"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/installer"
 )
 
 var (
-	components []string
-	themeMode  string
+ components []string
+ themeMode  string
 )
 
 var installCmd = &cobra.Command{
-	Use:   "install",
-	Short: "Install Dreamcoder OS components",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		platform := installer.DetectPlatform()
-		fmt.Printf("Detected platform: %s/%s (%s)\n", platform.OS, platform.Arch, platform.Distro)
-		
-		if !platform.HasStow {
-			return fmt.Errorf("GNU Stow is required. Install it first.")
-		}
-		
-		inst := installer.NewInstaller(platform, components, themeMode)
-		
-		return inst.Install(func(component, status string) {
-			fmt.Printf("[%s] %s\n", component, status)
-		})
-	},
+ Use:   "install",
+ Short: "Install Dreamcoder OS components",
+ RunE: func(cmd *cobra.Command, args []string) error {
+  platform := installer.DetectPlatform()
+  fmt.Printf("Detected platform: %s/%s (%s)\n", platform.OS, platform.Arch, platform.Distro)
+
+  if !platform.HasStow {
+   return fmt.Errorf("GNU Stow is required. Install it first.")
+  }
+
+  inst := installer.NewInstaller(platform, components, themeMode)
+
+  return inst.Install(func(component, status string) {
+   fmt.Printf("[%s] %s\n", component, status)
+  })
+ },
 }
 
 func init() {
-	installCmd.Flags().StringSliceVarP(&components, "components", "c", 
-		[]string{"kitty", "fish", "nvim"}, "Components to install")
-	installCmd.Flags().StringVarP(&themeMode, "theme", "t", "dark", "Theme mode (dark/light/dusk)")
-	rootCmd.AddCommand(installCmd)
+ installCmd.Flags().StringSliceVarP(&components, "components", "c",
+  []string{"kitty", "fish", "nvim"}, "Components to install")
+ installCmd.Flags().StringVarP(&themeMode, "theme", "t", "dark", "Theme mode (dark/light/dusk)")
+ rootCmd.AddCommand(installCmd)
 }
 ```
 
@@ -1538,33 +1546,33 @@ func init() {
 package cmd
 
 import (
-	"fmt"
-	"os/exec"
+ "fmt"
+ "os/exec"
 
-	"github.com/spf13/cobra"
+ "github.com/spf13/cobra"
 )
 
 var repairCmd = &cobra.Command{
-	Use:   "repair",
-	Short: "Reapply hooks after upstream updates",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("Reapplying Dreamcoder hooks...")
-		
-		// Re-stow all modules
-		modules := []string{"Kitty", "Ghostty", "Shell", "Nvim", "Fastfetch", "Tmux", "Zellij", "Nushell"}
-		for _, mod := range modules {
-			fmt.Printf("Restowing %s...\n", mod)
-			exec.Command("stow", "-D", "-t", "$HOME", mod).Run()
-			exec.Command("stow", "-t", "$HOME", mod).Run()
-		}
-		
-		fmt.Println("Repair complete!")
-		return nil
-	},
+ Use:   "repair",
+ Short: "Reapply hooks after upstream updates",
+ RunE: func(cmd *cobra.Command, args []string) error {
+  fmt.Println("Reapplying Dreamcoder hooks...")
+
+  // Re-stow all modules
+  modules := []string{"Kitty", "Ghostty", "Shell", "Nvim", "Fastfetch", "Tmux", "Zellij", "Nushell"}
+  for _, mod := range modules {
+   fmt.Printf("Restowing %s...\n", mod)
+   exec.Command("stow", "-D", "-t", "$HOME", mod).Run()
+   exec.Command("stow", "-t", "$HOME", mod).Run()
+  }
+
+  fmt.Println("Repair complete!")
+  return nil
+ },
 }
 
 func init() {
-	rootCmd.AddCommand(repairCmd)
+ rootCmd.AddCommand(repairCmd)
 }
 ```
 
@@ -1578,72 +1586,72 @@ go get github.com/fatih/color
 package cmd
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
-	"runtime"
+ "fmt"
+ "os"
+ "os/exec"
+ "runtime"
 
-	"github.com/fatih/color"
-	"github.com/spf13/cobra"
+ "github.com/fatih/color"
+ "github.com/spf13/cobra"
 )
 
 var doctorCmd = &cobra.Command{
-	Use:   "doctor",
-	Short: "Check health of Dreamcoder OS installation",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		green := color.New(color.FgGreen).SprintFunc()
-		red := color.New(color.FgRed).SprintFunc()
-		yellow := color.New(color.FgYellow).SprintFunc()
-		
-		fmt.Println("🔍 Dreamcoder OS Doctor")
-		fmt.Println("========================")
-		
-		// Check platform
-		fmt.Printf("Platform: %s/%s\n", runtime.GOOS, runtime.GOARCH)
-		
-		// Check tools
-		tools := map[string]string{
-			"git":      "Version control",
-			"stow":     "Symlink manager",
-			"nvim":     "Editor",
-			"fish":     "Shell",
-			"kitty":    "Terminal",
-			"ghostty":  "Terminal",
-			"starship": "Prompt",
-			"fzf":      "Fuzzy finder",
-			"zoxide":   "Smart cd",
-		}
-		
-		for tool, desc := range tools {
-			if _, err := exec.LookPath(tool); err == nil {
-				fmt.Printf("  %s %s (%s)\n", green("✓"), tool, desc)
-			} else {
-				fmt.Printf("  %s %s (%s) — not found\n", red("✗"), tool, desc)
-			}
-		}
-		
-		// Check theme mode
-		mode := os.Getenv("DREAMCODER_THEME_MODE")
-		if mode == "" {
-			mode = "dark"
-		}
-		fmt.Printf("\nTheme Mode: %s\n", yellow(mode))
-		
-		// Check dotfiles dir
-		home, _ := os.UserHomeDir()
-		dotfiles := home + "/Documents/PROYECTOS/dreamcoder-dots"
-		if _, err := os.Stat(dotfiles); err == nil {
-			fmt.Printf("Dotfiles: %s %s\n", green("✓"), dotfiles)
-		} else {
-			fmt.Printf("Dotfiles: %s %s\n", red("✗"), dotfiles)
-		}
-		
-		return nil
-	},
+ Use:   "doctor",
+ Short: "Check health of Dreamcoder OS installation",
+ RunE: func(cmd *cobra.Command, args []string) error {
+  green := color.New(color.FgGreen).SprintFunc()
+  red := color.New(color.FgRed).SprintFunc()
+  yellow := color.New(color.FgYellow).SprintFunc()
+
+  fmt.Println("🔍 Dreamcoder OS Doctor")
+  fmt.Println("========================")
+
+  // Check platform
+  fmt.Printf("Platform: %s/%s\n", runtime.GOOS, runtime.GOARCH)
+
+  // Check tools
+  tools := map[string]string{
+   "git":      "Version control",
+   "stow":     "Symlink manager",
+   "nvim":     "Editor",
+   "fish":     "Shell",
+   "kitty":    "Terminal",
+   "ghostty":  "Terminal",
+   "starship": "Prompt",
+   "fzf":      "Fuzzy finder",
+   "zoxide":   "Smart cd",
+  }
+
+  for tool, desc := range tools {
+   if _, err := exec.LookPath(tool); err == nil {
+    fmt.Printf("  %s %s (%s)\n", green("✓"), tool, desc)
+   } else {
+    fmt.Printf("  %s %s (%s) — not found\n", red("✗"), tool, desc)
+   }
+  }
+
+  // Check theme mode
+  mode := os.Getenv("DREAMCODER_THEME_MODE")
+  if mode == "" {
+   mode = "dark"
+  }
+  fmt.Printf("\nTheme Mode: %s\n", yellow(mode))
+
+  // Check dotfiles dir
+  home, _ := os.UserHomeDir()
+  dotfiles := home + "/Documents/PROYECTOS/dreamcoder-dots"
+  if _, err := os.Stat(dotfiles); err == nil {
+   fmt.Printf("Dotfiles: %s %s\n", green("✓"), dotfiles)
+  } else {
+   fmt.Printf("Dotfiles: %s %s\n", red("✗"), dotfiles)
+  }
+
+  return nil
+ },
 }
 
 func init() {
-	rootCmd.AddCommand(doctorCmd)
+ rootCmd.AddCommand(doctorCmd)
 }
 ```
 
@@ -1667,6 +1675,7 @@ git commit -m "feat(installer): add install, repair, and doctor commands"
 ### Task 9: Homebrew Tap
 
 **Files:**
+
 - Create: `homebrew-tap/Formula/dreamcoder-dots.rb`
 
 - [ ] **Step 1: Create formula directory**
@@ -1730,6 +1739,7 @@ git commit -m "feat(homebrew): add Homebrew tap formula for multi-platform insta
 ### Task 10: Vim Mastery Trainer (Module 1)
 
 **Files:**
+
 - Create: `installer/internal/tui/views/vim-trainer.go`
 - Create: `installer/internal/tui/views/vim-editor.go`
 - Create: `installer/internal/tui/trainer/module.go`
@@ -1742,48 +1752,48 @@ git commit -m "feat(homebrew): add Homebrew tap formula for multi-platform insta
 package trainer
 
 type Module struct {
-	ID          int
-	Name        string
-	Keys        []string
-	Lessons     []Lesson
-	BossFight   BossFight
+ ID          int
+ Name        string
+ Keys        []string
+ Lessons     []Lesson
+ BossFight   BossFight
 }
 
 type Lesson struct {
-	ID       int
-	Name     string
-	Task     string
-	Expected string
-	Hint     string
+ ID       int
+ Name     string
+ Task     string
+ Expected string
+ Hint     string
 }
 
 type BossFight struct {
-	Name  string
-	Tasks []Lesson
+ Name  string
+ Tasks []Lesson
 }
 
 type Module1 struct{}
 
 func (m Module1) GetModule() Module {
-	return Module{
-		ID:   1,
-		Name: "Horizontal Movement",
-		Keys: []string{"w", "e", "b", "f", "t", "0", "$", "^"},
-		Lessons: []Lesson{
-			{ID: 1, Name: "Word Forward", Task: "Move to next word", Expected: "w", Hint: "Press w to jump to next word start"},
-			{ID: 2, Name: "Word End", Task: "Move to end of word", Expected: "e", Hint: "Press e to jump to word end"},
-			{ID: 3, Name: "Word Back", Task: "Move to previous word", Expected: "b", Hint: "Press b to jump back"},
-			// ... 12 more lessons
-		},
-		BossFight: BossFight{
-			Name: "Code Maze",
-			Tasks: []Lesson{
-				{ID: 100, Name: "Navigate to function", Task: "Use w, e, b to reach the function name", Expected: "web"},
-				{ID: 101, Name: "Find character", Task: "Use f to jump to specific char", Expected: "f("},
-				{ID: 102, Name: "Line start/end", Task: "Use 0 and $ to navigate line", Expected: "0$"},
-			},
-		},
-	}
+ return Module{
+  ID:   1,
+  Name: "Horizontal Movement",
+  Keys: []string{"w", "e", "b", "f", "t", "0", "$", "^"},
+  Lessons: []Lesson{
+   {ID: 1, Name: "Word Forward", Task: "Move to next word", Expected: "w", Hint: "Press w to jump to next word start"},
+   {ID: 2, Name: "Word End", Task: "Move to end of word", Expected: "e", Hint: "Press e to jump to word end"},
+   {ID: 3, Name: "Word Back", Task: "Move to previous word", Expected: "b", Hint: "Press b to jump back"},
+   // ... 12 more lessons
+  },
+  BossFight: BossFight{
+   Name: "Code Maze",
+   Tasks: []Lesson{
+    {ID: 100, Name: "Navigate to function", Task: "Use w, e, b to reach the function name", Expected: "web"},
+    {ID: 101, Name: "Find character", Task: "Use f to jump to specific char", Expected: "f("},
+    {ID: 102, Name: "Line start/end", Task: "Use 0 and $ to navigate line", Expected: "0$"},
+   },
+  },
+ }
 }
 ```
 
@@ -1793,82 +1803,82 @@ func (m Module1) GetModule() Module {
 package trainer
 
 type Player struct {
-	XP          int            `json:"xp"`
-	Level       int            `json:"level"`
-	Title       string         `json:"title"`
-	Achievements []string      `json:"achievements"`
-	Modules     map[int]ModuleProgress `json:"modules"`
+ XP          int            `json:"xp"`
+ Level       int            `json:"level"`
+ Title       string         `json:"title"`
+ Achievements []string      `json:"achievements"`
+ Modules     map[int]ModuleProgress `json:"modules"`
 }
 
 type ModuleProgress struct {
-	CompletedLessons []int          `json:"completed"`
-	BestScores       map[int]int    `json:"best_scores"`
-	BossDefeated     bool           `json:"boss_defeated"`
+ CompletedLessons []int          `json:"completed"`
+ BestScores       map[int]int    `json:"best_scores"`
+ BossDefeated     bool           `json:"boss_defeated"`
 }
 
 func NewPlayer() *Player {
-	return &Player{
-		XP:      0,
-		Level:   1,
-		Title:   "Vim Beginner",
-		Modules: make(map[int]ModuleProgress),
-	}
+ return &Player{
+  XP:      0,
+  Level:   1,
+  Title:   "Vim Beginner",
+  Modules: make(map[int]ModuleProgress),
+ }
 }
 
 func (p *Player) AddXP(amount int) {
-	p.XP += amount
-	p.updateLevel()
+ p.XP += amount
+ p.updateLevel()
 }
 
 func (p *Player) updateLevel() {
-	switch {
-	case p.XP >= 2500:
-		p.Level = 7
-		p.Title = "Vim Sage"
-	case p.XP >= 1500:
-		p.Level = 6
-		p.Title = "Vim Wizard"
-	case p.XP >= 1000:
-		p.Level = 5
-		p.Title = "Vim Master"
-	case p.XP >= 600:
-		p.Level = 4
-		p.Title = "Vim Expert"
-	case p.XP >= 300:
-		p.Level = 3
-		p.Title = "Vim Journeyman"
-	case p.XP >= 100:
-		p.Level = 2
-		p.Title = "Vim Apprentice"
-	default:
-		p.Level = 1
-		p.Title = "Vim Beginner"
-	}
+ switch {
+ case p.XP >= 2500:
+  p.Level = 7
+  p.Title = "Vim Sage"
+ case p.XP >= 1500:
+  p.Level = 6
+  p.Title = "Vim Wizard"
+ case p.XP >= 1000:
+  p.Level = 5
+  p.Title = "Vim Master"
+ case p.XP >= 600:
+  p.Level = 4
+  p.Title = "Vim Expert"
+ case p.XP >= 300:
+  p.Level = 3
+  p.Title = "Vim Journeyman"
+ case p.XP >= 100:
+  p.Level = 2
+  p.Title = "Vim Apprentice"
+ default:
+  p.Level = 1
+  p.Title = "Vim Beginner"
+ }
 }
 
 func (p *Player) CompleteLesson(moduleID, lessonID int, score int, hintsUsed bool) {
-	if _, ok := p.Modules[moduleID]; !ok {
-		p.Modules[moduleID] = ModuleProgress{
-			CompletedLessons: []int{},
-			BestScores:       make(map[int]int),
-		}
-	}
-	
-	mod := p.Modules[moduleID]
-	mod.CompletedLessons = append(mod.CompletedLessons, lessonID)
-	
-	if score > mod.BestScores[lessonID] {
-		mod.BestScores[lessonID] = score
-	}
-	
-	p.Modules[moduleID] = mod
-	
-	// XP rewards
-	xp := 10
-	if score == 100 && !hintsUsed {
-		xp += 25 // Perfect bonus
-	}
-	p.AddXP(xp)
+ if _, ok := p.Modules[moduleID]; !ok {
+  p.Modules[moduleID] = ModuleProgress{
+   CompletedLessons: []int{},
+   BestScores:       make(map[int]int),
+  }
+ }
+
+ mod := p.Modules[moduleID]
+ mod.CompletedLessons = append(mod.CompletedLessons, lessonID)
+
+ if score > mod.BestScores[lessonID] {
+  mod.BestScores[lessonID] = score
+ }
+
+ p.Modules[moduleID] = mod
+
+ // XP rewards
+ xp := 10
+ if score == 100 && !hintsUsed {
+  xp += 25 // Perfect bonus
+ }
+ p.AddXP(xp)
 }
 ```
 
@@ -1878,42 +1888,42 @@ func (p *Player) CompleteLesson(moduleID, lessonID int, score int, hintsUsed boo
 package trainer
 
 import (
-	"encoding/json"
-	"os"
-	"path/filepath"
+ "encoding/json"
+ "os"
+ "path/filepath"
 )
 
 func GetSavePath() string {
-	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".config", "dreamcoder", "vim-trainer.json")
+ home, _ := os.UserHomeDir()
+ return filepath.Join(home, ".config", "dreamcoder", "vim-trainer.json")
 }
 
 func SavePlayer(player *Player) error {
-	path := GetSavePath()
-	os.MkdirAll(filepath.Dir(path), 0755)
-	
-	data, err := json.MarshalIndent(player, "", "  ")
-	if err != nil {
-		return err
-	}
-	
-	return os.WriteFile(path, data, 0644)
+ path := GetSavePath()
+ os.MkdirAll(filepath.Dir(path), 0755)
+
+ data, err := json.MarshalIndent(player, "", "  ")
+ if err != nil {
+  return err
+ }
+
+ return os.WriteFile(path, data, 0644)
 }
 
 func LoadPlayer() (*Player, error) {
-	path := GetSavePath()
-	
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return NewPlayer(), nil // Return fresh player if no save
-	}
-	
-	var player Player
-	if err := json.Unmarshal(data, &player); err != nil {
-		return NewPlayer(), nil
-	}
-	
-	return &player, nil
+ path := GetSavePath()
+
+ data, err := os.ReadFile(path)
+ if err != nil {
+  return NewPlayer(), nil // Return fresh player if no save
+ }
+
+ var player Player
+ if err := json.Unmarshal(data, &player); err != nil {
+  return NewPlayer(), nil
+ }
+
+ return &player, nil
 }
 ```
 
@@ -1923,83 +1933,83 @@ func LoadPlayer() (*Player, error) {
 package views
 
 import (
-	"fmt"
+ "fmt"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
-	"github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/trainer"
+ tea "github.com/charmbracelet/bubbletea"
+ "github.com/charmbracelet/lipgloss"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/styles"
+ "github.com/dreamcoder08/dreamcoder-dots/installer/internal/tui/trainer"
 )
 
 type VimTrainerModel struct {
-	player   *trainer.Player
-	module   int
-	lesson   int
-	width    int
-	height   int
+ player   *trainer.Player
+ module   int
+ lesson   int
+ width    int
+ height   int
 }
 
 func NewVimTrainerModel() VimTrainerModel {
-	player, _ := trainer.LoadPlayer()
-	return VimTrainerModel{player: player}
+ player, _ := trainer.LoadPlayer()
+ return VimTrainerModel{player: player}
 }
 
 func (m VimTrainerModel) Init() tea.Cmd {
-	return nil
+ return nil
 }
 
 func (m VimTrainerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "q", "ctrl+c":
-			trainer.SavePlayer(m.player)
-			return NewComponentsModel(), nil
-		}
-	}
-	return m, nil
+ switch msg := msg.(type) {
+ case tea.WindowSizeMsg:
+  m.width = msg.Width
+  m.height = msg.Height
+ case tea.KeyMsg:
+  switch msg.String() {
+  case "q", "ctrl+c":
+   trainer.SavePlayer(m.player)
+   return NewComponentsModel(), nil
+  }
+ }
+ return m, nil
 }
 
 func (m VimTrainerModel) View() string {
-	title := styles.TitleStyle.Render("🎮 VIM MASTERY TRAINER")
-	
-	// Player stats
-	stats := fmt.Sprintf("⭐ Lv%d %d XP — %s", m.player.Level, m.player.XP, m.player.Title)
-	
-	// Module list
-	modules := []string{
-		"✅ 1. Horizontal Movement",
-		"✅ 2. Vertical Movement",
-		"🔓 3. Text Objects",
-		"🔒 4. Change & Repeat",
-		"🔒 5. Substitution",
-		"🔒 6. Macros & Registers",
-		"🔒 7. Regex Search",
-	}
-	
-	moduleList := lipgloss.JoinVertical(lipgloss.Left, modules...)
-	
-	// Editor placeholder
-	editor := styles.BoxStyle.Width(50).Height(10).Render("Practice here...")
-	
-	leftPanel := lipgloss.JoinVertical(lipgloss.Left, 
-		styles.MenuItemStyle.Render(stats),
-		"",
-		moduleList,
-	)
-	
-	rightPanel := editor
-	
-	content := lipgloss.JoinHorizontal(lipgloss.Top, leftPanel, "  ", rightPanel)
-	
-	return lipgloss.Place(
-		m.width, m.height,
-		lipgloss.Center, lipgloss.Center,
-		lipgloss.JoinVertical(lipgloss.Center, title, "", content),
-	)
+ title := styles.TitleStyle.Render("🎮 VIM MASTERY TRAINER")
+
+ // Player stats
+ stats := fmt.Sprintf("⭐ Lv%d %d XP — %s", m.player.Level, m.player.XP, m.player.Title)
+
+ // Module list
+ modules := []string{
+  "✅ 1. Horizontal Movement",
+  "✅ 2. Vertical Movement",
+  "🔓 3. Text Objects",
+  "🔒 4. Change & Repeat",
+  "🔒 5. Substitution",
+  "🔒 6. Macros & Registers",
+  "🔒 7. Regex Search",
+ }
+
+ moduleList := lipgloss.JoinVertical(lipgloss.Left, modules...)
+
+ // Editor placeholder
+ editor := styles.BoxStyle.Width(50).Height(10).Render("Practice here...")
+
+ leftPanel := lipgloss.JoinVertical(lipgloss.Left,
+  styles.MenuItemStyle.Render(stats),
+  "",
+  moduleList,
+ )
+
+ rightPanel := editor
+
+ content := lipgloss.JoinHorizontal(lipgloss.Top, leftPanel, "  ", rightPanel)
+
+ return lipgloss.Place(
+  m.width, m.height,
+  lipgloss.Center, lipgloss.Center,
+  lipgloss.JoinVertical(lipgloss.Center, title, "", content),
+ )
 }
 ```
 
@@ -2032,6 +2042,7 @@ git commit -m "feat(trainer): add Vim Mastery Trainer with Module 1 and XP syste
 ### Task 11: Documentation Suite
 
 **Files:**
+
 - Create: `docs/README.md`
 - Create: `docs/installation/linux.md`
 - Create: `docs/installation/macos.md`
@@ -2048,7 +2059,7 @@ git commit -m "feat(trainer): add Vim Mastery Trainer with Module 1 and XP syste
 
 - [ ] **Step 1: Create docs/README.md**
 
-```markdown
+````markdown
 # Dreamcoder OS Documentation
 
 Welcome to the Dreamcoder OS documentation.
@@ -2068,6 +2079,7 @@ Welcome to the Dreamcoder OS documentation.
 brew install dreamcoder08/tap/dreamcoder-dots
 dreamcoder-dots
 ```
+````
 
 ### Install via Curl
 
@@ -2077,20 +2089,21 @@ curl -fsSL https://raw.githubusercontent.com/dreamcoder08/dreamcoder-dots/main/i
 
 ## What's Included
 
-| Component | Status |
-|-----------|--------|
-| Kitty | ✅ |
-| Ghostty | ✅ |
-| WezTerm | ✅ |
-| Alacritty | ✅ |
-| Fish | ✅ |
-| Zsh | ✅ |
-| Nushell | ✅ |
-| Tmux | ✅ |
-| Zellij | ✅ |
-| Neovim (LazyVim) | ✅ |
-| Vim Trainer | ✅ |
-```
+| Component        | Status |
+| ---------------- | ------ |
+| Kitty            | ✅     |
+| Ghostty          | ✅     |
+| WezTerm          | ✅     |
+| Alacritty        | ✅     |
+| Fish             | ✅     |
+| Zsh              | ✅     |
+| Nushell          | ✅     |
+| Tmux             | ✅     |
+| Zellij           | ✅     |
+| Neovim (LazyVim) | ✅     |
+| Vim Trainer      | ✅     |
+
+````
 
 - [ ] **Step 2: Create Linux installation guide**
 
@@ -2115,7 +2128,7 @@ sudo apt install stow git  # Ubuntu
 git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/dreamcoder-dots
 cd ~/dreamcoder-dots
 ./scripts/dreamcoder install
-```
+````
 
 ## Via Homebrew (Linux)
 
@@ -2127,7 +2140,8 @@ cd ~/dreamcoder-dots
 brew install dreamcoder08/tap/dreamcoder-dots
 dreamcoder-dots
 ```
-```
+
+````
 
 - [ ] **Step 3: Create macOS installation guide**
 
@@ -2145,7 +2159,7 @@ dreamcoder-dots
 ```bash
 brew install dreamcoder08/tap/dreamcoder-dots
 dreamcoder-dots
-```
+````
 
 ## Manual Install
 
@@ -2158,7 +2172,8 @@ git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/dreamcoder-dots
 cd ~/dreamcoder-dots
 ./scripts/dreamcoder install
 ```
-```
+
+````
 
 - [ ] **Step 4: Create WSL installation guide**
 
@@ -2181,15 +2196,17 @@ sudo apt update && sudo apt install -y stow git
 git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/dreamcoder-dots
 cd ~/dreamcoder-dots
 ./scripts/dreamcoder install
-```
+````
 
 ## Using Windows Terminal
 
 After install, configure Windows Terminal to use:
+
 - Shell: `wsl -d Ubuntu`
 - Font: JetBrainsMono Nerd Font
 - Theme: Use the Dreamcoder theme in Windows Terminal settings
-```
+
+````
 
 - [ ] **Step 5: Create Termux installation guide**
 
@@ -2210,14 +2227,15 @@ pkg install stow git python nodejs
 git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/dreamcoder-dots
 cd ~/dreamcoder-dots
 ./scripts/dreamcoder install
-```
+````
 
 ## Limitations
 
 - No systemd (day/night automation unavailable)
 - No GUI apps (Kitty/Ghostty unavailable)
 - Limited shader support
-```
+
+````
 
 - [ ] **Step 6: Create theme system docs**
 
@@ -2226,13 +2244,15 @@ cd ~/dreamcoder-dots
 
 ## Architecture
 
-```
+````
+
 tokens.json → Theme Engine (Python) → 48 config files → 22 targets
-```
+
+````
 
 ## Token Schema
 
-All colors are defined in `themes/dreamcoder/tokens.json`:
+All colors are defined in `DreamcoderThemes/dreamcoder/tokens.json`:
 
 ```json
 {
@@ -2251,7 +2271,7 @@ All colors are defined in `themes/dreamcoder/tokens.json`:
     "diagnostic": "#3a7bc8"
   }
 }
-```
+````
 
 ## Regenerating Themes
 
@@ -2266,8 +2286,9 @@ After editing `tokens.json`:
 1. Create renderer in `scripts/dreamcoder_theme/renderers_<target>.py`
 2. Add token mapping
 3. Run `./scripts/dreamcoder sync`
-4. Files appear in `themes/dreamcoder/`
-```
+4. Files appear in `DreamcoderThemes/dreamcoder/`
+
+````
 
 - [ ] **Step 7: Create migration guides**
 
@@ -2287,7 +2308,7 @@ After editing `tokens.json`:
 3. Run installer: `dreamcoder-dots`
 4. Select components to migrate
 5. Remove ML4W when satisfied: `rm -rf ~/.config/ml4w`
-```
+````
 
 ```markdown
 # Migrating from Gentleman.Dots
@@ -2310,6 +2331,7 @@ After editing `tokens.json`:
 - [ ] **Step 8: Update root README.md**
 
 Update the main README with:
+
 - New badges (version, platforms, health)
 - Updated feature table
 - Installation commands for all platforms
@@ -2326,25 +2348,26 @@ git commit -m "docs: add comprehensive documentation suite with migration guides
 
 ## Summary
 
-| Task | Deliverable | Files Created |
-|------|-------------|---------------|
-| 1 | Tmux config | 3 files |
-| 2 | Zellij config | 4 files |
-| 3 | Nushell config | 4 files |
-| 4 | WezTerm config | 3 files |
-| 5 | Alacritty config | 3 files |
-| 6 | Go project setup | 4 files |
-| 7 | TUI core | 5 files |
-| 8 | Install logic | 6 files |
-| 9 | Homebrew tap | 1 file |
-| 10 | Vim Trainer | 5 files |
-| 11 | Documentation | 15+ files |
+| Task | Deliverable      | Files Created |
+| ---- | ---------------- | ------------- |
+| 1    | Tmux config      | 3 files       |
+| 2    | Zellij config    | 4 files       |
+| 3    | Nushell config   | 4 files       |
+| 4    | WezTerm config   | 3 files       |
+| 5    | Alacritty config | 3 files       |
+| 6    | Go project setup | 4 files       |
+| 7    | TUI core         | 5 files       |
+| 8    | Install logic    | 6 files       |
+| 9    | Homebrew tap     | 1 file        |
+| 10   | Vim Trainer      | 5 files       |
+| 11   | Documentation    | 15+ files     |
 
 **Total:** ~53 new files, 2 modified files
 
 **Estimated effort:** 2-3 focused coding sessions
 
 **Success criteria:**
+
 - ✅ All terminal configs work with `dreamcoder sync`
 - ✅ Go binary compiles for 4 platforms
 - ✅ Homebrew install works

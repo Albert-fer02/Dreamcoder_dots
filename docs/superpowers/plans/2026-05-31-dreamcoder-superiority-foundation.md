@@ -13,6 +13,7 @@
 ### Task 1: Control Center CLI foundation
 
 **Files:**
+
 - Create: `scripts/dreamcoder_theme/control.py`
 - Modify: `scripts/dreamcoder`
 - Test: `tests/test_dreamcoder_control_center.py`
@@ -25,6 +26,7 @@
 ### Task 2: Smart Doctor contract
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/control.py`
 - Modify: `scripts/doctor.sh`
 - Test: `tests/test_dreamcoder_control_center.py`
@@ -37,9 +39,10 @@
 ### Task 3: Profiles and motion presets
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/control.py`
-- Create: `profiles/dreamcoder/asus-vivobook15.json`
-- Create: `profiles/dreamcoder/default.json`
+- Create: `DreamcoderProfiles/dreamcoder/asus-vivobook15.json`
+- Create: `DreamcoderProfiles/dreamcoder/default.json`
 - Test: `tests/test_dreamcoder_control_center.py`
 
 - [x] Define profiles for `default` and `asus-vivobook15` with monitor scale, keyboard, repeat rate, shell, terminal mode, and performance notes.
@@ -50,6 +53,7 @@
 ### Task 4: Documentation and verification
 
 **Files:**
+
 - Modify: `README.md`
 - Modify: `scripts/verify.sh`
 - Test: full project verification
@@ -61,6 +65,7 @@
 ### Task 5: Installer safety and repair foundation
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/control.py`
 - Modify: `scripts/dreamcoder`
 - Modify: `scripts/install.sh`
@@ -76,6 +81,7 @@
 ### Task 6: Smart repair automation
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/control.py`
 - Modify: `scripts/dreamcoder`
 - Modify: `scripts/verify.sh`
@@ -91,6 +97,7 @@
 ### Task 7: Control Center dashboard and modular refactor
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/control.py`
 - Create: `scripts/dreamcoder_theme/core.py`
 - Create: `scripts/dreamcoder_theme/backups.py`
@@ -114,6 +121,7 @@
 ### Task 8: Settings schema and validation contracts
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/settings_store.py`
 - Modify: `scripts/dreamcoder_theme/control.py`
 - Modify: `scripts/verify.sh`
@@ -130,6 +138,7 @@
 ### Task 9: Terminal settings TUI contract
 
 **Files:**
+
 - Create: `scripts/dreamcoder_theme/tui.py`
 - Create: `tests/test_dreamcoder_tui.py`
 - Modify: `scripts/dreamcoder_theme/control.py`
@@ -149,6 +158,7 @@
 ### Task 10: Generated visual operator documentation
 
 **Files:**
+
 - Create: `scripts/dreamcoder_theme/docs_report.py`
 - Create: `tests/test_dreamcoder_docs_report.py`
 - Create on demand: `docs/generated/DREAMCODER_OPERATOR_REPORT.md`
@@ -169,6 +179,7 @@
 ### Task 11: Competitive capability audit
 
 **Files:**
+
 - Create: `scripts/dreamcoder_theme/audit.py`
 - Create: `tests/test_dreamcoder_audit.py`
 - Modify: `scripts/dreamcoder_theme/cli_handlers.py`
@@ -188,6 +199,7 @@
 ### Task 12: Expanded safe repair catalog
 
 **Files:**
+
 - Modify: `scripts/dreamcoder_theme/repair_engine.py`
 - Modify: `scripts/dreamcoder_theme/audit.py`
 - Modify: `scripts/dreamcoder_theme/cli_handlers.py`

@@ -125,5 +125,5 @@ Sections:
 - Existing docs: `docs/README.md`, `docs/installation/macos.md`, `docs/installation/linux.md`
 - Gentleman.Dots README: (bilingual EN+ES) — reference for format
 - ML4W README: (professional, well-structured) — reference for professional tone
-- Theme tokens: `themes/dreamcoder/tokens.json`
+- Theme tokens: `DreamcoderThemes/dreamcoder/tokens.json`
 - Theme preview: `docs/dreamcoder-theme-preview.md`

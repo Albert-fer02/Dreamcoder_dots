@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate palette_tokens.py from themes/dreamcoder/tokens.json."""
+"""Generate palette_tokens.py from DreamcoderThemes/dreamcoder/tokens.json."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TOKENS_FILE = ROOT / "themes" / "dreamcoder" / "tokens.json"
+TOKENS_FILE = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 OUTPUT = ROOT / "src" / "dreamcoder_theme" / "palette_tokens.py"
 
 ANSI_KEY_NAMES = [
@@ -99,7 +99,7 @@ def oklch_to_hex(lightness: float, chroma: float, hue: float) -> str:
 def mix_hex(left: str, right: str, amount: float) -> str:
     a = hex_to_rgb(left)
     b = hex_to_rgb(right)
-    return rgb_to_hex(tuple(x + (y - x) * amount for x, y in zip(a, b)))
+    return rgb_to_hex((a[0] + (b[0] - a[0]) * amount, a[1] + (b[1] - a[1]) * amount, a[2] + (b[2] - a[2]) * amount))
 
 
 def ramp_step(base: str, target_l_delta: float) -> str:
@@ -160,7 +160,7 @@ def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
     lines = [
         '"""Static palette token data for Dreamcoder themes.',
         "",
-        "AUTO-GENERATED from themes/dreamcoder/tokens.json — do not edit by hand.",
+        "AUTO-GENERATED from DreamcoderThemes/dreamcoder/tokens.json — do not edit by hand.",
         "Run: ./scripts/generate-palette-tokens.py",
         '"""',
         "",
