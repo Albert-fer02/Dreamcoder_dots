@@ -273,8 +273,6 @@ class TestUpdateGhosttyTheme:
         assert update_ghostty_theme(path, "dark") is True
         content = path.read_text()
         assert "theme = dreamcoder-dark" in content
-        assert "background-opacity = 0.76" in content
-        assert "background-blur = 20" in content
 
     def test_sets_light_theme(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
@@ -282,14 +280,10 @@ class TestUpdateGhosttyTheme:
         assert update_ghostty_theme(path, "light") is True
         content = path.read_text()
         assert "theme = dreamcoder" in content
-        assert "background-opacity = 0.96" in content
-        assert "background-blur = false" in content
 
     def test_no_change_when_correct(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
-        path.write_text(
-            "theme = dreamcoder-dark\nbackground-opacity = 0.76\nbackground-blur = 20\n"
-        )
+        path.write_text("theme = dreamcoder-dark\n")
         assert update_ghostty_theme(path, "dark") is False
 
     def test_updates_existing_theme_line(self, tmp_path: Path) -> None:
@@ -303,19 +297,14 @@ class TestUpdateGhosttyTheme:
         path.write_text(
             "theme = dreamcoder-dark\nbackground-opacity = 1.00\nbackground-blur = 30\n"
         )
-        assert update_ghostty_theme(path, "dark") is True
-        content = path.read_text()
-        assert "background-opacity = 0.76" in content
-        assert "background-blur = 20" in content
-        assert "theme = dreamcoder-dark" in content
+        # Theme line matches: no change needed (opacity/blur come from theme file)
+        assert update_ghostty_theme(path, "dark") is False
 
     def test_replaces_different_opacity_light(self, tmp_path: Path) -> None:
         path = tmp_path / "ghostty.conf"
         path.write_text("theme = dreamcoder\nbackground-opacity = 0.50\nbackground-blur = false\n")
-        assert update_ghostty_theme(path, "light") is True
-        content = path.read_text()
-        assert "background-opacity = 0.96" in content
-        assert "background-blur = false" in content
+        # Theme line matches: no change needed
+        assert update_ghostty_theme(path, "light") is False
 
 
 class TestUpdateZellijConfig:
