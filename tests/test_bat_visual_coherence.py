@@ -2,9 +2,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FISH_THEME = ROOT / "Shell/.config/fish/conf.d/05-dreamcoder-theme.fish"
-BAT_THEMES = ROOT / "Bat/.config/bat/themes"
-CODEX_THEMES = ROOT / "Codex-CLI"
+FISH_THEME = ROOT / "DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish"
+BAT_THEMES = ROOT / "DreamcoderBat/.config/bat/themes"
+CODEX_THEMES = ROOT / "DreamcoderCodexCLI"
 
 
 class BatVisualCoherenceTest(unittest.TestCase):

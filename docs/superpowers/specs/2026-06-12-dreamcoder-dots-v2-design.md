@@ -129,9 +129,9 @@ WezTerm/.config/wezterm/dreamcoder-light.lua    # Generated
 **Files:**
 
 ```
-Alacritty/.config/alacritty/alacritty.toml → DreamcoderAlacritty/.config/alacritty/alacritty.toml
-Alacritty/.config/alacritty/dreamcoder-dark.toml     # Generated
-Alacritty/.config/alacritty/dreamcoder-light.toml    # Generated
+DreamcoderAlacritty/.config/alacritty/alacritty.toml
+DreamcoderAlacritty/.config/alacritty/dreamcoder-dark.toml     # Generated
+DreamcoderAlacritty/.config/alacritty/dreamcoder-light.toml    # Generated
 ```
 
 **Features:**

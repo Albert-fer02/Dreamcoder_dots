@@ -9,7 +9,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from dreamcoder_theme.palette import contrast
 from dreamcoder_theme.palette_tokens import ANSI_KEY_NAMES
 
-TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
+TOKENS = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 
 class TokenParityTest(unittest.TestCase):

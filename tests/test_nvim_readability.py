@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
+TOKENS = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 from dreamcoder_theme.renderers_extra_nvim import nvim_content
 

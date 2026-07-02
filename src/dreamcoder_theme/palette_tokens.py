@@ -1,6 +1,6 @@
 """Static palette token data for Dreamcoder themes.
 
-AUTO-GENERATED from themes/dreamcoder/tokens.json — do not edit by hand.
+AUTO-GENERATED from DreamcoderThemes/dreamcoder/tokens.json — do not edit by hand.
 Run: ./scripts/generate-palette-tokens.py
 """
 

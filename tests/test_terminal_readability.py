@@ -8,7 +8,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from dreamcoder_theme.palette import ansi, contrast
 
-TOKENS = ROOT / "themes" / "dreamcoder" / "tokens.json"
+TOKENS = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 
 class TerminalReadabilityTest(unittest.TestCase):

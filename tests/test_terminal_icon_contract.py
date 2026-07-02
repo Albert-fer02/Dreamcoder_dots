@@ -2,10 +2,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FISH_ICONS = ROOT / "Shell/.config/fish/conf.d/16-dreamcoder-icons.fish"
-SHELL_ALIASES = ROOT / "Shell/.config/shell/aliases/dreamcoder-icons.sh"
-KITTY_UI = ROOT / "Kitty/.config/kitty/dreamcoder-ui.conf"
-GHOSTTY = ROOT / "Ghostty/.config/ghostty/config"
+FISH_ICONS = ROOT / "DreamcoderShell/.config/fish/conf.d/16-dreamcoder-icons.fish"
+SHELL_ALIASES = ROOT / "DreamcoderShell/.config/shell/aliases/dreamcoder-icons.sh"
+KITTY_UI = ROOT / "DreamcoderKitty/.config/kitty/dreamcoder-ui.conf"
+GHOSTTY = ROOT / "DreamcoderGhostty/.config/ghostty/config"
 
 
 class TerminalIconContractTest(unittest.TestCase):

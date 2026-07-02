@@ -3,8 +3,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-KITTY = ROOT / "Kitty" / ".config" / "kitty"
-GHOSTTY = ROOT / "Ghostty" / ".config" / "ghostty" / "themes"
+KITTY = ROOT / "DreamcoderKitty" / ".config" / "kitty"
+GHOSTTY = ROOT / "DreamcoderGhostty" / ".config" / "ghostty" / "themes"
 
 
 def parse_kitty(path: Path) -> dict[str, str]:

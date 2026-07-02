@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-PROFILE_DIR = ROOT / "profiles" / "dreamcoder"
+PROFILE_DIR = ROOT / "DreamcoderProfiles" / "dreamcoder"
 VALID_STATUSES = {"ok", "warn", "fail", "skip"}
 
 

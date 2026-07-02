@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TOKENS_FILE = ROOT / "themes" / "dreamcoder" / "tokens.json"
+TOKENS_FILE = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 _HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
 _RGBA = re.compile(r"^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(0|1|0?\.\d+)\s*\)$")

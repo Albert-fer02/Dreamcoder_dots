@@ -289,7 +289,7 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             home = Path(tmpdir)
             target = home / ".config" / "kitty"
             target.parent.mkdir(parents=True)
-            target.symlink_to(ROOT / "Kitty" / ".config" / "kitty")
+            target.symlink_to(ROOT / "DreamcoderKitty" / ".config" / "kitty")
 
             result = run_control("installer", "plan", "--json", home=home)
             self.assertEqual(result.returncode, 0, result.stderr)
@@ -303,7 +303,7 @@ class DreamcoderControlCenterTest(unittest.TestCase):
             target = home / ".local" / "share" / "warp-terminal" / "themes"
             target.mkdir(parents=True)
             (target / "Dreamcoder.yaml").symlink_to(
-                ROOT / "Warp" / ".local" / "share" / "warp-terminal" / "themes" / "Dreamcoder.yaml"
+                ROOT / "DreamcoderWarp" / ".local" / "share" / "warp-terminal" / "themes" / "Dreamcoder.yaml"
             )
 
             result = run_control("installer", "plan", "--json", home=home)
