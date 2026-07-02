@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TOKENS = ROOT / "themes/dreamcoder/tokens.json"
+TOKENS = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
 OUT = ROOT / "docs/dreamcoder-theme-preview.md"
 TEXT_KEYS = [
     "text",

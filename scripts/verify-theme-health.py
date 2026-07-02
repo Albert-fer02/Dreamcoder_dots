@@ -9,52 +9,52 @@ from dreamcoder_theme.palette import ansi as terminal_ansi
 
 ROOT = Path(__file__).resolve().parent.parent
 FILES = [
-    ROOT / "Codex-App/Dreamcoder.codex-theme.json",
-    ROOT / "Codex-App/Dreamcoder-Light.codex-theme.json",
-    ROOT / "Codex-App/Dreamcoder-Dark.codex-theme.json",
+    ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json",
+    ROOT / "DreamcoderCodexApp/Dreamcoder-Light.codex-theme.json",
+    ROOT / "DreamcoderCodexApp/Dreamcoder-Dark.codex-theme.json",
 ]
-TOKEN_FILE = ROOT / "themes/dreamcoder/tokens.json"
-OPENCODE_THEME_DIR = ROOT / ".opencode/themes"
+TOKEN_FILE = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
+OPENCODE_THEME_DIR = ROOT / "DreamcoderOpenCode/.config/opencode"
 CODEX_CLI_FILES = [
-    ROOT / "Codex-CLI/Dreamcoder.tmTheme",
-    ROOT / "Codex-CLI/Dreamcoder-Light.tmTheme",
-    ROOT / "Codex-CLI/Dreamcoder-Dark.tmTheme",
+    ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme",
+    ROOT / "DreamcoderCodexCLI/Dreamcoder-Light.tmTheme",
+    ROOT / "DreamcoderCodexCLI/Dreamcoder-Dark.tmTheme",
 ]
 KITTY_FILES = [
-    ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-dark.conf",
-    ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder-light.conf",
+    ROOT / "DreamcoderKitty" / ".config" / "kitty" / "colors-dreamcoder-dark.conf",
+    ROOT / "DreamcoderKitty" / ".config" / "kitty" / "colors-dreamcoder-light.conf",
 ]
 STARSHIP_FILES = [
-    ROOT / "Shell" / ".config" / "starship-dark.toml",
-    ROOT / "Shell" / ".config" / "starship-light.toml",
+    ROOT / "DreamcoderShell" / ".config" / "starship-dark.toml",
+    ROOT / "DreamcoderShell" / ".config" / "starship-light.toml",
 ]
 GHOSTTY_FILES = [
-    ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder-dark",
-    ROOT / "Ghostty" / ".config" / "ghostty" / "themes" / "dreamcoder-light",
+    ROOT / "DreamcoderGhostty" / ".config" / "ghostty" / "themes" / "dreamcoder-dark",
+    ROOT / "DreamcoderGhostty" / ".config" / "ghostty" / "themes" / "dreamcoder-light",
 ]
 WAYBAR_FILES = [
-    ROOT / "themes" / "dreamcoder" / "waybar-dark.css",
-    ROOT / "themes" / "dreamcoder" / "waybar-light.css",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "waybar-dark.css",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "waybar-light.css",
 ]
 HYPRLAND_FILES = [
-    ROOT / "themes" / "dreamcoder" / "hyprland-dark.conf",
-    ROOT / "themes" / "dreamcoder" / "hyprland-light.conf",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "hyprland-dark.conf",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "hyprland-light.conf",
 ]
 ROFI_FILES = [
-    ROOT / "themes" / "dreamcoder" / "rofi-dark.rasi",
-    ROOT / "themes" / "dreamcoder" / "rofi-light.rasi",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "rofi-dark.rasi",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "rofi-light.rasi",
 ]
 BTOP_FILES = [
-    ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-dark.theme",
-    ROOT / "themes" / "dreamcoder" / "btop-dreamcoder-light.theme",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "btop-dreamcoder-dark.theme",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "btop-dreamcoder-light.theme",
 ]
 DUNST_FILES = [
-    ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-dark.conf",
-    ROOT / "themes" / "dreamcoder" / "dunst-dreamcoder-light.conf",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "dunst-dreamcoder-dark.conf",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "dunst-dreamcoder-light.conf",
 ]
 FZF_FILES = [
-    ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-dark.sh",
-    ROOT / "themes" / "dreamcoder" / "fzf-dreamcoder-light.sh",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "fzf-dreamcoder-dark.sh",
+    ROOT / "DreamcoderThemes" / "dreamcoder" / "fzf-dreamcoder-light.sh",
 ]
 HYPR_COLORS_LUA_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.lua"))
 HYPR_COLORS_CONF_GLOB = list((ROOT / "themes" / "dreamcoder").glob("hypr-colors-*.conf"))

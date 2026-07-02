@@ -14,11 +14,11 @@ The system competes as a **developer OS design system**, not as a web component 
 
 ## Token contract
 
-`themes/dreamcoder/tokens.json` is the canonical token source. Generated files must not invent independent color decisions.
+`DreamcoderThemes/dreamcoder/tokens.json` is the canonical token source. Generated files must not invent independent color decisions.
 
 Required contract:
 
-- **Versioned token schema**: `themes/dreamcoder/tokens.schema.json` defines the public token shape.
+- **Versioned token schema**: `DreamcoderThemes/dreamcoder/tokens.schema.json` defines the public token shape.
 - **Mode parity**: `light`, `dusk`, and `dark` must expose equivalent semantic roles.
 - **Semantic separation**: `accent`, `accent_2`, `diagnostic`, `warning`, `error`, `comment`, `subtle`, `focus`, `border_ui`, and `border_hi` must remain distinct.
 - **Generator ownership**: app-specific files are outputs; renderer modules own translation from tokens to target syntax.
@@ -53,11 +53,12 @@ Minimums:
 - Meaningful borders use `border_ui` or `border_hi`; decorative borders may use `border`.
 
 **APCA advisory thresholds (public beta, non-binding):**
+
 - Body text: Lc 75 (matches WCAG AAA target)
 - UI affordances: Lc 30 (matches WCAG any-text minimum)
 - Quiet text: Lc 45 (matches WCAG large/heavy text tier)
 
-Ve `themes/dreamcoder/tokens.json` guardrails for current values.
+Ve `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values.
 
 ## Governance
 
@@ -71,6 +72,7 @@ Dreamcoder changes follow this governance model:
 6. **Compatibility check**: repair/install flows must remain safe after ML4W, Gentleman, Waypaper, or Hyprland updates.
 
 ⚠️ **Known token gaps (quedan pendientes):**
+
 - Dark mode `diagnostic` color (#5f95ca) scores APCA Lc ~43 — below the Lc 75 advisory threshold. However WCAG 2.1 rates it at 6.00:1 (AA pass). This is a documented design tradeoff.
 
 ## Release readiness checklist

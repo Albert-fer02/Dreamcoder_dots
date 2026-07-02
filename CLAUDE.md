@@ -24,23 +24,24 @@ wallpaper-derived palettes unless explicitly requested.
 ./scripts/generate-palette-tokens.py
 bash -n scripts/update-colors.sh
 ghostty +validate-config
-STARSHIP_CONFIG=Shell/.config/starship.toml starship explain
-fish -n Shell/.config/fish/config.fish
+STARSHIP_CONFIG=DreamcoderShell/.config/starship.toml starship explain
+fish -n DreamcoderShell/.config/fish/config.fish
 ```
 
 ## Structure
 
 ```txt
-├── Shell/      # shell configs, Starship, Fish conf.d
-├── Kitty/      # Kitty config and Dreamcoder colors
-├── Ghostty/    # Ghostty config and Dreamcoder theme
-├── Fastfetch/  # Fastfetch config and Dreamcoder01 image
-└── scripts/    # sync/update helpers
+├── DreamcoderShell/      # shell configs, Starship, Fish conf.d
+├── DreamcoderKitty/      # Kitty config and Dreamcoder colors
+├── DreamcoderGhostty/    # Ghostty config and Dreamcoder theme
+├── DreamcoderFastfetch/  # Fastfetch config and Dreamcoder01 image
+├── DreamcoderThemes/     # Generated theme tokens and snippets
+└── scripts/              # sync/update helpers
 ```
 
 ## Dreamcoder identity
 
-Canonical palettes (see `themes/dreamcoder/tokens.json`):
+Canonical palettes (see `DreamcoderThemes/dreamcoder/tokens.json`):
 
 **Dark — Ember Noir OLED**
 
@@ -69,7 +70,7 @@ opacity     0.96
 Rules:
 
 - visible theme name is `Dreamcoder`
-- edit colors only in `themes/dreamcoder/tokens.json`, then `./scripts/dreamcoder sync`
+- edit colors only in `DreamcoderThemes/dreamcoder/tokens.json`, then `./scripts/dreamcoder sync`
 - Starship palette is `dreamcoder`
 - Ghostty theme is `dreamcoder` / `dreamcoder-dark` / `dreamcoder-light`
 - Fastfetch logo is `Dreamcoder01.jpg`

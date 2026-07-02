@@ -17,7 +17,7 @@ tokens.json → generate-palette-tokens.py → palette_tokens.py
 
 ## Canonical tokens
 
-Single source of truth: [`themes/dreamcoder/tokens.json`](../../themes/dreamcoder/tokens.json)
+Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../DreamcoderThemes/dreamcoder/tokens.json)
 
 Dark (**Ember Noir OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
 

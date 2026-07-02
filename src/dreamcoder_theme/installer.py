@@ -15,19 +15,19 @@ def managed_targets() -> list[dict[str, Any]]:
     dh = data_home()
     home = Path.home()
     return [
-        {"module": "Kitty", "path": str(ch / "kitty")},
-        {"module": "Ghostty", "path": str(ch / "ghostty")},
-        {"module": "Fastfetch", "path": str(ch / "fastfetch")},
-        {"module": "Fastfetch", "path": str(ch / "dreamcoder")},
-        {"module": "Shell", "path": str(ch / "fish")},
-        {"module": "Shell", "path": str(ch / "starship.toml")},
-        {"module": "Shell", "path": str(home / ".zshrc")},
-        {"module": "Shell", "path": str(home / ".bashrc")},
-        {"module": "Shell", "path": str(home / ".inputrc")},
-        {"module": "Bat", "path": str(ch / "bat")},
-        {"module": "Warp", "path": str(dh / "warp-terminal" / "themes")},
+{"module": "DreamcoderKitty", "path": str(ch / "kitty")},
+        {"module": "DreamcoderGhostty", "path": str(ch / "ghostty")},
+        {"module": "DreamcoderFastfetch", "path": str(ch / "fastfetch")},
+        {"module": "DreamcoderFastfetch", "path": str(ch / "dreamcoder")},
+        {"module": "DreamcoderShell", "path": str(ch / "fish")},
+        {"module": "DreamcoderShell", "path": str(ch / "starship.toml")},
+        {"module": "DreamcoderShell", "path": str(home / ".zshrc")},
+        {"module": "DreamcoderShell", "path": str(home / ".bashrc")},
+        {"module": "DreamcoderShell", "path": str(home / ".inputrc")},
+        {"module": "DreamcoderBat", "path": str(ch / "bat")},
+        {"module": "DreamcoderWarp", "path": str(dh / "warp-terminal" / "themes")},
         {
-            "module": "Systemd",
+            "module": "DreamcoderSystemd",
             "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.service"),
         },
         {"module": "Systemd", "path": str(ch / "systemd" / "user" / "dreamcoder-theme-auto.timer")},
@@ -74,9 +74,9 @@ def installer_plan() -> dict[str, Any]:
     target_args = " ".join(json.dumps(item["path"]) for item in targets)
     return {
         "schema": "dreamcoder.install-plan.v1",
-        "modules": ["Shell", "Kitty", "Ghostty", "Fastfetch", "Warp", "Bat", "Systemd"],
+        "modules": ["DreamcoderShell", "DreamcoderKitty", "DreamcoderGhostty", "DreamcoderFastfetch", "DreamcoderWarp", "DreamcoderBat", "DreamcoderSystemd"],
         "targets": targets,
         "conflicts": conflicts,
         "backup_command": f"./scripts/dreamcoder backup create {target_args} --reason install-preflight --json",
-        "stow_command": "stow -t ${HOME} Shell Kitty Ghostty Fastfetch Warp Bat Systemd",
+        "stow_command": "stow -t ${HOME} DreamcoderShell DreamcoderKitty DreamcoderGhostty DreamcoderFastfetch DreamcoderWarp DreamcoderBat DreamcoderSystemd",
     }

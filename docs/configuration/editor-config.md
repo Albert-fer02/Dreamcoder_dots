@@ -5,7 +5,7 @@
 ### Structure
 
 ```
-Nvim/.config/nvim/
+DreamcoderNvim/.config/nvim/
 ├── init.lua           # Bootstrap
 ├── lua/
 │   ├── config/        # Core config
@@ -34,6 +34,7 @@ See `docs/neovim-keymaps.md` for complete reference.
 ### Plugins
 
 Core plugins:
+
 - LazyVim (framework)
 - LSP (nvim-lspconfig)
 - Treesitter (syntax)

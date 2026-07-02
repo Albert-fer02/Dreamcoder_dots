@@ -5,7 +5,7 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 # shellcheck source=/dev/null
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 
-SOURCE_DIR="${DREAMCODER_DOTS_DIR}/Fastfetch/.config/dreamcoder"
+SOURCE_DIR="${DREAMCODER_DOTS_DIR}/DreamcoderFastfetch/.config/dreamcoder"
 TARGET_DIR="${CONFIG_HOME}/dreamcoder"
 BACKUP_DIR="${CONFIG_HOME}/dreamcoder-backup-$(date +%Y%m%d-%H%M%S)"
 

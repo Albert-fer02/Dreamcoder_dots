@@ -19,10 +19,10 @@
 /scripts/*.sh @Dreamcoder08
 
 # Shell configs
-/Shell/ @Dreamcoder08
+/DreamcoderShell/ @Dreamcoder08
 
 # Terminal configs
-/Kitty/ @Dreamcoder08
-/Ghostty/ @Dreamcoder08
-/Tmux/ @Dreamcoder08
-/Zellij/ @Dreamcoder08
+/DreamcoderKitty/ @Dreamcoder08
+/DreamcoderGhostty/ @Dreamcoder08
+/DreamcoderTmux/ @Dreamcoder08
+/DreamcoderZellij/ @Dreamcoder08

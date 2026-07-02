@@ -19,10 +19,10 @@ SAFE_REPAIR_CATALOG = {
 }
 
 MANAGED_RESTORE_TARGETS = {
-    "kitty config": ROOT / "Kitty" / ".config" / "kitty",
-    "ghostty config": ROOT / "Ghostty" / ".config" / "ghostty",
-    "starship config": ROOT / "Shell" / ".config" / "starship.toml",
-    "fish config": ROOT / "Shell" / ".config" / "fish" / "config.fish",
+"kitty config": ROOT / "DreamcoderKitty" / ".config" / "kitty",
+    "ghostty config": ROOT / "DreamcoderGhostty" / ".config" / "ghostty",
+    "starship config": ROOT / "DreamcoderShell" / ".config" / "starship.toml",
+    "fish config": ROOT / "DreamcoderShell" / ".config" / "fish" / "config.fish",
 }
 
 
@@ -73,7 +73,7 @@ def repair_plan() -> dict[str, Any]:
                 )
             )
         elif check.name == "active theme mode":
-            source = ROOT / "Kitty" / ".config" / "kitty" / "colors-dreamcoder.conf"
+            source = ROOT / "DreamcoderKitty" / ".config" / "kitty" / "colors-dreamcoder.conf"
             actions.append(
                 safe_action(
                     "restore-active-kitty-colors",

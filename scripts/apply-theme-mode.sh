@@ -143,13 +143,13 @@ printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
 WARP_THEME="${HOME}/.local/share/warp-terminal/themes/Dreamcoder.yaml"
-WARP_VARIANT="${DOTS_DIR}/Warp/.local/share/warp-terminal/themes/Dreamcoder-${MODE^}.yaml"
+WARP_VARIANT="${DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-${MODE^}.yaml"
 
 if [[ -L "${DUNST_CONF}" ]]; then
   target=$(readlink "${DUNST_CONF}")
   case "${target}" in
   *dunst-dreamcoder-dark.conf | *dunst-dreamcoder-light.conf)
-    ln -sf "${DOTS_DIR}/themes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
+    ln -sf "${DOTS_DIR}/DreamcoderThemes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
     ;;
   esac
 fi

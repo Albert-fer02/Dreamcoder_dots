@@ -90,7 +90,7 @@ cd ~/Documents/PROYECTOS/dreamcoder-dots
 Esto:
 
 1. Crea backups de configs existentes
-2. Stowea los módulos (Shell, Kitty, Ghostty, Fastfetch, Warp, Bat, Systemd)
+2. Stowea los módulos (DreamcoderShell, DreamcoderKitty, DreamcoderGhostty, DreamcoderFastfetch, DreamcoderWarp, DreamcoderBat, DreamcoderSystemd)
 3. Instala los hooks de tema para cada app
 4. Activa el timer systemd para auto-theme-switching
 5. Corre el primer sync de temas

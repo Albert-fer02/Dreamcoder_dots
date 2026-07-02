@@ -18,7 +18,7 @@ status=0
 check ghostty "$(file_mode "${CONFIG_HOME}/ghostty/themes/dreamcoder")" || status=1
 check kitty "$(file_mode "${CONFIG_HOME}/kitty/colors-dreamcoder.conf")" || status=1
 check opencode "$(bg_mode "$(json_bg "${CONFIG_HOME}/opencode/themes/dreamcoder.json")")" || status=1
-check repo_opencode "$(bg_mode "$(json_bg "${DREAMCODER_DOTS_DIR}/.opencode/themes/dreamcoder.json")")" || status=1
+check repo_opencode "$(bg_mode "$(json_bg "${DREAMCODER_DOTS_DIR}/DreamcoderOpenCode/.config/opencode/opencode.json")")" || status=1
 check starship "$(bg_mode "$(starship_bg)")" || status=1
 check gtk "$(gtk_mode)" || status=1
 exit "${status}"

@@ -68,7 +68,7 @@ def theme_paths() -> ThemePaths:
     data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
     codex_home = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
     pi_agent_home = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi/agent"))
-    dreamcoder_theme = ROOT / "themes/dreamcoder"
+    dreamcoder_theme = ROOT / "DreamcoderThemes/dreamcoder"
     return ThemePaths(
         kitty=Path(os.environ.get("KITTY_COLORS", config_home / "kitty/colors-dreamcoder.conf")),
         kitty_config=Path(os.environ.get("KITTY_CONFIG", config_home / "kitty/kitty.conf")),
@@ -94,59 +94,59 @@ def theme_paths() -> ThemePaths:
         pi_settings=Path(os.environ.get("PI_SETTINGS", pi_agent_home / "settings.json")),
         wallpaper=Path(os.environ.get("DREAMCODER_WALLPAPER", "")),
         tokens_file=Path(
-            os.environ.get("DREAMCODER_TOKENS", ROOT / "themes/dreamcoder/tokens.json")
+            os.environ.get("DREAMCODER_TOKENS", ROOT / "DreamcoderThemes/dreamcoder/tokens.json")
         ),
         # New targets — all stored in themes/dreamcoder/ by default
         bat_theme_dir=Path(os.environ.get("BAT_THEME_DIR", config_home / "bat/themes")),
         nvim=Path(
             os.environ.get(
                 "DREAMCODER_NVIM_THEME",
-                dreamcoder_theme.parent.parent / "Nvim/.config/nvim/colors/dreamcoder.lua",
+                dreamcoder_theme.parent.parent / "DreamcoderNvim/.config/nvim/colors/dreamcoder.lua",
             )
         ),
         zsh_syntax=Path(
             os.environ.get(
                 "DREAMCODER_ZSH_SYNTAX_THEME",
-                dreamcoder_theme / "zsh-syntax-highlighting-dreamcoder.zsh",
+                dreamcoder_theme.parent / "zsh-syntax-highlighting-dreamcoder.zsh",
             )
         ),
         ls_colors=Path(
             os.environ.get(
                 "DREAMCODER_LS_COLORS_THEME",
-                dreamcoder_theme / "ls-colors-dreamcoder.sh",
+                dreamcoder_theme.parent / "ls-colors-dreamcoder.sh",
             )
         ),
-        bat=Path(os.environ.get("DREAMCODER_BAT_THEME", dreamcoder_theme / "bat-dreamcoder.sh")),
+        bat=Path(os.environ.get("DREAMCODER_BAT_THEME", dreamcoder_theme.parent / "bat-dreamcoder.sh")),
         delta=Path(
             os.environ.get(
                 "DREAMCODER_DELTA_THEME",
-                dreamcoder_theme / "delta-dreamcoder.gitconfig",
+                dreamcoder_theme.parent / "delta-dreamcoder.gitconfig",
             )
         ),
-        fzf=Path(os.environ.get("DREAMCODER_FZF_THEME", dreamcoder_theme / "fzf-dreamcoder.sh")),
+        fzf=Path(os.environ.get("DREAMCODER_FZF_THEME", dreamcoder_theme.parent / "fzf-dreamcoder.sh")),
         btop=Path(
-            os.environ.get("DREAMCODER_BTOP_THEME", dreamcoder_theme / "btop-dreamcoder.theme")
+            os.environ.get("DREAMCODER_BTOP_THEME", dreamcoder_theme.parent / "btop-dreamcoder.theme")
         ),
         dunst=Path(
-            os.environ.get("DREAMCODER_DUNST_THEME", dreamcoder_theme / "dunst-dreamcoder.conf")
+            os.environ.get("DREAMCODER_DUNST_THEME", dreamcoder_theme.parent / "dunst-dreamcoder.conf")
         ),
         firefox=Path(
-            os.environ.get("DREAMCODER_FIREFOX_THEME", dreamcoder_theme / "firefox-dreamcoder.css")
+            os.environ.get("DREAMCODER_FIREFOX_THEME", dreamcoder_theme.parent / "firefox-dreamcoder.css")
         ),
         obsidian=Path(
             os.environ.get(
                 "DREAMCODER_OBSIDIAN_THEME",
-                dreamcoder_theme / "obsidian-dreamcoder.css",
+                dreamcoder_theme.parent / "obsidian-dreamcoder.css",
             )
         ),
         cava=Path(
-            os.environ.get("DREAMCODER_CAVA_THEME", dreamcoder_theme / "cava-dreamcoder.config")
+            os.environ.get("DREAMCODER_CAVA_THEME", dreamcoder_theme.parent / "cava-dreamcoder.config")
         ),
         # Desktop/WM targets
         hyprland=Path(
             os.environ.get(
                 "DREAMCODER_HYPRLAND_THEME",
-                dreamcoder_theme / "hyprland.conf",
+                dreamcoder_theme.parent / "hyprland.conf",
             )
         ),
         hypr_colors_lua=Path(
@@ -164,7 +164,7 @@ def theme_paths() -> ThemePaths:
         waybar=Path(
             os.environ.get(
                 "DREAMCODER_WAYBAR_THEME",
-                dreamcoder_theme / "waybar.css",
+                dreamcoder_theme.parent / "waybar.css",
             )
         ),
         waybar_matugen=Path(
@@ -176,7 +176,7 @@ def theme_paths() -> ThemePaths:
         rofi=Path(
             os.environ.get(
                 "DREAMCODER_ROFI_THEME",
-                dreamcoder_theme / "rofi.rasi",
+                dreamcoder_theme.parent / "rofi.rasi",
             )
         ),
         rofi_matugen=Path(

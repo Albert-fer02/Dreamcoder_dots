@@ -51,11 +51,12 @@ tests/                        # pytest test suite
 shell-tests/                  # bats tests for shell scripts
 docs/                         # Documentation hub
 scripts/                      # Shell automation scripts
-themes/dreamcoder/            # Generated theme files (output)
+DreamcoderThemes/dreamcoder/    # Generated theme files (output)
 ```
 
-Each terminal/shell/editor lives in its own top-level directory
-(`Kitty/`, `Ghostty/`, `Nvim/`, etc.) and is installed via GNU Stow.
+Each tool lives in a Dreamcoder-prefixed top-level directory
+(`DreamcoderKitty/`, `DreamcoderGhostty/`, `DreamcoderNvim/`, etc.)
+and is installed via GNU Stow.
 
 ## Development Setup
 

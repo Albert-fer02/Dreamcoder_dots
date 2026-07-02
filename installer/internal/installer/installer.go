@@ -40,16 +40,16 @@ func (i *Installer) Install(progressFunc func(component string, status string)) 
 
 func (i *Installer) installComponent(component string) error {
 	moduleMap := map[string]string{
-		"kitty":     "Kitty",
-		"ghostty":   "Ghostty",
-		"wezterm":   "WezTerm",
-		"alacritty": "Alacritty",
-		"fish":      "Shell",
-		"zsh":       "Shell",
-		"nushell":   "Nushell",
-		"tmux":      "Tmux",
-		"zellij":    "Zellij",
-		"nvim":      "Nvim",
+		"kitty":     "DreamcoderKitty",
+		"ghostty":   "DreamcoderGhostty",
+		"wezterm":   "DreamcoderWezTerm",
+		"alacritty": "DreamcoderAlacritty",
+		"fish":      "DreamcoderShell",
+		"zsh":       "DreamcoderShell",
+		"nushell":   "DreamcoderNushell",
+		"tmux":      "DreamcoderTmux",
+		"zellij":    "DreamcoderZellij",
+		"nvim":      "DreamcoderNvim",
 	}
 
 	module, ok := moduleMap[component]

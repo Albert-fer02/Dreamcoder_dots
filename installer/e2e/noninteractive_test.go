@@ -74,16 +74,16 @@ func TestNonInteractiveConfig_Validation(t *testing.T) {
 func TestNonInteractiveConfig_ComponentMapping(t *testing.T) {
 	// Test that component names map correctly
 	componentMap := map[string]string{
-		"kitty":     "Kitty",
-		"ghostty":   "Ghostty",
-		"wezterm":   "WezTerm",
-		"alacritty": "Alacritty",
-		"fish":      "Shell",
-		"zsh":       "Shell",
-		"nushell":   "Nushell",
-		"tmux":      "Tmux",
-		"zellij":    "Zellij",
-		"nvim":      "Nvim",
+		"kitty":     "DreamcoderKitty",
+		"ghostty":   "DreamcoderGhostty",
+		"wezterm":   "DreamcoderWezTerm",
+		"alacritty": "DreamcoderAlacritty",
+		"fish":      "DreamcoderShell",
+		"zsh":       "DreamcoderShell",
+		"nushell":   "DreamcoderNushell",
+		"tmux":      "DreamcoderTmux",
+		"zellij":    "DreamcoderZellij",
+		"nvim":      "DreamcoderNvim",
 	}
 
 	for component, expectedModule := range componentMap {

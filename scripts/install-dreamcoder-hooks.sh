@@ -20,7 +20,7 @@ DRY_RUN="${DRY_RUN:-false}"
 }
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-THEME_DIR="${ROOT}/themes/dreamcoder"
+THEME_DIR="${ROOT}/DreamcoderThemes/dreamcoder"
 
 # ---- helpers ----
 info()  { printf '  ✓ %s\n' "$*"; }

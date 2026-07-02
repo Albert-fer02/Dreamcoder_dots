@@ -25,10 +25,10 @@ Hook these into your app configs after ML4W/Gentleman files:
 | **Waybar** | `waybar-{mode}.css` | `@import` in waybar style.css |
 | **Rofi** | `rofi-{mode}.rasi` | `@import` or `-theme` in rofi launch |
 | **Starship** | `starship-{mode}.toml` | `STARSHIP_CONFIG` env var |
-| **Antigravity** | `Antigravity/Dreamcoder-{Mode}.json` | Antigravity theme selector |
+| **Antigravity** | `DreamcoderAntigravity/Dreamcoder-{Mode}.json` | Antigravity theme selector |
 | **opencode** | `opencode/dreamcoder.json` | `theme: "dreamcoder"` in opencode config |
-| **Codex CLI** | `Codex-CLI/Dreamcoder-{Mode}.tmTheme` | `theme = "Dreamcoder"` in codex config |
-| **PI CLI** | `Pi/.pi/agent/themes/dreamcoder-{mode}.json` | `theme: "dreamcoder"` in pi settings |
+| **Codex CLI** | `DreamcoderCodexCLI/Dreamcoder-{Mode}.tmTheme` | `theme = "Dreamcoder"` in codex config |
+| **PI CLI** | `DreamcoderPi/.pi/agent/themes/dreamcoder-{mode}.json` | `theme: "dreamcoder"` in pi settings |
 | **Neovim** | `nvim-dreamcoder-{mode}.lua` | `require('dreamcoder')` in neovim config |
 | **Zsh-syntax-highlighting** | `zsh-syntax-highlighting-dreamcoder-{mode}.zsh` | `source` after zsh-syntax-highlighting plugin |
 | **LS_COLORS / eza** | `ls-colors-dreamcoder-{mode}.sh` | `source` in .zshrc or .bashrc |
