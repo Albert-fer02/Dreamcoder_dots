@@ -1,7 +1,5 @@
-// Dreamcoder Layout for Zellij
-// Minimal: Zellij = marco invisible, no dashboard.
-// No bottom status bar. Top bar = solo tabs + hora.
-// Contexto de trabajo en Starship prompt.
+// Work layout for Zellij — minimal, no bottom bar
+// Context: prompt for git, Zellij for navigation only.
 
 layout {
     tab name="base" focus=true {
@@ -9,8 +7,7 @@ layout {
     }
 
     default_tab_template {
-        // ─── Top status bar (minimal) ────────────────────────
-        // Solo muestra tabs + hora. Sin modo, sin git, sin fecha.
+        // Top bar: minimal tabs + time
         pane size=1 borderless=true {
             plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
                 format_left   "{tabs}"
@@ -20,7 +17,7 @@ layout {
 
                 border_enabled  "false"
 
-                tab_normal   "#[fg=#8A7A68]{index}:{name} "
+                tab_normal   "#[fg=#8a7a68]{index}:{name} "
                 tab_active   "#[fg=#e2a85c,bold,italic]{index}:{name} "
 
                 datetime        "#[fg=#3a302f,bold] {format} "
@@ -28,8 +25,6 @@ layout {
                 datetime_timezone "America/Argentina/Buenos_Aires"
             }
         }
-
-        // ─── Main content (no bottom bar) ────────────────────
         children
     }
 }
