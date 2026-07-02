@@ -22,21 +22,17 @@ def tmux_content(c: dict[str, str]) -> str:
     info = c["diagnostic"]
     surface0 = c["surface0"]
 
-    # Inverted text uses bg_pane (=c["bg"]) on accent for the status-left
-    # and current-window blocks. Matches ukiyo plugin's default
-    # left_icon_fg=bg_pane and left_icon_bg=accent.
     pane_fg = surface2
     pane_active_fg = highlight
-    inverted_fg = c["bg"]
-    inverted_bg = accent
 
-    return f"""# {c["name"]} — tmux {mode} theme
+    return rf"""# {c["name"]} — tmux {mode} theme
+# Text-only minimal hierarchy: no blocks, no pills, no powerline.
 # Source: tmux source-file ~/.config/tmux/tmux-dreamcoder-{mode}.conf
 
 # Default terminal colours (truecolor)
 set -g default-terminal "tmux-256color"
 set -ga terminal-overrides ",*256col*:Tc"
-set -ga terminal-overrides '*:Ss=\\E[%p1%d q:Se=\\E[2 q'
+set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[2 q'
 
 # Panes
 set -g pane-border-style "fg={pane_fg},bg=default"
@@ -44,24 +40,26 @@ set -g pane-active-border-style "fg={pane_active_fg},bg=default"
 set -g display-panes-colour "{accent}"
 set -g display-panes-active-colour "{accent}"
 
-# Status bar
-set -g status-style "fg={text},bg={bg_bar}"
-set -g status-left-style "fg={inverted_fg},bg={inverted_bg}"
-set -g status-right-style "fg={muted},bg={bg_bar}"
-
-set -g status-left "#[fg={inverted_fg},bg={inverted_bg},bold]  #S #[fg={inverted_bg},bg={bg_bar},nobold]"
-set -g status-right "#[fg={bg_bar},bg={bg_bar}]#[fg={muted},bg={bg_bar}] %H:%M #[fg={sel}]#[fg={muted},bg={sel}] %d-%b-%y "
-
-# Status position
+# ─── Minimal status bar (text-only hierarchy) ─────────
+set -g status-style "bg={bg_bar}"
 set -g status-position top
+set -g status-justify left
 set -g status-interval 5
+set -g status-left-length 60
+set -g status-right-length 120
 
-# Window tabs
-setw -g window-status-style "fg={muted},bg={bg_bar}"
-setw -g window-status-current-style "fg={inverted_fg},bg={inverted_bg},bold"
-setw -g window-status-format " #I:#W "
-setw -g window-status-current-format " #I:#W "
+# Left: session name bold + middot separator
+set -g status-left "#[fg={text},bold]  #S  #[fg={muted}]· "
+
+# Window tabs — text-only, muted / accent active
+set -g window-status-style "fg={muted}"
+setw -g window-status-format "#I:#W "
+set -g window-status-current-style "fg={accent},bold"
+setw -g window-status-current-format "#I:#W "
 setw -g window-status-separator ""
+
+# Right: path muted + time bold
+set -g status-right "#[fg={muted}]#{{b:pane_current_path}}  #[fg={text},bold]%H:%M  "
 
 # Message
 set -g message-style "fg={text},bg={surface0}"
