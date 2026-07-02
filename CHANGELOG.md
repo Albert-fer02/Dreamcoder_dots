@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Changed
+
+- **Prefix restructure**: 22 directorios renombrados con prefix `Dreamcoder*` (estilo Gentleman.Dots).
+  Config tools (Alacritty → DreamcoderAlacritty, Kitty → DreamcoderKitty, etc.), AI configs
+  (Pi → DreamcoderPi, Codex-*→ DreamcoderCodex*, Antigravity → DreamcoderAntigravity),
+  y assets (themes → DreamcoderThemes, Wallpapers → DreamcoderWallpapers, profiles → DreamcoderProfiles).
+  Infra (src, tests, installer, scripts, docs) mantiene nombres estándar.
+- Actualizadas todas las referencias internas: installer Go, theme engine Python, scripts,
+  tests, docs, CI workflows, .gitignore, CODEOWNERS.
+- Symlink `unknown` convertido de absoluto a relativo.
+
 ### Added
 
 - PEP 621 packaging: `pyproject.toml` with setuptools build backend, `__version__` in package.
