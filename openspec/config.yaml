@@ -1,0 +1,9 @@
+# Dreamcoder Dots — OpenSpec SDD Config
+project: dreamcoder-dots
+workspace: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots
+description: >
+  Dreamcoder theme ecosystem — syncs palette tokens to all
+  terminal/shell/tool configs across the system.
+
+strict_tdd: false
+test_command: null
