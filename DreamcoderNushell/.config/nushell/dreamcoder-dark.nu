@@ -33,7 +33,6 @@ $env.config = {
         max_size: 50000
         sync_on_enter: true
     }
-   .rm: { always_interactive: true }
-   .cd: { with_ls: true }
-   .ls: { use_ls_colors: true }
+   rm: { always_trash: false }
+   ls: { use_ls_colors: true }
 }

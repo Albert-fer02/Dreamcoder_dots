@@ -37,3 +37,15 @@ clea
 clear
 ls
 exit
+ls
+clear
+ls
+c
+clear
+ls
+clear
+ls
+clear
+ls
+clear
+ls
