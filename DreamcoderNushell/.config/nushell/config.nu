@@ -2,7 +2,7 @@
 # https://github.com/dreamcoder08/dreamcoder-dots
 
 # Source theme
-source $"($env.HOME)/.config/nushell/dreamcoder-($env.DREAMCODER_THEME_MODE).nu"
+source ~/.config/nushell/dreamcoder-theme.nu
 
 # Starship prompt
 mkdir ~/.cache/starship
