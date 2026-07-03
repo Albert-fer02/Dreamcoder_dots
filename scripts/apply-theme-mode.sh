@@ -165,5 +165,11 @@ fi
     # Btop: flip theme symlink to mode-specific variant
     BTOP_THEME="${HOME}/.config/btop/themes/dreamcoder.theme"
     if [[ -L "${BTOP_THEME}" ]]; then
-      ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
+    ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
+    fi
+
+    # Zellij: update theme in config.kdl
+    ZELLIJ_CONF="${HOME}/.config/zellij/config.kdl"
+    if [[ -f "${ZELLIJ_CONF}" ]]; then
+    sed -i "s/^theme \".*\"/theme \"dreamcoder-${MODE}\"/" "${ZELLIJ_CONF}"
     fi
