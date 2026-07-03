@@ -249,6 +249,7 @@ VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | No
     ),
 ]
 
+
 def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
     repo_changes: list[bool] = []
 

@@ -409,14 +409,13 @@ def test_write_variant_files_and_active_delegates(tmp_path: Path) -> None:
     def builder(c: dict[str, str]) -> str:
         return f"bg={c['bg']}"
 
-    with mock.patch(
-        "dreamcoder_theme.writers.write_variant_files", return_value=[True, False]
-    ) as m_wvf, mock.patch(
-        "dreamcoder_theme.writers.write_if_changed", return_value=True
-    ) as m_wic:
-        result = write_variant_files_and_active(
-            base, names, builder, variants, active, active_path
-        )
+    with (
+        mock.patch(
+            "dreamcoder_theme.writers.write_variant_files", return_value=[True, False]
+        ) as m_wvf,
+        mock.patch("dreamcoder_theme.writers.write_if_changed", return_value=True) as m_wic,
+    ):
+        result = write_variant_files_and_active(base, names, builder, variants, active, active_path)
 
     m_wvf.assert_called_once_with(base, names, builder, variants)
     m_wic.assert_called_once_with(active_path, builder(active))
@@ -436,14 +435,11 @@ def test_write_variant_files_and_active_returns_false_when_unchanged(
     def builder(c: dict[str, str]) -> str:
         return f"bg={c['bg']}"
 
-    with mock.patch(
-        "dreamcoder_theme.writers.write_variant_files", return_value=[False, False]
-    ), mock.patch(
-        "dreamcoder_theme.writers.write_if_changed", return_value=False
-    ) as m_wic:
-        result = write_variant_files_and_active(
-            base, names, builder, variants, active, active_path
-        )
+    with (
+        mock.patch("dreamcoder_theme.writers.write_variant_files", return_value=[False, False]),
+        mock.patch("dreamcoder_theme.writers.write_if_changed", return_value=False) as m_wic,
+    ):
+        result = write_variant_files_and_active(base, names, builder, variants, active, active_path)
 
     m_wic.assert_called_once()
     assert result == [False, False, False]

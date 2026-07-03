@@ -339,8 +339,10 @@ def test_variant_registry_no_wm_nvim_entries() -> None:
 
 def test_variant_registry_write_order_deterministic(variants, active) -> None:
     """Mock write_variant_files; assert call sequence matches registry order."""
-    with mock.patch("dreamcoder_theme.sync.write_variant_files", return_value=[]) as m_wvf, \
-         mock.patch("dreamcoder_theme.sync.write_if_changed", return_value=False):
+    with (
+        mock.patch("dreamcoder_theme.sync.write_variant_files", return_value=[]) as m_wvf,
+        mock.patch("dreamcoder_theme.sync.write_if_changed", return_value=False),
+    ):
         sync.sync_repo_snippets(variants, active)
 
     called_bases = [call[0][0] for call in m_wvf.call_args_list]
@@ -349,6 +351,6 @@ def test_variant_registry_write_order_deterministic(variants, active) -> None:
     for called_base in called_bases:
         if reg_idx < len(registry_bases) and called_base == registry_bases[reg_idx]:
             reg_idx += 1
-    assert reg_idx == len(registry_bases), (
-        f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
-    )
+    assert reg_idx == len(
+        registry_bases
+    ), f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"

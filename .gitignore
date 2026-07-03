@@ -1,57 +1,47 @@
-# Logs
-*.log
 
-# Build artifacts
-target/
-node_modules/
-
-# Generated configs
-DreamcoderKitty/.config/kitty/colors-matugen.conf
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor
-*.swp
 *~
-.editorconfig-unreal
-
+.atl/
+*.backup
 # Backups
 *.bak
-*.backup
-
-# Local AI sessions / usage cache
-.gemini/
-
-# Local migration/editor backups
-.local-backups/
-# Python cache
-__pycache__/
-*.py[cod]
-
-# Local AI session metadata
-.atl/
-# Fish user files
+build/
+# Build artifacts
+*.cover
+.coverage
+.coverage.*
+# Coverage
+dist/
+DreamcoderKitty/.config/kitty/colors-matugen.conf
 DreamcoderShell/.config/fish/fish_variables
 DreamcoderShell/.config/fish/functions/
-
+.DS_Store
+# Editor
+.editorconfig-unreal
+*.egg-info/
+.firecrawl/
+# Fish user files
+.gemini/
+# Generated configs
 # Installer binaries
 installer/dreamcoder-dots
 installer/dreamcoder-dots-*
-.firecrawl/
-
+# Local AI session metadata
+# Local AI sessions / usage cache
+.local-backups/
+# Local migration/editor backups
+*.log
+# Logs
+node_modules/
+# OS files
+.pi-subagents/
+__pycache__/
+*.py[cod]
+*.py,cover
+# Python cache
 # Python packaging
-*.egg-info/
 src/dreamcoder_theme.egg-info/
-dist/
-build/
-
-# Coverage
-.coverage
-.coverage.*
-
+*.swp
+target/
+Thumbs.db
 # uv
 uv.lock
-*.cover
-*.py,cover
