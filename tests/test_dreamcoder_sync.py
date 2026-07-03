@@ -298,3 +298,57 @@ def test_load_variants_merges_tokens(tmp_path):
     assert result["dark"]["bg"] == "#000001"
     assert result["light"]["bg"] == V["light"]["bg"]
     assert "prompt_bg" in result["dark"]
+
+
+# ---------------------------------------------------------------------------
+# VARIANT_REGISTRY structure tests (T3.1)
+# ---------------------------------------------------------------------------
+
+
+def test_variant_registry_has_minimum_entries() -> None:
+    """Registry must have >=18 entries."""
+    assert len(sync.VARIANT_REGISTRY) >= 18, f"Expected >=18, got {len(sync.VARIANT_REGISTRY)}"
+
+
+def test_variant_registry_all_four_tuples() -> None:
+    """Every registry entry must be a 4-tuple."""
+    for i, entry in enumerate(sync.VARIANT_REGISTRY):
+        assert isinstance(entry, tuple), f"Entry {i} is not a tuple"
+        assert len(entry) == 4, f"Entry {i} has {len(entry)} elements, expected 4"
+
+
+def test_variant_registry_content_fns_callable() -> None:
+    """Every registry entry's builder must be callable."""
+    for i, (_base, _names, builder, _active_path) in enumerate(sync.VARIANT_REGISTRY):
+        assert callable(builder), f"Entry {i} builder is not callable: {builder}"
+
+
+def test_variant_registry_no_wm_nvim_entries() -> None:
+    """Registry must not contain hyprland, waybar, rofi, or nvim."""
+    excluded = {"hypr", "waybar", "rofi", "nvim"}
+    for i, (base, _names, _builder, _active_path) in enumerate(sync.VARIANT_REGISTRY):
+        base_str = str(base).lower()
+        found = excluded & set(base_str.split("/"))
+        assert not found, f"Entry {i} base {base} contains excluded name: {found}"
+
+
+# ---------------------------------------------------------------------------
+# Write-order determinism test (T3.2)
+# ---------------------------------------------------------------------------
+
+
+def test_variant_registry_write_order_deterministic(variants, active) -> None:
+    """Mock write_variant_files; assert call sequence matches registry order."""
+    with mock.patch("dreamcoder_theme.sync.write_variant_files", return_value=[]) as m_wvf, \
+         mock.patch("dreamcoder_theme.sync.write_if_changed", return_value=False):
+        sync.sync_repo_snippets(variants, active)
+
+    called_bases = [call[0][0] for call in m_wvf.call_args_list]
+    registry_bases = [entry[0] for entry in sync.VARIANT_REGISTRY]
+    reg_idx = 0
+    for called_base in called_bases:
+        if reg_idx < len(registry_bases) and called_base == registry_bases[reg_idx]:
+            reg_idx += 1
+    assert reg_idx == len(registry_bases), (
+        f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
+    )

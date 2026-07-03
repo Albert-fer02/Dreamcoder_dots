@@ -387,3 +387,63 @@ class TestUpdateWarpSettings:
         content = path.read_text()
         assert "[other]" in content
         assert "[appearance.window]" in content
+
+
+# ---------------------------------------------------------------------------
+# write_variant_files_and_active delegation tests (T3.3)
+# ---------------------------------------------------------------------------
+
+from unittest import mock
+
+from dreamcoder_theme.writers import write_variant_files_and_active
+
+
+def test_write_variant_files_and_active_delegates(tmp_path: Path) -> None:
+    """Helper delegates to write_variant_files then write_if_changed, in order."""
+    base = tmp_path / "out"
+    names = {"dark": "dark.txt", "light": "light.txt"}
+    active = {"bg": "#111"}
+    variants = {"dark": {"bg": "#000"}, "light": {"bg": "#fff"}}
+    active_path = base / "active.txt"
+
+    def builder(c: dict[str, str]) -> str:
+        return f"bg={c['bg']}"
+
+    with mock.patch(
+        "dreamcoder_theme.writers.write_variant_files", return_value=[True, False]
+    ) as m_wvf, mock.patch(
+        "dreamcoder_theme.writers.write_if_changed", return_value=True
+    ) as m_wic:
+        result = write_variant_files_and_active(
+            base, names, builder, variants, active, active_path
+        )
+
+    m_wvf.assert_called_once_with(base, names, builder, variants)
+    m_wic.assert_called_once_with(active_path, builder(active))
+    assert result == [True, False, True]
+
+
+def test_write_variant_files_and_active_returns_false_when_unchanged(
+    tmp_path: Path,
+) -> None:
+    """Active file write returns False when unchanged."""
+    base = tmp_path / "out"
+    names = {"dark": "dark.txt", "light": "light.txt"}
+    active = {"bg": "#111"}
+    variants = {"dark": {"bg": "#000"}, "light": {"bg": "#fff"}}
+    active_path = base / "active.txt"
+
+    def builder(c: dict[str, str]) -> str:
+        return f"bg={c['bg']}"
+
+    with mock.patch(
+        "dreamcoder_theme.writers.write_variant_files", return_value=[False, False]
+    ), mock.patch(
+        "dreamcoder_theme.writers.write_if_changed", return_value=False
+    ) as m_wic:
+        result = write_variant_files_and_active(
+            base, names, builder, variants, active, active_path
+        )
+
+    m_wic.assert_called_once()
+    assert result == [False, False, False]
