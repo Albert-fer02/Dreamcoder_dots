@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from .palette import guard
+from .palette import detect_mode, guard
 
 
 def starship_content(c: dict[str, str]) -> str:
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     # Prompt surfaces are powerline segment backgrounds — need aesthetic
     # gradient, not text contrast. Use raw token values, not guard().
     prom_acc = guard(c["prompt_accent"], c["bg"], mode)

@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
+from .palette import detect_mode, guard, mix
 
 
 def firefox_content(c: dict[str, str]) -> str:
     """Return a Firefox userChrome.css with Dreamcoder colors."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     bg = c["bg"]
     surface0 = c["surface0"]
     surface1 = c["surface1"]

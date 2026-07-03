@@ -2,11 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import guard
-
-
-def _mode(c: dict[str, str]) -> str:
-    return "dark" if c["details"] == "darker" else "light"
+from .palette import detect_mode, guard
 
 
 def _fg(hex_color: str) -> str:
@@ -21,7 +17,7 @@ def _bg(hex_color: str) -> str:
 
 def zsh_syntax_content(c: dict[str, str]) -> str:
     """Return a compact zsh-syntax-highlighting snippet."""
-    mode, bg = _mode(c), c["bg"]
+    mode, bg = detect_mode(c), c["bg"]
 
     def g(key: str) -> str:
         val = guard(c[key], bg, mode)
@@ -76,7 +72,7 @@ def zsh_syntax_content(c: dict[str, str]) -> str:
 
 def ls_colors_content(c: dict[str, str]) -> str:
     """Return a compact LS_COLORS/eza snippet."""
-    mode, bg = _mode(c), c["bg"]
+    mode, bg = detect_mode(c), c["bg"]
 
     def g(key: str) -> str:
         val = guard(c[key], bg, mode)
@@ -193,8 +189,8 @@ def ls_colors_content(c: dict[str, str]) -> str:
 
 def fzf_content(c: dict[str, str]) -> str:
     """Return a compact FZF_DEFAULT_OPTS export."""
-    fg = guard(c["text"], c["bg"], _mode(c))
-    mode = _mode(c)
+    fg = guard(c["text"], c["bg"], detect_mode(c))
+    mode = detect_mode(c)
     # In dark mode, use surface1 for selected/preview backgrounds (visible)
     bg_plus = c["surface1"] if mode == "dark" else c["surface0"]
     gutter_bg = c["surface1"] if mode == "dark" else c["bg"]

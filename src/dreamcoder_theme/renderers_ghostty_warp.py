@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from .palette import ansi
+from .palette import ansi, detect_mode
 
 
 def ghostty_content(c: dict[str, str]) -> str:
-    is_dark = c["details"] == "darker"
+    is_dark = detect_mode(c) == "dark"
     sel_bg = c["selection_bg"]
     sel_fg = c["selection_fg"]
     opacity = "0.76" if is_dark else "0.96"

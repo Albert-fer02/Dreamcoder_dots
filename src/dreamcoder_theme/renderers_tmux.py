@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from .palette import detect_mode
+
 
 def tmux_content(c: dict[str, str]) -> str:
     """Return a tmux config snippet using the Dreamcoder palette."""
-    is_dark = c["details"] == "darker"
+    is_dark = detect_mode(c) == "dark"
     mode = "dark" if is_dark else "light"
 
     bg_pane = c["bg"]

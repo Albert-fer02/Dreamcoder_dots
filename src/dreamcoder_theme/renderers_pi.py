@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import json
 
-from .palette import guard, mix
+from .palette import detect_mode, guard, mix
 from .renderers_opencode import opencode_tokens
 from .settings import PI_THEME_SCHEMA
 
 
 def pi_theme_content(c: dict[str, str]) -> str:
     t = opencode_tokens(c)
-    mode_name = "dark" if c["details"] == "darker" else "light"
+    mode_name = detect_mode(c)
     user_bg = mix(c["accent"], c["bg"], 0.84)
     pending_bg = mix(c["surface0"], c["bg"], 0.55)
     success_bg = mix(c["sage"], c["bg"], 0.82)

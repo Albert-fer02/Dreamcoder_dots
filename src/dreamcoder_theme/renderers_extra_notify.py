@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
+from .palette import detect_mode, guard, mix
 
 
 def dunst_content(c: dict[str, str]) -> str:
     """Return a Dunst config snippet with Dreamcoder colors."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     bg = c["bg"]
     # Guard foreground text against notification background
     txt = guard(c["text"], bg, mode)
@@ -47,7 +47,7 @@ def dunst_content(c: dict[str, str]) -> str:
 
 def cava_content(c: dict[str, str]) -> str:
     """Return a Cava config snippet with Dreamcoder colors."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     bg = c["bg"]
 
     return f"""# ========================================================

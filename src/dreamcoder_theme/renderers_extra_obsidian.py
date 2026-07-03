@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from .palette import mix
+from .palette import detect_mode, mix
 
 
 def obsidian_content(c: dict[str, str]) -> str:
     """Return an Obsidian CSS snippet with Dreamcoder colors."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     bg = c["bg"]
 
     is_dark = mode == "dark"

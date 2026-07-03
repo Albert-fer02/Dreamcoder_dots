@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import subprocess
 import sys
+from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 from .palette import adaptive_palette, load_variants
@@ -111,89 +113,169 @@ def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[s
     }
 
 
-def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
-    mode_names = {"dark": "dark", "light": "light"}
-    repo_changes: list[bool] = []
-    repo_changes += write_variant_files(
+# ------------------------------------------------------------------
+# Declarative variant registry — each entry produces write_variant_files
+# (+ active-file write when active_path is set). Uniform entries only;
+# hyprland, waybar, rofi, nvim, kitty-ui, and opencode-transparent
+# stay as explicit calls below the loop.
+# ------------------------------------------------------------------
+D = {"dark": "dark", "light": "light"}
+VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | None]] = [
+    # -- Terminal targets --
+    (
         ROOT / "DreamcoderKitty/.config/kitty",
-        {k: f"colors-dreamcoder-{v}.conf" for k, v in mode_names.items()},
+        {k: f"colors-dreamcoder-{v}.conf" for k, v in D.items()},
         kitty_content,
-        variants,
-    )
+        None,
+    ),
+    (
+        ROOT / "DreamcoderGhostty/.config/ghostty/themes",
+        {k: f"dreamcoder-{v}" for k, v in D.items()},
+        ghostty_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderWarp/.local/share/warp-terminal/themes",
+        {k: f"Dreamcoder-{v.title()}.yaml" for k, v in D.items()},
+        warp_content,
+        None,
+    ),
+    # -- Shell / prompt --
+    (
+        ROOT / "DreamcoderShell/.config",
+        {k: f"starship-{v}.toml" for k, v in D.items()},
+        starship_content,
+        None,
+    ),
+    # -- TUI / editor themes --
+    (
+        ROOT / "DreamcoderCodexApp",
+        {k: f"Dreamcoder-{v.title()}.codex-theme.json" for k, v in D.items()},
+        opencode_content,
+        ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json",
+    ),
+    (
+        ROOT / "DreamcoderCodexCLI",
+        {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in D.items()},
+        codex_tmtheme_content,
+        ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme",
+    ),
+    (
+        ROOT / "DreamcoderBat/.config/bat/themes",
+        {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in D.items()},
+        codex_tmtheme_content,
+        ROOT / "DreamcoderBat/.config/bat/themes/Dreamcoder.tmTheme",
+    ),
+    # -- Pi CLI --
+    (
+        ROOT / "DreamcoderPi/.pi/agent/themes",
+        {k: f"dreamcoder-{v}.json" for k, v in D.items()},
+        pi_theme_content,
+        ROOT / "DreamcoderPi/.pi/agent/themes/dreamcoder.json",
+    ),
+    # -- Antigravity --
+    (
+        ROOT / "DreamcoderAntigravity",
+        {k: f"Dreamcoder-{v.title()}.json" for k, v in D.items()},
+        antigravity_content,
+        ROOT / "DreamcoderAntigravity/Dreamcoder.json",
+    ),
+    # -- theme_dir entries (DreamcoderThemes/dreamcoder) --
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"zsh-syntax-highlighting-dreamcoder-{v}.zsh" for k, v in D.items()},
+        zsh_syntax_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"ls-colors-dreamcoder-{v}.sh" for k, v in D.items()},
+        ls_colors_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"bat-dreamcoder-{v}.sh" for k, v in D.items()},
+        bat_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"delta-dreamcoder-{v}.gitconfig" for k, v in D.items()},
+        delta_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"fzf-dreamcoder-{v}.sh" for k, v in D.items()},
+        fzf_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"btop-dreamcoder-{v}.theme" for k, v in D.items()},
+        btop_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"dunst-dreamcoder-{v}.conf" for k, v in D.items()},
+        dunst_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"firefox-dreamcoder-{v}.css" for k, v in D.items()},
+        firefox_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"obsidian-dreamcoder-{v}.css" for k, v in D.items()},
+        obsidian_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"cava-dreamcoder-{v}.config" for k, v in D.items()},
+        cava_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderThemes/dreamcoder",
+        {k: f"tmux-dreamcoder-{v}.conf" for k, v in D.items()},
+        tmux_content,
+        None,
+    ),
+]
+
+def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
+    repo_changes: list[bool] = []
+
+    # ---- Declarative registry loop ----
+    for base, names, builder, active_path in VARIANT_REGISTRY:
+        repo_changes += write_variant_files(base, names, builder, variants)
+        if active_path is not None:
+            repo_changes.append(write_if_changed(active_path, builder(active)))
+
+    # ---- Non-uniform entries (explicit calls) ----
+
+    # Kitty UI (different content fn)
     repo_changes.append(
         write_if_changed(
             ROOT / "DreamcoderKitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active)
         )
     )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderGhostty/.config/ghostty/themes",
-        {k: f"dreamcoder-{v}" for k, v in mode_names.items()},
-        ghostty_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderWarp/.local/share/warp-terminal/themes",
-        {k: f"Dreamcoder-{v.title()}.yaml" for k, v in mode_names.items()},
-        warp_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderShell/.config",
-        {k: f"starship-{v}.toml" for k, v in mode_names.items()},
-        starship_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderCodexApp",
-        {k: f"Dreamcoder-{v.title()}.codex-theme.json" for k, v in mode_names.items()},
-        opencode_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderCodexCLI",
-        {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()},
-        codex_tmtheme_content,
-        variants,
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme", codex_tmtheme_content(active)
-        )
-    )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderBat/.config/bat/themes",
-        {k: f"Dreamcoder-{v.title()}.tmTheme" for k, v in mode_names.items()},
-        codex_tmtheme_content,
-        variants,
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "DreamcoderBat/.config/bat/themes/Dreamcoder.tmTheme",
-            codex_tmtheme_content(active),
-        )
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json", opencode_content(active)
-        )
-    )
+
+    # Opencode dotfile (transparent_background=True)
     repo_changes.append(
         write_if_changed(
             ROOT / ".opencode/themes/dreamcoder.json",
             opencode_content(active, transparent_background=True),
         )
     )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderPi/.pi/agent/themes",
-        {k: f"dreamcoder-{v}.json" for k, v in mode_names.items()},
-        pi_theme_content,
-        variants,
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "DreamcoderPi/.pi/agent/themes/dreamcoder.json", pi_theme_content(active)
-        )
-    )
+
+    # Hyprland — per-mode + active
     repo_changes.append(
         write_if_changed(
             ROOT / "DreamcoderThemes/dreamcoder/hyprland-dark.conf",
@@ -208,19 +290,22 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     )
     repo_changes += write_variant_files(
         ROOT / "DreamcoderThemes/dreamcoder",
-        {k: f"hypr-colors-{v}.lua" for k, v in mode_names.items()},
+        {k: f"hypr-colors-{v}.lua" for k, v in D.items()},
         hypr_colors_lua_content,
         variants,
     )
     repo_changes += write_variant_files(
         ROOT / "DreamcoderThemes/dreamcoder",
-        {k: f"hypr-colors-{v}.conf" for k, v in mode_names.items()},
+        {k: f"hypr-colors-{v}.conf" for k, v in D.items()},
         hypr_colors_conf_content,
         variants,
     )
+
+    # Waybar — per-mode + active
     repo_changes.append(
         write_if_changed(
-            ROOT / "DreamcoderThemes/dreamcoder/waybar-dark.css", waybar_content(variants["dark"])
+            ROOT / "DreamcoderThemes/dreamcoder/waybar-dark.css",
+            waybar_content(variants["dark"]),
         )
     )
     repo_changes.append(
@@ -229,16 +314,21 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
             waybar_content(variants["light"]),
         )
     )
+
+    # Rofi — per-mode + active
     repo_changes.append(
         write_if_changed(
-            ROOT / "DreamcoderThemes/dreamcoder/rofi-dark.rasi", rofi_content(variants["dark"])
+            ROOT / "DreamcoderThemes/dreamcoder/rofi-dark.rasi",
+            rofi_content(variants["dark"]),
         )
     )
     repo_changes.append(
         write_if_changed(
-            ROOT / "DreamcoderThemes/dreamcoder/rofi-light.rasi", rofi_content(variants["light"])
+            ROOT / "DreamcoderThemes/dreamcoder/rofi-light.rasi",
+            rofi_content(variants["light"]),
         )
     )
+
     # Desktop/WM active files (no suffix — tracks current mode)
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/hyprland.conf", hypr_content(active))
@@ -249,96 +339,21 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi.rasi", rofi_content(active))
     )
+
+    # README
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/README.md", readme_content())
     )
-    repo_changes += write_variant_files(
-        ROOT / "DreamcoderAntigravity",
-        {k: f"Dreamcoder-{v.title()}.json" for k, v in mode_names.items()},
-        antigravity_content,
-        variants,
-    )
-    repo_changes.append(
-        write_if_changed(
-            ROOT / "DreamcoderAntigravity/Dreamcoder.json", antigravity_content(active)
-        )
-    )
-    # Nvim variant files go in DreamcoderNvim/.config/nvim/colors/
+
+    # Nvim variant files
     nvim_dir = ROOT / "DreamcoderNvim/.config/nvim/colors"
     repo_changes += write_variant_files(
         nvim_dir,
-        {k: f"dreamcoder-{v}.lua" for k, v in mode_names.items()},
+        {k: f"dreamcoder-{v}.lua" for k, v in D.items()},
         nvim_content,
         variants,
     )
-    # Other variant files stay in themes/dreamcoder/
-    theme_dir = ROOT / "DreamcoderThemes/dreamcoder"
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"zsh-syntax-highlighting-dreamcoder-{v}.zsh" for k, v in mode_names.items()},
-        zsh_syntax_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"ls-colors-dreamcoder-{v}.sh" for k, v in mode_names.items()},
-        ls_colors_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"bat-dreamcoder-{v}.sh" for k, v in mode_names.items()},
-        bat_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"delta-dreamcoder-{v}.gitconfig" for k, v in mode_names.items()},
-        delta_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"fzf-dreamcoder-{v}.sh" for k, v in mode_names.items()},
-        fzf_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"btop-dreamcoder-{v}.theme" for k, v in mode_names.items()},
-        btop_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"dunst-dreamcoder-{v}.conf" for k, v in mode_names.items()},
-        dunst_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"firefox-dreamcoder-{v}.css" for k, v in mode_names.items()},
-        firefox_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"obsidian-dreamcoder-{v}.css" for k, v in mode_names.items()},
-        obsidian_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"cava-dreamcoder-{v}.config" for k, v in mode_names.items()},
-        cava_content,
-        variants,
-    )
-    repo_changes += write_variant_files(
-        theme_dir,
-        {k: f"tmux-dreamcoder-{v}.conf" for k, v in mode_names.items()},
-        tmux_content,
-        variants,
-    )
+
     return repo_changes
 
 

@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix, surface_guard
+from .palette import detect_mode, guard, mix, surface_guard
 
 
 def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
-    mode_name = "dark" if c["details"] == "darker" else "light"
+    mode_name = detect_mode(c)
     # Use lower contrast minimum for syntax colors so they stay vibrant.
     # 4.5 is for body text; syntax highlighting is decorative/auxiliary.
     syntax_min = 3.0
@@ -54,7 +54,7 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
 
 def opencode_content(c: dict[str, str], transparent_background: bool = False) -> str:
     t = opencode_tokens(c)
-    mode_name = "dark" if c["details"] == "darker" else "light"
+    mode_name = detect_mode(c)
 
     # Mode-aware surface formulas
     if mode_name == "dark":

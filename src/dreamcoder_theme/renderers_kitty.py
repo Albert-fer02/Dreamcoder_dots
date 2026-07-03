@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from .palette import ansi
+from .palette import ansi, detect_mode
 
 
 def kitty_content(c: dict[str, str]) -> str:
@@ -65,7 +65,7 @@ mark3_background        {c["mauve"]}
 
 
 def kitty_ui_content(c: dict[str, str]) -> str:
-    is_dark = c["details"] == "darker"
+    is_dark = detect_mode(c) == "dark"
     opacity = "0.76" if is_dark else "0.96"
     blur = "24" if is_dark else "0"
     return f"""# Dreamcoder Kitty UI parity layer

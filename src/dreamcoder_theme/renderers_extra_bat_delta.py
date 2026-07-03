@@ -2,19 +2,12 @@
 
 from __future__ import annotations
 
-from .palette import guard, mix
-
-
-def _detect_mode(c: dict[str, str]) -> str:
-    """Detect dark/light from palette dict."""
-    if c["details"] == "darker":
-        return "dark"
-    return "light"
+from .palette import detect_mode, guard, mix
 
 
 def bat_content(c: dict[str, str]) -> str:
     """Return a Bat theme config snippet with modern defaults."""
-    mode_name = _detect_mode(c)
+    mode_name = detect_mode(c)
     theme = f"Dreamcoder-{mode_name.title()}"
     return (
         "#!/usr/bin/env bash\n"
@@ -29,7 +22,7 @@ def bat_content(c: dict[str, str]) -> str:
 
 def delta_content(c: dict[str, str]) -> str:
     """Return a Git Delta config snippet with Dreamcoder colors."""
-    mode = _detect_mode(c)
+    mode = detect_mode(c)
     bg = c["bg"]
 
     def g(color: str) -> str:

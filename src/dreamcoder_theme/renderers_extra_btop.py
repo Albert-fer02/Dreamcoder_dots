@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from .palette import guard
+from .palette import detect_mode, guard
 
 
 def btop_content(c: dict[str, str]) -> str:
     """Return a Btop theme file."""
-    mode = "dark" if c["details"] == "darker" else "light"
+    mode = detect_mode(c)
     bg = c["bg"]
     # Guard foreground text colors; use raw palette for backgrounds/surfaces
     txt = guard(c["text"], bg, mode)
