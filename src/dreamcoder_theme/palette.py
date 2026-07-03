@@ -6,6 +6,7 @@ import json
 import re
 import subprocess
 import warnings
+from collections.abc import Callable
 from pathlib import Path
 
 from .palette_tokens import ANSI_KEY_NAMES
@@ -231,6 +232,19 @@ def ansi(palette: dict[str, str]) -> list[str]:
 def detect_mode(palette: dict[str, str]) -> str:
     """Return "dark" or "light" based on the palette's details key."""
     return "dark" if palette.get("details") == "darker" else "light"
+
+
+def make_guard(palette: dict[str, str], minimum: float = 3.0) -> Callable[[str], str]:
+    """Return a guard() bound to the palette's bg and mode.
+
+    Usage:
+        g = make_guard(c)          # min contrast 3.0
+        g = make_guard(c, 2.8)     # custom minimum
+        accent = g(c["accent"])    # guarded accent color
+    """
+    mode = detect_mode(palette)
+    bg = palette["bg"]
+    return lambda color: guard(color, bg, mode, minimum=minimum)
 
 
 def validate_palette(

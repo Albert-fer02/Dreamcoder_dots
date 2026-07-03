@@ -190,7 +190,7 @@ def _check_backup_freshness() -> list[HealthCheck]:
     """Check backup manifest freshness."""
     backups_dir = data_home() / "dreamcoder" / "backups"
     fresh = False
-    manifests: list = []
+    manifests: list[Path] = []
     if backups_dir.exists():
         manifests = sorted(backups_dir.glob("*/manifest.json"))
         if manifests:
