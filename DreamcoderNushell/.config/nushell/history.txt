@@ -49,3 +49,20 @@ clear
 ls
 clear
 ls
+clear
+ls
+cd Documents/
+clear
+ls
+cd PROYECTOS/
+clear
+ls
+clear
+ls
+clear
+ls
+clear
+ls
+c
+clear
+ls
