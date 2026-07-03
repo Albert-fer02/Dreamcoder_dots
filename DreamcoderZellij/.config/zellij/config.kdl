@@ -6,26 +6,26 @@ env {
 }
 
 keybinds {
-    shared_except "locked" {
-        alt "n" { NewTab; }
-        alt "j" { MoveTabLeft; }
-        alt "k" { MoveTabRight; }
-        alt "1" { GoToTab 1; }
-        alt "2" { GoToTab 2; }
-        alt "3" { GoToTab 3; }
-        alt "4" { GoToTab 4; }
-        alt "5" { GoToTab 5; }
-        ctrl "t" { ToggleTab; }
-    }
-    shared_except "locked" "resize" {
-        ctrl "b" { SwitchToMode "Resize"; }
+    normal {
+            bind "Alt n" { NewTab; SwitchToMode "Normal"; }
+            bind "Alt j" { GoToPreviousTab; }
+            bind "Alt k" { GoToNextTab; }
+            bind "Alt 1" { GoToTab 1; SwitchToMode "Normal"; }
+            bind "Alt 2" { GoToTab 2; SwitchToMode "Normal"; }
+            bind "Alt 3" { GoToTab 3; SwitchToMode "Normal"; }
+            bind "Alt 4" { GoToTab 4; SwitchToMode "Normal"; }
+            bind "Alt 5" { GoToTab 5; SwitchToMode "Normal"; }
+            bind "Ctrl t" { SwitchToMode "Tab"; }
+        }
+    locked {
+        bind "Ctrl b" { SwitchToMode "Resize"; }
     }
     resize {
-        "k" { Resize "Up"; }
-        "j" { Resize "Down"; }
-        "h" { Resize "Left"; }
-        "l" { Resize "Right"; }
-        ctrl "b" { SwitchToMode "Locked"; }
+        bind "k" { Resize "Up"; }
+        bind "j" { Resize "Down"; }
+        bind "h" { Resize "Left"; }
+        bind "l" { Resize "Right"; }
+        bind "Ctrl b" { SwitchToMode "Locked"; }
     }
 }
 
