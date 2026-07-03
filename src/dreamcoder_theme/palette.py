@@ -218,7 +218,7 @@ def adaptive_palette(
 
 
 def ansi(palette: dict[str, str]) -> list[str]:
-    mode_name = "dark" if palette["details"] == "darker" else "light"
+    mode_name = detect_mode(palette)
     safe = []
     for key in ANSI_KEY_NAMES:
         color = resolve_color(palette, key)

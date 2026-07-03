@@ -189,3 +189,16 @@ def write_variant_files(
         write_if_changed(base / file_name, builder(variants[mode_name]))
         for mode_name, file_name in names.items()
     ]
+
+
+def write_variant_files_and_active(
+    base: Path,
+    names: dict[str, str],
+    builder: Callable[..., str],
+    variants: dict[str, dict[str, str]],
+    active: dict[str, str],
+    active_path: Path,
+) -> list[bool]:
+    changes = write_variant_files(base, names, builder, variants)
+    changes.append(write_if_changed(active_path, builder(active)))
+    return changes
