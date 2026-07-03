@@ -84,7 +84,7 @@ box_drawing_scale     0.001, 1, 1.5, 2
 text_composition_strategy platform
 shell                 fish --login
 
-window_padding_width  18 20 18 20
+window_padding_width  20 18 20 18
 single_window_padding_width -1
 placement_strategy    center
 initial_window_width  1180
@@ -92,8 +92,6 @@ initial_window_height 780
 background_opacity    {opacity}
 dynamic_background_opacity no
 background_blur       {blur}
-input_delay           0
-repaint_delay         1
 
 tab_bar_edge          top
 tab_bar_style         fade
