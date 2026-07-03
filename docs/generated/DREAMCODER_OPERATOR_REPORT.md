@@ -7,8 +7,8 @@ Generated from current machine state and Control Center contracts.
 ```text
 ┌──────────────────────── Dreamcoder Health ────────────────────────┐
 │ Theme: unknown  Profile: unknown            │
-│ Motion: unknown Health: 5 ok / 1 warn / 4 fail       │
-│ Installer conflicts: 0   Repair actions: 5           │
+│ Motion: unknown Health: 6 ok / 8 warn / 6 fail       │
+│ Installer conflicts: 0   Repair actions: 14          │
 └───────────────────────────────────────────────────────────────────┘
 ```
 
@@ -17,7 +17,7 @@ Generated from current machine state and Control Center contracts.
 ```text
 ╭──────────── Dreamcoder Settings ────────────╮
 │ Theme: unknown  Profile: unknown          │
-│ Motion: unknown Health: 5 ok / 1 warn / 4 fail │
+│ Motion: unknown Health: 6 ok / 8 warn / 6 fail │
 ├─────────────────────────────────────────────┤
 │ terminal.default_mode    = light      │
 │   Default terminal theme mode. (light, dark│

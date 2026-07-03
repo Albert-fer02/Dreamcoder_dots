@@ -1,0 +1,88 @@
+name: Integration Test — Gentleman.Dots + ML4W + Dreamcoder
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dreamcoder-theme
+        run: pip install -e .
+
+      - name: Create mock base directories (Gentleman.Dots + ML4W)
+        run: |
+          mkdir -p ~/Gentleman.Dots/{GentlemanTmux,GentlemanGhostty,GentlemanKitty,GentlemanFish}
+          mkdir -p ~/.config/{hypr,waybar,rofi,dunst,btop/themes,bat/themes,kitty,ghostty,fish/conf.d,fastfetch,zellij}
+          mkdir -p ~/.local/share/warp-terminal/themes
+          mkdir -p ~/.pi/agent/themes
+          mkdir -p ~/.local/share/dreamcoder/backups
+          touch ~/Gentleman.Dots/GentlemanTmux/tmux.conf
+
+      - name: Set up symlinks (simulating install)
+        run: |
+          ln -sf "$PWD/DreamcoderGhostty/.config/ghostty/config" ~/.config/ghostty/config
+          ln -sf "$PWD/DreamcoderKitty/.config/kitty/kitty.conf" ~/.config/kitty/kitty.conf
+          ln -sf "$PWD/DreamcoderTmux/.tmux.conf" ~/.tmux.conf
+          ln -sf "$PWD/DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish" ~/.config/fish/conf.d/05-dreamcoder-theme.fish
+          mkdir -p ~/.config/ghostty/themes
+
+      - name: Run dreamcoder-theme sync
+        run: dreamcoder-theme sync
+
+      - name: Verify critical theme files exist
+        run: |
+          ERRORS=0
+          for f in \
+            ~/.config/ghostty/themes/dreamcoder \
+            ~/.config/ghostty/themes/dreamcoder-dark \
+            ~/.config/ghostty/themes/dreamcoder-light \
+            ~/.config/kitty/colors-dreamcoder.conf \
+            ~/.config/kitty/colors-dreamcoder-dark.conf \
+            ~/.config/kitty/colors-dreamcoder-light.conf \
+            "$PWD/DreamcoderThemes/dreamcoder/tokens.json" \
+            "$PWD/DreamcoderThemes/dreamcoder/fzf-dreamcoder-dark.sh" \
+            "$PWD/DreamcoderThemes/dreamcoder/fzf-dreamcoder-light.sh" \
+            "$PWD/DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-dark.sh" \
+            "$PWD/DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-light.sh" \
+            "$PWD/DreamcoderThemes/dreamcoder/hypr-colors-dark.lua" \
+            "$PWD/DreamcoderThemes/dreamcoder/hypr-colors-light.lua" \
+            "$PWD/DreamcoderThemes/dreamcoder/btop-dreamcoder.theme" \
+            "$PWD/DreamcoderThemes/dreamcoder/btop-dreamcoder-dark.theme" \
+            "$PWD/DreamcoderThemes/dreamcoder/btop-dreamcoder-light.theme"; do
+            if [ -f "$f" ]; then
+              echo "✓ $f"
+            else
+              echo "✗ $f MISSING"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          exit $ERRORS
+
+      - name: Run structured doctor
+        run: |
+          python3 -c "
+          import json, sys
+          sys.path.insert(0, 'src')
+          from dreamcoder_theme.doctor import doctor_report
+          r = doctor_report()
+          print(json.dumps(r['summary'], indent=2))
+          if r['summary']['fail'] > 0:
+            print('FAIL: Some checks failed')
+            for c in r['checks']:
+              if c['status'] == 'fail':
+                print(f'  ✗ {c[\"name\"]}: {c[\"detail\"]}')
+            sys.exit(1)
+          else:
+            print('OK: All critical checks pass')
+          "

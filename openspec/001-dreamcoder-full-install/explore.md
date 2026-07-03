@@ -57,7 +57,7 @@
 
 ```bash
 M .gitmodules
-M .pi/settings.json  
+M .pi/settings.json
 M CHANGELOG.md
 M DreamcoderGhostty/.config/ghostty/config
 M DreamcoderKitty/.config/kitty/colors-matugen.conf

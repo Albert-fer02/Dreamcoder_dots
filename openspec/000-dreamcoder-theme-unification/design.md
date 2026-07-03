@@ -34,26 +34,26 @@ Un solo cambio: la línea `set -l theme_dir` en Fish.
 
 ### Cambio 1: Fish theme path
 
-**File**: `DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish`  
-**Línea**: 10  
-**De**: `set -l theme_dir "$DREAMCODER_DOTS_DIR/themes/dreamcoder"`  
-**A**: `set -l theme_dir "$DREAMCODER_DOTS_DIR/DreamcoderThemes/dreamcoder"`  
+**File**: `DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish`
+**Línea**: 10
+**De**: `set -l theme_dir "$DREAMCODER_DOTS_DIR/themes/dreamcoder"`
+**A**: `set -l theme_dir "$DREAMCODER_DOTS_DIR/DreamcoderThemes/dreamcoder"`
 **Riesgo**: Bajo. Solo cambia una ruta de búsqueda. Si hay error, no rompe el shell, solo no setea las vars.
 
 ### Cambio 2: Tmux features de gentleman-dots
 
-**File**: `DreamcoderTmux/.tmux.conf`  
-**Sección**: "Plugin: TPM" — agregar 2 plugins  
-**Sección**: después de "Key Bindings" — agregar terminal-features  
-**Sección**: después de "TPM init" — agregar remote controls + mobile overlay  
-**Sección**: al principio — agregar `extended-keys off`  
+**File**: `DreamcoderTmux/.tmux.conf`
+**Sección**: "Plugin: TPM" — agregar 2 plugins
+**Sección**: después de "Key Bindings" — agregar terminal-features
+**Sección**: después de "TPM init" — agregar remote controls + mobile overlay
+**Sección**: al principio — agregar `extended-keys off`
 **Riesgo**: Medio. Plugins ya instalados en `~/.tmux/plugins/`. Solo hay que cargarlos con TPM.
 
 ### Cambio 3: Sync — active tmux en repo
 
-**File**: `src/dreamcoder_theme/sync.py`  
-**Función**: `sync_repo_snippets`  
-**Agregar**: `write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/tmux-dreamcoder.conf", tmux_content(active))`  
+**File**: `src/dreamcoder_theme/sync.py`
+**Función**: `sync_repo_snippets`
+**Agregar**: `write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/tmux-dreamcoder.conf", tmux_content(active))`
 **Riesgo**: Bajo. Solo replica lo que ya hace para otros targets.
 
 ---

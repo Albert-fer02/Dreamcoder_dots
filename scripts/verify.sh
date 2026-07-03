@@ -21,6 +21,29 @@ check_path() {
 control() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "${@}"; }
 command -v starship >/dev/null || fail 'Missing dependency: starship'
 for path in "${CONFIG_HOME}/kitty" "${CONFIG_HOME}/ghostty" "${CONFIG_HOME}/fastfetch" "${CONFIG_HOME}/starship.toml" "${CONFIG_HOME}/kitty/dreamcoder-ui.conf" "${DATA_HOME}/warp-terminal/themes" "${CONFIG_HOME}/hypr/colors.lua" "${CONFIG_HOME}/hypr/colors.conf" "${CONFIG_HOME}/waybar/colors.css" "${CONFIG_HOME}/rofi/colors.rasi"; do check_path "${path}"; done
+
+# ─── Extended symlink checks (T9) ───────────────────
+echo "--- Symlink checks ---"
+HYPR_DC_LUA="${CONFIG_HOME}/hypr/dreamcoder-colors.lua"
+if [[ -L "${HYPR_DC_LUA}" ]]; then
+  ok "dreamcoder-colors.lua symlink: $(readlink "${HYPR_DC_LUA}")"
+else
+  fail "dreamcoder-colors.lua missing or not a symlink"
+fi
+
+BTOP_THEME="${CONFIG_HOME}/btop/themes/dreamcoder.theme"
+if [[ -L "${BTOP_THEME}" ]]; then
+  ok "btop dreamcoder.theme symlink: $(readlink "${BTOP_THEME}")"
+else
+  fail "btop dreamcoder.theme missing or not a symlink"
+fi
+
+BTOP_CONF="${CONFIG_HOME}/btop/btop.conf"
+if [[ -f "${BTOP_CONF}" ]] && grep -q 'color_theme.*dreamcoder' "${BTOP_CONF}"; then
+  ok "btop.conf color_theme = dreamcoder"
+else
+  fail "btop.conf does not reference dreamcoder theme"
+fi
 PI_AGENT_DIR="${PI_AGENT_DIR:-${HOME}/.pi/agent}"
 check_path "${PI_AGENT_DIR}/themes/dreamcoder.json"
 "${DREAMCODER_DOTS_DIR}/scripts/verify-pi-theme.py" "${PI_AGENT_DIR}/themes/dreamcoder.json" "${PI_AGENT_DIR}/settings.json"

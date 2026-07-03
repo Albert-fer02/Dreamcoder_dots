@@ -46,6 +46,11 @@ fi
 if [[ -L "${HYPR_CONF}" ]]; then
   ln -sf "colors-${MODE}.conf" "${HYPR_CONF}"
 fi
+# --- Hyprland: flip dreamcoder-colors.lua ---
+HYPR_DC_LUA="${HOME}/.config/hypr/dreamcoder-colors.lua"
+if [[ -L "${HYPR_DC_LUA}" ]]; then
+  ln -sf "hypr-colors-${MODE}.lua" "${HYPR_DC_LUA}"
+fi
 
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
   PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
@@ -154,5 +159,11 @@ if [[ -L "${DUNST_CONF}" ]]; then
   esac
 fi
 
-# Warp: flip active theme symlink to mode-specific variant
-[[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"
+    # Warp: flip active theme symlink to mode-specific variant
+    [[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"
+
+    # Btop: flip theme symlink to mode-specific variant
+    BTOP_THEME="${HOME}/.config/btop/themes/dreamcoder.theme"
+    if [[ -L "${BTOP_THEME}" ]]; then
+      ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
+    fi

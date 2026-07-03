@@ -16,6 +16,10 @@ SAFE_REPAIR_CATALOG = {
     "restore-starship-config": "Restore missing Starship config from repo.",
     "restore-fish-config": "Restore missing Fish config from repo.",
     "restore-active-kitty-colors": "Restore active Kitty colors from repo.",
+    "restore-btop-theme": "Deploy Btop theme from repo.",
+    "restore-hypr-import": "Add dreamcoder-colors import in hyprland.lua.",
+    "restore-bat-themes": "Deploy Bat themes from repo.",
+    "enable-auto-timer": "Enable dreamcoder auto-theme timer via systemctl.",
 }
 
 MANAGED_RESTORE_TARGETS = {
@@ -23,6 +27,8 @@ MANAGED_RESTORE_TARGETS = {
     "ghostty config": ROOT / "DreamcoderGhostty" / ".config" / "ghostty",
     "starship config": ROOT / "DreamcoderShell" / ".config" / "starship.toml",
     "fish config": ROOT / "DreamcoderShell" / ".config" / "fish" / "config.fish",
+    "btop theme": ROOT / "DreamcoderThemes" / "dreamcoder" / "btop-dreamcoder-light.theme",
+    "bat theme": ROOT / "DreamcoderBat" / ".config" / "bat" / "themes" / "Dreamcoder-Dark.tmTheme",
 }
 
 

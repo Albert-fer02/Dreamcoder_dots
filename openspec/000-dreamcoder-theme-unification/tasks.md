@@ -17,8 +17,8 @@ Dentro del presupuesto de 400 líneas. Single PR.
 
 ### Task 1: Fish — corregir path de theme_dir
 
-**Archivo**: `DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish`  
-**Línea**: 10  
+**Archivo**: `DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish`
+**Línea**: 10
 **De**:
 
 ```fish
@@ -33,8 +33,8 @@ set -l theme_dir "$DREAMCODER_DOTS_DIR/DreamcoderThemes/dreamcoder"
 
 ### Task 2: Tmux — agregar continuum + which-key
 
-**Archivo**: `DreamcoderTmux/.tmux.conf`  
-**Sección**: "Plugin: TPM"  
+**Archivo**: `DreamcoderTmux/.tmux.conf`
+**Sección**: "Plugin: TPM"
 **Agregar después de tmux-resurrect**:
 
 ```tmux
@@ -49,8 +49,8 @@ set -g @plugin 'alexwforsythe/tmux-which-key'
 
 ### Task 3: Tmux — terminal features
 
-**Archivo**: `DreamcoderTmux/.tmux.conf`  
-**Después de la sección "Session Management"**  
+**Archivo**: `DreamcoderTmux/.tmux.conf`
+**Después de la sección "Session Management"**
 **Agregar**:
 
 ```tmux
@@ -65,8 +65,8 @@ set -s extended-keys off
 
 ### Task 4: Tmux — remote session controls
 
-**Archivo**: `DreamcoderTmux/.tmux.conf`  
-**Antes de "TPM init"**  
+**Archivo**: `DreamcoderTmux/.tmux.conf`
+**Antes de "TPM init"**
 **Agregar**:
 
 ```tmux
@@ -82,8 +82,8 @@ bind-key | split-window -h -c "#{pane_current_path}"
 
 ### Task 5: Tmux — mobile control overlay
 
-**Archivo**: `DreamcoderTmux/.tmux.conf`  
-**Después de "TPM init"**  
+**Archivo**: `DreamcoderTmux/.tmux.conf`
+**Después de "TPM init"**
 **Agregar**:
 
 ```tmux
@@ -95,9 +95,9 @@ if-shell "test -f ~/.config/tmux/mobile-control.conf" \
 
 ### Task 6: Sync — agregar tmux activo a sync_repo_snippets
 
-**Archivo**: `src/dreamcoder_theme/sync.py`  
-**Función**: `sync_repo_snippets`  
-**Después de la línea de `tmux-dreamcoder-{v}.conf`**  
+**Archivo**: `src/dreamcoder_theme/sync.py`
+**Función**: `sync_repo_snippets`
+**Después de la línea de `tmux-dreamcoder-{v}.conf`**
 **Agregar**:
 
 ```python
