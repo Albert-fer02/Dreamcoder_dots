@@ -10,20 +10,17 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
     # Use lower contrast minimum for syntax colors so they stay vibrant.
     # 4.5 is for body text; syntax highlighting is decorative/auxiliary.
     syntax_min = 3.0
-    keyword = guard(mix(c["accent"], c["warning"], 0.22), c["bg"], mode_name, minimum=syntax_min)
-    function = guard(c["diagnostic"], c["bg"], mode_name, minimum=syntax_min)
-    type_color = guard(c["lavender"], c["bg"], mode_name, minimum=syntax_min)
-    constant = guard(mix(c["accent_2"], c["mauve"], 0.24), c["bg"], mode_name, minimum=syntax_min)
+    keyword = guard(c["accent"], c["bg"], mode_name, minimum=syntax_min)
+    function = guard(c["accent_2"], c["bg"], mode_name, minimum=syntax_min)
+    type_color = guard(c["diagnostic"], c["bg"], mode_name, minimum=syntax_min)
+    constant = guard(c["mauve"], c["bg"], mode_name, minimum=syntax_min)
     sel_bg = c["selection_bg"]
     sel_fg = c["selection_fg"]
     return {
         "keyword": keyword,
         "function": function,
-        "method": guard(mix(function, c["lavender"], 0.16), c["bg"], mode_name, minimum=syntax_min),
-        # Variables deserve a real hue — lavender-blue tint, not brown.
-        "variable": guard(
-            mix(c["lavender"], c["muted"], 0.25), c["bg"], mode_name, minimum=syntax_min
-        ),
+        "method": guard(c["accent_2"], c["bg"], mode_name, minimum=syntax_min),
+        "variable": guard(c["muted"], c["bg"], mode_name, minimum=syntax_min),
         "parameter": guard(
             mix(c["accent_2"], c["text"], 0.06), c["bg"], mode_name, minimum=syntax_min
         ),
@@ -34,16 +31,14 @@ def opencode_tokens(c: dict[str, str]) -> dict[str, str]:
         # Strings — lower guard for more vibrant green pop
         "string": guard(c["sage"], c["bg"], mode_name, minimum=2.8),
         # Numbers — warm orange (further from keyword brown)
-        "number": guard(
-            mix(c["accent"], c["accent_2"], 0.35), c["bg"], mode_name, minimum=syntax_min
-        ),
+        "number": guard(mix(c["accent"], c["mauve"], 0.45), c["bg"], mode_name, minimum=syntax_min),
         "constant": constant,
         "type": type_color,
         "constructor": guard(
             mix(type_color, c["accent"], 0.18), c["bg"], mode_name, minimum=syntax_min
         ),
         "enum": guard(mix(type_color, c["sage"], 0.18), c["bg"], mode_name, minimum=syntax_min),
-        "operator": guard(c["mauve"], c["bg"], mode_name, minimum=syntax_min),
+        "operator": guard(c["accent_2"], c["bg"], mode_name, minimum=syntax_min),
         "punctuation": guard(c["muted"], c["bg"], mode_name, minimum=syntax_min),
         "comment": guard(c["comment"], c["bg"], mode_name, minimum=2.2),
         "todo": guard(mix(c["warning"], c["text"], 0.12), c["bg"], mode_name, minimum=syntax_min),

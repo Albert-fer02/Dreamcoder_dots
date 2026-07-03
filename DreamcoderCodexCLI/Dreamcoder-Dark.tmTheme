@@ -18,21 +18,22 @@
       <key>invisibles</key><string>#b8a99a</string>
     </dict></dict>
     <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#b8a99a</string><key>fontStyle</key><string>italic</string></dict></dict>
-    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#dc9d59</string><key>fontStyle</key><string>bold</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string></dict></dict>
-    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#d1b5d7</string></dict></dict>
+    <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#d99555</string><key>fontStyle</key><string>bold</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#c96a45</string></dict></dict>
+    <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#c7b9aa</string></dict></dict>
     <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#4db35f</string></dict></dict>
-    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#cf7660</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
-    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#e29cb4</string></dict></dict>
+    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#e29cb4</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string></dict></dict>
+    <dict><key>scope</key><string>punctuation</string><key>settings</key><dict><key>foreground</key><string>#c7b9aa</string></dict></dict>
+    <dict><key>scope</key><string>keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#c96a45</string></dict></dict>
     <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#4db35f</string></dict></dict>
-    <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#dc9d59</string></dict></dict>
+    <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#d99555</string></dict></dict>
     <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#6498ca</string></dict></dict>
     <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#ed8a7a</string></dict></dict>
     <dict><key>scope</key><string>markup.heading, markup.bold</string><key>settings</key><dict><key>foreground</key><string>#d99555</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>markup.italic</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string><key>fontStyle</key><string>italic</string></dict></dict>
     <dict><key>scope</key><string>meta.diff, meta.diff.header</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
-    <dict><key>scope</key><string>support.class, support.constant</string><key>settings</key><dict><key>foreground</key><string>#d4b4e6</string></dict></dict>
+    <dict><key>scope</key><string>support.class, support.constant</string><key>settings</key><dict><key>foreground</key><string>#5f95ca</string></dict></dict>
   </array>
 </dict>
 </plist>

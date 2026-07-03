@@ -37,7 +37,8 @@ def codex_tmtheme_content(c: dict[str, str]) -> str:
     <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>{t["string"]}</string></dict></dict>
     <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>{t["constant"]}</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>{t["type"]}</string></dict></dict>
-    <dict><key>scope</key><string>punctuation, keyword.operator</string><key>settings</key><dict><key>foreground</key><string>{t["operator"]}</string></dict></dict>
+    <dict><key>scope</key><string>punctuation</string><key>settings</key><dict><key>foreground</key><string>{t["punctuation"]}</string></dict></dict>
+    <dict><key>scope</key><string>keyword.operator</string><key>settings</key><dict><key>foreground</key><string>{t["operator"]}</string></dict></dict>
     <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>{t["string"]}</string></dict></dict>
     <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>{t["keyword"]}</string></dict></dict>
     <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>{t["property"]}</string></dict></dict>
