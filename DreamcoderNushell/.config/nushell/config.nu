@@ -10,14 +10,14 @@ $env.STARSHIP_CACHE = $"($env.HOME)/.cache/starship"
 
 # Aliases
 alias g = git
-alias gs = "git status"
-alias gp = "git push"
-alias gl = "git log --oneline --graph"
-alias ll = "ls -la"
-alias la = "ls -a"
-alias cat = "bat"
-alias find = "fd"
-alias grep = "rg"
+alias gs = git status
+alias gp = git push
+alias gl = git log --oneline --graph
+alias ll = ls -la
+alias la = ls -a
+alias cat = bat
+alias find = fd
+alias grep = rg
 
 # Cargo
 source "~/.cargo/env.nu"
