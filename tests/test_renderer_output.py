@@ -35,6 +35,7 @@ class TestMakeGuard:
     def test_produces_same_as_direct_guard(self, dark):
         g = make_guard(dark, minimum=3.0)
         from dreamcoder_theme.palette import guard
+
         expected = guard(dark["accent"], dark["bg"], "dark", minimum=3.0)
         assert g(dark["accent"]) == expected
 
@@ -59,10 +60,27 @@ class TestOpencodeTokens:
     def test_returns_expected_keys(self, variant):
         t = opencode_tokens(variant)
         expected_keys = {
-            "keyword", "function", "method", "variable", "parameter",
-            "property", "field", "string", "number", "constant", "type",
-            "constructor", "enum", "operator", "punctuation", "comment",
-            "todo", "deprecated", "code_bg", "selection", "selection_fg",
+            "keyword",
+            "function",
+            "method",
+            "variable",
+            "parameter",
+            "property",
+            "field",
+            "string",
+            "number",
+            "constant",
+            "type",
+            "constructor",
+            "enum",
+            "operator",
+            "punctuation",
+            "comment",
+            "todo",
+            "deprecated",
+            "code_bg",
+            "selection",
+            "selection_fg",
             "search",
         }
         assert set(t.keys()) == expected_keys
@@ -106,8 +124,15 @@ class TestOpencodeContent:
         content = opencode_content(variant)
         data = json.loads(content)
         theme = data["theme"]
-        for key in ("background", "text", "syntaxKeyword", "syntaxFunction",
-                     "syntaxVariable", "syntaxType", "syntaxString"):
+        for key in (
+            "background",
+            "text",
+            "syntaxKeyword",
+            "syntaxFunction",
+            "syntaxVariable",
+            "syntaxType",
+            "syntaxString",
+        ):
             assert key in theme, f"missing {key}"
 
     def test_syntax_colors_match_opencode_tokens(self, variant):
@@ -162,9 +187,9 @@ class TestCodexTmTheme:
             scope = item.get("scope", "")
             if scope in scope_map:
                 expected = t[scope_map[scope]]
-                assert item["settings"]["foreground"] == expected, (
-                    f"scope '{scope}': expected {expected}"
-                )
+                assert (
+                    item["settings"]["foreground"] == expected
+                ), f"scope '{scope}': expected {expected}"
 
 
 # ── Pi theme JSON structure tests ─────────────────────────────
@@ -182,8 +207,15 @@ class TestPiThemeContent:
         content = pi_theme_content(variant)
         data = json.loads(content)
         colors = data["colors"]
-        for key in ("syntaxKeyword", "syntaxFunction", "syntaxVariable",
-                     "syntaxString", "syntaxType", "accent", "text"):
+        for key in (
+            "syntaxKeyword",
+            "syntaxFunction",
+            "syntaxVariable",
+            "syntaxString",
+            "syntaxType",
+            "accent",
+            "text",
+        ):
             assert key in colors, f"missing colors.{key}"
 
     def test_syntax_colors_match_opencode_tokens(self, variant):
@@ -206,7 +238,7 @@ class TestPiThemeContent:
 class TestKitchenSink:
     """Every renderer function produces valid output for both modes."""
 
-    RENDERERS = [  # type: ignore[var-annotated]
+    RENDERERS = [  # type: ignore[var-annotated]  # noqa: RUF012
         ("kitty", kitty_content),
         ("kitty_ui", kitty_ui_content),
         ("starship", starship_content),
@@ -232,7 +264,6 @@ class TestCrossModeConsistency:
         dark_t = opencode_tokens(VARIANTS["dark"])
         light_t = opencode_tokens(VARIANTS["light"])
         for key in ("keyword", "function", "type", "string", "variable"):
-            assert dark_t[key] != light_t[key], (
-                f"{key} should differ between modes: "
-                f"dark={dark_t[key]} light={light_t[key]}"
-            )
+            assert (
+                dark_t[key] != light_t[key]
+            ), f"{key} should differ between modes: dark={dark_t[key]} light={light_t[key]}"

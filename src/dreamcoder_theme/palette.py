@@ -17,7 +17,11 @@ def load_variants(
 ) -> dict[str, dict[str, str]]:
     if not tokens_file.exists():
         return defaults
-    tokens = json.loads(tokens_file.read_text())
+    try:
+        tokens = json.loads(tokens_file.read_text())
+    except (json.JSONDecodeError, OSError):
+        warnings.warn(f"invalid tokens file: {tokens_file}", stacklevel=2)
+        return defaults
     modes = tokens.get("modes", {})
     merged = {key: value.copy() for key, value in defaults.items()}
     for key in ("dark", "light", "dusk"):
@@ -46,7 +50,14 @@ def resolve_color(palette: dict[str, str], value: str) -> str:
     if value.endswith("_bright"):
         base = value.removesuffix("_bright")
         if base in palette:
-            return mix(palette[base], palette["text"], 0.18)
+            # Bright variants must always be LIGHTER than base.
+            # Dark mode: text is light → mix with text to lighten.
+            # Light mode: bg is light → mix with bg to lighten.
+            if detect_mode(palette) == "light":
+                mix_target = palette.get("bg", palette["text"])
+            else:
+                mix_target = palette["text"]
+            return mix(palette[base], mix_target, 0.18)
     return palette.get(value, value)
 
 
@@ -161,7 +172,10 @@ def matugen_scheme(path: Path, mode_name: str, adaptive: bool) -> dict[str, str]
     match = re.search(r"\{.*\}", result.stdout, flags=re.S)
     if not match:
         return {}
-    return json.loads(match.group(0)).get("colors", {}).get(matugen_mode_name(mode_name), {})  # type: ignore[no-any-return]
+    try:
+        return json.loads(match.group(0)).get("colors", {}).get(matugen_mode_name(mode_name), {})  # type: ignore[no-any-return]
+    except json.JSONDecodeError:
+        return {}
 
 
 def adaptive_palette(

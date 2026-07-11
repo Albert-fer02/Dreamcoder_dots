@@ -8,8 +8,10 @@ font-family = "Symbols Nerd Font"
 font-size = 14
 font-feature = -calt, -liga, -dlig
 
-# Theme — mode-tracking (sync writes here, follows light/dark)
+# Theme — native dual-mode: auto-switches with system light/dark
 theme = dreamcoder
+# Auto-generate full 256-color palette from our 16 base dreamcoder colors
+palette-generate = true
 
 # Shell
 command = fish --login
@@ -27,12 +29,14 @@ window-padding-y = 18
 window-padding-color = background
 window-width = 1180
 window-height = 780
-window-decoration = client
+# Hyprland handles borders/decorations — no redundant internal ones
+window-decoration = none
 window-save-state = never
+# Tabs managed by Kitty — hide GTK tab bar for a clean look
+gtk-tabs-location = hidden
 
-# Opacity
-background-opacity = 0.96
-background-blur = false
+# Opacity (per-theme in dreamcoder-{light,dark} theme files)
+# background-opacity set per-theme for mode-specific transparency
 unfocused-split-opacity = 0.92
 
 # Scrollback

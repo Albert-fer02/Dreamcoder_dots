@@ -42,4 +42,25 @@ set -gx PATH $clean_path
 alias zp="zen-browser -P Personal"
 alias zd="zen-browser -P Dev"
 alias zf="zen-browser -P Founder"
+# Default browser = Zen Personal (for pi login OAuth, git, etc.)
+set -gx BROWSER "zen-browser -P Personal"
 fish_add_path /home/dreamcoder08/.local/share/npm-global/bin
+
+# OpenAI API key from Codex CLI (for OpenCode openai-codex provider)
+# Token expires 2026-07-10. Run `refresh-openai-key` to renew.
+# Loaded dynamically from Codex CLI auth in the function below
+# Remove this line when the token in Codex auth changes
+source (python3 -c "
+import json, os, sys
+try:
+    d = json.load(open(os.path.expanduser('~/.codex/auth.json')))
+    token = d['tokens']['access_token']
+    print(f'set -gx OPENAI_API_KEY {token}')
+except Exception as e:
+    print(f'echo \\\"Warning: could not load Codex token: {e}\\\"')
+" 2>/dev/null) 2>/dev/null
+
+# Start selected terminal multiplexer (Herdr)
+if status is-interactive; and command -q herdr; and not set -q HERDR_ENV; and not set -q TMUX; and not set -q ZELLIJ
+    herdr; or echo "⚠️  Herdr failed to start; continuing in Fish."
+end

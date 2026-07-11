@@ -51,6 +51,26 @@ HYPR_DC_LUA="${HOME}/.config/hypr/dreamcoder-colors.lua"
 if [[ -L "${HYPR_DC_LUA}" ]]; then
   ln -sf "hypr-colors-${MODE}.lua" "${HYPR_DC_LUA}"
 fi
+# --- Kitty: flip colors-dreamcoder.conf and dreamcoder-ui.conf symlinks BEFORE sync ---
+# This ensures the Python sync writes to the correct variant file
+# instead of overwriting the wrong one through a stale symlink.
+KITTY_DIR="${HOME}/.config/kitty"
+if [[ -d "${KITTY_DIR}" ]]; then
+  for _link in colors-dreamcoder.conf dreamcoder-ui.conf; do
+    _target="${KITTY_DIR}/${_link}"
+    if [[ -L "${_target}" ]]; then
+      ln -sf "${_link%.conf}-${MODE}.conf" "${_target}"
+    fi
+  done
+fi
+# Ghostty uses native dual-mode (light:dreamcoder-light,dark:dreamcoder-dark)
+# No symlink flipping needed — Ghostty auto-detects system theme
+# --- Pi CLI: flip theme symlink ---
+PI_SCRIPT="${DREAMCODER_DOTS_DIR}/DreamcoderPi/.pi/agent/scripts/pi-theme.sh"
+if [[ -f "${PI_SCRIPT}" ]]; then
+  DREAMCODER_THEME_MODE="${MODE}" bash "${PI_SCRIPT}" &>/dev/null || true
+  printf '  pi theme switched to %s mode\n' "${MODE}"
+fi
 
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
   PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
@@ -139,6 +159,14 @@ if command -v tmux >/dev/null 2>&1; then
 fi
 # --- /tmux integration ---
 
+# --- Herdr: switch config symlink + reload ---
+HERDR_SCRIPT="${DREAMCODER_DOTS_DIR}/scripts/herdr-theme-switch.sh"
+if [[ -f "${HERDR_SCRIPT}" ]]; then
+  bash "${HERDR_SCRIPT}" "${MODE}"
+  printf '  herdr theme switched to %s mode\n' "${MODE}"
+fi
+# --- /Herdr ---
+
 printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 
 # --- Post-sync: fix any stale symlinks ---
@@ -159,17 +187,17 @@ if [[ -L "${DUNST_CONF}" ]]; then
   esac
 fi
 
-    # Warp: flip active theme symlink to mode-specific variant
-    [[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"
+# Warp: flip active theme symlink to mode-specific variant
+[[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"
 
-    # Btop: flip theme symlink to mode-specific variant
-    BTOP_THEME="${HOME}/.config/btop/themes/dreamcoder.theme"
-    if [[ -L "${BTOP_THEME}" ]]; then
-    ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
-    fi
+# Btop: flip theme symlink to mode-specific variant
+BTOP_THEME="${HOME}/.config/btop/themes/dreamcoder.theme"
+if [[ -L "${BTOP_THEME}" ]]; then
+  ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
+fi
 
-    # Zellij: update theme in config.kdl
-    ZELLIJ_CONF="${HOME}/.config/zellij/config.kdl"
-    if [[ -f "${ZELLIJ_CONF}" ]]; then
-    sed -i "s/^theme \".*\"/theme \"dreamcoder-${MODE}\"/" "${ZELLIJ_CONF}"
-    fi
+# Zellij: update theme in config.kdl
+ZELLIJ_CONF="${HOME}/.config/zellij/config.kdl"
+if [[ -f "${ZELLIJ_CONF}" ]]; then
+  sed -i "s/^theme \".*\"/theme \"dreamcoder-${MODE}\"/" "${ZELLIJ_CONF}"
+fi

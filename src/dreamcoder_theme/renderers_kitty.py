@@ -57,9 +57,9 @@ color17 {c["error"]}
 
 mark1_foreground        {c["on_accent"]}
 mark1_background        {c["accent"]}
-mark2_foreground        {c["on_surface"]}
+mark2_foreground        {c["on_accent"]}
 mark2_background        {c["diagnostic"]}
-mark3_foreground        {c["on_surface"]}
+mark3_foreground        {c["on_accent"]}
 mark3_background        {c["mauve"]}
 """
 
@@ -68,10 +68,16 @@ def kitty_ui_content(c: dict[str, str]) -> str:
     is_dark = detect_mode(c) == "dark"
     opacity = "0.76" if is_dark else "0.96"
     blur = "24" if is_dark else "0"
+    gamma = "1.0" if is_dark else "1.3"
+    contrast = "15" if is_dark else "15"
     return f"""# Dreamcoder Kitty UI parity layer
 # Loaded last so ML4W can keep behavior while Dreamcoder owns readability.
 # Dark mode: glass blur (24px) with 76% opacity for depth.
 # Light mode: opaque paper (96%) for maximum text legibility.
+# text_composition_strategy:
+#   gamma (1st val): thickness of dark text on light bg (default 1.0 on Linux).
+#   contrast (2nd val): extra contrast %, 0-100 (default 0 on Linux).
+#   Higher gamma = thicker text on light themes; contrast helps both modes.
 
 font_family           JetBrainsMono Nerd Font
 bold_font             auto
@@ -81,7 +87,8 @@ font_size             14
 disable_ligatures     cursor
 symbol_map            U+E000-U+F8FF,U+F0000-U+10FFFF Symbols Nerd Font
 box_drawing_scale     0.001, 1, 1.5, 2
-text_composition_strategy platform
+# gamma {gamma} + {contrast}% contrast = thicker, sharper text matching Ghostty
+text_composition_strategy {gamma} {contrast}
 shell                 fish --login
 
 window_padding_width  20 18 20 18

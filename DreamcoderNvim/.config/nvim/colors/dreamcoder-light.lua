@@ -5,7 +5,7 @@
 -- Can also be loaded directly: vim.cmd.colorscheme("dreamcoder-light")
 -- ========================================================
 
-vim.g.colors_name = "dreamcoder-light"
+vim.g.colors_name = "dreamcoder-dark"
 
 local c = {
   bg        = "#f3eadc",
@@ -148,7 +148,7 @@ end
 
   -- ── Popup Menu ────────────────────────────────────────
   vim.api.nvim_set_hl(0, "Pmenu", {
-    fg = "#17120d",
+    fg = "#352e22",
     bg = "#decbb1"
   })
 

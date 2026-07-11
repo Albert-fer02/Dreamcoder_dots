@@ -50,7 +50,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         element_bg = c["surface1"]
         hover_bg = c["hover"]
         line_bg = mix(c["bg"], c["surface0"], 0.50)
-        code_bg = mix(c["surface0"], c["surface1"], 0.30)
+        code_bg = mix(c["surface0"], c["surface1"], 0.20)
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
         user_bg = mix(c["bg"], c["accent"], 0.12)
         tool_bg = mix(c["bg"], c["lavender"], 0.12)
@@ -61,11 +61,12 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         element_bg = mix(c["bg_soft"], c["surface1"], 0.4)
         hover_bg = c["hover"]
         line_bg = c["bg_soft"]
-        code_bg = mix(c["surface1"], c["border_ui"], 0.12)
+        # Light code_bg: use surface0 (near-bg) instead of surface1 for syntax contrast
+        code_bg = c["surface0"]
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
         user_bg = mix(c["bg"], c["accent"], 0.15)
         tool_bg = mix(c["bg"], c["lavender"], 0.12)
-        accent_muted = mix(c["accent"], c["bg"], 0.4)
+        accent_muted = mix(c["accent"], c["bg"], 0.3)
         inline_code_bg = mix(c["sage"], c["bg"], 0.18)
         mix_base = c["bg"]
 

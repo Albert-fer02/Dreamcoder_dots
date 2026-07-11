@@ -5,7 +5,7 @@
 -- Can also be loaded directly: vim.cmd.colorscheme("dreamcoder-dark")
 -- ========================================================
 
-vim.g.colors_name = "dreamcoder-dark"
+vim.g.colors_name = "dreamcoder-light"
 
 local c = {
   bg        = "#100f0d",
@@ -34,11 +34,12 @@ local function h(name, opts)
 end
 
 -- ── Editor UI ────────────────────────────────────────────────
--- Normal background is opaque in both modes so terminal transparency cannot hide text.
+-- Normal background is opaque in light so dark terminal transparency cannot hide text.
+-- Dark mode keeps transparent Normal for Ember Noir glass.
 
   vim.api.nvim_set_hl(0, "Normal", {
     fg = "#e8dfd0",
-    bg = "#100f0d"
+    bg = "none"
   })
 
   vim.api.nvim_set_hl(0, "NormalFloat", {

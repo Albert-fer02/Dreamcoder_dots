@@ -12,7 +12,7 @@ from .settings import PI_THEME_SCHEMA
 def pi_theme_content(c: dict[str, str]) -> str:
     t = opencode_tokens(c)
     mode_name = detect_mode(c)
-    user_bg = mix(c["accent"], c["bg"], 0.84)
+    user_bg = mix(c["accent"], c["bg"], 0.96)
     pending_bg = mix(c["surface0"], c["bg"], 0.55)
     success_bg = mix(c["sage"], c["bg"], 0.82)
     error_bg = mix(c["error"], c["bg"], 0.84)

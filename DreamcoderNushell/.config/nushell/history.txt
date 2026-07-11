@@ -66,3 +66,9 @@ ls
 c
 clear
 ls
+c
+clear
+ls
+clear
+ls
+exit

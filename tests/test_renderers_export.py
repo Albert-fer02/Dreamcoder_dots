@@ -32,12 +32,20 @@ def _get_renderer_functions(module_name: str) -> set[str]:
     return {
         name
         for name, obj in inspect.getmembers(mod, inspect.isfunction)
-        if (not name.startswith("_")
-        and (name.endswith("_content") or name == "opencode_tokens")
-        and not name.startswith("nvim_"))
-        or name in {"nvim_content", "nvim_dispatcher_content",
-                     "hypr_colors_conf_content", "hypr_colors_lua_content",
-                     "rofi_matugen_content", "waybar_matugen_content"}
+        if (
+            not name.startswith("_")
+            and (name.endswith("_content") or name == "opencode_tokens")
+            and not name.startswith("nvim_")
+        )
+        or name
+        in {
+            "nvim_content",
+            "nvim_dispatcher_content",
+            "hypr_colors_conf_content",
+            "hypr_colors_lua_content",
+            "rofi_matugen_content",
+            "waybar_matugen_content",
+        }
     }
 
 
