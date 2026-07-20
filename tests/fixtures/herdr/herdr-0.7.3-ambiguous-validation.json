@@ -1,0 +1,16 @@
+{
+  "profile_id": "herdr-0.7.3-validation-ambiguous",
+  "executable": "herdr",
+  "version": "0.7.3",
+  "source_identity": "synthetic incomplete test evidence",
+  "source_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "default_config_path": "<HOME>/.config/herdr/config.toml",
+  "config_path_environment": "HERDR_CONFIG_PATH",
+  "color_representation": "test",
+  "allowed_theme_fields": ["test.theme"],
+  "allowed_custom_fields": ["test.color"],
+  "candidate_validation": { "available": true, "unambiguous": false },
+  "server_applicability": { "available": true, "unambiguous": true },
+  "reload": { "available": true, "observable": true, "unambiguous": true },
+  "restoration": { "available": true, "unambiguous": true }
+}

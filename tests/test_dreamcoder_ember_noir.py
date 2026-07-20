@@ -12,13 +12,13 @@ class DreamcoderEmberNoirTest(unittest.TestCase):
 
     def test_dark_mode_uses_ember_noir_identity(self):
         self.assertEqual(self.dark["name"], "Dreamcoder Ember Noir OLED")
-        self.assertEqual(self.dark["bg"], "#100f0d")
+        self.assertEqual(self.dark["bg"], "#000000")
         self.assertEqual(self.dark["surface0"], "#201b16")
         self.assertEqual(self.dark["surface1"], "#2b231b")
         self.assertEqual(self.dark["surface2"], "#392e21")
 
     def test_dark_mode_has_red_orange_gold_signature(self):
-        self.assertEqual(self.dark["accent"], "#d99555")
+        self.assertEqual(self.dark["accent"], "#e6a15c")
         self.assertEqual(self.dark["accent_2"], "#c96a45")
         self.assertEqual(self.dark["error"], "#ed8a7a")
         self.assertEqual(self.dark["warning"], "#e8b866")

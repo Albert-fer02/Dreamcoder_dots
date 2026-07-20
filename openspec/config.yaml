@@ -1,9 +1,71 @@
 # Dreamcoder Dots — OpenSpec SDD Config
+schema: spec-driven
+
 project: dreamcoder-dots
 workspace: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots
-description: >
-  Dreamcoder theme ecosystem — syncs palette tokens to all
-  terminal/shell/tool configs across the system.
 
-strict_tdd: false
-test_command: null
+context: |
+  Tech stack: Python 3.11+ (setuptools, Jinja2) + Go 1.26 (installer CLI)
+  Architecture: Theme engine under src/dreamcoder_theme/ with renderers, writers, sync orchestrator.
+    Go installer under installer/ with TUI (Bubbletea), dotfiles paths, system detection.
+    Shell scripts under scripts/ for theme switching, repair, doctor, install.
+    Targets: Kitty, Ghostty, Fish/Zsh/Bash, Starship, Fastfetch, Tmux, Zellij, Hyprland,
+    Waybar, Rofi, btop, bat, Nvim, Warp, WezTerm, Alacritty, Pi, Codex, Antigravity,
+    OpenCode, Firefox, Obsidian, systemd, notifications.
+  Testing: pytest 9.0 (Python), go test (Go), bats (shell scripts)
+  Style: Ruff lint+format (py311, line-length 100), mypy strict, ShellCheck, pre-commit
+  Conventions: Identity-first theme (Dreamcoder Ember Noir / Cocoa), WCAG/APCA guardrails,
+    canonical tokens in themes/dreamcoder/tokens.json, sync.py orchestrates rendering
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Clarify ambiguous targets before implementation
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns
+      - Shell scripts: max 30 lines, set -euo pipefail, quote vars, use [[ ]]
+      - Python: Ruff lint rules, mypy strict
+    tdd: false
+    test_command: python -m pytest tests/ -v
+  verify:
+    test_command: python -m pytest tests/ -v --tb=short
+    build_command: pip install -e ".[dev]"
+    coverage_threshold: 40
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: false
+  runner:
+    command: python -m pytest tests/ -v
+    framework: pytest 9.0
+  layers:
+    unit:
+      available: true
+      tool: pytest
+    integration:
+      available: true
+      tool: pytest + CI integration-test.yml (mock overlay)
+    e2e:
+      available: true
+      tool: bats (shell-tests/) + Go e2e (installer/e2e/)
+  coverage:
+    available: true
+    command: python -m pytest tests/ --cov=dreamcoder_theme --cov-report=term-missing
+    threshold: 40
+  quality:
+    linter: ruff check src/ tests/
+    type_checker: mypy src/
+    formatter: ruff format src/ tests/
+    shell_lint: shellcheck --shell=bash scripts/*.sh
+    pre_commit: pre-commit run --all-files

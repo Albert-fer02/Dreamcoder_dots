@@ -113,7 +113,7 @@ class PiThemeGenerationTest(unittest.TestCase):
             self.assertEqual(theme["name"], "dreamcoder")
             self.assertEqual(set(theme["colors"].keys()), REQUIRED_PI_TOKENS)
             self.assertEqual(theme["colors"]["accent"], "lucuma")
-            self.assertEqual(theme["vars"]["lucuma"], "#d99555")
+            self.assertEqual(theme["vars"]["lucuma"], "#e6a15c")
 
     def test_opencode_preserves_terminal_transparent_background(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -126,7 +126,7 @@ class PiThemeGenerationTest(unittest.TestCase):
 
             self.assertEqual(theme["background"], "none")
             self.assertEqual(theme["backgroundPanel"], "#201b16")
-            self.assertEqual(theme["primary"], "#d99555")
+            self.assertEqual(theme["primary"], "#e6a15c")
             self.assertEqual(theme["secondary"], "#c96a45")
 
     def test_selects_dreamcoder_theme_without_overwriting_existing_pi_settings(self):

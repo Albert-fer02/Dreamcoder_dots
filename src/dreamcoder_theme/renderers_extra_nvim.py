@@ -113,7 +113,7 @@ def nvim_content(c: dict[str, str]) -> str:
 -- Can also be loaded directly: vim.cmd.colorscheme("dreamcoder-{"light" if invert else "dark"}")
 -- ========================================================
 
-vim.g.colors_name = "dreamcoder-{"dark" if invert else "light"}"
+vim.g.colors_name = "dreamcoder-{"light" if invert else "dark"}"
 
 local c = {{
   bg        = "{bg}",

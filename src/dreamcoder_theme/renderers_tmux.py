@@ -20,6 +20,7 @@ def tmux_content(c: dict[str, str]) -> str:
     sel = c["surface1"]
     surface2 = c["surface2"]
     error = c["error"]
+    success = c["success"]
     warn = c["warning"]
     info = c["diagnostic"]
     surface0 = c["surface0"]
@@ -41,6 +42,8 @@ set -g pane-border-style "fg={pane_fg},bg=default"
 set -g pane-active-border-style "fg={pane_active_fg},bg=default"
 set -g display-panes-colour "{accent}"
 set -g display-panes-active-colour "{accent}"
+# Semantic token for status integrations that report successful commands.
+set -g @dreamcoder-success-colour "{success}"
 
 # ─── Minimal status bar (text-only hierarchy) ─────────
 set -g status-style "bg={bg_bar}"

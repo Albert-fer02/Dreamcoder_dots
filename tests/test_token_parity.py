@@ -1,4 +1,6 @@
 import json
+import os
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -14,7 +16,10 @@ TOKENS = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 class TokenParityTest(unittest.TestCase):
     def setUp(self):
-        self.modes = json.loads(TOKENS.read_text())["modes"]
+        try:
+            self.modes = json.loads(TOKENS.read_text())["modes"]
+        except (OSError, json.JSONDecodeError, KeyError) as error:
+            self.fail(f"unable to load token modes from {TOKENS}: {error}")
 
     def test_dark_and_light_share_semantic_keys(self):
         dark_keys = {k for k in self.modes["dark"] if k not in {"name", "details"}}
@@ -46,6 +51,19 @@ class TokenParityTest(unittest.TestCase):
     def test_ansi_keys_are_token_names_only(self):
         for key in ANSI_KEY_NAMES:
             self.assertFalse(key.startswith("#"), f"literal hex in ANSI_KEY_NAMES: {key}")
+
+    def test_health_requires_dark_on_accent_to_meet_apca_threshold(self):
+        environment = os.environ | {"PYTHONPATH": str(ROOT / "src")}
+        result = subprocess.run(
+            [sys.executable, "scripts/verify-theme-health.py"],
+            cwd=ROOT,
+            env=environment,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

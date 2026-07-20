@@ -1,0 +1,89 @@
+# Dreamcoder Ghostty — Minimal, focused config.
+# Colors come from the theme file (~/.config/ghostty/themes/dreamcoder).
+# Keep global settings here; color-only settings belong in the theme.
+
+# Fonts
+font-family = "JetBrainsMono Nerd Font"
+font-family = "Symbols Nerd Font"
+font-size = 14
+font-feature = -calt, -liga, -dlig
+
+# Theme — native dual-mode: auto-switches with system light/dark
+theme = dreamcoder
+# Auto-generate full 256-color palette from our 16 base dreamcoder colors
+palette-generate = true
+
+# Shell
+command = fish --login
+shell-integration = fish
+shell-integration-features = no-cursor
+
+# Cursor
+cursor-style = "block"
+cursor-style-blink = true
+cursor-opacity = 0.96
+
+# Window
+window-padding-x = 20
+window-padding-y = 18
+window-padding-color = background
+window-width = 1180
+window-height = 780
+# Hyprland handles borders/decorations — no redundant internal ones
+window-decoration = none
+window-save-state = never
+# Tabs managed by Kitty — hide GTK tab bar for a clean look
+gtk-tabs-location = hidden
+
+# Opacity (per-theme in dreamcoder-{light,dark} theme files)
+# background-opacity set per-theme for mode-specific transparency
+unfocused-split-opacity = 0.92
+
+# Scrollback
+scrollback-limit = 10000
+
+# Keybindings — tabs
+keybind = ctrl+t=new_tab
+keybind = ctrl+w=close_tab
+keybind = ctrl+tab=next_tab
+keybind = ctrl+shift+tab=previous_tab
+keybind = ctrl+1=goto_tab:1
+keybind = ctrl+2=goto_tab:2
+keybind = ctrl+3=goto_tab:3
+keybind = ctrl+4=goto_tab:4
+keybind = ctrl+5=goto_tab:5
+keybind = ctrl+6=goto_tab:6
+keybind = ctrl+7=goto_tab:7
+keybind = ctrl+8=goto_tab:8
+keybind = ctrl+9=goto_tab:9
+keybind = ctrl+0=goto_tab:10
+
+# Keybindings — splits
+keybind = f5=new_split:right
+keybind = f6=new_split:down
+
+# Keybindings — zoom
+keybind = ctrl+shift+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+
+# Keybindings — navigation
+keybind = ctrl+shift+z=jump_to_prompt:-1
+keybind = ctrl+shift+x=jump_to_prompt:1
+keybind = ctrl+shift+r=reload_config
+
+# Mouse
+mouse-hide-while-typing = true
+focus-follows-mouse = false
+
+# Links
+link-url = true
+copy-on-select = true
+
+# Misc
+confirm-close-surface = false
+auto-update = off
+window-padding-balance = false
+
+# Shaders
+custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl
+custom-shader-animation = true

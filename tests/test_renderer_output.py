@@ -251,6 +251,39 @@ class TestKitchenSink:
             assert len(result) > 0, f"{name} should not be empty"
 
 
+# ── Nvim colors_name correctness ──────────────────────────────
+
+
+class TestNvimColorsName:
+    """colors_name must accurately identify the mode, not be swapped."""
+
+    def test_dark_sets_correct_colors_name(self, dark):
+        from dreamcoder_theme.renderers_extra_nvim import nvim_content
+
+        content = nvim_content(dark)
+        assert (
+            'colors_name = "dreamcoder-dark"' in content
+        ), "dark variant must report dreamcoder-dark"
+
+    def test_light_sets_correct_colors_name(self):
+        from dreamcoder_theme.renderers_extra_nvim import nvim_content
+
+        light = VARIANTS["light"]
+        content = nvim_content(light)
+        assert (
+            'colors_name = "dreamcoder-light"' in content
+        ), "light variant must report dreamcoder-light"
+
+    def test_dusk_sets_correct_colors_name(self):
+        from dreamcoder_theme.renderers_extra_nvim import nvim_content
+
+        dusk = VARIANTS["dusk"]
+        content = nvim_content(dusk)
+        assert (
+            'colors_name = "dreamcoder-light"' in content
+        ), "dusk variant (lighter) must report dreamcoder-light"
+
+
 # ── Cross-mode consistency ────────────────────────────────────
 
 

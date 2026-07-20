@@ -1,0 +1,89 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                    GENTLEMAN DOTS + DREAMCODER THEMES                        ║
+# ║            Estructura Gentleman Ghostty · Colors Dreamcoder dual-mode        ║
+# ║                   Optimized for Neovim · Hyprland                            ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                   FONT                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+font-family = IosevkaTerm NF
+font-size = 14
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  THEME                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Dual-mode: auto-switches with system light/dark via ~/.config/ghostty/themes/
+theme = light:dreamcoder-light, dark:dreamcoder-dark
+palette-generate = true
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  WINDOW                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+background-opacity = 0.95
+background-blur-radius = 20
+
+window-decoration = true
+window-padding-color = extend
+window-step-resize = false
+window-padding-balance = true
+window-height = 100
+window-width = 100
+
+gtk-tabs-location = hidden
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  SHADER                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+custom-shader = shaders/cursor_smear_gentleman.glsl
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                            INPUT / KEYBINDINGS                               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# macOS Alt key fix
+macos-option-as-alt = left
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+
+# Split Management
+keybind = alt+v=new_split:right
+keybind = alt+d=new_split:down
+
+# Split Navigation
+keybind = alt+k=goto_split:up
+keybind = alt+j=goto_split:down
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+
+# Split Resize
+keybind = ctrl+shift+j=resize_split:up,10
+keybind = ctrl+shift+k=resize_split:down,10
+keybind = ctrl+shift+h=resize_split:left,10
+keybind = ctrl+shift+l=resize_split:right,10
+
+# Miscellaneous
+keybind = cmd+k=clear_screen
+keybind = shift+enter=text:\x1b\r
+keybind = ctrl+shift+r=reload_config
+
+# Open file with nvim (write 'nvim' first, then use this keybinding)
+keybind = alt+s=write_screen_file:paste
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                MOUSE / MISC                                  │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+mouse-hide-while-typing = true
+confirm-close-surface = false
+auto-update = off

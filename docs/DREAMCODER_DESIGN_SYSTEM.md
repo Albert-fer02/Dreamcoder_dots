@@ -58,7 +58,17 @@ Minimums:
 - UI affordances: Lc 30 (matches WCAG any-text minimum)
 - Quiet text: Lc 45 (matches WCAG large/heavy text tier)
 
-Ve `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values.
+See `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values.
+
+The dark `subtle` token measures APCA Lc 36.8 against the quiet advisory target of 44, while retaining WCAG contrast of 5.19:1. This is a documented non-blocking advisory and must remain visible in health-command output.
+
+## Health verification policy
+
+`python scripts/verify-theme-health.py` is the blocking health command for Dreamcoder theme changes. It validates the in-memory design-system contract matrix for `dark`, `light`, and `dusk`; any contract finding fails health verification.
+
+OpenCode theme ownership is limited to `.opencode/themes/`. The health check requires exactly `dreamcoder.json` there. Application configuration under `DreamcoderOpenCode/.config/opencode/`, including `opencode.json`, is not a theme artifact and is intentionally excluded.
+
+`dusk` is a validated design-system mode only. Runtime activation remains unsupported until a separate rollout explicitly adds it; this health policy does not enable it.
 
 ## Governance
 

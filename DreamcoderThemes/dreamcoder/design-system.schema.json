@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dreamcoder terminal-first design system contract",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "modes",
+    "roles",
+    "targets",
+    "matrix",
+    "artifacts"
+  ],
+  "properties": {
+    "$schema": { "const": "./design-system.schema.json" },
+    "schema_version": { "const": 1 },
+    "modes": { "type": "array", "const": ["dark", "light", "dusk"] },
+    "roles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/role" }
+    },
+    "targets": {
+      "type": "object",
+      "minProperties": 6,
+      "additionalProperties": { "$ref": "#/$defs/target" }
+    },
+    "matrix": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "$ref": "#/$defs/matrix-row" }
+    },
+    "artifacts": { "type": "array", "items": { "$ref": "#/$defs/artifact" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "role": {
+      "type": "object",
+      "required": ["layer"],
+      "anyOf": [{ "required": ["source"] }, { "required": ["derivation"] }],
+      "properties": {
+        "layer": { "enum": ["primitive", "semantic", "component-state"] },
+        "source": {
+          "type": "string",
+          "pattern": "^modes\\.\\{mode\\}\\.[a-z0-9_]+$"
+        },
+        "parent": { "type": "string" },
+        "derivation": {
+          "type": "object",
+          "required": ["id", "inputs"],
+          "properties": {
+            "id": { "enum": ["alias"] },
+            "inputs": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["renderer", "modes", "required_roles", "fields"],
+      "properties": {
+        "renderer": { "type": "string" },
+        "modes": { "const": ["dark", "light", "dusk"] },
+        "required_roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "mappings": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "matrix-row": {
+      "type": "object",
+      "required": [
+        "id",
+        "foreground",
+        "background",
+        "modes",
+        "targets",
+        "metric",
+        "threshold",
+        "severity"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "foreground": { "type": "string" },
+        "background": { "type": "string" },
+        "modes": { "const": ["dark", "light", "dusk"] },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "metric": { "enum": ["wcag", "wcag-non-text", "apca"] },
+        "threshold": { "oneOf": [{ "type": "string" }, { "type": "number" }] },
+        "severity": { "enum": ["error", "warning", "info"] }
+      },
+      "additionalProperties": false
+    },
+    "artifact": {
+      "type": "object",
+      "required": [
+        "id",
+        "owner",
+        "lifecycle",
+        "source",
+        "generator",
+        "path",
+        "mode_policy",
+        "discovery_root",
+        "pattern",
+        "validation"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "owner": { "type": "string" },
+        "lifecycle": {
+          "enum": ["checked-in", "ephemeral", "workflow-specific"]
+        },
+        "source": { "const": "DreamcoderThemes/dreamcoder/tokens.json" },
+        "generator": { "type": "string" },
+        "path": { "type": "string" },
+        "mode_policy": { "type": "string" },
+        "discovery_root": { "type": "string" },
+        "pattern": { "type": "string" },
+        "validation": { "enum": ["exact-bytes", "structured", "schema-fields"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

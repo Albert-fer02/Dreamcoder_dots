@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -180,22 +181,76 @@ def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
     return "\n".join(lines)
 
 
-def main() -> int:
-    tokens = json.loads(TOKENS_FILE.read_text())
+def load_tokens(path: Path = TOKENS_FILE) -> dict[str, object]:
+    """Load canonical tokens without modifying their source file."""
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def enrich_tokens(tokens: dict[str, object]) -> dict[str, object]:
+    """Return a generated view with derived tokens, leaving canonical input untouched."""
+    result = dict(tokens)
     modes = tokens.get("modes", {})
-    enriched: dict[str, dict[str, str]] = {}
-    for name, palette in modes.items():
-        enriched[name] = enrich_mode(palette)
+    if not isinstance(modes, dict):
+        raise ValueError("tokens.modes must be an object")
+    result["modes"] = {
+        name: enrich_mode(palette) for name, palette in modes.items() if isinstance(palette, dict)
+    }
+    guardrails = dict(tokens.get("guardrails", {}))
+    guardrails.setdefault("minimum_apca_on_accent", 60)
+    guardrails.setdefault("minimum_apca_heading_light", 60)
+    guardrails.setdefault("minimum_apca_heading_dark", 45)
+    result["guardrails"] = guardrails
+    return result
 
-    tokens["modes"] = enriched
-    tokens["guardrails"].setdefault("minimum_apca_on_accent", 60)
-    tokens["guardrails"].setdefault("minimum_apca_heading_light", 60)
-    tokens["guardrails"].setdefault("minimum_apca_heading_dark", 45)
-    TOKENS_FILE.write_text(json.dumps(tokens, indent=2) + "\n")
 
-    subset = {k: enriched[k] for k in ("dark", "light", "dusk") if k in enriched}
-    OUTPUT.write_text(render_palette_tokens(subset))
-    print(f"✓ Updated {TOKENS_FILE.relative_to(ROOT)}")
+def render_from_tokens(tokens: dict[str, object]) -> str:
+    """Render deterministic static tokens for the three declared modes."""
+    enriched = enrich_tokens(tokens)
+    modes = enriched["modes"]
+    if not isinstance(modes, dict):
+        raise ValueError("generated modes must be an object")
+    missing = [name for name in ("dark", "light", "dusk") if name not in modes]
+    if missing:
+        raise ValueError(f"missing required modes: {', '.join(missing)}")
+    return render_palette_tokens({name: modes[name] for name in ("dark", "light", "dusk")})
+
+
+def _display_path(path: Path) -> Path:
+    """Prefer repository-relative diagnostics while supporting isolated test paths."""
+    try:
+        return path.relative_to(ROOT)
+    except ValueError:
+        return path
+
+
+def generated_drift_message(source: Path, output: Path) -> str:
+    return (
+        "GENERATED_DRIFT: canonical source="
+        f"{_display_path(source)} generated path={_display_path(output)} "
+        "regeneration command=python scripts/generate-palette-tokens.py"
+    )
+
+
+def check_generated(tokens_path: Path = TOKENS_FILE, output_path: Path = OUTPUT) -> str | None:
+    """Return an actionable drift diagnostic or None; never write files."""
+    expected = render_from_tokens(load_tokens(tokens_path))
+    actual = output_path.read_text(encoding="utf-8") if output_path.exists() else None
+    return None if actual == expected else generated_drift_message(tokens_path, output_path)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="fail when generated output is stale")
+    args = parser.parse_args(argv)
+    tokens = load_tokens()
+    if args.check:
+        drift = check_generated()
+        if drift:
+            print(drift, file=sys.stderr)
+            return 1
+        print(f"✓ Generated tokens synchronized: {OUTPUT.relative_to(ROOT)}")
+        return 0
+    OUTPUT.write_text(render_from_tokens(tokens), encoding="utf-8")
     print(f"✓ Generated {OUTPUT.relative_to(ROOT)}")
     return 0
 

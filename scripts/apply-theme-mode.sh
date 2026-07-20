@@ -121,18 +121,18 @@ if command -v tmux >/dev/null 2>&1; then
       ;;
     dark)
       KANAGAWA_VARIANT="dragon"
-      # Dreamcoder Ember Noir OLED palette — source: tokens.json modes.dark.{text,accent,error,...}
-      tmux set-option -g @ukiyo-color-text "#e8dfd0" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-bg-bar "#181512" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-bg-pane "#100f0d" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-accent "#d99555" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-info "#4db35f" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-notice "#c96a45" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-muted "#c7b9aa" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-error "#ed8a7a" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-alert "#e8b866" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-highlight "#5f8f8f" 2>/dev/null || true
-      tmux set-option -g @ukiyo-color-selection "#2b231b" 2>/dev/null || true
+      # Dreamcoder Anthracite Steel palette — source: tokens.json modes.dark.{text,accent,error,...}
+      tmux set-option -g @ukiyo-color-text "#E6EDF3" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-bg-bar "#0D121A" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-bg-pane "#070A13" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-accent "#A5C7E8" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-info "#7CB3D9" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-notice "#8FAFCB" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-muted "#A8B5C2" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-error "#E69AA4" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-alert "#D9B36C" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-highlight "#A5C7E8" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-selection "#202A35" 2>/dev/null || true
       # Swap plugin color order: fg=bg_bar (oscuro) sobre bg=color vibrante
       tmux set-option -g @ukiyo-git-colors "accent bg_bar" 2>/dev/null || true
       tmux set-option -g @ukiyo-cpu-usage-colors "notice bg_bar" 2>/dev/null || true

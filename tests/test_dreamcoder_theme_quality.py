@@ -34,7 +34,7 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
         self.assertEqual(dark["surface0"], "#201b16")
         self.assertEqual(dark["surface1"], "#2b231b")
         self.assertEqual(dark["surface2"], "#392e21")
-        self.assertEqual(dark["accent"], "#d99555")
+        self.assertEqual(dark["accent"], "#e6a15c")
         self.assertEqual(dark["accent_2"], "#c96a45")
 
     def test_light_has_stronger_editor_readability_tiers(self):

@@ -5,7 +5,7 @@
 -- Can also be loaded directly: vim.cmd.colorscheme("dreamcoder-light")
 -- ========================================================
 
-vim.g.colors_name = "dreamcoder-dark"
+vim.g.colors_name = "dreamcoder-light"
 
 local c = {
   bg        = "#f3eadc",
@@ -1261,3 +1261,4 @@ end
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     fg = "#352e22"
   })
+

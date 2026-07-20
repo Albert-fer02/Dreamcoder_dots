@@ -1,0 +1,17 @@
+{
+  "profile_id": "test-herdr-0.7.3",
+  "executable": "herdr",
+  "version": "0.7.3",
+  "source_identity": "synthetic test evidence; not a Herdr configuration reference",
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "default_config_path": "<HOME>/.config/herdr/config.toml",
+  "config_path_environment": "HERDR_CONFIG_PATH",
+  "color_representation": "synthetic-test-string",
+  "base_theme_name": "synthetic-base",
+  "allowed_theme_fields": ["test.theme"],
+  "allowed_custom_fields": ["test.color"],
+  "candidate_validation": { "available": true, "unambiguous": true },
+  "server_applicability": { "available": true, "unambiguous": true },
+  "reload": { "available": true, "observable": true, "unambiguous": true },
+  "restoration": { "available": true, "unambiguous": true }
+}

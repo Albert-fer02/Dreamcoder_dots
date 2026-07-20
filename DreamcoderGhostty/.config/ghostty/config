@@ -1,48 +1,87 @@
-# Dreamcoder Ghostty — Minimal, focused config.
-# Colors come from the theme file (~/.config/ghostty/themes/dreamcoder).
-# Keep global settings here; color-only settings belong in the theme.
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║              GHOSTTY — GENTLEMAN STRUCTURE + DREAMCODER SOUL                ║
+# ║        Gentleman keybindings & shader · Dreamcoder themes & pulido          ║
+# ║          Optimized for Neovim · Hyprland                                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Fonts
-font-family = "JetBrainsMono Nerd Font"
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                   FONT                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+font-family = IosevkaTerm NF
 font-family = "Symbols Nerd Font"
 font-size = 14
 font-feature = -calt, -liga, -dlig
 
-# Theme — native dual-mode: auto-switches with system light/dark
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  THEME                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+# Dual-mode: auto-switches with system light/dark via theme files
 theme = dreamcoder
-# Auto-generate full 256-color palette from our 16 base dreamcoder colors
 palette-generate = true
 
-# Shell
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  CURSOR                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.96
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  WINDOW                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+window-padding-x = 20
+window-padding-y = 18
+window-padding-color = extend
+window-padding-balance = true
+window-width = 1180
+window-height = 780
+
+# Hyprland handles decorations — no redundant internal ones
+window-decoration = none
+window-save-state = never
+window-step-resize = false
+
+# Opacity per-mode is set in the theme files (dreamcoder-dark: 0.76, light: 0.96)
+unfocused-split-opacity = 0.92
+background-blur-radius = 20
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  SHELL                                       │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
 command = fish --login
 shell-integration = fish
 shell-integration-features = no-cursor
 
-# Cursor
-cursor-style = "block"
-cursor-style-blink = true
-cursor-opacity = 0.96
 
-# Window
-window-padding-x = 20
-window-padding-y = 18
-window-padding-color = background
-window-width = 1180
-window-height = 780
-# Hyprland handles borders/decorations — no redundant internal ones
-window-decoration = none
-window-save-state = never
-# Tabs managed by Kitty — hide GTK tab bar for a clean look
-gtk-tabs-location = hidden
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  SCROLLBACK                                  │
+# └──────────────────────────────────────────────────────────────────────────────┘
 
-# Opacity (per-theme in dreamcoder-{light,dark} theme files)
-# background-opacity set per-theme for mode-specific transparency
-unfocused-split-opacity = 0.92
-
-# Scrollback
 scrollback-limit = 10000
 
-# Keybindings — tabs
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  SHADER                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+custom-shader = shaders/cursor_smear_gentleman.glsl
+custom-shader-animation = true
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                            KEYBINDINGS — TABS                                │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
 keybind = ctrl+t=new_tab
 keybind = ctrl+w=close_tab
 keybind = ctrl+tab=next_tab
@@ -58,32 +97,49 @@ keybind = ctrl+8=goto_tab:8
 keybind = ctrl+9=goto_tab:9
 keybind = ctrl+0=goto_tab:10
 
-# Keybindings — splits
-keybind = f5=new_split:right
-keybind = f6=new_split:down
 
-# Keybindings — zoom
-keybind = ctrl+shift+equal=increase_font_size:1
-keybind = ctrl+minus=decrease_font_size:1
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                          KEYBINDINGS — SPLITS                                │
+# └──────────────────────────────────────────────────────────────────────────────┘
 
-# Keybindings — navigation
+keybind = alt+v=new_split:right
+keybind = alt+d=new_split:down
+keybind = alt+k=goto_split:up
+keybind = alt+j=goto_split:down
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = ctrl+shift+j=resize_split:up,10
+keybind = ctrl+shift+k=resize_split:down,10
+keybind = ctrl+shift+h=resize_split:left,10
+keybind = ctrl+shift+l=resize_split:right,10
+
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                          KEYBINDINGS — MISC                                  │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
+keybind = ctrl+shift+r=reload_config
 keybind = ctrl+shift+z=jump_to_prompt:-1
 keybind = ctrl+shift+x=jump_to_prompt:1
-keybind = ctrl+shift+r=reload_config
+keybind = ctrl+shift+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = shift+enter=text:\x1b\r
+keybind = alt+s=write_screen_file:paste
 
-# Mouse
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                MOUSE / LINKS                                 │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
 mouse-hide-while-typing = true
 focus-follows-mouse = false
-
-# Links
 link-url = true
 copy-on-select = true
 
-# Misc
+
+# ┌──────────────────────────────────────────────────────────────────────────────┐
+# │                                  MISC                                        │
+# └──────────────────────────────────────────────────────────────────────────────┘
+
 confirm-close-surface = false
 auto-update = off
-window-padding-balance = false
-
-# Shaders
-custom-shader = ~/.config/ghostty/shaders/dreamcoder-cursor-pulse.glsl
-custom-shader-animation = true

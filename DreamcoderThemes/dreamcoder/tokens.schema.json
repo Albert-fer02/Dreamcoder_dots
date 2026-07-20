@@ -9,7 +9,7 @@
     "description": { "type": "string" },
     "modes": {
       "type": "object",
-      "required": ["dark", "light"],
+      "required": ["dark", "light", "dusk"],
       "additionalProperties": { "$ref": "#/$defs/palette" }
     },
     "guardrails": {
@@ -44,8 +44,14 @@
         "light_hours_default": { "type": "string" },
         "dusk_hours_default": { "type": "string" },
         "minimum_terminal_ansi_contrast": { "type": "number", "minimum": 4.5 },
-        "minimum_terminal_cursor_contrast": { "type": "number", "minimum": 4.5 },
-        "minimum_terminal_selection_contrast": { "type": "number", "minimum": 7 }
+        "minimum_terminal_cursor_contrast": {
+          "type": "number",
+          "minimum": 4.5
+        },
+        "minimum_terminal_selection_contrast": {
+          "type": "number",
+          "minimum": 7
+        }
       }
     }
   },

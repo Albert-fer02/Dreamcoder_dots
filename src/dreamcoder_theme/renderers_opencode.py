@@ -49,7 +49,8 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
     if mode_name == "dark":
         element_bg = c["surface1"]
         hover_bg = c["hover"]
-        line_bg = mix(c["bg"], c["surface0"], 0.50)
+        # Use a canonical surface tier that clears the distinct-surface guardrail.
+        line_bg = c["surface1"]
         code_bg = mix(c["surface0"], c["surface1"], 0.20)
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
         user_bg = mix(c["bg"], c["accent"], 0.12)

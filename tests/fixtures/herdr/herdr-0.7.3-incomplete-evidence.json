@@ -1,0 +1,16 @@
+{
+  "profile_id": "herdr-0.7.3",
+  "executable": "herdr",
+  "version": "0.7.3",
+  "source_identity": "herdr 0.7.3 --help (sanitized exploration record)",
+  "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "default_config_path": "<HOME>/.config/herdr/config.toml",
+  "config_path_environment": "HERDR_CONFIG_PATH",
+  "color_representation": null,
+  "allowed_theme_fields": [],
+  "allowed_custom_fields": [],
+  "candidate_validation": { "available": false, "unambiguous": false },
+  "server_applicability": { "available": false, "unambiguous": false },
+  "reload": { "available": false, "observable": false, "unambiguous": false },
+  "restoration": { "available": false, "unambiguous": false }
+}

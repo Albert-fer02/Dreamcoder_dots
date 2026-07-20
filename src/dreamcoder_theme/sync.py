@@ -8,6 +8,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from .herdr_contract import HERDR_073_PROFILE, HerdrProfile
 from .palette import adaptive_palette, load_variants
 from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
 from .renderers import (
@@ -21,6 +22,7 @@ from .renderers import (
     firefox_content,
     fzf_content,
     ghostty_content,
+    herdr_content,
     hypr_colors_conf_content,
     hypr_colors_lua_content,
     hypr_content,
@@ -250,6 +252,23 @@ VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | No
 ]
 
 
+def sync_herdr_repo_variants(
+    variants: dict[str, dict[str, str]], profile: HerdrProfile | None = HERDR_073_PROFILE
+) -> list[bool]:
+    """Generate managed repository variants only; never select a live configuration."""
+    if profile is None or not profile.is_complete:
+        return []
+    base = ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3"
+    return [
+        write_if_changed(
+            base / "config.dark.toml", herdr_content(profile, "dark", variants["dark"])
+        ),
+        write_if_changed(
+            base / "config.light.toml", herdr_content(profile, "light", variants["light"])
+        ),
+    ]
+
+
 def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
     repo_changes: list[bool] = []
 
@@ -341,6 +360,9 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi.rasi", rofi_content(active))
     )
 
+    # Herdr repository variants are intentionally separate from live selection.
+    repo_changes += sync_herdr_repo_variants(variants)
+
     # README
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/README.md", readme_content())
@@ -375,6 +397,7 @@ def print_summary(
     print(f"Kitty: {paths.kitty}")
     print(f"Kitty UI: {paths.kitty_ui}")
     print(f"Ghostty: {paths.ghostty}")
+    print(f"Herdr repository variants: {paths.herdr_repo_variants}")
     print(f"Warp: {paths.warp}")
     print(f"opencode: {paths.opencode}")
     print(f"opencode tui: {paths.opencode_tui}")

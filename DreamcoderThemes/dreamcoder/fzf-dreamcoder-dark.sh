@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Dreamcoder Ember Noir OLED — fzf
-export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --color=bg:#100f0d,bg+:#2b231b,fg:#e8dfd0,fg+:#e8dfd0,hl:#d99555,hl+:#d99555,info:#5f95ca,marker:#4db35f,prompt:#d99555,spinner:#d4b4e6,pointer:#c96a45,header:#c7b9aa,border:#756052,label:#c7b9aa,query:#e8dfd0,gutter:#2b231b,scrollbar:#756052,separator:#756052,preview-bg:#2b231b,preview-border:#756052"
+# Dreamcoder Anthracite Steel — fzf
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --color=bg:#070A13,bg+:#151C25,fg:#E6EDF3,fg+:#E6EDF3,hl:#A5C7E8,hl+:#A5C7E8,info:#7CB3D9,marker:#7FBF9A,prompt:#A5C7E8,spinner:#B6C5D4,pointer:#8FAFCB,header:#A8B5C2,border:#17202B,label:#A8B5C2,query:#E6EDF3,gutter:#151C25,scrollbar:#17202B,separator:#17202B,preview-bg:#151C25,preview-border:#17202B"

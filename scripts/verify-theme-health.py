@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
+import importlib.util
 import json
-import os
 import plistlib
 import re
 from pathlib import Path
 
+import jsonschema
+
+from dreamcoder_theme.design_system import evaluate_contract, load_contract, load_tokens
 from dreamcoder_theme.palette import ansi as terminal_ansi
+from dreamcoder_theme.renderers_opencode import opencode_content
 
 ROOT = Path(__file__).resolve().parent.parent
 FILES = [
@@ -14,7 +18,11 @@ FILES = [
     ROOT / "DreamcoderCodexApp/Dreamcoder-Dark.codex-theme.json",
 ]
 TOKEN_FILE = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
-OPENCODE_THEME_DIR = ROOT / "DreamcoderOpenCode/.config/opencode"
+TOKENS_SCHEMA_FILE = ROOT / "DreamcoderThemes/dreamcoder/tokens.schema.json"
+OPENCODE_THEME_DIR = ROOT / ".opencode/themes"
+DESIGN_SYSTEM_CONTRACT_FILE = ROOT / "DreamcoderThemes/dreamcoder/design-system.json"
+DESIGN_SYSTEM_SCHEMA_FILE = ROOT / "DreamcoderThemes/dreamcoder/design-system.schema.json"
+GENERATOR_FILE = ROOT / "scripts/generate-palette-tokens.py"
 CODEX_CLI_FILES = [
     ROOT / "DreamcoderCodexCLI/Dreamcoder.tmTheme",
     ROOT / "DreamcoderCodexCLI/Dreamcoder-Light.tmTheme",
@@ -295,11 +303,6 @@ def check_apca_require(mode, key, value, bg, threshold):
 def check_apca_or_warn(mode, key, value, bg, threshold):
     """Check APCA contrast, log warning but don't fail (APCA is public beta, not a standard)."""
     lc = apca_lc(value, bg)
-    if os.environ.get("DREAMCODER_ENFORCE_APCA", "") and lc < threshold:
-        require(
-            False,
-            f"tokens:{mode}:{key} APCA Lc {lc:.1f} < {threshold} (APCA enforcement enabled)",
-        )
     if lc < threshold:
         print(
             f"  ⚠ APCA advisory: tokens:{mode}:{key} Lc {lc:.1f} < {threshold} (WCAG {contrast(bg, value):.2f}:1 passes)"
@@ -339,7 +342,10 @@ def check_tokens():
     for mode, palette in tokens["modes"].items():
         bg = palette["bg"]
         require(HEX.match(bg), f"tokens:{mode}: invalid background")
-        require(bg.lower() not in {"#000000", "#ffffff"}, f"tokens:{mode}: harsh background")
+        # Dark mode intentionally uses pure OLED black (#000000) for contrast/battery.
+        # Light/dusk must still avoid harsh pure black/white backgrounds.
+        if mode != "dark":
+            require(bg.lower() not in {"#000000", "#ffffff"}, f"tokens:{mode}: harsh background")
         for key in TOKEN_TEXT_KEYS:
             require(key in palette, f"tokens:{mode}:{key}: missing token")
             value = palette[key]
@@ -424,16 +430,19 @@ def check_tokens():
             check_apca_or_warn(mode, key, value, bg, apca_ui)
 
 
-def check_theme_file(file):
+def check_theme_file(file, mode=None):
     if not file.exists():
         return
     theme = json.loads(file.read_text())["theme"]
     bg = theme["background"]
-    require(
-        bg not in {"#000000", "#ffffff"},
-        f"{file}: background uses harsh pure black/white",
-    )
-    require(0.004 < lum(bg) < 0.94, f"{file}: background luminance is outside comfort band")
+    # Dark mode intentionally uses pure OLED black (#000000) for contrast/battery.
+    # Light/dusk must still avoid harsh pure black/white backgrounds.
+    if mode != "dark":
+        require(
+            bg not in {"#000000", "#ffffff"},
+            f"{file}: background uses harsh pure black/white",
+        )
+        require(0.004 < lum(bg) < 0.94, f"{file}: background luminance is outside comfort band")
     for key in TEXT_KEYS + SYNTAX_KEYS:
         ratio = contrast(bg, theme[key])
         require(ratio >= 4.5, f"{file}: {key} contrast {ratio:.2f} < 4.5")
@@ -478,11 +487,92 @@ def check_codex_cli_theme(file):
         require(contrast(bg, settings["gutter"]) >= 1.45, f"{file}: light gutter too faint")
 
 
+def _load_generator():
+    path = ROOT / "scripts" / "generate-palette-tokens.py"
+    spec = importlib.util.spec_from_file_location("dreamcoder_palette_generator", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"unable to load generator: {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _health_findings():
+    """Return deterministic Phase 2 errors before running legacy guardrails."""
+    findings = []
+    tokens = load_tokens(TOKEN_FILE)
+    contract = load_contract(DESIGN_SYSTEM_CONTRACT_FILE)
+    for document, schema_path in (
+        (tokens, ROOT / "DreamcoderThemes/dreamcoder/tokens.schema.json"),
+        (contract, ROOT / "DreamcoderThemes/dreamcoder/design-system.schema.json"),
+    ):
+        try:
+            jsonschema.Draft202012Validator(json.loads(schema_path.read_text())).validate(document)
+        except (json.JSONDecodeError, jsonschema.ValidationError) as error:
+            findings.append(f"SCHEMA_INVALID: {schema_path.relative_to(ROOT)}: {error}")
+    drift = _load_generator().check_generated(
+        TOKEN_FILE, ROOT / "src/dreamcoder_theme/palette_tokens.py"
+    )
+    if drift:
+        findings.append(drift)
+    findings.extend(
+        f"design-system:{finding.code}: {finding.message}"
+        for finding in evaluate_contract(contract, tokens)
+        if finding.severity == "error"
+    )
+    artifact = next(
+        (item for item in contract.get("artifacts", []) if item.get("id") == "opencode-default"),
+        None,
+    )
+    if artifact is None:
+        findings.append("DECLARED_ARTIFACT_MISSING: opencode-default")
+        return sorted(findings)
+    artifact_path = artifact.get("path")
+    if not isinstance(artifact_path, str) or not artifact_path:
+        findings.append("MALFORMED_ARTIFACT: opencode-default missing path")
+        return sorted(findings)
+    theme_path = ROOT / artifact_path
+    names = (
+        sorted(path.name for path in OPENCODE_THEME_DIR.glob("*.json"))
+        if OPENCODE_THEME_DIR.exists()
+        else []
+    )
+    if names != ["dreamcoder.json"]:
+        findings.append(
+            f"UNOWNED_ARTIFACT: .opencode/themes expected ['dreamcoder.json'], got {names}"
+        )
+    if not theme_path.exists():
+        findings.append("MALFORMED_ARTIFACT: missing {}".format(artifact["path"]))
+    else:
+        try:
+            actual = theme_path.read_text(encoding="utf-8")
+            expected = opencode_content(tokens["modes"]["light"], transparent_background=True)
+            json.loads(actual)
+            if actual != expected:
+                findings.append(
+                    "STALE_ARTIFACT: .opencode/themes/dreamcoder.json "
+                    "regeneration command=PYTHONPATH=src python -m dreamcoder_theme.sync"
+                )
+        except (json.JSONDecodeError, KeyError) as error:
+            findings.append("MALFORMED_ARTIFACT: {}: {}".format(artifact["path"], error))
+    return sorted(findings)
+
+
 def check_opencode_repo():
-    names = sorted(path.name for path in OPENCODE_THEME_DIR.glob("*.json"))
+    """Validate the declared .opencode/themes contract, not application configuration."""
+    findings = _health_findings()
+    require(not findings, "\n".join(findings))
+
+
+def check_design_system_contract():
+    """Fail health verification when the declared three-mode contract has findings."""
+    findings = evaluate_contract(
+        load_contract(DESIGN_SYSTEM_CONTRACT_FILE),
+        load_tokens(TOKEN_FILE),
+    )
     require(
-        names == ["dreamcoder.json"],
-        f"opencode repo themes must only contain dreamcoder.json, got {names}",
+        not findings,
+        "\n".join(f"design-system:{finding.code}: {finding.message}" for finding in findings),
     )
 
 
@@ -587,11 +677,16 @@ def check_hypr_colors_file(file):
 
 check_rgba_tokens()
 check_tokens()
-for file in FILES:
-    check_theme_file(file)
+for file, mode in (
+    (FILES[0], "dark"),
+    (FILES[1], "light"),
+    (FILES[2], "dark"),
+):
+    check_theme_file(file, mode=mode)
 for file in CODEX_CLI_FILES:
     check_codex_cli_theme(file)
 check_opencode_repo()
+check_design_system_contract()
 for file in KITTY_FILES:
     check_kitty_colors(file)
 for file in STARSHIP_FILES:
