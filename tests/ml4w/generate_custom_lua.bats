@@ -89,15 +89,16 @@ load '../helpers/setup'
   [ "$count" -eq 3 ]
 }
 
-@test "generate-custom-lua: asus-vivobook15 has 17 bindings" {
+@test "generate-custom-lua: asus-vivobook15 has 19 bindings (inc. mouse, release)" {
   run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
     --profile asus-vivobook15 --dry-run
   [ "$status" -eq 0 ]
   local count
-  count="$(echo "$output" | grep '^hl.bind' | wc -l)"
-  [ "$count" -eq 17 ]
+  count="$(echo "$output" | grep -cE '^hl\.(bind|bindl|mouse_bind)\(' || true)"
+  echo "# bind function calls: $count" >&3
+  [ "$count" -eq 19 ]
 }
-
+    
 @test "generate-custom-lua: each binding has exec_cmd" {
   run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
     --profile asus-vivobook15 --dry-run
@@ -105,7 +106,7 @@ load '../helpers/setup'
   local cmds
   cmds="$(echo "$output" | grep -c 'hl.dsp.exec_cmd' || true)"
   echo "# exec_cmd count: $cmds" >&3
-  [ "$cmds" -eq 17 ]
+  [ "$cmds" -eq 19 ]
 }
 
 @test "generate-custom-lua: bare Fn keys have no SUPER prefix" {

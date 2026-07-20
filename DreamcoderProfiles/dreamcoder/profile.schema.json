@@ -115,6 +115,27 @@
                 "minLength": 1,
                 "description": "Human-readable description shown in Lua comments and help output"
               },
+              "bind_type": {
+                "type": "string",
+                "enum": ["press", "release"],
+                "default": "press",
+                "description": "Press or release trigger. 'press' = hl.bind(), 'release' = hl.bindl()"
+              },
+              "mouse": {
+                "type": "boolean",
+                "default": false,
+                "description": "When true, uses hl.mouse_bind() instead of hl.bind(). Requires 'button' field."
+              },
+              "button": {
+                "type": "string",
+                "pattern": "^BTN_",
+                "description": "Mouse button identifier (e.g., BTN_LEFT, BTN_RIGHT). Required when mouse=true."
+              },
+              "submap_entry": {
+                "type": "string",
+                "pattern": "^[a-z_]+",
+                "description": "When set, this binding enters the named submap on activation."
+              },
               "options": {
                 "type": "object",
                 "properties": {
@@ -127,6 +148,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Whether the binding repeats on key hold"
+                  },
+                  "disable_workspace_consume": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Prevents the workspace from being consumed when triggered"
                   }
                 },
                 "additionalProperties": false
@@ -139,21 +165,5 @@
       "additionalProperties": false
     }
   },
-  "additionalProperties": false,
-  "examples": [
-    {
-      "name": "default",
-      "description": "Portable defaults for unknown machines",
-      "keybindings": {
-        "bindings": [
-          {
-            "key": "D",
-            "mods": ["SUPER", "SHIFT"],
-            "command": "~/.config/hypr/scripts/dreamcoder-toggle-theme.sh",
-            "description": "Toggle Dreamcoder light/dark theme"
-          }
-        ]
-      }
-    }
-  ]
+  "additionalProperties": false
 }

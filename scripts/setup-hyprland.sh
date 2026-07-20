@@ -69,13 +69,13 @@ usage() {
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-      --profile)
-        shift
-        if [[ -z "$1" ]]; then
-          die "--profile requires a non-empty profile name"
-        fi
-        PROFILE_NAME="$1"
-        ;;
+  --profile)
+    shift
+    if [[ -z "$1" ]]; then
+      die "--profile requires a non-empty profile name"
+    fi
+    PROFILE_NAME="$1"
+    ;;
   --dry-run) DRY_RUN=true ;;
   --help | -h) usage ;;
   *) die "Unknown option: $1" ;;

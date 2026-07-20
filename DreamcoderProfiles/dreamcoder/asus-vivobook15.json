@@ -36,42 +36,67 @@
         "mods": [],
         "command": "brightnessctl -q s +10%",
         "description": "Subir brillo",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "F4",
         "mods": [],
         "command": "brightnessctl -q s 10%-",
         "description": "Bajar brillo",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "F3",
         "mods": [],
         "command": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
         "description": "Subir volumen",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "F2",
         "mods": [],
         "command": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
         "description": "Bajar volumen",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "F1",
         "mods": [],
         "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "description": "Mutear audio",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        },
+        "bind_type": "release"
       },
       {
         "key": "F10",
         "mods": [],
         "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
         "description": "Mutear micrófono",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "F8",
@@ -117,14 +142,38 @@
         "mods": [],
         "command": "brightnessctl -d smc::kbd_backlight s +10",
         "description": "Brillo teclado +",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
       },
       {
         "key": "code:237",
         "mods": [],
         "command": "brightnessctl -d smc::kbd_backlight s 10%-",
         "description": "Brillo teclado -",
-        "options": { "locked": true, "repeating": true }
+        "options": {
+          "locked": true,
+          "repeating": true,
+          "disable_workspace_consume": true
+        }
+      },
+      {
+        "key": "BTN_SIDE",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace -1",
+        "description": "Workspace previo (mouse)",
+        "mouse": true,
+        "button": "BTN_SIDE"
+      },
+      {
+        "key": "BTN_EXTRA",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace +1",
+        "description": "Workspace siguiente (mouse)",
+        "mouse": true,
+        "button": "BTN_EXTRA"
       }
     ]
   }
