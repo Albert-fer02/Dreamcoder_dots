@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dreamcoder.dots/profiles/profile.schema.json",
+  "title": "Dreamcoder Machine Profile",
+  "description": "Schema for Dreamcoder machine profiles — defines monitor, keyboard, shell, and keybinding configuration for Hyprland ML4W integration.",
+  "type": "object",
+  "required": ["name", "description", "keybindings"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Unique machine profile name (e.g., asus-vivobook15, desktop-ryzen, default)"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable description of this profile and its target machine"
+    },
+    "monitor": {
+      "type": "string",
+      "default": "auto",
+      "description": "Hyprland monitor string (e.g., eDP-1,1920x1080@60,0x0,1 or auto)"
+    },
+    "monitor_scale": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 4,
+      "default": 1,
+      "description": "Hyprland monitor scale factor"
+    },
+    "keyboard_layout": {
+      "type": "string",
+      "default": "latam",
+      "description": "Hyprland keyboard layout (e.g., latam, us, es)"
+    },
+    "repeat_rate": {
+      "type": "integer",
+      "minimum": 10,
+      "maximum": 200,
+      "default": 40,
+      "description": "Keyboard repeat rate (characters per second)"
+    },
+    "repeat_delay": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 1000,
+      "default": 300,
+      "description": "Keyboard repeat delay in milliseconds"
+    },
+    "shell": {
+      "type": "string",
+      "default": "fish --login",
+      "description": "Default shell command for terminal emulators"
+    },
+    "terminal_default_mode": {
+      "type": "string",
+      "enum": ["light", "dark", "dusk"],
+      "default": "light",
+      "description": "Default terminal color mode for this machine"
+    },
+    "motion_preset": {
+      "type": "string",
+      "enum": ["fluid", "balanced", "reduced"],
+      "default": "balanced",
+      "description": "Hyprland motion/animation preset (fluid = smooth animations, balanced = moderate, reduced = minimal)"
+    },
+    "performance_notes": {
+      "type": "string",
+      "description": "Free-form notes about performance tuning or hardware-specific considerations"
+    },
+    "keybindings": {
+      "type": "object",
+      "required": ["bindings"],
+      "properties": {
+        "super_mod": {
+          "type": "string",
+          "default": "SUPER",
+          "description": "Super key modifier (usually SUPER for the Windows/Command key)"
+        },
+        "bindings": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "required": ["key", "command", "description"],
+            "properties": {
+              "key": {
+                "type": "string",
+                "pattern": "^[A-Z0-9_]+$|^code:[0-9]+$|^F(?:1[0-2]?|[2-9])$",
+                "description": "Key identifier: uppercase letter (D), function key (F1-F12), or raw keycode (code:237)"
+              },
+              "mods": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "SUPER",
+                    "SHIFT",
+                    "CTRL",
+                    "ALT",
+                    "CTRL_SHIFT",
+                    "SUPER_SHIFT"
+                  ]
+                },
+                "description": "Modifier keys. Use empty array [] for bare keys (Fn keys, media keys, keycodes).",
+                "uniqueItems": true
+              },
+              "command": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Shell command or script path to execute"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Human-readable description shown in Lua comments and help output"
+              },
+              "options": {
+                "type": "object",
+                "properties": {
+                  "locked": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether the binding requires the session to be unlocked"
+                  },
+                  "repeating": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether the binding repeats on key hold"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "default",
+      "description": "Portable defaults for unknown machines",
+      "keybindings": {
+        "bindings": [
+          {
+            "key": "D",
+            "mods": ["SUPER", "SHIFT"],
+            "command": "~/.config/hypr/scripts/dreamcoder-toggle-theme.sh",
+            "description": "Toggle Dreamcoder light/dark theme"
+          }
+        ]
+      }
+    }
+  ]
+}

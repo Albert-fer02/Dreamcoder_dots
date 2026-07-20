@@ -6,10 +6,12 @@
 # (JSON) and emits a well-formed Lua file at ~/.config/hypr/custom.lua.
 #
 # Usage:
-#   ./scripts/generate-custom-lua.sh                          # auto-detect profile
-#   ./scripts/generate-custom-lua.sh --profile asus-vivobook15 # explicit
-#   ./scripts/generate-custom-lua.sh --dry-run                 # preview only
-#   ./scripts/generate-custom-lua.sh --help                   # this message
+#   ./scripts/generate-custom-lua.sh                           # auto-detect profile
+#   ./scripts/generate-custom-lua.sh --profile asus-vivobook15  # explicit profile
+#   ./scripts/generate-custom-lua.sh --dry-run                  # preview only
+#   ./scripts/generate-custom-lua.sh --validate                 # validate + exit
+#   ./scripts/generate-custom-lua.sh --list-profiles            # list available
+#   ./scripts/generate-custom-lua.sh --help                    # this message
 #
 # Dependencies: jq (JSON processor)
 # ============================================================================
@@ -31,6 +33,8 @@ PROFILES_DIR="${DREAMCODER_DOTS_DIR}/DreamcoderProfiles/dreamcoder"
 # ── profile resolution ──────────────────────────────────────────────────────
 PROFILE_NAME="${DREAMCODER_PROFILE:-}"
 DRY_RUN=false
+VALIDATE_ONLY=false
+LIST_PROFILES=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -39,6 +43,8 @@ while [[ $# -gt 0 ]]; do
     PROFILE_NAME="$1"
     ;;
   --dry-run) DRY_RUN=true ;;
+  --validate) VALIDATE_ONLY=true ;;
+  --list-profiles) LIST_PROFILES=true ;;
   --help | -h)
     sed -n '/^# ====/,/^# ====/p' "$0" | grep -E '^# ' | sed 's/^# //'
     exit 0
@@ -48,7 +54,19 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-# Auto-detect profile: check hostname-based matches, fall back to default
+# ── --list-profiles ─────────────────────────────────────────────────────────
+if $LIST_PROFILES; then
+  echo "Available profiles:"
+  for f in "${PROFILES_DIR}"/*.json; do
+    name="$(basename "${f}" .json)"
+    [[ "${name}" == "profile.schema" ]] && continue
+    desc="$(jq -r '.description // "(no description)"' "${f}" 2>/dev/null || echo "(invalid)")"
+    printf '  • %-20s %s\n' "${name}" "${desc}"
+  done
+  exit 0
+fi
+
+# ── auto-detect profile ─────────────────────────────────────────────────────
 if [[ -z "${PROFILE_NAME}" ]]; then
   HOSTNAME="$(hostname -s 2>/dev/null || echo "unknown")"
   case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
@@ -59,12 +77,57 @@ if [[ -z "${PROFILE_NAME}" ]]; then
 fi
 
 PROFILE_FILE="${PROFILES_DIR}/${PROFILE_NAME}.json"
+SCHEMA_FILE="${PROFILES_DIR}/profile.schema.json"
+
 if [[ ! -f "${PROFILE_FILE}" ]]; then
   die "Profile not found: ${PROFILE_FILE}"
 fi
 
-# ── verify dependencies ─────────────────────────────────────────────────────
+# ── pre-flight ──────────────────────────────────────────────────────────────
 command -v jq >/dev/null || die "jq is required but not installed."
+
+# Validate JSON syntax
+if ! jq empty "${PROFILE_FILE}" 2>/dev/null; then
+  die "Profile is not valid JSON: ${PROFILE_FILE}"
+fi
+
+# Validate against schema (optional — requires check-json or Python + jsonschema)
+if [[ -f "${SCHEMA_FILE}" ]]; then
+  SCHEMA_OK=false
+  if command -v check-json >/dev/null; then
+    if check-json --schema "${SCHEMA_FILE}" "${PROFILE_FILE}" 2>/dev/null; then
+      SCHEMA_OK=true
+    fi
+  elif command -v python3 >/dev/null && python3 -c "import jsonschema" 2>/dev/null; then
+    if python3 -c "
+    import json, sys
+    with open('${SCHEMA_FILE}') as f:
+        schema = json.load(f)
+    with open('${PROFILE_FILE}') as f:
+        profile = json.load(f)
+    import jsonschema
+    try:
+        jsonschema.validate(instance=profile, schema=schema)
+        sys.exit(0)
+    except jsonschema.ValidationError as e:
+        print(f'Schema error: {e.message}', file=sys.stderr)
+        sys.exit(1)
+    " 2>/dev/null; then
+      SCHEMA_OK=true
+    fi
+  fi
+  if $SCHEMA_OK; then
+    info "Profile JSON valid — matches schema"
+  else
+    warn "Profile schema validation unavailable or failed"
+  fi
+fi
+
+# Exit early if --validate only
+if $VALIDATE_ONLY; then
+  info "Profile validation complete: ${PROFILE_FILE}"
+  exit 0
+fi
 
 # ── read keybindings from profile ───────────────────────────────────────────
 SUPER_MOD=$(jq -r '.keybindings.super_mod // "SUPER"' "${PROFILE_FILE}")

@@ -92,13 +92,107 @@ else
   step "Using profile: ${PROFILE_NAME}"
 fi
 
-# ── verify dependencies ────────────────────────────────────────────────────
+# ── pre-flight validation ──────────────────────────────────────────────────
 if $DRY_RUN; then
   step "Dry-run mode — no files will be modified"
   echo ""
 fi
 
-command -v jq >/dev/null || die "jq is required but not installed."
+PASS=0
+FAIL=0
+
+check() {
+  local label="$1"
+  shift 1
+  if "$@" 2>/dev/null; then
+    ok "${label}"
+    ((PASS++))
+  else
+    die "${label}"
+  fi
+}
+
+check_warn() {
+  local label="$1"
+  shift 1
+  if "$@" 2>/dev/null; then
+    ok "${label}"
+    ((PASS++))
+  else
+    warn "${label}"
+  fi
+}
+
+echo ""
+echo "═══ Pre-flight checks ═══"
+
+# Dependency checks
+check "jq is installed" command -v jq
+check_warn "luac available (Lua syntax)" command -v luac
+check_warn "hyprctl available" command -v hyprctl
+
+# Profile checks
+SCHEMA_FILE="${DREAMCODER_DOTS_DIR}/DreamcoderProfiles/dreamcoder/profile.schema.json"
+PROFILE_FILE="${DREAMCODER_DOTS_DIR}/DreamcoderProfiles/dreamcoder/${PROFILE_NAME}.json"
+
+check "Profile exists: ${PROFILE_NAME}.json" test -f "${PROFILE_FILE}"
+check "Profile is valid JSON" jq empty "${PROFILE_FILE}"
+check "Schema file exists" test -f "${SCHEMA_FILE}"
+
+# JSON Schema validation
+SCHEMA_VALID=false
+if command -v check-json >/dev/null; then
+  if check-json --schema "${SCHEMA_FILE}" "${PROFILE_FILE}" 2>/dev/null; then
+    SCHEMA_VALID=true
+  fi
+elif command -v python3 >/dev/null && python3 -c "import jsonschema" 2>/dev/null; then
+  if python3 -c "
+import json, sys
+with open('${SCHEMA_FILE}') as f:
+    schema = json.load(f)
+with open('${PROFILE_FILE}') as f:
+    profile = json.load(f)
+import jsonschema
+try:
+    jsonschema.validate(instance=profile, schema=schema)
+    sys.exit(0)
+except jsonschema.ValidationError as e:
+    print(e.message, file=sys.stderr)
+    sys.exit(1)
+" 2>/dev/null; then
+    SCHEMA_VALID=true
+  fi
+fi
+
+if $SCHEMA_VALID; then
+  ok "Profile matches schema"
+  ((PASS++))
+else
+  warn "Profile schema validation — check profile.schema.json"
+fi
+
+# ML4W environment checks
+check_warn "Hyprland config is symlinked (ML4W)" test -L "${HOME}/.config/hypr/hyprland.conf"
+check_warn "Waybar config is symlinked (ML4W)" test -L "${HOME}/.config/waybar/config.jsonc"
+
+# Hyprland running check
+if command -v hyprctl >/dev/null; then
+  check_warn "Hyprland is running" hyprctl monitors -j 2>/dev/null
+fi
+
+# Git worktree check
+if command -v git >/dev/null; then
+  REPO_ROOT="$(git -C "${DREAMCODER_DOTS_DIR}" rev-parse --show-toplevel 2>/dev/null || true)"
+  if [[ -n "${REPO_ROOT}" ]] && ! git -C "${REPO_ROOT}" diff --quiet HEAD 2>/dev/null; then
+    warn "Uncommitted changes in repo — commit before setup"
+  fi
+fi
+
+echo ""
+echo "  Pre-flight: ${PASS} passed, ${FAIL} failed"
+if [[ "${FAIL}" -gt 0 ]]; then
+  die "Pre-flight checks failed — aborting"
+fi
 
 # ── 1. Symlink wlogout → waybar colors ────────────────────────────────────
 echo ""

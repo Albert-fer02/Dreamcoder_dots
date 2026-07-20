@@ -1,0 +1,128 @@
+name: ML4W Setup Tests
+
+on:
+  push:
+    paths:
+      - 'scripts/setup-hyprland.sh'
+      - 'scripts/generate-custom-lua.sh'
+      - 'scripts/verify-ml4w-setup.sh'
+      - 'ml4w_assets/**'
+      - 'DreamcoderProfiles/dreamcoder/*.json'
+      - 'tests/ml4w/**'
+      - '.github/workflows/test-ml4w-setup.yml'
+    branches: [main]
+  pull_request:
+    paths:
+      - 'scripts/setup-hyprland.sh'
+      - 'scripts/generate-custom-lua.sh'
+      - 'scripts/verify-ml4w-setup.sh'
+      - 'ml4w_assets/**'
+      - 'DreamcoderProfiles/dreamcoder/*.json'
+      - 'tests/ml4w/**'
+      - '.github/workflows/test-ml4w-setup.yml'
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Shellcheck on setup scripts
+        run: |
+          shellcheck --shell=bash scripts/setup-hyprland.sh
+          shellcheck --shell=bash scripts/generate-custom-lua.sh
+          shellcheck --shell=bash scripts/verify-ml4w-setup.sh
+          shellcheck --shell=bash ml4w_assets/hypr/scripts/dreamcoder-toggle-theme.sh
+
+  validate-profiles:
+    name: Validate profile JSONs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y jq
+          pip install jsonschema --break-system-packages || pip install jsonschema
+
+      - name: Run comprehensive profile validation
+        run: |
+          python3 scripts/validate-ml4w-profiles.py --ci
+
+  bats-tests:
+    name: BATS tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq bats
+          # luac may not be available on Ubuntu CI — that's fine, tests handle it
+
+      - name: Run generate-custom-lua tests
+        run: bats tests/ml4w/generate_custom_lua.bats
+
+      - name: Run setup-hyprland tests
+        run: bats tests/ml4w/setup_hyprland.bats
+
+      - name: Run profile validation tests
+        run: bats tests/ml4w/profile_validation.bats
+
+  full-dry-run:
+    name: Full dry-run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install -y jq
+
+      - name: Dry-run with default profile
+        run: |
+          bash scripts/setup-hyprland.sh --profile default --dry-run
+          bash scripts/generate-custom-lua.sh --profile default --dry-run
+
+      - name: Dry-run with asus-vivobook15 profile
+        run: |
+          bash scripts/setup-hyprland.sh --profile asus-vivobook15 --dry-run
+          bash scripts/generate-custom-lua.sh --profile asus-vivobook15 --dry-run
+
+      - name: Run verification script (dry-run env) for default
+        run: |
+          bash scripts/verify-ml4w-setup.sh --quiet --profile default 2>&1 || true
+
+      - name: Validate all profiles
+        run: |
+          bash scripts/generate-custom-lua.sh --validate --profile default
+          bash scripts/generate-custom-lua.sh --validate --profile asus-vivobook15
+
+  renderer-health:
+    name: Renderer and theme health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Theme health check
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify-theme-health.py
+
+      - name: Shellcheck all scripts
+        run: |
+          if command -v shellcheck &>/dev/null; then
+            shellcheck --shell=bash scripts/*.sh
+          else
+            echo "shellcheck not available"
+          fi

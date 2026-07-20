@@ -3,7 +3,8 @@
 > Visual layer premium para **Gentleman.Dots + ML4W**.
 > Café/Lúcuma. Ember Noir. Contraste saludable. Identidad.
 
-[![CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
+[![Theme CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
+[![ML4W Setup CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml)
 [![WCAG 4.5:1](https://img.shields.io/badge/WCAG-4.5%3A1-brightgreen)]()
 [![APCA](https://img.shields.io/badge/APCA-75-brightgreen)]()
 [![PyPI](https://img.shields.io/pypi/v/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
@@ -45,6 +46,109 @@ cd ~/Documents/PROYECTOS/dreamcoder-dots
 **Aplica**: Dreamcoder dark/light/dusk sobre toda la base de Gentleman + ML4W
 
 **Agrega**: Starship prompt con AI session state, 9 funciones shell, aliases modernos, auto-theme-switching
+
+---
+
+## ML4W Integration — Profile-Driven Keybinding System
+
+Dreamcoder integrates with [ML4W](https://ml4w.com) through a modular, profile-driven system.
+All machine-specific keybindings live in JSON profiles, avoiding manual editing of ML4W-managed files.
+
+### Architecture
+
+```mermaid
+flowchart LR
+    P["DreamcoderProfiles/dreamcoder/<br/>&lt;machine&gt;.json"]
+    S["profile.schema.json"]
+    GEN["scripts/generate-custom-lua.sh"]
+    ORCH["scripts/setup-hyprland.sh"]
+    VER["scripts/verify-ml4w-setup.sh"]
+    VAL["scripts/validate-ml4w-profiles.py"]
+    CUSTOM["~/.config/hypr/custom.lua"]
+    TST["tests/ml4w/*.bats"]
+
+    P -->|jq + tmpl| GEN
+    S -->|schema| VAL
+    S -->|schema| GEN
+    GEN -->|validate| VAL
+    GEN --> CUSTOM
+    ORCH -->|symlinks + generation| CUSTOM
+    VER -->|post-reboot| CUSTOM
+    TST -->|bats| GEN
+    TST -->|bats| ORCH
+```
+
+### Workflow
+
+1. **Edit profile**: `DreamcoderProfiles/dreamcoder/<machine>.json`
+2. **Generate**: `./scripts/generate-custom-lua.sh --profile <machine>`
+3. **Setup**: `./scripts/setup-hyprland.sh --profile <machine>`
+4. **Verify (post-reboot)**: `./scripts/verify-ml4w-setup.sh`
+5. **Validate (CI)**: `python3 scripts/validate-ml4w-profiles.py --ci`
+
+### Profiles
+
+| Profile           | Machine          | Keybindings                               |
+| ----------------- | ---------------- | ----------------------------------------- |
+| `default`         | Any generic      | Theme toggle, blue light filter (3 binds) |
+| `asus-vivobook15` | ASUS VivoBook 15 | All Fn keys + custom binds (17 total)     |
+
+### What setup-hyprland.sh does
+
+1. **Symlinks** wlogout + swaync `colors.css` → waybar (single theme toggle point)
+2. **Generates** `custom.lua` from JSON profile via `generate-custom-lua.sh`
+3. **Installs** toggle script (`dreamcoder-toggle-theme.sh`) to `~/.config/hypr/scripts/`
+4. **Applies** ML4W hooks (wallpaper, theme regeneration)
+5. **Reloads** Hyprland
+
+### Theme Toggle
+
+| Shortcut            | Action                             |
+| ------------------- | ---------------------------------- |
+| `SUPER + SHIFT + D` | Toggle Dreamcoder light/dark theme |
+| `SUPER + SHIFT + U` | Activate blue light filter (4000K) |
+| `SUPER + SHIFT + I` | Deactivate blue light filter       |
+
+### Testing
+
+```bash
+# Run all ML4W integration tests
+bats tests/ml4w/*.bats
+
+# Validate all profiles against schema
+python3 scripts/validate-ml4w-profiles.py --ci
+
+# Dry-run without system changes
+./scripts/setup-hyprland.sh --profile default --dry-run
+./scripts/generate-custom-lua.sh --profile default --dry-run
+```
+
+### File Layout
+
+```
+scripts/
+├── generate-custom-lua.sh    # JSON → custom.lua generator with --validate
+├── setup-hyprland.sh         # Idempotent orchestrator (symlinks + generation + hooks)
+├── verify-ml4w-setup.sh      # Post-reboot health verification
+└── validate-ml4w-profiles.py  # Schema + convention validation with --ci flag
+
+ml4w_assets/
+└── hypr/
+    ├── custom.lua.tmpl        # Lua template for keybinding generation
+    └── scripts/
+        └── dreamcoder-toggle-theme.sh  # Theme toggle script
+
+DreamcoderProfiles/dreamcoder/
+├── profile.schema.json        # JSON Schema for machine profiles
+├── default.json               # Default profile (theme toggle + blue light)
+└── asus-vivobook15.json       # ASUS VivoBook 15 profile (all Fn keys)
+
+tests/ml4w/
+├── generate_custom_lua.bats   # 13 tests for the generator
+├── setup_hyprland.bats        # 9 tests for the orchestrator
+├── profile_validation.bats    # 11 tests for JSON profiles
+└── setup.bash                 # BATS test helper
+```
 
 ---
 
