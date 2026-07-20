@@ -69,10 +69,13 @@ usage() {
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-  --profile)
-    shift
-    PROFILE_NAME="$1"
-    ;;
+      --profile)
+        shift
+        if [[ -z "$1" ]]; then
+          die "--profile requires a non-empty profile name"
+        fi
+        PROFILE_NAME="$1"
+        ;;
   --dry-run) DRY_RUN=true ;;
   --help | -h) usage ;;
   *) die "Unknown option: $1" ;;
@@ -99,7 +102,6 @@ if $DRY_RUN; then
 fi
 
 PASS=0
-FAIL=0
 
 check() {
   local label="$1"
@@ -172,8 +174,8 @@ else
 fi
 
 # ML4W environment checks
-check_warn "Hyprland config is symlinked (ML4W)" test -L "${HOME}/.config/hypr/hyprland.conf"
-check_warn "Waybar config is symlinked (ML4W)" test -L "${HOME}/.config/waybar/config.jsonc"
+check "Hyprland config is symlinked (ML4W)" test -L "${HOME}/.config/hypr/hyprland.conf"
+check "Waybar config is symlinked (ML4W)" test -L "${HOME}/.config/waybar/config.jsonc"
 
 # Hyprland running check
 if command -v hyprctl >/dev/null; then
@@ -189,10 +191,7 @@ if command -v git >/dev/null; then
 fi
 
 echo ""
-echo "  Pre-flight: ${PASS} passed, ${FAIL} failed"
-if [[ "${FAIL}" -gt 0 ]]; then
-  die "Pre-flight checks failed — aborting"
-fi
+echo "  Pre-flight: ${PASS} passed"
 
 # ── 1. Symlink wlogout → waybar colors ────────────────────────────────────
 echo ""

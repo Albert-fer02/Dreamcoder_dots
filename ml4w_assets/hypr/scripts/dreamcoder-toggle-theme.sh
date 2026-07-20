@@ -23,6 +23,7 @@ TOGGLE_SCRIPT="${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh"
 # --- detect current mode ---
 CURRENT="dark"
 if [[ -f "${ENV_FILE}" ]]; then
+  # shellcheck source=/dev/null
   if source "${ENV_FILE}" 2>/dev/null && [[ -n "${DREAMCODER_THEME_MODE:-}" ]]; then
     CURRENT="${DREAMCODER_THEME_MODE}"
   fi
