@@ -9,5 +9,28 @@
   "shell": "fish --login",
   "terminal_default_mode": "light",
   "motion_preset": "balanced",
-  "performance_notes": "Safe defaults with moderate key repeat and low visual overhead."
+  "performance_notes": "Safe defaults with moderate key repeat and low visual overhead.",
+  "keybindings": {
+    "super_mod": "SUPER",
+    "bindings": [
+      {
+        "key": "D",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "~/.config/hypr/scripts/dreamcoder-toggle-theme.sh",
+        "description": "Toggle Dreamcoder light/dark theme"
+      },
+      {
+        "key": "U",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprsunset --temperature 4000 --gamma 90",
+        "description": "Activar filtro luz azul"
+      },
+      {
+        "key": "I",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "pkill -f hyprsunset 2>/dev/null; hyprsunset --identity",
+        "description": "Desactivar filtro luz azul"
+      }
+    ]
+  }
 }

@@ -9,5 +9,123 @@
   "shell": "fish --login",
   "terminal_default_mode": "light",
   "motion_preset": "fluid",
-  "performance_notes": "Optimized for responsive typing, FHD readability, light default mode, and laptop-friendly motion."
+  "performance_notes": "Optimized for responsive typing, FHD readability, light default mode, and laptop-friendly motion.",
+  "keybindings": {
+    "super_mod": "SUPER",
+    "bindings": [
+      {
+        "key": "D",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "~/.config/hypr/scripts/dreamcoder-toggle-theme.sh",
+        "description": "Toggle Dreamcoder light/dark theme"
+      },
+      {
+        "key": "U",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprsunset --temperature 4000 --gamma 90",
+        "description": "Activar filtro luz azul"
+      },
+      {
+        "key": "I",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "pkill -f hyprsunset 2>/dev/null; hyprsunset --identity",
+        "description": "Desactivar filtro luz azul"
+      },
+      {
+        "key": "F5",
+        "mods": [],
+        "command": "brightnessctl -q s +10%",
+        "description": "Subir brillo",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F4",
+        "mods": [],
+        "command": "brightnessctl -q s 10%-",
+        "description": "Bajar brillo",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F3",
+        "mods": [],
+        "command": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "description": "Subir volumen",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F2",
+        "mods": [],
+        "command": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+        "description": "Bajar volumen",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F1",
+        "mods": [],
+        "command": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "description": "Mutear audio",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F10",
+        "mods": [],
+        "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "description": "Mutear micrófono",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "F8",
+        "mods": [],
+        "command": "playerctl play-pause",
+        "description": "Play/Pause",
+        "options": { "locked": true }
+      },
+      {
+        "key": "F7",
+        "mods": [],
+        "command": "playerctl previous",
+        "description": "Anterior",
+        "options": { "locked": true }
+      },
+      {
+        "key": "F9",
+        "mods": [],
+        "command": "playerctl next",
+        "description": "Siguiente",
+        "options": { "locked": true }
+      },
+      {
+        "key": "F12",
+        "mods": [],
+        "command": "~/.config/ml4w/settings/calculator.sh",
+        "description": "Calculadora"
+      },
+      {
+        "key": "F11",
+        "mods": [],
+        "command": "hyprlock",
+        "description": "Bloquear pantalla"
+      },
+      {
+        "key": "F6",
+        "mods": [],
+        "command": "flatpak run com.ml4w.settings",
+        "description": "ML4W Settings"
+      },
+      {
+        "key": "code:238",
+        "mods": [],
+        "command": "brightnessctl -d smc::kbd_backlight s +10",
+        "description": "Brillo teclado +",
+        "options": { "locked": true, "repeating": true }
+      },
+      {
+        "key": "code:237",
+        "mods": [],
+        "command": "brightnessctl -d smc::kbd_backlight s 10%-",
+        "description": "Brillo teclado -",
+        "options": { "locked": true, "repeating": true }
+      }
+    ]
+  }
 }
