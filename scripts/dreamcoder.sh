@@ -36,7 +36,8 @@ status)
   ;;
 doctor)
   if [[ -f "${DOCTOR_SCRIPT}" ]]; then
-    bash "${DOCTOR_SCRIPT}"
+    shift
+    bash "${DOCTOR_SCRIPT}" "$@"
   else
     echo "Error: ${DOCTOR_SCRIPT} not found" >&2
     exit 1
@@ -50,6 +51,7 @@ help | --help | -h)
   echo "  light         Switch to Dreamcoder Light"
   echo "  status        Show system status overview"
   echo "  doctor        Run health checks on all components"
+  echo "  doctor --ml4w Run ML4W integration health checks"
   echo "  help          Show this help"
   exit 0
   ;;

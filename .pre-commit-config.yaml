@@ -44,3 +44,9 @@ repos:
         language: system
         files: ^themes/dreamcoder/.*\.json$
         pass_filenames: false
+      - id: ml4w-profile-validate
+        name: Validate ML4W profile JSON files
+        entry: python3 scripts/validate-ml4w-profiles.py --ci
+        language: system
+        files: ^DreamcoderProfiles/dreamcoder/.*\.json$
+        pass_filenames: false

@@ -106,7 +106,7 @@ check() {
   shift 1
   if "$@" 2>/dev/null; then
     ok "${label}"
-    ((PASS++))
+    ((++PASS))
   else
     die "${label}"
   fi
@@ -117,7 +117,7 @@ check_warn() {
   shift 1
   if "$@" 2>/dev/null; then
     ok "${label}"
-    ((PASS++))
+    ((++PASS))
   else
     warn "${label}"
   fi
@@ -166,7 +166,7 @@ fi
 
 if $SCHEMA_VALID; then
   ok "Profile matches schema"
-  ((PASS++))
+  ((++PASS))
 else
   warn "Profile schema validation — check profile.schema.json"
 fi

@@ -32,15 +32,15 @@ WARN=0
 info() { [[ "$QUIET" == "true" ]] || printf '  ✓ %s\n' "$*"; }
 warn() {
   printf '  ⚠ %s\n' "$*" >&2
-  ((WARN++))
+  ((++WARN))
 }
 ok() {
   [[ "$QUIET" == "true" ]] || printf '  ✅ %s\n' "$*"
-  ((PASS++))
+  ((++PASS))
 }
 fail() {
   printf '  ❌ %s\n' "$*" >&2
-  ((FAIL++))
+  ((++FAIL))
   EXIT_CODE=1
 }
 die() {
