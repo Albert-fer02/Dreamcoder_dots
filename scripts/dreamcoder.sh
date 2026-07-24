@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Dreamcoder CLI — theme switching and system status
-# Usage: dreamcoder {dark|light|status|doctor|help}
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/logging.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/env.sh"
 
-DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
-APPLY_SCRIPT="${DOTS_DIR}/scripts/apply-theme-mode.sh"
-DOCTOR_SCRIPT="${DOTS_DIR}/scripts/doctor.sh"
+ensure_dots_dir
+APPLY_SCRIPT="${DREAMCODER_DOTS_DIR}/scripts/apply-theme-mode.sh"
+DOCTOR_SCRIPT="${DREAMCODER_DOTS_DIR}/scripts/doctor.sh"
 
 case "${1:-}" in
 dark | light)
@@ -21,9 +21,9 @@ dark | light)
 status)
   echo "=== Dreamcoder OS Status ==="
   echo "Theme mode: ${DREAMCODER_THEME_MODE:-dark}"
-  echo "Dotfiles dir: ${DOTS_DIR}"
-  echo "Git branch: $(cd "${DOTS_DIR}" && git branch --show-current 2>/dev/null || echo 'N/A')"
-  echo "Last commit: $(cd "${DOTS_DIR}" && git log -1 --oneline 2>/dev/null || echo 'N/A')"
+  echo "Dotfiles dir: "
+  echo "Git branch: $(cd "" && git branch --show-current 2>/dev/null || echo 'N/A')"
+  echo "Last commit: $(cd "" && git log -1 --oneline 2>/dev/null || echo 'N/A')"
   echo ""
   if command -v systemctl &>/dev/null; then
     echo "Timer: $(systemctl --user is-active dreamcoder-theme-auto.timer 2>/dev/null || echo 'inactive')"

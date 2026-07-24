@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Dreamcoder Doctor — health checks for all components
-# Usage: dreamcoder doctor [--ml4w]
-#   --ml4w   Run ML4W integration health checks
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/logging.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/env.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/checks.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/safety.sh"
 
-DOTS_DIR="${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}"
-ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
-# shellcheck source=/dev/null
-[[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
+ensure_dots_dir
 
 CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
@@ -39,7 +37,7 @@ check_symlink() {
 }
 
 control() {
-  PYTHONPATH="${DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"
+  PYTHONPATH="/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"
 }
 
 # ── parse args ──────────────────────────────────────────────────────────────
@@ -108,7 +106,7 @@ print(json.loads(p.read_text()).get("theme", "unset"))
     warn 'timer inactive'
   fi
 
-  "${DOTS_DIR}/.venv/bin/python3" "${DOTS_DIR}/scripts/verify-theme-health.py"
+  "/.venv/bin/python3" "/scripts/verify-theme-health.py"
   exit 0
 fi
 
@@ -311,7 +309,7 @@ fi
 # ── 7. Profile detection ────────────────────────────────────────────────────
 section '7. Machine profile'
 
-PROFILES_DIR="${DOTS_DIR}/DreamcoderProfiles/dreamcoder"
+PROFILES_DIR="/DreamcoderProfiles/dreamcoder"
 HOSTNAME="$(hostname -s 2>/dev/null || echo "unknown")"
 
 case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
@@ -400,7 +398,7 @@ fi
 section '10. Dreamcoder generators'
 
 for script in generate-custom-lua.sh setup-hyprland.sh verify-ml4w-setup.sh validate-ml4w-profiles.py; do
-  if [[ -f "${DOTS_DIR}/scripts/${script}" ]]; then
+  if [[ -f "/scripts/${script}" ]]; then
     ok "Script available: ${script}"
     ((++PASS))
   else

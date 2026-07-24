@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DREAMCODER_DOTS_DIR="${DREAMCODER_DOTS_DIR:-$(cd "${0%/*}/.." && pwd)}"
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/env.sh"
+ensure_dots_dir
 WAYPAPER_CONFIG="${WAYPAPER_CONFIG:-${HOME}/.config/waypaper/config.ini}"
 ML4W_WALLPAPER_SCRIPT="${ML4W_WALLPAPER_SCRIPT:-${HOME}/.config/hypr/scripts/wallpaper.sh}"
 HOOK="${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh \"\$wallpaper\" > /dev/null 2>&1"

@@ -26,7 +26,8 @@ die() {
 }
 
 # ── paths ────────────────────────────────────────────────────────────────────
-DREAMCODER_DOTS_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/env.sh"
+ensure_dots_dir
 OUTPUT="${HOME}/.config/hypr/custom.lua"
 PROFILES_DIR="${DREAMCODER_DOTS_DIR}/DreamcoderProfiles/dreamcoder"
 

@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/logging.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/env.sh"
+
+ensure_dots_dir
 WALLPAPER="${1:-${WALLPAPER:-}}"
-DREAMCODER_DOTS_DIR="${DREAMCODER_DOTS_DIR:-$(cd "${0%/*}/.." && pwd)}"
 WALLPAPER="$("${DREAMCODER_DOTS_DIR}/scripts/normalize-wallpaper-path.sh" "${WALLPAPER}")"
 CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 ML4W_CACHE_DIR="${ML4W_CACHE_DIR:-${CACHE_HOME}/ml4w/hyprland-dotfiles}"

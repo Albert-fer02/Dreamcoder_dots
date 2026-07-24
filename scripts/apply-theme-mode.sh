@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
-# shellcheck source=/dev/null
-[[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
+source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/logging.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/env.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/checks.sh"
+source "${DREAMCODER_DOTS_DIR}/lib/hyprland.sh"
+
+ensure_dots_dir
 MODE="${1:-light}"
 WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-}}"
 ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
@@ -22,9 +25,8 @@ mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
 printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" >"${CURSOR_CLI_ENV}"
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
-if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && command -v matugen >/dev/null; then
-  # Only run matugen when a graphical session is available (prevents hang in TTY/SSH)
-  if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
+if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && optional_command matugen; then
+  if is_gui_session; then
     timeout 10 matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
   fi
 fi
@@ -78,18 +80,8 @@ fi
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
   PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
   "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
-# Signal Kitty to reload config (GUI only)
-if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
-  command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
-fi
-# Restart Waybar so it picks up the new colors.css immediately (GUI only)
-if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
-  if command -v pkill >/dev/null; then
-    pkill waybar 2>/dev/null || true
-    sleep 0.3
-    "${HOME}/.config/waybar/launch.sh" 2>/dev/null || true
-  fi
-fi
+signal_kitty
+restart_waybar
 
 # --- tmux integration: propagate theme to running sessions ---
 KANAGAWA_DIR="${HOME}/.tmux/plugins/tmux-kanagawa"
