@@ -1,0 +1,84 @@
+# Dreamcoder Light — Yazi theme
+# https://yazi-rs.github.io/docs/configuration/theme
+
+[flavor]
+dark = "dreamcoder-dark"
+light = "dreamcoder-light"
+
+[manager]
+cwd = { fg = "#17120d" }
+
+# Hovered
+hovered = { fg = "#17120d", bg = "#decbb1" }
+preview_hovered = { fg = "#17120d", bg = "#e6d7c4" }
+
+# Find
+find_keyword = { fg = "#a7471c", bold = true }
+find_position = { fg = "#0d4a68" }
+
+# Marker
+marker_copied = { fg = "#3d723d", bg = "#c8ad89" }
+marker_cut = { fg = "#842f24", bg = "#c8ad89" }
+marker_selected = { fg = "#824f16", bg = "#c8ad89" }
+
+# Tab
+tab_active = { fg = "#17120d", bg = "#f3eadc" }
+tab_inactive = { fg = "#725e4c", bg = "#e6d7c4" }
+tab_width = 2
+
+# Count
+count_copied = { fg = "#17120d", bg = "#3d723d" }
+count_cut = { fg = "#17120d", bg = "#842f24" }
+count_selected = { fg = "#17120d", bg = "#824f16" }
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#8a7358" }
+
+# Highlight
+syntect_theme = "Dreamcoder-Light"
+
+[status]
+separator_open = ""
+separator_close = ""
+progress_label = { fg = "#17120d", bold = true }
+progress_normal = { fg = "#824f16" }
+progress_error = { fg = "#842f24" }
+
+# Permissions
+permissions_t = { fg = "#0d4a68" }
+permissions_r = { fg = "#3d723d" }
+permissions_w = { fg = "#a7471c" }
+permissions_x = { fg = "#842f24" }
+permissions_s = { fg = "#57478b" }
+
+[input]
+border = { fg = "#824f16" }
+title = {}
+value = {}
+selected = { bg = "#decbb1" }
+
+[select]
+border = { fg = "#824f16" }
+active = { fg = "#a7471c" }
+inactive = {}
+
+[tasks]
+border = { fg = "#824f16" }
+title = {}
+hovered = { fg = "#17120d", bg = "#decbb1" }
+
+[which]
+mask = { bg = "#c8ad89" }
+cand = { fg = "#0d4a68" }
+rest = { fg = "#725e4c" }
+desc = { fg = "#352e22" }
+separator = " ─ "
+separator_style = { fg = "#8a7358" }
+
+[help]
+on = { fg = "#824f16" }
+run = { fg = "#a7471c" }
+desc = { fg = "#352e22" }
+hovered = { fg = "#17120d", bg = "#decbb1" }
+footer = { fg = "#725e4c" }
