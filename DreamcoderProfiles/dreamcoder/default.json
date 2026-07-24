@@ -14,6 +14,318 @@
     "super_mod": "SUPER",
     "bindings": [
       {
+        "key": "RETURN",
+        "mods": ["SUPER"],
+        "command": "kitty",
+        "description": "Terminal"
+      },
+      {
+        "key": "B",
+        "mods": ["SUPER"],
+        "command": "firefox",
+        "description": "Browser"
+      },
+      {
+        "key": "E",
+        "mods": ["SUPER"],
+        "command": "thunar",
+        "description": "File Manager"
+      },
+      {
+        "key": "SPACE",
+        "mods": ["SUPER"],
+        "command": "rofi -show drun",
+        "description": "Application Launcher"
+      },
+      {
+        "key": "V",
+        "mods": ["SUPER"],
+        "command": "cliphist list | rofi -dmenu | cliphist decode | wl-copy",
+        "description": "Clipboard Manager"
+      },
+      {
+        "key": "K",
+        "mods": ["SUPER", "CTRL"],
+        "command": "kitty nvim",
+        "description": "Code Editor (Neovim)"
+      },
+      {
+        "key": "M",
+        "mods": ["SUPER", "CTRL"],
+        "command": "kitty btop",
+        "description": "System Monitor (btop)"
+      },
+      {
+        "key": "S",
+        "mods": ["SUPER", "CTRL"],
+        "command": "flatpak run com.ml4w.settings",
+        "description": "ML4W Settings"
+      },
+      {
+        "key": "C",
+        "mods": ["SUPER", "CTRL"],
+        "command": "~/.config/ml4w/settings/calculator.sh",
+        "description": "Calculator"
+      },
+      {
+        "key": "Q",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch killactive",
+        "description": "Close Window"
+      },
+      {
+        "key": "F",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch fullscreen 1",
+        "description": "Toggle Fullscreen"
+      },
+      {
+        "key": "T",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch togglefloating",
+        "description": "Toggle Floating Window"
+      },
+      {
+        "key": "Y",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch togglesplit",
+        "description": "Toggle Split Direction"
+      },
+      {
+        "key": "1",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 1",
+        "description": "Workspace 1"
+      },
+      {
+        "key": "2",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 2",
+        "description": "Workspace 2"
+      },
+      {
+        "key": "3",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 3",
+        "description": "Workspace 3"
+      },
+      {
+        "key": "4",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 4",
+        "description": "Workspace 4"
+      },
+      {
+        "key": "5",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 5",
+        "description": "Workspace 5"
+      },
+      {
+        "key": "1",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 1",
+        "description": "Move to Workspace 1"
+      },
+      {
+        "key": "2",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 2",
+        "description": "Move to Workspace 2"
+      },
+      {
+        "key": "3",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 3",
+        "description": "Move to Workspace 3"
+      },
+      {
+        "key": "4",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 4",
+        "description": "Move to Workspace 4"
+      },
+      {
+        "key": "5",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 5",
+        "description": "Move to Workspace 5"
+      },
+      {
+        "key": "6",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 6",
+        "description": "Workspace 6"
+      },
+      {
+        "key": "7",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 7",
+        "description": "Workspace 7"
+      },
+      {
+        "key": "8",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 8",
+        "description": "Workspace 8"
+      },
+      {
+        "key": "9",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 9",
+        "description": "Workspace 9"
+      },
+      {
+        "key": "0",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch workspace 10",
+        "description": "Workspace 10"
+      },
+      {
+        "key": "6",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 6",
+        "description": "Move to Workspace 6"
+      },
+      {
+        "key": "7",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 7",
+        "description": "Move to Workspace 7"
+      },
+      {
+        "key": "8",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 8",
+        "description": "Move to Workspace 8"
+      },
+      {
+        "key": "9",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 9",
+        "description": "Move to Workspace 9"
+      },
+      {
+        "key": "0",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movetoworkspace 10",
+        "description": "Move to Workspace 10"
+      },
+      {
+        "key": "H",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus l",
+        "description": "Focus Left"
+      },
+      {
+        "key": "L",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus r",
+        "description": "Focus Right"
+      },
+      {
+        "key": "K",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus u",
+        "description": "Focus Up"
+      },
+      {
+        "key": "J",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus d",
+        "description": "Focus Down"
+      },
+      {
+        "key": "H",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow l",
+        "description": "Move Window Left"
+      },
+      {
+        "key": "L",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow r",
+        "description": "Move Window Right"
+      },
+      {
+        "key": "K",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow u",
+        "description": "Move Window Up"
+      },
+      {
+        "key": "J",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow d",
+        "description": "Move Window Down"
+      },
+      {
+        "key": "LEFT",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus l",
+        "description": "Focus Left (Arrow)"
+      },
+      {
+        "key": "RIGHT",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus r",
+        "description": "Focus Right (Arrow)"
+      },
+      {
+        "key": "UP",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus u",
+        "description": "Focus Up (Arrow)"
+      },
+      {
+        "key": "DOWN",
+        "mods": ["SUPER"],
+        "command": "hyprctl dispatch movefocus d",
+        "description": "Focus Down (Arrow)"
+      },
+      {
+        "key": "LEFT",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow l",
+        "description": "Move Window Left (Arrow)"
+      },
+      {
+        "key": "RIGHT",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow r",
+        "description": "Move Window Right (Arrow)"
+      },
+      {
+        "key": "UP",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow u",
+        "description": "Move Window Up (Arrow)"
+      },
+      {
+        "key": "DOWN",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "hyprctl dispatch movewindow d",
+        "description": "Move Window Down (Arrow)"
+      },
+      {
+        "key": "L",
+        "mods": ["SUPER", "ALT"],
+        "command": "hyprlock",
+        "description": "Lock Screen"
+      },
+      {
+        "key": "PRINT",
+        "mods": [],
+        "command": "grimblast save area",
+        "description": "Screenshot Area"
+      },
+      {
+        "key": "S",
+        "mods": ["SUPER", "SHIFT"],
+        "command": "grimblast save screen",
+        "description": "Screenshot Full Screen"
+      },
+      {
         "key": "D",
         "mods": ["SUPER", "SHIFT"],
         "command": "~/.config/hypr/scripts/dreamcoder-toggle-theme.sh",

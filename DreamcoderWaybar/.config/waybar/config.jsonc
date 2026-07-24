@@ -1,0 +1,133 @@
+{
+  // ============================================================================
+  // Dreamcoder Waybar Config — ML4W-compatible
+  // ============================================================================
+  // Colors: @import in style.css from Dreamcoder waybar-{mode}.css
+  // Icons: Nerd Fonts v3 (JetBrainsMono Nerd Font recommended)
+  // ============================================================================
+
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "spacing": 4,
+  "margin-top": 0,
+  "margin-bottom": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["network", "pulseaudio", "cpu", "memory", "battery", "tray"],
+
+  // ── Workspaces (Taskbar) ──────────────────────────────────────────
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "十",
+      "active": "",
+      "default": ""
+    },
+    "window-rewrite": {
+      "class<firefox>": "󰈹",
+      "class<Firefox>": "󰈹",
+      "class<kitty>": "",
+      "class<Kitty>": "",
+      "class<thunar>": "",
+      "class<Thunar>": "",
+      "class<code-oss>": "",
+      "class<Code>": "",
+      "class<obsidian>": "󰠮",
+      "class<Obsidian>": "󰠮",
+      "class<spotify>": "",
+      "class<Spotify>": "",
+      "class<discord>": "",
+      "class<Discord>": "",
+      "class<slack>": "",
+      "class<Slack>": "",
+      "class<rofi>": "",
+      "class<org.wezfurlong.wezterm>": "",
+      "class<ghostty>": "",
+      "title<.*nvim.*>": ""
+    },
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    }
+  },
+
+  // ── Clock ──────────────────────────────────────────────────────────
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A, %d %B %Y}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  // ── Network ────────────────────────────────────────────────────────
+  "network": {
+    "format-wifi": "  {signalStrength}%",
+    "format-ethernet": "󰈀  {ifname}",
+    "format-disconnected": "󰖪  Offline",
+    "tooltip-format-wifi": "{essid} — {ipaddr}/{cidr}",
+    "max-length": 20,
+    "on-click": "kitty nmtui"
+  },
+
+  // ── PulseAudio ─────────────────────────────────────────────────────
+  "pulseaudio": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "󰝟  Muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "scroll-step": 5,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip-format": "{desc} — {volume}%"
+  },
+
+  // ── CPU ────────────────────────────────────────────────────────────
+  "cpu": {
+    "format": "  {usage}%",
+    "tooltip-format": "{usage}% — {load} load",
+    "interval": 2
+  },
+
+  // ── Memory ─────────────────────────────────────────────────────────
+  "memory": {
+    "format": "  {}%",
+    "tooltip-format": "{used:0.1f}G / {total:0.1f}G",
+    "interval": 5
+  },
+
+  // ── Battery ────────────────────────────────────────────────────────
+  "battery": {
+    "format": "{icon}  {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "format-charging": "󰂄  {capacity}%",
+    "format-plugged": "󰚥  {capacity}%",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "tooltip-format": "{time} — {capacity}% {status}",
+    "interval": 10
+  },
+
+  // ── Tray ───────────────────────────────────────────────────────────
+  "tray": {
+    "icon-size": 18,
+    "spacing": 8
+  }
+}

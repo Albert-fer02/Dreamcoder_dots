@@ -137,7 +137,9 @@ def _validate_binding(
             errors.append(f"  ❌ {name} binding[{index}]: invalid modifier '{m}'")
 
     # Fn keys / keycodes must have empty mods
-    if (key.startswith("F") or key.startswith("code:")) and len(mods) > 0:
+    # Note: single-letter 'F' is a key, not a function key (F1-F12 have digits)
+    is_fn = key.startswith("F") and len(key) > 1 and key[1].isdigit()
+    if (is_fn or key.startswith("code:")) and len(mods) > 0:
         errors.append(f"  ❌ {name} binding[{index}]: Fn/keycode '{key}' should have empty mods")
 
     # SUPER modifier check: must be first in mods
