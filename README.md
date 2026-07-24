@@ -1,7 +1,7 @@
 # Dreamcoder OS
 
 > Visual layer premium para **Gentleman.Dots + ML4W**.
-> Café/Lúcuma. Ember Noir. Contraste saludable. Identidad.
+> Café/Lúcuma. Anthracite Steel. Contraste saludable. Identidad.
 
 [![Theme CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
 [![ML4W Setup CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml)
@@ -194,7 +194,7 @@ Dreamcoder es una **capa visual**, no un reemplazo. Mantenés todo lo que ya te 
 **Dreamcoder aporta:**
 
 - Tokens de color validados con WCAG 4.5:1 + APCA
-- 3 modos: Ember Noir (dark), Cocoa/Lúcuma (light), Dusk (transición)
+- 3 modos: Anthracite Steel (dark), Cocoa/Lúcuma (light), Dusk (transición)
 - Starship prompt con 23 módulos y AI session state
 - 9 funciones shell (extract, sysupdate, killport, etc.)
 - Aliases modernos con graceful fallback (eza, bat, fd, rg, zoxide)
@@ -208,7 +208,7 @@ Dreamcoder es una **capa visual**, no un reemplazo. Mantenés todo lo que ya te 
 ### CLI
 
 ```bash
-dreamcoder dark         # → Ember Noir OLED
+dreamcoder dark         # → Anthracite Steel OLED
 dreamcoder light        # → Dreamcoder Light
 dreamcoder status       # → System status overview
 dreamcoder doctor       # → Health check

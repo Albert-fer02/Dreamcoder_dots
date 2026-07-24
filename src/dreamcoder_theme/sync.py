@@ -118,7 +118,7 @@ def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[s
 # ------------------------------------------------------------------
 # Declarative variant registry — each entry produces write_variant_files
 # (+ active-file write when active_path is set). Uniform entries only;
-# hyprland, waybar, rofi, nvim, kitty-ui, and opencode-transparent
+# hyprland, waybar, rofi, nvim, and opencode-transparent
 # stay as explicit calls below the loop.
 # ------------------------------------------------------------------
 D = {"dark": "dark", "light": "light"}
@@ -128,6 +128,12 @@ VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | No
         ROOT / "DreamcoderKitty/.config/kitty",
         {k: f"colors-dreamcoder-{v}.conf" for k, v in D.items()},
         kitty_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderKitty/.config/kitty",
+        {k: f"dreamcoder-ui-{v}.conf" for k, v in D.items()},
+        kitty_ui_content,
         None,
     ),
     (
@@ -280,7 +286,7 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
 
     # ---- Non-uniform entries (explicit calls) ----
 
-    # Kitty UI (different content fn)
+    # Kitty UI active file (variants handled by VARIANT_REGISTRY above)
     repo_changes.append(
         write_if_changed(
             ROOT / "DreamcoderKitty/.config/kitty/dreamcoder-ui.conf", kitty_ui_content(active)

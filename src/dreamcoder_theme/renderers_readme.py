@@ -10,7 +10,7 @@ This directory contains the Dreamcoder visual contract and generated color-only 
 
 - `tokens.json`: canonical Dreamcoder OS design tokens and guardrails.
 - `tokens.schema.json`: machine-readable token contract.
-- `*-dark.*`: Dreamcoder Ember Noir mode with espresso glass, refined orange/red protagonists, and gold support accents.
+- `*-dark.*`: Dreamcoder Anthracite Steel mode with near-black bg, cool steel-blue accents, and muted slate surfaces.
 - `*-light.*`: paper-like daytime mode with flat surface ladder and distinct semantic tokens.
 ## Color-only Snippets (Hooks)
 

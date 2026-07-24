@@ -93,7 +93,7 @@ dreamcoder status
 
 ```bash
 # Manual
-dreamcoder dark     # → Ember Noir OLED
+dreamcoder dark     # → Anthracite Steel OLED
 dreamcoder light    # → Cocoa/Lúcuma
 dreamcoder status   # → System overview
 

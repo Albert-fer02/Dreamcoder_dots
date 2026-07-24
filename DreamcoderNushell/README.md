@@ -4,7 +4,7 @@ Nushell config for Dreamcoder Dots, adapted from [Gentleman.Dots](https://github
 
 ## Theme
 
-**Ember Noir OLED** — dark theme based on Dreamcoder OS visual tokens.
+**Anthracite Steel OLED** — dark theme based on Dreamcoder OS visual tokens.
 
 | Token   | Color     |
 | ------- | --------- |

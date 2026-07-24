@@ -1,8 +1,8 @@
-"""Unit tests for domain/palette.py — pure color math functions."""
+"""Unit tests for _math.py — pure color math functions."""
 
 import pytest
 
-from dreamcoder_theme.domain.palette import (
+from dreamcoder_theme._math import (
     compute_on_color,
     contrast,
     guard,

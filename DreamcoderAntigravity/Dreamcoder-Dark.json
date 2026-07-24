@@ -38,11 +38,11 @@
     "terminal.foreground": "#E6EDF3",
     "terminal.ansiBlack": "#0D121A",
     "terminal.ansiRed": "#E69AA4",
-    "terminal.ansiGreen": "#7FBF9A",
+    "terminal.ansiGreen": "#55C080",
     "terminal.ansiYellow": "#D9B36C",
     "terminal.ansiBlue": "#A5C7E8",
     "terminal.ansiMagenta": "#8FA9C0",
-    "terminal.ansiCyan": "#7CB3D9",
+    "terminal.ansiCyan": "#4DAED6",
     "terminal.ansiWhite": "#E6EDF3"
   },
   "tokenColors": [
@@ -75,7 +75,7 @@
         "entity.name.method"
       ],
       "settings": {
-        "foreground": "#7CB3D9"
+        "foreground": "#4DAED6"
       }
     },
     {
@@ -84,7 +84,7 @@
         "punctuation.definition.string"
       ],
       "settings": {
-        "foreground": "#7FBF9A"
+        "foreground": "#55C080"
       }
     },
     {

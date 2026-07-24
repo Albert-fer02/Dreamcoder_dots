@@ -7,7 +7,7 @@ Dreamcoder is a personal developer-experience design system for Arch Linux works
 Dreamcoder optimizes long coding sessions around three product principles:
 
 1. **Readability before decoration**: text, selections, borders, and diagnostics must survive real terminal/editor use.
-2. **Health-aware identity**: warm light mode, dusk transition, OLED-conscious Ember Noir dark mode, and no harsh pure black/white primary backgrounds.
+2. **Health-aware identity**: warm light mode, dusk transition, OLED-conscious Anthracite Steel dark mode, and no harsh pure black/white primary backgrounds.
 3. **Operational resilience**: ML4W/Gentleman updates are expected; Dreamcoder must be repairable, auditable, and regenerable.
 
 The system competes as a **developer OS design system**, not as a web component library. Its peers are theme ecosystems and workstation shells; its inspiration for rigor is Material, Carbon, Spectrum, and Fluent.

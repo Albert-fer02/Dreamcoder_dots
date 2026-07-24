@@ -75,7 +75,7 @@ Ningún otro dotfiles hace esto. Cada color está validado contra WCAG 4.5:1 y A
 
 | Modo     | Nombre          | BG        | Accent    | Uso         |
 | -------- | --------------- | --------- | --------- | ----------- |
-| 🌙 Dark  | Ember Noir OLED | `#100f0d` | `#d99555` | 18:00-07:00 |
+| 🌙 Dark  | Anthracite Steel OLED | `#100f0d` | `#d99555` | 18:00-07:00 |
 | ☀️ Light | Cocoa/Lúcuma    | `#f3eadc` | `#824f16` | 07:00-16:00 |
 | 🌆 Dusk  | Transición      | `#ebe4d6` | `#8a5520` | 16:00-18:00 |
 

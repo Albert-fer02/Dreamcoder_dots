@@ -28,14 +28,14 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
     def setUp(self):
         self.modes = json.loads(TOKENS.read_text())["modes"]
 
-    def test_dark_uses_refined_ember_noir_scale(self):
+    def test_dark_uses_anthracite_steel_scale(self):
         dark = self.modes["dark"]
-        self.assertEqual(dark["name"], "Dreamcoder Ember Noir OLED")
-        self.assertEqual(dark["surface0"], "#201b16")
-        self.assertEqual(dark["surface1"], "#2b231b")
-        self.assertEqual(dark["surface2"], "#392e21")
-        self.assertEqual(dark["accent"], "#e6a15c")
-        self.assertEqual(dark["accent_2"], "#c96a45")
+        self.assertEqual(dark["name"], "Dreamcoder Anthracite Steel")
+        self.assertEqual(dark["surface0"], "#0D121A")
+        self.assertEqual(dark["surface1"], "#151C25")
+        self.assertEqual(dark["surface2"], "#202A35")
+        self.assertEqual(dark["accent"], "#A5C7E8")
+        self.assertEqual(dark["accent_2"], "#8FAFCB")
 
     def test_light_has_stronger_editor_readability_tiers(self):
         light = self.modes["light"]

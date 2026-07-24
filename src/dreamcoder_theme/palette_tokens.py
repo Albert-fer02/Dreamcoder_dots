@@ -26,7 +26,7 @@ VARIANTS = {
         "focus": "#A5C7E8",
         "accent": "#A5C7E8",
         "accent_2": "#8FAFCB",
-        "diagnostic": "#7CB3D9",
+        "diagnostic": "#4DAED6",
         "selection": "#202A35",
         "panel_rgba": "rgba(7, 10, 19, 0.80)",
         "module_rgba": "rgba(230, 237, 243, 0.08)",
@@ -41,13 +41,13 @@ VARIANTS = {
         "prompt_muted": "#A8B5C2",
         "prompt_accent": "#A5C7E8",
         "prompt_accent_2": "#8FAFCB",
-        "sage": "#7FBF9A",
+        "sage": "#55C080",
         "lavender": "#B6C5D4",
         "mauve": "#8FA9C0",
         "error": "#E69AA4",
         "warning": "#D9B36C",
-        "success": "#7FBF9A",
-        "info": "#7CB3D9",
+        "success": "#55C080",
+        "info": "#4DAED6",
         "selection_bg": "#202A35",
         "selection_fg": "#E6EDF3",
         "on_surface": "#E6EDF3",
@@ -60,7 +60,7 @@ VARIANTS = {
         "hover": "#151C25",
         "pressed": "#202A35",
         "overlay": "rgba(7, 10, 19, 0.52)",
-        "scrim": "rgba(0, 0, 0, 0.60)"
+        "scrim": "rgba(0, 0, 0, 0.60)",
     },
     "light": {
         "name": "Dreamcoder Light",
@@ -115,7 +115,7 @@ VARIANTS = {
         "hover": "#decbb1",
         "pressed": "#c8ad89",
         "overlay": "rgba(243, 234, 220, 0.40)",
-        "scrim": "rgba(26, 18, 12, 0.42)"
+        "scrim": "rgba(26, 18, 12, 0.42)",
     },
     "dusk": {
         "name": "Dreamcoder Dusk",
@@ -170,8 +170,8 @@ VARIANTS = {
         "hover": "#d8cbb8",
         "pressed": "#c6b6a0",
         "overlay": "rgba(235, 228, 214, 0.40)",
-        "scrim": "rgba(26, 18, 12, 0.42)"
-    }
+        "scrim": "rgba(26, 18, 12, 0.42)",
+    },
 }
 
 ANSI_KEY_NAMES = [
@@ -190,5 +190,5 @@ ANSI_KEY_NAMES = [
     "diagnostic_bright",
     "lavender_bright",
     "focus_bright",
-    "text"
+    "text",
 ]

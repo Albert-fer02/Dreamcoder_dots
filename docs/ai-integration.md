@@ -97,4 +97,4 @@ Dreamcoder incluye un `CLAUDE.md` con instrucciones para Claude Code sobre cómo
 5. Need to extract something? `extract project.tar.gz`
 6. Cambiando de tarea? `tm-session` → fzf session picker
 7. Terminando el día? `sysupdate` → actualiza todo
-8. El timer systemd cambia automáticamente a Ember Noir a las 18:00
+8. El timer systemd cambia automáticamente a Anthracite Steel a las 18:00

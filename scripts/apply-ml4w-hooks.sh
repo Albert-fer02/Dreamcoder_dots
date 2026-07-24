@@ -9,11 +9,11 @@ HOOK="${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh \"\$wallpaper\" > /dev/nu
 BLOCK="\"${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh\" \"\$used_wallpaper\""
 
 if [[ -f "${WAYPAPER_CONFIG}" ]] && ! grep -q 'wallpaper-hook.sh' "${WAYPAPER_CONFIG}"; then
-    sed -i "s|^post_command = \(.*\)|post_command = \1; ${HOOK}|" "${WAYPAPER_CONFIG}"
+  sed -i "s|^post_command = \(.*\)|post_command = \1; ${HOOK}|" "${WAYPAPER_CONFIG}"
 fi
 
 if [[ -f "${ML4W_WALLPAPER_SCRIPT}" ]] && ! grep -q 'wallpaper-hook.sh' "${ML4W_WALLPAPER_SCRIPT}"; then
-    cat >>"${ML4W_WALLPAPER_SCRIPT}" <<ML4W_HOOK
+  cat >>"${ML4W_WALLPAPER_SCRIPT}" <<ML4W_HOOK
 
 # Dreamcoder final wallpaper/theme sync
 if [[ -x "${DREAMCODER_DOTS_DIR}/scripts/wallpaper-hook.sh" ]]; then

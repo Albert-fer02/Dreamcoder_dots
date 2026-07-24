@@ -11,17 +11,17 @@ minimum-contrast = 4.5
 
 palette = 0=#7a7d81
 palette = 1=#E69AA4
-palette = 2=#7FBF9A
+palette = 2=#55C080
 palette = 3=#A5C7E8
-palette = 4=#7CB3D9
+palette = 4=#4DAED6
 palette = 5=#8FA9C0
 palette = 6=#B6C5D4
 palette = 7=#A8B5C2
 palette = 8=#708090
 palette = 9=#e6a9b2
-palette = 10=#92c7aa
+palette = 10=#6fc895
 palette = 11=#D9B36C
-palette = 12=#8fbdde
+palette = 12=#69b9db
 palette = 13=#bfccda
 palette = 14=#b1ceea
 palette = 15=#E6EDF3

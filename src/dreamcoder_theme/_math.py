@@ -31,7 +31,7 @@ def rel_luminance(value: str) -> float:
     lr = sr / 12.92 if sr <= 0.03928 else ((sr + 0.055) / 1.055) ** 2.4
     lg = sg / 12.92 if sg <= 0.03928 else ((sg + 0.055) / 1.055) ** 2.4
     lb = sb / 12.92 if sb <= 0.03928 else ((sb + 0.055) / 1.055) ** 2.4
-    return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb  # type: ignore[no-any-return]
+    return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb
 
 
 def contrast(fg: str, bg: str) -> float:
@@ -40,9 +40,7 @@ def contrast(fg: str, bg: str) -> float:
     return (a + 0.05) / (b + 0.05)
 
 
-def guard(
-    color: str, background: str, mode_name: str, minimum: float = 4.5
-) -> str:
+def guard(color: str, background: str, mode_name: str, minimum: float = 4.5) -> str:
     """Adjust color toward white (dark mode) or black (light mode) until
     it meets the minimum contrast ratio against the background."""
     target = "#ffffff" if mode_name == "dark" else "#000000"

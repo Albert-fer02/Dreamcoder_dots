@@ -47,7 +47,7 @@ help | --help | -h)
   echo "Usage: dreamcoder <command>"
   echo ""
   echo "Commands:"
-  echo "  dark          Switch to Ember Noir OLED (dark mode)"
+  echo "  dark          Switch to Anthracite Steel OLED (dark mode)"
   echo "  light         Switch to Dreamcoder Light"
   echo "  status        Show system status overview"
   echo "  doctor        Run health checks on all components"

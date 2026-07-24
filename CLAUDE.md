@@ -43,7 +43,7 @@ fish -n DreamcoderShell/.config/fish/config.fish
 
 Canonical palettes (see `DreamcoderThemes/dreamcoder/tokens.json`):
 
-**Dark — Ember Noir OLED**
+**Dark — Anthracite Steel OLED**
 
 ```txt
 bg          #100f0d

@@ -9,8 +9,8 @@ import warnings
 from collections.abc import Callable
 from pathlib import Path
 
-# Re-export pure color math from domain layer
-from .domain.palette import (
+# Re-export pure color math
+from ._math import (
     compute_on_color,
     contrast,
     guard,

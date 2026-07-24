@@ -6,7 +6,7 @@ Generated from `DreamcoderThemes/dreamcoder/tokens.json`.
 
 Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.
 
-Dreamcoder dark uses an **Ember Noir** identity: espresso/cacao glass surfaces, warm silver text, refined orange and maple red protagonists, and gold as the support accent. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the autumn glass color.
+Dreamcoder dark uses an **Anthracite Steel** identity: espresso/cacao glass surfaces, warm silver text, refined orange and maple red protagonists, and gold as the support accent. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the autumn glass color.
 
 Semantic tokens are intentionally distinct:
 
@@ -17,7 +17,7 @@ Semantic tokens are intentionally distinct:
 
 ## Palette
 
-### Dreamcoder Ember Noir OLED
+### Dreamcoder Anthracite Steel
 
 | Role           | Color                                                                                                                  |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -127,7 +127,7 @@ Semantic tokens are intentionally distinct:
 
 ## Contrast audit
 
-### Dreamcoder Ember Noir OLED contrast (WCAG 2)
+### Dreamcoder Anthracite Steel contrast (WCAG 2)
 
 | Token        | Ratio vs bg | Target |
 | ------------ | ----------: | ------ |
@@ -141,7 +141,7 @@ Semantic tokens are intentionally distinct:
 | `error`      |      7.77:1 | AA     |
 | `warning`    |     10.47:1 | AA     |
 
-### Dreamcoder Ember Noir OLED APCA
+### Dreamcoder Anthracite Steel APCA
 
 | Token        | Lc vs bg | Target     |
 | ------------ | -------: | ---------- |
@@ -157,7 +157,7 @@ Semantic tokens are intentionally distinct:
 | `border_ui`  |     39.3 | ≥60 (FAIL) |
 | `focus`      |     37.6 | ≥60 (FAIL) |
 
-### Dreamcoder Ember Noir OLED UI affordance contrast
+### Dreamcoder Anthracite Steel UI affordance contrast
 
 | Token       | Ratio vs bg | Target |
 | ----------- | ----------: | ------ |
@@ -255,6 +255,6 @@ Semantic tokens are intentionally distinct:
 
 - Main backgrounds avoid pure black and pure white.
 - Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.
-- Cocoa/Lúcuma accents are identity colors in light; Ember Noir uses refined orange, maple red, soft coral, and gold for dark-mode personality.
+- Cocoa/Lúcuma accents are identity colors in light; Anthracite Steel uses refined orange, maple red, soft coral, and gold for dark-mode personality.
 - UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.
 - opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.

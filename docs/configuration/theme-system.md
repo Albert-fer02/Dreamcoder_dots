@@ -19,7 +19,7 @@ tokens.json → generate-palette-tokens.py → palette_tokens.py
 
 Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../DreamcoderThemes/dreamcoder/tokens.json)
 
-Dark (**Ember Noir OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
+Dark (**Anthracite Steel OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
 
 | Layer       | Examples                                                       |
 | ----------- | -------------------------------------------------------------- |
