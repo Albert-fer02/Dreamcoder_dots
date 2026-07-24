@@ -9,7 +9,30 @@ import warnings
 from collections.abc import Callable
 from pathlib import Path
 
+# Re-export pure color math from domain layer
+from .domain.palette import (
+    compute_on_color,
+    contrast,
+    guard,
+    hex_to_rgb,
+    mix,
+    rel_luminance,
+    rgb_to_hex,
+    surface_guard,
+)
 from .palette_tokens import ANSI_KEY_NAMES
+
+# Re-export domain functions for backward compatibility
+__all__ = [
+    "compute_on_color",
+    "contrast",
+    "guard",
+    "hex_to_rgb",
+    "mix",
+    "rel_luminance",
+    "rgb_to_hex",
+    "surface_guard",
+]
 
 
 def load_variants(
@@ -59,95 +82,6 @@ def resolve_color(palette: dict[str, str], value: str) -> str:
                 mix_target = palette["text"]
             return mix(palette[base], mix_target, 0.18)
     return palette.get(value, value)
-
-
-def hex_to_rgb(value: str) -> tuple[int, int, int]:
-    value = value.lstrip("#")
-    return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
-
-
-def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
-    return "#" + "".join(f"{max(0, min(255, part)):02x}" for part in rgb)
-
-
-def mix(left: str, right: str, amount: float) -> str:
-    a = hex_to_rgb(left)
-    b = hex_to_rgb(right)
-    return rgb_to_hex(tuple(round(x + (y - x) * amount) for x, y in zip(a, b)))  # type: ignore[arg-type]
-
-
-def rel_luminance(value: str) -> float:
-    r: int
-    g: int
-    b: int
-    r, g, b = hex_to_rgb(value)
-    sr = r / 255
-    sg = g / 255
-    sb = b / 255
-    lr = sr / 12.92 if sr <= 0.03928 else ((sr + 0.055) / 1.055) ** 2.4
-    lg = sg / 12.92 if sg <= 0.03928 else ((sg + 0.055) / 1.055) ** 2.4
-    lb = sb / 12.92 if sb <= 0.03928 else ((sb + 0.055) / 1.055) ** 2.4
-    return 0.2126 * lr + 0.7152 * lg + 0.0722 * lb  # type: ignore[no-any-return, unused-ignore]
-
-
-def contrast(left: str, right: str) -> float:
-    a, b = sorted((rel_luminance(left), rel_luminance(right)), reverse=True)
-    return (a + 0.05) / (b + 0.05)
-
-
-def guard(color: str, background: str, mode_name: str, minimum: float = 4.5) -> str:
-    target = "#ffffff" if mode_name == "dark" else "#000000"
-    safe = color
-    for _ in range(12):
-        if contrast(safe, background) >= minimum:
-            return safe
-        safe = mix(safe, target, 0.18)
-    return safe
-
-
-def compute_on_color(
-    background: str,
-    mode_name: str,
-    *,
-    light_candidate: str | None = None,
-    dark_candidate: str | None = None,
-    minimum: float = 4.5,
-) -> str:
-    """Pick readable foreground on a filled surface."""
-    if mode_name == "dark":
-        candidates = [c for c in (dark_candidate, "#100f0d", "#000000") if c]
-    else:
-        candidates = [c for c in (light_candidate, "#fff7ea", "#ffffff") if c]
-    for candidate in candidates:
-        if contrast(candidate, background) >= minimum:
-            return candidate
-    target = candidates[-1]
-    return guard(target, background, mode_name, minimum=minimum)
-
-
-def surface_guard(
-    color: str,
-    background: str,
-    mode_name: str,
-    minimum: float = 1.05,
-    maximum: float = 2.4,
-) -> str:
-    if contrast(color, background) < minimum:
-        target = "#ffffff" if mode_name == "dark" else "#000000"
-        safe = color
-        for _ in range(12):
-            safe = mix(safe, target, 0.08)
-            if contrast(safe, background) >= minimum:
-                return safe
-        return safe
-    if contrast(color, background) > maximum:
-        safe = color
-        for _ in range(12):
-            safe = mix(safe, background, 0.12)
-            if contrast(safe, background) <= maximum:
-                return safe
-        return safe
-    return color
 
 
 def matugen_scheme(path: Path, mode_name: str, adaptive: bool) -> dict[str, str]:
