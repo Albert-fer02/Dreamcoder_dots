@@ -26,7 +26,15 @@ SCHEMA_FILE = PROFILES_DIR / "profile.schema.json"
 KEY_PATTERN = re.compile(r"^[A-Z0-9_]+$|^code:[0-9]+$|^F(?:1[0-2]?|[2-9])$|^BTN_")
 VALID_MODS = {"SUPER", "SHIFT", "CTRL", "ALT", "CTRL_SHIFT", "SUPER_SHIFT"}
 VALID_BIND_TYPES = {"press", "release"}
-VALID_BUTTONS = {"BTN_LEFT", "BTN_RIGHT", "BTN_MIDDLE", "BTN_SIDE", "BTN_EXTRA", "BTN_FORWARD", "BTN_BACK"}
+VALID_BUTTONS = {
+    "BTN_LEFT",
+    "BTN_RIGHT",
+    "BTN_MIDDLE",
+    "BTN_SIDE",
+    "BTN_EXTRA",
+    "BTN_FORWARD",
+    "BTN_BACK",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -130,50 +138,34 @@ def _validate_binding(
 
     # Fn keys / keycodes must have empty mods
     if (key.startswith("F") or key.startswith("code:")) and len(mods) > 0:
-        errors.append(
-            f"  ❌ {name} binding[{index}]: Fn/keycode '{key}' should have empty mods"
-        )
+        errors.append(f"  ❌ {name} binding[{index}]: Fn/keycode '{key}' should have empty mods")
 
     # SUPER modifier check: must be first in mods
     if len(mods) > 0 and "SUPER" in mods and mods[0] != "SUPER":
-        errors.append(
-            f"  ⚠ {name} binding[{index}]: SUPER should be first in mods array"
-        )
+        errors.append(f"  ⚠ {name} binding[{index}]: SUPER should be first in mods array")
 
     # Bind type validation
     if bind_type not in VALID_BIND_TYPES:
-        errors.append(
-            f"  ❌ {name} binding[{index}]: invalid bind_type '{bind_type}'"
-        )
+        errors.append(f"  ❌ {name} binding[{index}]: invalid bind_type '{bind_type}'")
 
     # Mouse binding validation
     if mouse and not button:
-        errors.append(
-            f"  ❌ {name} binding[{index}]: mouse=true requires 'button' field"
-        )
+        errors.append(f"  ❌ {name} binding[{index}]: mouse=true requires 'button' field")
     if mouse and button not in VALID_BUTTONS:
-        errors.append(
-            f"  ⚠ {name} binding[{index}]: unusual button '{button}'"
-        )
+        errors.append(f"  ⚠ {name} binding[{index}]: unusual button '{button}'")
 
     # Submap_entry should be lowercase
     if submap_entry and submap_entry != submap_entry.lower():
-        errors.append(
-            f"  ⚠ {name} binding[{index}]: submap_entry should be lowercase"
-        )
+        errors.append(f"  ⚠ {name} binding[{index}]: submap_entry should be lowercase")
 
     # Description format: should be capitalized
     if desc and desc[0].islower():
-        errors.append(
-            f"  ⚠ {name} binding[{index}]: description should start with uppercase"
-        )
+        errors.append(f"  ⚠ {name} binding[{index}]: description should start with uppercase")
 
     # Duplicate detection
     sig = (key, mods)
     if sig in seen:
-        errors.append(
-            f"  ❌ {name} binding[{index}]: duplicate {key} with mods {list(mods)}"
-        )
+        errors.append(f"  ❌ {name} binding[{index}]: duplicate {key} with mods {list(mods)}")
     seen.add(sig)
 
     return errors

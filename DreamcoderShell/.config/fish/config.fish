@@ -52,3 +52,8 @@ fish_add_path /home/dreamcoder08/.local/share/npm-global/bin
 if status is-interactive; and command -q herdr; and not set -q HERDR_ENV; and not set -q TMUX; and not set -q ZELLIJ
     herdr; or echo "⚠️  Herdr failed to start; continuing in Fish."
 end
+
+# ── SDD Profile Aliases ───────────────────────────────────────────
+alias sdd-gpt='~/.pi/gentle-ai/sdd-swap chatgpt'
+alias sdd-deepseek='~/.pi/gentle-ai/sdd-swap deepseek'
+alias sdd-status='~/.pi/gentle-ai/sdd-swap status'

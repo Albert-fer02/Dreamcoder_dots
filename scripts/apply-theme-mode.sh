@@ -23,7 +23,10 @@ printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport COLORTE
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && command -v matugen >/dev/null; then
-  matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
+  # Only run matugen when a graphical session is available (prevents hang in TTY/SSH)
+  if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
+    timeout 10 matugen image "${WALLPAPER}" -m "${MODE}" >/dev/null 2>&1 || true
+  fi
 fi
 # --- Waybar: flip colors.css symlink to mode-specific variant BEFORE sync ---
 # This ensures the Python sync writes to the correct variant file
@@ -75,12 +78,17 @@ fi
 DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
   PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
   "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
-command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
-# Restart Waybar so it picks up the new colors.css immediately
-if command -v pkill >/dev/null; then
-  pkill waybar 2>/dev/null || true
-  sleep 0.3
-  "${HOME}/.config/waybar/launch.sh" 2>/dev/null || true
+# Signal Kitty to reload config (GUI only)
+if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
+  command -v pkill >/dev/null && pkill -SIGUSR1 kitty 2>/dev/null || true
+fi
+# Restart Waybar so it picks up the new colors.css immediately (GUI only)
+if [[ -n "${WAYLAND_DISPLAY:-}" || -n "${DISPLAY:-}" ]]; then
+  if command -v pkill >/dev/null; then
+    pkill waybar 2>/dev/null || true
+    sleep 0.3
+    "${HOME}/.config/waybar/launch.sh" 2>/dev/null || true
+  fi
 fi
 
 # --- tmux integration: propagate theme to running sessions ---
@@ -200,4 +208,11 @@ fi
 ZELLIJ_CONF="${HOME}/.config/zellij/config.kdl"
 if [[ -f "${ZELLIJ_CONF}" ]]; then
   sed -i "s/^theme \".*\"/theme \"dreamcoder-${MODE}\"/" "${ZELLIJ_CONF}"
+fi
+
+# Delta: flip git diff theme symlink to mode-specific variant
+DELTA_LINK="${HOME}/.config/git/delta-dreamcoder.gitconfig"
+DELTA_VARIANT="${DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-${MODE}.gitconfig"
+if [[ -f "${DELTA_VARIANT}" ]]; then
+  ln -sf "${DELTA_VARIANT}" "${DELTA_LINK}"
 fi

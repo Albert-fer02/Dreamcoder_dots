@@ -108,7 +108,7 @@ print(json.loads(p.read_text()).get("theme", "unset"))
     warn 'timer inactive'
   fi
 
-  "${DOTS_DIR}/scripts/verify-theme-health.py"
+  "${DOTS_DIR}/.venv/bin/python3" "${DOTS_DIR}/scripts/verify-theme-health.py"
   exit 0
 fi
 

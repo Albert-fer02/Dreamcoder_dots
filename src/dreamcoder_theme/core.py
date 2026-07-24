@@ -68,7 +68,7 @@ def emit(data: Any, as_json: bool) -> None:
         return
     if isinstance(data, dict):
         for key, value in data.items():
-            if isinstance(value, (dict, list)):
+            if isinstance(value, dict | list):
                 print(f"{key}: {json.dumps(value, sort_keys=True)}")
             else:
                 print(f"{key}: {value}")
@@ -102,6 +102,6 @@ def detect_mode_from_file(path: Path) -> str:
     lowered = text.lower()
     if "dreamcoder light" in lowered:
         return "light"
-    if "dreamcoder dark" in lowered or "ember noir" in lowered:
+    if "dreamcoder dark" in lowered or "ember noir" in lowered or "anthracite steel" in lowered:
         return "dark"
     return "unknown"
