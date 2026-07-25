@@ -7,6 +7,12 @@ source "${DREAMCODER_DOTS_DIR}/lib/checks.sh"
 source "${DREAMCODER_DOTS_DIR}/lib/hyprland.sh"
 
 ensure_dots_dir
+
+# Define cache dirs — these are set in dreamcoder-env.sh but that file is NOT
+# sourced here (its callers exec this script in a fresh process).
+CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+ML4W_CACHE_DIR="${ML4W_CACHE_DIR:-${CACHE_HOME}/ml4w/hyprland-dotfiles}"
+
 MODE="${1:-light}"
 WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-}}"
 ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"

@@ -2,8 +2,9 @@
 # shellcheck disable=SC2034
 set -euo pipefail
 
-source "/lib/logging.sh"
-source "/lib/env.sh"
+DREAMCODER_ENV_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${DREAMCODER_ENV_DIR}/../lib/logging.sh"
+source "${DREAMCODER_ENV_DIR}/../lib/env.sh"
 
 ensure_dots_dir
 CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"

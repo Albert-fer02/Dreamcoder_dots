@@ -37,7 +37,7 @@ check_symlink() {
 }
 
 control() {
-  PYTHONPATH="/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"
+  PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"
 }
 
 # ── parse args ──────────────────────────────────────────────────────────────
@@ -106,7 +106,7 @@ print(json.loads(p.read_text()).get("theme", "unset"))
     warn 'timer inactive'
   fi
 
-  "/.venv/bin/python3" "/scripts/verify-theme-health.py"
+  "${DREAMCODER_DOTS_DIR}/.venv/bin/python3" "${DREAMCODER_DOTS_DIR}/scripts/verify-theme-health.py"
   exit 0
 fi
 

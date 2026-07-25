@@ -22,8 +22,8 @@ status)
   echo "=== Dreamcoder OS Status ==="
   echo "Theme mode: ${DREAMCODER_THEME_MODE:-dark}"
   echo "Dotfiles dir: "
-  echo "Git branch: $(cd "" && git branch --show-current 2>/dev/null || echo 'N/A')"
-  echo "Last commit: $(cd "" && git log -1 --oneline 2>/dev/null || echo 'N/A')"
+  echo "Git branch: $(cd "${DREAMCODER_DOTS_DIR}" && git branch --show-current 2>/dev/null || echo 'N/A')"
+  echo "Last commit: $(cd "${DREAMCODER_DOTS_DIR}" && git log -1 --oneline 2>/dev/null || echo 'N/A')"
   echo ""
   if command -v systemctl &>/dev/null; then
     echo "Timer: $(systemctl --user is-active dreamcoder-theme-auto.timer 2>/dev/null || echo 'inactive')"

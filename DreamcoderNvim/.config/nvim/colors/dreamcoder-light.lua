@@ -35,7 +35,7 @@ end
 
 -- ── Editor UI ────────────────────────────────────────────────
 -- Normal background is opaque in light so dark terminal transparency cannot hide text.
--- Dark mode keeps transparent Normal for Ember Noir glass.
+-- Dark mode keeps transparent Normal for Anthracite Steel glass.
 
   vim.api.nvim_set_hl(0, "Normal", {
     fg = "#17120d",
