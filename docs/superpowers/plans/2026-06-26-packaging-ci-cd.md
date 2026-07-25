@@ -372,4 +372,3 @@ python -c "from dreamcoder_theme.control import main; print('OK:', main)" 2>&1 |
 pip uninstall -y dreamcoder-theme
 pip install -e ".[dev]"
 ```
-

@@ -351,6 +351,6 @@ def test_variant_registry_write_order_deterministic(variants, active) -> None:
     for called_base in called_bases:
         if reg_idx < len(registry_bases) and called_base == registry_bases[reg_idx]:
             reg_idx += 1
-    assert reg_idx == len(
-        registry_bases
-    ), f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
+    assert reg_idx == len(registry_bases), (
+        f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
+    )

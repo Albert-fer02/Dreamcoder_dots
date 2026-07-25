@@ -5,11 +5,11 @@ setup() {
   # Ensure we're in the repo root
   TEST_DIR="$(cd "$(dirname "$BATS_TEST_FILENAME")/../.." && pwd)"
   export DREAMCODER_DOTS_DIR="${TEST_DIR}"
-  
+
   # Set up a temporary home for tests that generate files
   export TEST_TEMP_HOME="$(mktemp -d)"
   export HOME="${TEST_TEMP_HOME}"
-  
+
   # Profiles dir
   export PROFILES_DIR="${TEST_DIR}/DreamcoderProfiles/dreamcoder"
   export SCHEMA_FILE="${PROFILES_DIR}/profile.schema.json"

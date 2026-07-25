@@ -98,7 +98,7 @@ load '../helpers/setup'
   echo "# bind function calls: $count" >&3
   [ "$count" -eq 19 ]
 }
-    
+
 @test "generate-custom-lua: each binding has exec_cmd" {
   run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
     --profile asus-vivobook15 --dry-run

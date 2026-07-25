@@ -45,8 +45,8 @@ nextRecommended: apply
 2. **Incomplete S0 matrix:** deterministic expected/installed conformance, ownership, and rollback evidence were not produced before the stop. `receipts/S0.json` is `blocked` with `next_stage_permitted: false`.
 3. **Receipt-integrity warning:** the sealed S0 receipt omits `000022` from `stop_reason`. It was intentionally not edited after sealing. A fresh authorized baseline must produce a complete receipt.
 
-**Affected boundary:** managed GGA and all unproven managed roots.  
-**Safe alternative:** authorize a fresh complete read-only S0 matrix/ownership/rollback audit (safe), then seek a separately authorized official lifecycle operation only if ownership and rollback are proven (mutating). Manual replacement remains prohibited.  
+**Affected boundary:** managed GGA and all unproven managed roots.
+**Safe alternative:** authorize a fresh complete read-only S0 matrix/ownership/rollback audit (safe), then seek a separately authorized official lifecycle operation only if ownership and rollback are proven (mutating). Manual replacement remains prohibited.
 **Smallest additional scope:** a fresh read-only S0 audit and complete sealed receipt; no mutation approval requested.
 
 ## Changes

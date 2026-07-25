@@ -1261,4 +1261,3 @@ end
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     fg = "#A8B5C2"
   })
-

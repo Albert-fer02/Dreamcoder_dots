@@ -16,7 +16,7 @@ Then implement:
 
 ## T2: Hyprland dreamcoder-colors import
 
-The file `~/.config/hypr/dreamcoder-colors.conf` exists but is NOT imported by hyprland.lua. 
+The file `~/.config/hypr/dreamcoder-colors.conf` exists but is NOT imported by hyprland.lua.
 ML4W 2.13+ uses LUA format, not conf.
 We need to:
 1. Check if `DreamcoderThemes/dreamcoder/hypr-colors-{mode}.lua` already exists or if we need to generate it

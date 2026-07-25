@@ -44,7 +44,7 @@ load '../helpers/setup'
     local file="${PROFILES_DIR}/${profile}.json"
     local count
     count=$(jq '.keybindings.bindings | length' "$file")
-    
+
     for i in $(seq 0 $((count - 1))); do
       for field in key command description; do
         if ! jq -e ".keybindings.bindings[$i].$field" "$file" >/dev/null 2>&1; then
@@ -70,7 +70,7 @@ load '../helpers/setup'
   local errors=0
   local count
   count=$(jq '.keybindings.bindings | length' "$file")
-  
+
   for i in $(seq 0 $((count - 1))); do
     local key
     key=$(jq -r ".keybindings.bindings[$i].key" "$file")
@@ -92,7 +92,7 @@ load '../helpers/setup'
   local errors=0
   local count
   count=$(jq '.keybindings.bindings | length' "$file")
-  
+
   for i in $(seq 0 $((count - 1))); do
     local mods_json
     mods_json=$(jq -c ".keybindings.bindings[$i].mods" "$file" 2>/dev/null || echo "[]")
@@ -115,7 +115,7 @@ load '../helpers/setup'
     local file="${PROFILES_DIR}/${profile}.json"
     local count
     count=$(jq '.keybindings.bindings | length' "$file")
-    
+
     for i in $(seq 0 $((count - 1))); do
       local key
       key=$(jq -r ".keybindings.bindings[$i].key" "$file")
@@ -136,17 +136,17 @@ load '../helpers/setup'
     local file="${PROFILES_DIR}/${profile}.json"
     local count
     count=$(jq '.keybindings.bindings | length' "$file")
-    
+
     for i in $(seq 0 $((count - 1))); do
       local key_i mods_i
       key_i=$(jq -r ".keybindings.bindings[$i].key" "$file")
       mods_i=$(jq -c ".keybindings.bindings[$i].mods // []" "$file")
-      
+
       for j in $(seq $((i + 1)) $((count - 1))); do
         local key_j mods_j
         key_j=$(jq -r ".keybindings.bindings[$j].key" "$file")
         mods_j=$(jq -c ".keybindings.bindings[$j].mods // []" "$file")
-        
+
         if [[ "$key_i" == "$key_j" ]] && [[ "$mods_i" == "$mods_j" ]]; then
           echo "# ${profile}.json: duplicate binding $key_i at index $i and $j" >&3
           ((errors++))
