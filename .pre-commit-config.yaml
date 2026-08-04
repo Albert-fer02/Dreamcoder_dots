@@ -20,14 +20,14 @@ repos:
     hooks:
       - id: mypy
         args: [--config-file=pyproject.toml, src]
-        additional_dependencies: [PyQt6-stubs]
+        additional_dependencies: [PyQt6-stubs, types-jsonschema]
         pass_filenames: false
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-        args: ['--shell=bash']
+        args: ["--shell=bash"]
         files: ^scripts/
 
   - repo: local

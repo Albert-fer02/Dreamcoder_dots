@@ -7,7 +7,7 @@ import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from .renderers_ghostty_warp import ghostty_content, warp_content
 from .renderers_kitty import kitty_content
@@ -66,12 +66,12 @@ _RENDERERS: dict[str, Renderer] = {
 
 def load_contract(path: Path) -> dict[str, Any]:
     """Load author-owned policy without resolving any user-home paths."""
-    return json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
 def load_tokens(path: Path) -> dict[str, Any]:
     """Load canonical tokens without generating or writing any output."""
-    return json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
 def resolve_role(
@@ -110,12 +110,12 @@ def resolve_role(
         if not isinstance(source, str):
             raise ValueError(f"role requires canonical source or derivation: {name}")
         source = source.replace("{mode}", mode)
-        value: Any = tokens
+        resolved: Any = tokens
         for part in source.split("."):
-            if not isinstance(value, Mapping) or part not in value:
+            if not isinstance(resolved, Mapping) or part not in resolved:
                 raise ValueError(f"missing canonical role source: {source}")
-            value = value[part]
-        if not isinstance(value, str):
+            resolved = resolved[part]
+        if not isinstance(resolved, str):
             raise ValueError(f"canonical role is not a color string: {source}")
         return value, source
 
@@ -319,7 +319,7 @@ def _parse_renderer_output(target: str, content: str) -> dict[str, str]:  # noqa
                 fields[f"terminal_colors.{section}.{key}"] = value.strip().strip("'")
         return fields
     if target == "starship":
-        fields: dict[str, str] = {}
+        star_fields: dict[str, str] = {}
         in_palette = False
         for line in content.splitlines():
             if line == "[palettes.dreamcoder]":
@@ -329,8 +329,8 @@ def _parse_renderer_output(target: str, content: str) -> dict[str, str]:  # noqa
                 break
             if in_palette and " = " in line:
                 key, value = line.split(" = ", 1)
-                fields[f"palette.{key}"] = value.strip().strip('"')
-        return fields
+                star_fields[f"palette.{key}"] = value.strip().strip('"')
+        return star_fields
     if target == "tmux":
         return _tmux_fields(content)
     raise ValueError(f"no adapter for target: {target}")
