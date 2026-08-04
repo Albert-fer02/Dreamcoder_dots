@@ -28,12 +28,15 @@ end
 set -gx PATH (string match -v "$HOME/.config" $PATH)
 set -gx PATH (string match -v "$HOME/.opencode/bin" $PATH)
 
+# Dedup PATH resolving symlinks (Arch: /bin → /usr/bin, etc.)
 set -l seen
 set -l clean_path
 for dir in $PATH
-    if not contains -- $dir $seen
+    # Resolve real path to catch symlinked dirs (e.g. /bin -> /usr/bin)
+    set -l real_dir (realpath $dir 2>/dev/null; or echo $dir)
+    if not contains -- $real_dir $seen
         set -a clean_path $dir
-        set -a seen $dir
+        set -a seen $real_dir
     end
 end
 set -gx PATH $clean_path
@@ -44,10 +47,6 @@ alias zd="zen-browser -P Dev"
 alias zf="zen-browser -P Founder"
 # Default browser = Zen Personal (for pi login OAuth, git, etc.)
 set -gx BROWSER "zen-browser -P Personal"
-fish_add_path /home/dreamcoder08/.local/share/npm-global/bin
-
-
-
 # Start selected terminal multiplexer (Herdr)
 if status is-interactive; and command -q herdr; and not set -q HERDR_ENV; and not set -q TMUX; and not set -q ZELLIJ
     herdr; or echo "⚠️  Herdr failed to start; continuing in Fish."
@@ -57,3 +56,7 @@ end
 alias sdd-gpt='~/.pi/gentle-ai/sdd-swap chatgpt'
 alias sdd-deepseek='~/.pi/gentle-ai/sdd-swap deepseek'
 alias sdd-status='~/.pi/gentle-ai/sdd-swap status'
+
+# Redirección de directorios temporales para evitar saturar tmpfs
+set -gx TMPDIR "$HOME/.tmp"
+set -gx BUN_TMPDIR "$HOME/.tmp"
