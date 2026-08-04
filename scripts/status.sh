@@ -14,8 +14,12 @@ gtk_mode() {
   if [[ "${v}" == "1" ]]; then printf dark; elif [[ "${v}" == "0" ]]; then printf light; else printf unknown; fi
 }
 starship_bg() { grep -m1 '^bg = ' "${CONFIG_HOME}/starship.toml" 2>/dev/null | sed 's/.*= "//;s/".*//'; }
-file_mode() { if grep -qi 'Dreamcoder Light' "$1" 2>/dev/null; then printf light; elif grep -qi 'Dreamcoder Dark' "$1" 2>/dev/null; then printf dark; else printf unknown; fi; }
-bg_mode() { case "$1" in '#15100d' | '#13100d' | '#101216') printf dark ;; '#f3eadc' | '#f8f2ea' | '#f6f1e8' | '#f7f5f0') printf light ;; *) printf unknown ;; esac }
+file_mode() { if grep -qi 'Dreamcoder Light' "$1" 2>/dev/null; then printf light; elif grep -qiE 'Dreamcoder (Dark|Anthracite)' "$1" 2>/dev/null; then printf dark; else printf unknown; fi; }
+bg_mode() { case "${1,,}" in
+  '#15100d' | '#13100d' | '#101216' | '#070a13') printf dark ;;
+  '#f3eadc' | '#f8f2ea' | '#f6f1e8' | '#f7f5f0') printf light ;;
+  *) printf unknown ;;
+esac }
 check() {
   local name="$1" actual="$2"
   if [[ "${actual}" == "${EXPECTED}" ]]; then printf '✓ %s=%s\n' "${name}" "${actual}"; else
@@ -29,7 +33,7 @@ status=0
 check ghostty "$(file_mode "${CONFIG_HOME}/ghostty/themes/dreamcoder")" || status=1
 check kitty "$(file_mode "${CONFIG_HOME}/kitty/colors-dreamcoder.conf")" || status=1
 check opencode "$(bg_mode "$(json_bg "${CONFIG_HOME}/opencode/themes/dreamcoder.json")")" || status=1
-check repo_opencode "$(bg_mode "$(json_bg "${DREAMCODER_DOTS_DIR}/DreamcoderOpenCode/.config/opencode/opencode.json")")" || status=1
+check repo_opencode "$(bg_mode "$(json_bg "${DREAMCODER_DOTS_DIR}/.opencode/themes/dreamcoder.json")")" || status=1
 check starship "$(bg_mode "$(starship_bg)")" || status=1
 check gtk "$(gtk_mode)" || status=1
 exit "${status}"

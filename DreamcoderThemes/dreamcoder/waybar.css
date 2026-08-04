@@ -1,29 +1,29 @@
 /* Dreamcoder color layer for Waybar. */
-@define-color bg #f3eadc;
-@define-color bg-soft #e6d7c4;
-@define-color surface #fff7ea;
-@define-color surface-2 #c8ad89;
-@define-color surface-3 #b89d7a;
-@define-color text #17120d;
-@define-color text-heading #100c07;
-@define-color muted #352e22;
-@define-color subtle #554638;
-@define-color comment #725e4c;
-@define-color border #8a7358;
-@define-color border-ui #66513b;
-@define-color focus #0f6570;
-@define-color accent #824f16;
-@define-color accent-2 #a7471c;
-@define-color diagnostic #0d4a68;
-@define-color lavender #57478b;
-@define-color error #842f24;
-@define-color success #3d723d;
-@define-color warning #654300;
-@define-color link #824f16;
-@define-color link-hover #a7471c;
+@define-color bg #070A13;
+@define-color bg-soft #0D121A;
+@define-color surface #0D121A;
+@define-color surface-2 #202A35;
+@define-color surface-3 #2B3846;
+@define-color text #E6EDF3;
+@define-color text-heading #F1F5F9;
+@define-color muted #A8B5C2;
+@define-color subtle #708090;
+@define-color comment #9AA9B8;
+@define-color border #17202B;
+@define-color border-ui #526575;
+@define-color focus #A5C7E8;
+@define-color accent #A5C7E8;
+@define-color accent-2 #8FAFCB;
+@define-color diagnostic #4DAED6;
+@define-color lavender #B6C5D4;
+@define-color error #E69AA4;
+@define-color success #55C080;
+@define-color warning #D9B36C;
+@define-color link #A5C7E8;
+@define-color link-hover #8FAFCB;
 
 window#waybar {
-  background: rgba(243, 234, 220, 0.96);
+  background: rgba(7, 10, 19, 0.80);
   color: @text;
   border-bottom: 1px solid alpha(@accent, 0.26);
 }
@@ -36,7 +36,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @accent;
-  background: rgba(130, 79, 22, 0.34);
+  background: rgba(124, 179, 217, 0.24);
   border-color: alpha(@focus, 0.82);
 }
 
@@ -47,7 +47,7 @@ window#waybar {
 #cpu,
 #memory,
 #tray {
-  background: rgba(222, 203, 177, 0.80);
+  background: rgba(230, 237, 243, 0.08);
   color: @text;
   border: 1px solid alpha(@border-ui, 0.78);
 }
