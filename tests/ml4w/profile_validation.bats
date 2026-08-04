@@ -74,7 +74,7 @@ load '../helpers/setup'
   for i in $(seq 0 $((count - 1))); do
     local key
     key=$(jq -r ".keybindings.bindings[$i].key" "$file")
-    if [[ "$key" == F* ]] || [[ "$key" == code:* ]]; then
+    if [[ "$key" =~ ^F[0-9] ]] || [[ "$key" == code:* ]]; then
       local mods_length
       mods_length=$(jq ".keybindings.bindings[$i].mods | length" "$file")
       if [[ "$mods_length" -ne 0 ]]; then

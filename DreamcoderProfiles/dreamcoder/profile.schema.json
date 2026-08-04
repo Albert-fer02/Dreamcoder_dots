@@ -4,7 +4,11 @@
   "title": "Dreamcoder Machine Profile",
   "description": "Schema for Dreamcoder machine profiles — defines monitor, keyboard, shell, and keybinding configuration for Hyprland ML4W integration.",
   "type": "object",
-  "required": ["name", "description", "keybindings"],
+  "required": [
+    "name",
+    "description",
+    "keybindings"
+  ],
   "properties": {
     "name": {
       "type": "string",
@@ -54,13 +58,21 @@
     },
     "terminal_default_mode": {
       "type": "string",
-      "enum": ["light", "dark", "dusk"],
+      "enum": [
+        "light",
+        "dark",
+        "dusk"
+      ],
       "default": "light",
       "description": "Default terminal color mode for this machine"
     },
     "motion_preset": {
       "type": "string",
-      "enum": ["fluid", "balanced", "reduced"],
+      "enum": [
+        "fluid",
+        "balanced",
+        "reduced"
+      ],
       "default": "balanced",
       "description": "Hyprland motion/animation preset (fluid = smooth animations, balanced = moderate, reduced = minimal)"
     },
@@ -70,7 +82,9 @@
     },
     "keybindings": {
       "type": "object",
-      "required": ["bindings"],
+      "required": [
+        "bindings"
+      ],
       "properties": {
         "super_mod": {
           "type": "string",
@@ -82,7 +96,11 @@
           "minItems": 0,
           "items": {
             "type": "object",
-            "required": ["key", "command", "description"],
+            "required": [
+              "key",
+              "command",
+              "description"
+            ],
             "properties": {
               "key": {
                 "type": "string",
@@ -117,19 +135,22 @@
               },
               "bind_type": {
                 "type": "string",
-                "enum": ["press", "release"],
+                "enum": [
+                  "press",
+                  "release"
+                ],
                 "default": "press",
-                "description": "Press or release trigger. 'press' = hl.bind(), 'release' = hl.bindl()"
+                "description": "Press or release trigger. 'press' = hl.bind(), 'release' = hl.bind(..., { release = true })"
               },
               "mouse": {
                 "type": "boolean",
                 "default": false,
-                "description": "When true, uses hl.mouse_bind() instead of hl.bind(). Requires 'button' field."
+                "description": "When true, adds the `mouse = true` flag to hl.bind() and puts the button in the key string (hl.mouse_bind does not exist). Requires 'button'."
               },
               "button": {
                 "type": "string",
-                "pattern": "^BTN_",
-                "description": "Mouse button identifier (e.g., BTN_LEFT, BTN_RIGHT). Required when mouse=true."
+                "pattern": "^BTN_|^mouse:[0-9]+$",
+                "description": "Mouse button: BTN_LEFT/BTN_RIGHT... or mouse:<code> (BTN_SIDE=275, BTN_EXTRA=276). Required when mouse=true."
               },
               "submap_entry": {
                 "type": "string",

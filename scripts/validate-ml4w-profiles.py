@@ -36,6 +36,11 @@ VALID_BUTTONS = {
     "BTN_BACK",
 }
 
+# Mouse buttons can also be referenced by libinput button code, e.g.
+# "mouse:275" (BTN_SIDE) / "mouse:276" (BTN_EXTRA) — the only form the
+# Hyprland Lua hl.bind() key string accepts (BTN_* is not a valid keysym).
+BUTTON_CODE_PATTERN = re.compile(r"^mouse:[0-9]+$")
+
 
 def load_json(path: Path) -> dict[str, Any]:
     """Load a JSON file, returning empty dict on failure."""
@@ -153,7 +158,7 @@ def _validate_binding(
     # Mouse binding validation
     if mouse and not button:
         errors.append(f"  ❌ {name} binding[{index}]: mouse=true requires 'button' field")
-    if mouse and button not in VALID_BUTTONS:
+    if mouse and button not in VALID_BUTTONS and not BUTTON_CODE_PATTERN.match(button):
         errors.append(f"  ⚠ {name} binding[{index}]: unusual button '{button}'")
 
     # Submap_entry should be lowercase

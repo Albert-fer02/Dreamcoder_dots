@@ -26,6 +26,7 @@ die() {
 }
 
 # ── paths ────────────────────────────────────────────────────────────────────
+# shellcheck disable=SC1091  # dynamic path (DREAMCODER_DOTS_DIR fallback)
 source "${DREAMCODER_DOTS_DIR:-$(cd "$(dirname "$0")/.." && pwd)}/lib/env.sh"
 ensure_dots_dir
 OUTPUT="${HOME}/.config/hypr/custom.lua"
@@ -69,12 +70,25 @@ fi
 
 # ── auto-detect profile ─────────────────────────────────────────────────────
 if [[ -z "${PROFILE_NAME}" ]]; then
+  # Detect real hardware first (DMI), fall back to hostname. Hostnames like
+  # "archlinux" never matched the ASUS laptop, silently applying the wrong
+  # profile (no F1-F12 multimedia / brightness bindings).
+  DMI_PRODUCT="$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo "unknown")"
+  DMI_VENDOR="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null || echo "unknown")"
   HOSTNAME="$(hostname -s 2>/dev/null || echo "unknown")"
-  case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
+  DETECT_SOURCE="DMI"
+  case "$(echo "${DMI_PRODUCT} ${DMI_VENDOR}" | tr '[:upper:]' '[:lower:]')" in
   *asus* | *vivobook*) PROFILE_NAME="asus-vivobook15" ;;
   *) PROFILE_NAME="default" ;;
   esac
-  info "Auto-detected profile: ${PROFILE_NAME} (hostname: ${HOSTNAME})"
+  if [[ "${PROFILE_NAME}" == "default" ]]; then
+    case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
+    *asus* | *vivobook*) PROFILE_NAME="asus-vivobook15" ;;
+    *) : ;;
+    esac
+    [[ "${PROFILE_NAME}" == "default" ]] && DETECT_SOURCE="DMI+hostname"
+  fi
+  info "Auto-detected profile: ${PROFILE_NAME} (${DETECT_SOURCE}: ${DMI_PRODUCT} / ${DMI_VENDOR})"
 fi
 
 PROFILE_FILE="${PROFILES_DIR}/${PROFILE_NAME}.json"
@@ -169,6 +183,14 @@ generate() {
     if [[ "${locked}" == "true" ]]; then opts_parts+=("locked = true"); fi
     if [[ "${repeating}" == "true" ]]; then opts_parts+=("repeating = true"); fi
     if [[ "${disable_workspace_consume}" == "true" ]]; then opts_parts+=("disable_workspace_consume = true"); fi
+    # Release trigger: hl.bindl() does NOT exist in the Hyprland Lua API
+    # (errors with "attempt to call a nil value (field 'bindl')").
+    # The documented flag is `release = true` on a regular hl.bind().
+    if [[ "${bind_type}" == "release" ]]; then opts_parts+=("release = true"); fi
+    # Mouse bindings: hl.mouse_bind() does NOT exist in the Hyprland Lua
+    # API. The button goes in the key string and `mouse = true` is a
+    # flag on a regular hl.bind() (same pattern ML4W uses for mouse:272).
+    if [[ "${mouse}" == "true" ]]; then opts_parts+=("mouse = true"); fi
 
     if [[ ${#opts_parts[@]} -gt 0 ]]; then
       local joined=""
@@ -184,14 +206,11 @@ generate() {
       opts="{ description = \"${description}\" }"
     fi
 
-    # Determine binding function: hl.bind(), hl.bindl(), or hl.mouse_bind()
+    # Binding function: always hl.bind(); release and mouse are flags.
+    # (release = true and mouse = true are flags on hl.bind).
     local bind_fn="hl.bind"
     local mod_display="${mod_string}"
-    if [[ "${bind_type}" == "release" ]]; then
-      bind_fn="hl.bindl"
-    fi
     if [[ "${mouse}" == "true" && -n "${button}" ]]; then
-      bind_fn="hl.mouse_bind"
       # Mouse bindings: use button name instead of key in the mod string
       if [[ "${mods_count}" -gt 0 ]]; then
         # Remove trailing " + " and append button
@@ -206,6 +225,46 @@ generate() {
     local cmd="${command}"
     if [[ -n "${submap_entry}" && "${command}" != hl.submap* ]]; then
       cmd="hl.submap('${submap_entry}')"
+    fi
+
+    # Translate known `hyprctl dispatch <X>` shell commands to native Lua
+    # dispatchers. Hyprland >= 0.55 parses `hyprctl dispatch` arguments as
+    # Lua (hl.dispatch(...)), so legacy strings like "workspace 2" fail at
+    # runtime. Native hl.dsp.* dispatchers avoid the broken subprocess call.
+    local dispatcher
+    local last_arg="${cmd##* }"
+    last_arg="${last_arg#+}" # Lua has no +N literal (workspace +1 from mouse binds)
+    case "${cmd}" in
+    hyprctl\ dispatch\ workspace\ *)
+      dispatcher="hl.dsp.focus({ workspace = ${last_arg} })"
+      ;;
+    hyprctl\ dispatch\ movetoworkspace\ *)
+      dispatcher="hl.dsp.window.move({ workspace = ${last_arg} })"
+      ;;
+    hyprctl\ dispatch\ killactive)
+      dispatcher="hl.dsp.window.close()"
+      ;;
+    hyprctl\ dispatch\ fullscreen\ *)
+      dispatcher='hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" })'
+      ;;
+    hyprctl\ dispatch\ togglefloating)
+      dispatcher='hl.dsp.window.float({ action = "toggle" })'
+      ;;
+    hyprctl\ dispatch\ togglesplit)
+      dispatcher='hl.dsp.layout("togglesplit")'
+      ;;
+    hyprctl\ dispatch\ movefocus\ *)
+      dispatcher="hl.dsp.focus({ direction = \"${last_arg}\" })"
+      ;;
+    hyprctl\ dispatch\ movewindow\ *)
+      dispatcher="hl.dsp.window.move({ direction = \"${last_arg}\" })"
+      ;;
+    *)
+      dispatcher=""
+      ;;
+    esac
+    if [[ -z "${dispatcher}" ]]; then
+      dispatcher="hl.dsp.exec_cmd(\"${cmd}\")"
     fi
 
     # Emit header comment on first binding
@@ -232,7 +291,7 @@ LUA_HEADER
 -- ${description}
 ${bind_fn}(
   "${mod_display}",
-  hl.dsp.exec_cmd("${cmd}"),
+  ${dispatcher},
   ${opts}
 )
 LUA_BINDING

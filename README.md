@@ -88,10 +88,62 @@ flowchart LR
 
 ### Profiles
 
-| Profile           | Machine          | Keybindings                               |
-| ----------------- | ---------------- | ----------------------------------------- |
-| `default`         | Any generic      | Theme toggle, blue light filter (3 binds) |
-| `asus-vivobook15` | ASUS VivoBook 15 | All Fn keys + custom binds (17 total)     |
+| Profile           | Machine          | Keybindings                                     |
+| ----------------- | ---------------- | ----------------------------------------------- |
+| `default`         | Any generic      | Apps, workspaces, focus, theme, blue light      |
+| `asus-vivobook15` | ASUS VivoBook 15 | Multimedia F row, brightness, backlight + all of the above |
+
+Profile auto-detection reads **DMI hardware** (`/sys/class/dmi/id/product_name`,
+`sys_vendor`) first, then falls back to the hostname. Hostname-only detection
+was a bug: hosts named `archlinux` never matched `*asus*`, so the wrong profile
+(with no multimedia or brightness binds) was generated silently.
+
+### Binding contract (avoid duplicate binds)
+
+`~/.config/hypr/conf/keybindings/dreamcoder.lua` (our curated ML4W variant) and
+the generated `custom.lua` are BOTH loaded by `hyprland.lua`. They must not
+define the same key — Hyprland executes ALL matching duplicate binds in
+declaration order (e.g. `SUPER + F` fullscreens and immediately unfullscreens).
+
+Per the official ML4W docs, shipped keybinding variations are overwritten on
+updates, so custom bindings live in a separate **variant**. `conf/keybinding.lua`
+(the selector) points at `dreamcoder.lua` instead of the stock `default.lua`.
+
+- The **profile JSON owns** everything the generator can emit: apps, workspaces,
+  focus/move, fullscreen/floating/split, screenshots, theme, hyprsunset, the
+  multimedia F row and the keyboard backlight.
+- The **`dreamcoder.lua` variant** is restricted to binds the generator
+  **cannot** emit: native mouse drag/resize, workspace scroll, window swap,
+  group toggle, scratchpad, ML4W actions (wallpaper, power, launcher,
+  statusbar) and the XF86* multimedia keys as a hardware fallback.
+- The stock `default.lua` stays untouched (defensive fallback if an ML4W
+  update resets the selector; it is also curated to avoid duplicate binds).
+- `setup-hyprland.sh` re-applies the selector + variant after ML4W updates.
+
+If you add a keybinding, add it to the profile JSON and re-run the generator —
+never to `dreamcoder.lua` unless it is a native-only bind.
+
+### hyprctl dispatch is broken on Hyprland 0.55+ — native dispatchers used
+
+Hyprland's Lua config parses `hyprctl dispatch <arg>` as Lua
+(`hl.dispatch(<arg>)`), so legacy shell commands like
+`hyprctl dispatch workspace 2` fail at runtime with a syntax error — the bind
+appears registered but does nothing. `generate-custom-lua.sh` therefore
+translates the following `hyprctl dispatch` commands in profiles to native
+`hl.dsp.*` dispatchers:
+
+| Shell command           | Native Lua dispatcher                                |
+| ----------------------- | ---------------------------------------------------- |
+| `hyprctl dispatch workspace N`     | `hl.dsp.focus({ workspace = N })`          |
+| `hyprctl dispatch movetoworkspace N` | `hl.dsp.window.move({ workspace = N })`  |
+| `hyprctl dispatch killactive`      | `hl.dsp.window.close()`                    |
+| `hyprctl dispatch fullscreen 1`    | `hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" })` |
+| `hyprctl dispatch togglefloating`  | `hl.dsp.window.float({ action = "toggle" })` |
+| `hyprctl dispatch togglesplit`     | `hl.dsp.layout("togglesplit")`             |
+| `hyprctl dispatch movefocus <dir>` | `hl.dsp.focus({ direction = "<dir>" })`    |
+| `hyprctl dispatch movewindow <dir>`| `hl.dsp.window.move({ direction = "<dir>" })` |
+
+Any other command still falls back to `hl.dsp.exec_cmd(...)`.
 
 ### What setup-hyprland.sh does
 

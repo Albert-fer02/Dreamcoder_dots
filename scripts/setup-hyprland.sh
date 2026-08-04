@@ -85,12 +85,23 @@ done
 
 # ── profile auto-detection ─────────────────────────────────────────────────
 if [[ -z "${PROFILE_NAME}" ]]; then
+  # Real hardware first (DMI), then hostname fallback. Hostnames like
+  # "archlinux" never matched the ASUS laptop and the wrong profile
+  # (no F1-F12 multimedia / brightness binds) was applied silently.
+  DMI_PRODUCT="$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo "unknown")"
+  DMI_VENDOR="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null || echo "unknown")"
   HOSTNAME="$(hostname -s 2>/dev/null || echo "unknown")"
-  case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
+  case "$(echo "${DMI_PRODUCT} ${DMI_VENDOR}" | tr '[:upper:]' '[:lower:]')" in
   *asus* | *vivobook*) PROFILE_NAME="asus-vivobook15" ;;
   *) PROFILE_NAME="default" ;;
   esac
-  step "Auto-detected profile: ${PROFILE_NAME} (hostname: ${HOSTNAME})"
+  if [[ "${PROFILE_NAME}" == "default" ]]; then
+    case "$(echo "${HOSTNAME}" | tr '[:upper:]' '[:lower:]')" in
+    *asus* | *vivobook*) PROFILE_NAME="asus-vivobook15" ;;
+    *) : ;;
+    esac
+  fi
+  step "Auto-detected profile: ${PROFILE_NAME} (DMI: ${DMI_PRODUCT} / ${DMI_VENDOR})"
 else
   step "Using profile: ${PROFILE_NAME}"
 fi
@@ -248,9 +259,32 @@ else
   fi
 fi
 
-# ── 3. Install dreamcoder-toggle-theme.sh ─────────────────────────────────
+# ── 3. Install keybindings variant (dreamcoder.lua) ────────────────────────
+# ML4W ships default.lua and restores it on updates; editing it directly is
+# fragile (official docs: use a separate keybinding VARIANT + selector). The
+# selector (conf/keybinding.lua) points at our curated dreamcoder.lua variant,
+# which only holds native binds the generator cannot emit. Re-applying both
+# keeps the profile JSON the single source of truth for keyboard bindings.
+KEYBIND_SELECTOR="${DREAMCODER_DOTS_DIR}/ml4w_assets/hypr/conf/keybinding.lua"
+KEYBIND_VARIANT="${DREAMCODER_DOTS_DIR}/ml4w_assets/hypr/conf/keybindings/dreamcoder.lua"
+KEYBIND_SELECTOR_TARGET="${HYPR_DIR}/conf/keybinding.lua"
+KEYBIND_VARIANT_TARGET="${HYPR_DIR}/conf/keybindings/dreamcoder.lua"
 echo ""
-echo "═══ Step 3: Install dreamcoder-toggle-theme.sh ═══"
+echo "═══ Step 3: Install keybindings variant (dreamcoder.lua) ═══"
+if $DRY_RUN; then
+  step "Would install keybindings selector + variant"
+elif [[ -f "${KEYBIND_VARIANT}" ]] && grep -q "CONTRACT: This file only defines keybindings NOT managed" "${KEYBIND_VARIANT}" 2>/dev/null; then
+  mkdir -p "$(dirname "${KEYBIND_SELECTOR_TARGET}")" "$(dirname "${KEYBIND_VARIANT_TARGET}")"
+  cp "${KEYBIND_SELECTOR}" "${KEYBIND_SELECTOR_TARGET}"
+  cp "${KEYBIND_VARIANT}" "${KEYBIND_VARIANT_TARGET}"
+  info "Installed keybindings selector + dreamcoder.lua variant"
+else
+  warn "Keybindings variant missing or malformed: ${KEYBIND_VARIANT}"
+fi
+
+# ── 4. Install dreamcoder-toggle-theme.sh ─────────────────────────────────
+echo ""
+echo "═══ Step 4: Install dreamcoder-toggle-theme.sh ═══"
 if $DRY_RUN; then
   step "Would install: ${TOGGLE_TARGET}"
 else
@@ -265,9 +299,9 @@ else
   fi
 fi
 
-# ── 4. Apply ML4W wallpaper hooks ─────────────────────────────────────────
+# ── 5. Apply ML4W wallpaper hooks ─────────────────────────────────────────
 echo ""
-echo "═══ Step 4: Apply ML4W wallpaper hooks ═══"
+echo "═══ Step 5: Apply ML4W wallpaper hooks ═══"
 if $DRY_RUN; then
   step "Would run: ${ML4W_HOOKS}"
 else
@@ -279,9 +313,9 @@ else
   fi
 fi
 
-# ── 5. Reload Hyprland ────────────────────────────────────────────────────
+# ── 6. Reload Hyprland ────────────────────────────────────────────────────
 echo ""
-echo "═══ Step 5: Reload Hyprland ═══"
+echo "═══ Step 6: Reload Hyprland ═══"
 if $DRY_RUN; then
   step "Would run: hyprctl reload"
 else

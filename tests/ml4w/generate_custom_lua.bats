@@ -83,30 +83,48 @@ load '../helpers/setup'
   run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
     --profile default --dry-run
   [ "$status" -eq 0 ]
-  # Count only hl.bind lines (not the comment lines)
-  local count
-  count="$(echo "$output" | grep '^hl.bind' | wc -l)"
-  [ "$count" -eq 3 ]
-}
-
-@test "generate-custom-lua: asus-vivobook15 has 19 bindings (inc. mouse, release)" {
-  run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
-    --profile asus-vivobook15 --dry-run
-  [ "$status" -eq 0 ]
+  local expected
+  expected=$(jq '.keybindings.bindings | length' "${PROFILES_DIR}/default.json")
   local count
   count="$(echo "$output" | grep -cE '^hl\.(bind|bindl|mouse_bind)\(' || true)"
-  echo "# bind function calls: $count" >&3
-  [ "$count" -eq 19 ]
+  echo "# bind function calls: $count (expected $expected)" >&3
+  [ "$count" -eq "$expected" ]
 }
 
-@test "generate-custom-lua: each binding has exec_cmd" {
+@test "generate-custom-lua: asus-vivobook15 generates all profile bindings" {
   run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
     --profile asus-vivobook15 --dry-run
   [ "$status" -eq 0 ]
+  local expected
+  expected=$(jq '.keybindings.bindings | length' "${PROFILES_DIR}/asus-vivobook15.json")
+  local count
+  count="$(echo "$output" | grep -cE '^hl\.(bind|bindl|mouse_bind)\(' || true)"
+  echo "# bind function calls: $count (expected $expected)" >&3
+  [ "$count" -eq "$expected" ]
+}
+
+@test "generate-custom-lua: each binding has a dispatcher (exec_cmd or native)" {
+  run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
+    --profile asus-vivobook15 --dry-run
+  [ "$status" -eq 0 ]
+  local expected
+  expected=$(jq '.keybindings.bindings | length' "${PROFILES_DIR}/asus-vivobook15.json")
   local cmds
-  cmds="$(echo "$output" | grep -c 'hl.dsp.exec_cmd' || true)"
-  echo "# exec_cmd count: $cmds" >&3
-  [ "$cmds" -eq 19 ]
+  cmds="$(echo "$output" | grep -cE 'hl\.dsp\.' || true)"
+  echo "# dispatcher count: $cmds (expected $expected)" >&3
+  [ "$cmds" -eq "$expected" ]
+}
+
+@test "generate-custom-lua: hyprctl dispatch workspace binds use native dispatchers" {
+  run bash "${DREAMCODER_DOTS_DIR}/scripts/generate-custom-lua.sh" \
+    --profile asus-vivobook15 --dry-run
+  [ "$status" -eq 0 ]
+  # Legacy `hyprctl dispatch workspace N` fails on Hyprland >= 0.55 (Lua
+  # parses the arg), so the generator must emit hl.dsp.focus({workspace=N}).
+  [[ "$output" == *"hl.dsp.focus({ workspace = 1 })"* ]]
+  [[ "$output" == *"hl.dsp.window.move({ workspace = 1 })"* ]]
+  [[ "$output" != *'hyprctl dispatch workspace'* ]]
+  [[ "$output" != *'hyprctl dispatch movetoworkspace'* ]]
 }
 
 @test "generate-custom-lua: bare Fn keys have no SUPER prefix" {
