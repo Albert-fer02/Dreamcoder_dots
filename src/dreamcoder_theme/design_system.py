@@ -117,7 +117,7 @@ def resolve_role(
             resolved = resolved[part]
         if not isinstance(resolved, str):
             raise ValueError(f"canonical role is not a color string: {source}")
-        return value, source
+        return resolved, source
 
     value, source = resolve(role)
     return ResolvedRole(role=role, value=value, source=source, chain=tuple(chain))
