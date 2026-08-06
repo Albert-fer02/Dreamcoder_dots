@@ -1,10 +1,10 @@
-# Dreamcoder OS
+# Dreamcoder Workbench
 
-> Visual layer premium para **Gentleman.Dots + ML4W**.
+> A health-first, terminal-native engineering environment built on **Gentleman.Dots + ML4W**.
 > Café/Lúcuma. Anthracite Steel. Contraste saludable. Identidad.
 
-[![Theme CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/theme-validation.yml)
-[![ML4W Setup CI](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Gentleman-Programming/dreamcoder-dots/actions/workflows/test-ml4w-setup.yml)
+[![Theme CI](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/theme-validation.yml)
+[![ML4W Setup CI](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/test-ml4w-setup.yml)
 [![WCAG 4.5:1](https://img.shields.io/badge/WCAG-4.5%3A1-brightgreen)]()
 [![APCA](https://img.shields.io/badge/APCA-75-brightgreen)]()
 [![PyPI](https://img.shields.io/pypi/v/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
@@ -13,6 +13,8 @@
 ---
 
 ## Quick Start — 3-Step Install
+
+Dreamcoder Workbench is a personal distribution layer that adds profiles, themes, generators, and verification around Gentleman.Dots and ML4W. It does not replace either upstream project.
 
 ### 1. Install Gentleman.Dots
 
@@ -210,7 +212,7 @@ tests/ml4w/
 | --------------------- | ------------------- | ------------ | ------------------------------ |
 | **Theme Engine**      | ❌ Catppuccin       | ✅ Matugen   | ✅ **Token-based + WCAG/APCA** |
 | **Light/Dark/Dusk**   | ❌                  | ✅           | ✅ **+ Dusk transition**       |
-| **AI Session Prompt** | ❌                  | ❌           | ✅ **Bleeding edge**           |
+| **AI Session Prompt** | ❌                  | ❌           | ✅ **Session-aware prompt**    |
 | **Accesibilidad**     | ❌                  | ❌           | ✅ **WCAG 4.5:1 + APCA 75**    |
 | **Neovim**            | ✅ 29 plugins       | ❌           | 🔶 Dreamcoder colorscheme      |
 | **Hyprland**          | ❌                  | ✅ Completo  | 🔶 Color overlay               |
@@ -306,6 +308,10 @@ Dreamcoder no es un rice neon. Es un banco de trabajo:
 - **Identidad segundo**: calidez Cocoa/Lúcuma, cyan diagnóstico, colores editoriales
 
 ---
+
+## Credits and upstream relationship
+
+Dreamcoder Workbench builds on the upstream work of [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots) and [ML4W](https://ml4w.com/). Their projects remain the source of the base environment; this repository contributes the Dreamcoder profiles, tokens, overlays, generators, and verification layer.
 
 ## Projecto
 

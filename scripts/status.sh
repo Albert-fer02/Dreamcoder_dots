@@ -19,7 +19,7 @@ bg_mode() { case "${1,,}" in
   '#15100d' | '#13100d' | '#101216' | '#070a13') printf dark ;;
   '#f3eadc' | '#f8f2ea' | '#f6f1e8' | '#f7f5f0') printf light ;;
   *) printf unknown ;;
-esac }
+  esac }
 check() {
   local name="$1" actual="$2"
   if [[ "${actual}" == "${EXPECTED}" ]]; then printf '✓ %s=%s\n' "${name}" "${actual}"; else
