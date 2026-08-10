@@ -14,6 +14,8 @@ Documentación de alto nivel sobre cómo está construido y cómo funciona el si
 | [Theme Pipeline](architecture/theme-pipeline.mmd) | Cómo los tokens de `palette_tokens.py` fluyen por los renderers hasta los archivos de tema finales |
 | [Monorepo Structure](architecture/monorepo-structure.mmd) | Mapa visual del repositorio: `src/`, `scripts/`, `tests/`, y cada directorio top-level |
 | [Data Flow](architecture/data-flow.mmd) | Flujo completo de `dreamcoder-theme sync`: palette → tokens → renderers → writers → disco |
+| [Source Manifest](sources.md) | Upstream inputs (ML4W, Gentleman.Dots), ownership boundaries, y prohibiciones de secretos/estado en ejecución |
+| [Herdr Integration](herdr.md) | Contratos Herdr 0.7.3/0.8.0, variantes versionadas generadas, y perfiles de despliegue |
 | [Design System](DREAMCODER_DESIGN_SYSTEM.md) | Principios de diseño, filosofía de color, y guías de identidad visual |
 | [Control Center](DREAMCODER_CONTROL_CENTER.md) | Dashboard de control central del ecosistema Dreamcoder |
 

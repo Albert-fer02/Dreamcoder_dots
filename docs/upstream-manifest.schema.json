@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dreamcoder upstream manifest schema",
+  "description": "Schema for docs/upstream-manifest.json: the machine-readable record of upstream inputs Dreamcoder builds on, their verified pinned commits, and the repository files declared owned from each upstream.",
+  "type": "object",
+  "required": ["version", "provenance", "upstreams", "owned_paths"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["verified_on", "method", "command"],
+      "additionalProperties": false,
+      "properties": {
+        "verified_on": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "upstreams": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/definitions/upstream"
+      }
+    },
+    "owned_paths": {
+      "type": "object",
+      "patternProperties": {
+        "^(?:(?!(?:\\.\\.?)(?:\\/|$))[^/\\\\]+(?:\\/(?!(?:\\.\\.?)(?:\\/|$))[^/\\\\]+)*)$": {
+          "$ref": "#/definitions/owned_mapping"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "upstream": {
+      "type": "object",
+      "required": ["name", "url", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://[^@\\s]+\\.git$"
+        },
+        "status": {
+          "enum": ["pinned", "unpinned"]
+        },
+        "pinned_ref": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "verified_on": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "pinned"
+              }
+            },
+            "required": ["status"]
+          },
+          "then": {
+            "required": ["pinned_ref", "verified_on"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unpinned"
+              }
+            },
+            "required": ["status"]
+          },
+          "then": {
+            "properties": {
+              "pinned_ref": {
+                "const": null
+              },
+              "verified_on": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "owned_mapping": {
+      "type": "object",
+      "required": ["upstream", "upstream_path"],
+      "additionalProperties": false,
+      "properties": {
+        "upstream": {
+          "type": "string",
+          "minLength": 1
+        },
+        "upstream_path": {
+          "type": "string",
+          "pattern": "^(?:(?!(?:\\.\\.?)(?:\\/|$))[^/\\\\]+(?:\\/(?!(?:\\.\\.?)(?:\\/|$))[^/\\\\]+)*)$"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
