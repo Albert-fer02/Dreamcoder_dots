@@ -56,7 +56,7 @@ class ThemePaths:
     rofi: Path
     rofi_matugen: Path
     herdr_repo_variants: Path = field(
-        default_factory=lambda: ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3"
+        default_factory=lambda: ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder"
     )
     herdr_managed_root: Path = field(
         default_factory=lambda: Path(tempfile.gettempdir()) / "dreamcoder-herdr-managed"
@@ -96,7 +96,7 @@ def theme_paths() -> ThemePaths:
         starship=Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml")),
         tmux=Path(os.environ.get("TMUX_THEME", config_home / "tmux/tmux-dreamcoder.conf")),
         zellij_config=Path(os.environ.get("ZELLIJ_CONFIG", config_home / "zellij/config.kdl")),
-        herdr_repo_variants=ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3",
+        herdr_repo_variants=ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder",
         herdr_managed_root=config_home / "herdr/dreamcoder/0.7.3",
         herdr_selector=config_home / "herdr/config.toml",
         herdr_state=config_home / "herdr/dreamcoder/state.json",

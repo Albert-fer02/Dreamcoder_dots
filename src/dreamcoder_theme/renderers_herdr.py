@@ -7,7 +7,10 @@ import re
 from .herdr_contract import HerdrProfile
 
 _HEX_COLOR = re.compile(r"#[0-9a-fA-F]{6}\Z")
-_UI_LINES = ('accent = "#6FA0AF"',)
+_UI_FIELD_RHS = {
+    "accent": '"#6FA0AF"',
+    "pane_scrollbars": "false",
+}
 _KEYS_LINES = (
     'prefix = "ctrl+a"',
     'previous_agent = "prefix+alt+k"',
@@ -38,12 +41,16 @@ class HerdrContractUnavailableError(RuntimeError):
     """Raised when code attempts Herdr rendering without verified evidence."""
 
 
+class HerdrModeError(Exception):
+    """Raised when a Herdr variant mode is not the supported dark or light set."""
+
+
 def herdr_content(profile: HerdrProfile, mode: str, palette: dict[str, str]) -> str:
     """Render one static Light or Dark variant without touching active configuration."""
     if not profile.is_complete:
         raise HerdrContractUnavailableError("Herdr color rendering requires a complete profile")
     if mode not in {"dark", "light"}:
-        raise ValueError("Herdr supports only dark and light variants")
+        raise HerdrModeError("Herdr supports only dark and light variants")
 
     evidence = profile.evidence
     if "name" not in evidence.allowed_theme_fields:
@@ -55,10 +62,21 @@ def herdr_content(profile: HerdrProfile, mode: str, palette: dict[str, str]) -> 
             raise HerdrContractUnavailableError(
                 f"Herdr profile does not allow theme.custom.{field}"
             )
-        value = palette.get(token)
-        if not isinstance(value, str) or _HEX_COLOR.fullmatch(value) is None:
-            raise ValueError(f"Herdr palette token {token!r} must be a #RRGGBB color")
-        custom_lines.append(f'{field} = "{value}"')
+        color = palette.get(token)
+        if not isinstance(color, str) or _HEX_COLOR.fullmatch(color) is None:
+            raise HerdrContractUnavailableError(
+                f"Herdr palette token {token!r} must be a #RRGGBB color"
+            )
+        custom_lines.append(f'{field} = "{color}"')
+
+    ui_lines: list[str] = []
+    for field in evidence.allowed_ui_fields:
+        rhs = _UI_FIELD_RHS.get(field)
+        if rhs is None:
+            raise HerdrContractUnavailableError(
+                f"Herdr profile requests unsupported [ui] field {field!r}"
+            )
+        ui_lines.append(f"{field} = {rhs}")
 
     return "\n".join(
         (
@@ -70,7 +88,7 @@ def herdr_content(profile: HerdrProfile, mode: str, palette: dict[str, str]) -> 
             *custom_lines,
             "",
             "[ui]",
-            *_UI_LINES,
+            *ui_lines,
             "",
             "[keys]",
             *_KEYS_LINES,
@@ -82,3 +100,8 @@ def herdr_content(profile: HerdrProfile, mode: str, palette: dict[str, str]) -> 
 def herdr_token_mapping() -> tuple[tuple[str, str], ...]:
     """Expose the fixed documented-field to canonical-token mapping for tests."""
     return _TOKEN_MAPPING
+
+
+def herdr_ui_field_rhs() -> dict[str, str]:
+    """Expose the evidence-bound [ui] field right-hand sides for tests."""
+    return dict(_UI_FIELD_RHS)

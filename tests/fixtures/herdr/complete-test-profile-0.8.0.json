@@ -1,7 +1,7 @@
 {
-  "profile_id": "test-herdr-0.7.3",
+  "profile_id": "test-herdr-0.8.0",
   "executable": "herdr",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "source_identity": "synthetic test evidence; not a Herdr configuration reference",
   "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "default_config_path": "<HOME>/.config/herdr/config.toml",

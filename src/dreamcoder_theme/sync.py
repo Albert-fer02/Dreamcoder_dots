@@ -8,7 +8,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from .herdr_contract import HERDR_073_PROFILE, HerdrProfile
+from .herdr_contract import SUPPORTED_PROFILES, HerdrProfile
 from .palette import adaptive_palette, load_variants
 from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
 from .renderers import (
@@ -259,20 +259,29 @@ VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | No
 
 
 def sync_herdr_repo_variants(
-    variants: dict[str, dict[str, str]], profile: HerdrProfile | None = HERDR_073_PROFILE
+    variants: dict[str, dict[str, str]],
+    profiles: tuple[HerdrProfile, ...] = SUPPORTED_PROFILES,
 ) -> list[bool]:
-    """Generate managed repository variants only; never select a live configuration."""
-    if profile is None or not profile.is_complete:
-        return []
-    base = ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3"
-    return [
-        write_if_changed(
-            base / "config.dark.toml", herdr_content(profile, "dark", variants["dark"])
-        ),
-        write_if_changed(
-            base / "config.light.toml", herdr_content(profile, "light", variants["light"])
-        ),
-    ]
+    """Generate managed repository variants for every supported profile.
+
+    Repository variants only; never select or touch a live configuration.
+    """
+    changes: list[bool] = []
+    for profile in profiles:
+        if profile is None or not profile.is_complete:
+            continue
+        base = ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder" / profile.evidence.version
+        changes.append(
+            write_if_changed(
+                base / "config.dark.toml", herdr_content(profile, "dark", variants["dark"])
+            )
+        )
+        changes.append(
+            write_if_changed(
+                base / "config.light.toml", herdr_content(profile, "light", variants["light"])
+            )
+        )
+    return changes
 
 
 def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, str]) -> list[bool]:
@@ -432,7 +441,7 @@ def print_summary(
     print(f"Waybar matugen: {paths.waybar_matugen}")
     print(f"Rofi: {paths.rofi}")
     print(f"Rofi matugen: {paths.rofi_matugen}")
-    print("Changed: " + " ".join(f"{key}={value}" for key, value in changed.items()))
+    print("Changed: " + " ".join(f"{key}={flag}" for key, flag in changed.items()))
     print(f"Repo variant/snippet changes: {sum(repo_changes)}")
 
 

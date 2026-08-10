@@ -9,6 +9,7 @@ import pytest
 
 from dreamcoder_theme.herdr_contract import (
     HERDR_073_PROFILE,
+    HERDR_080_PROFILE,
     ContractEvidence,
     ContractStatus,
     detect_profile,
@@ -33,6 +34,26 @@ def test_complete_synthetic_profile_is_accepted_for_its_exact_version() -> None:
     assert profile.is_complete
     selection = detect_profile("herdr 0.7.3", profiles=(profile,))
     assert selection.status is ContractStatus.SUPPORTED
+
+
+def test_complete_synthetic_080_profile_is_accepted_for_its_exact_version() -> None:
+    profile = profile_from_evidence(load_evidence("complete-test-profile-0.8.0.json"))
+
+    assert profile.is_complete
+    selection = detect_profile("herdr 0.8.0", profiles=(profile,))
+    assert selection.status is ContractStatus.SUPPORTED
+
+
+def test_production_080_profile_is_complete_and_version_bound() -> None:
+    assert HERDR_080_PROFILE.is_complete
+    assert detect_profile("herdr 0.8.0").profile is HERDR_080_PROFILE
+    assert detect_profile("herdr 0.8.1").status is ContractStatus.UNSUPPORTED_CONTRACT
+
+
+def test_073_and_080_profiles_select_their_own_exact_versions() -> None:
+    assert detect_profile("herdr 0.7.3").profile is HERDR_073_PROFILE
+    assert detect_profile("herdr 0.8.0").profile is HERDR_080_PROFILE
+    assert detect_profile("herdr 0.7.4").status is ContractStatus.UNSUPPORTED_CONTRACT
 
 
 def test_production_profile_is_complete_and_version_bound() -> None:

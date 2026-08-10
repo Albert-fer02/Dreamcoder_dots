@@ -29,12 +29,12 @@ class ProcedureEvidence:
     observable: bool = True
 
     @classmethod
-    def from_mapping(cls, value: object) -> ProcedureEvidence:
-        if not isinstance(value, Mapping):
+    def from_mapping(cls, mapping: object) -> ProcedureEvidence:
+        if not isinstance(mapping, Mapping):
             return cls(available=False, unambiguous=False, observable=False)
-        available = value.get("available")
-        unambiguous = value.get("unambiguous")
-        observable = value.get("observable", True)
+        available = mapping.get("available")
+        unambiguous = mapping.get("unambiguous")
+        observable = mapping.get("observable", True)
         return cls(
             available=available if isinstance(available, bool) else False,
             unambiguous=unambiguous if isinstance(unambiguous, bool) else False,
@@ -61,26 +61,27 @@ class ContractEvidence:
     base_theme_name: str
     allowed_theme_fields: tuple[str, ...]
     allowed_custom_fields: tuple[str, ...]
+    allowed_ui_fields: tuple[str, ...]
     candidate_validation: ProcedureEvidence
     server_applicability: ProcedureEvidence
     reload: ProcedureEvidence
     restoration: ProcedureEvidence
 
     @classmethod
-    def from_mapping(cls, value: Mapping[str, Any]) -> ContractEvidence:
+    def from_mapping(cls, mapping: Mapping[str, Any]) -> ContractEvidence:
         def text(name: str) -> str:
-            candidate = value.get(name)
+            candidate = mapping.get(name)
             return candidate if isinstance(candidate, str) else ""
 
         def strings(name: str) -> tuple[str, ...]:
-            candidate = value.get(name)
+            candidate = mapping.get(name)
             if not isinstance(candidate, list) or not all(
                 isinstance(item, str) for item in candidate
             ):
                 return ()
             return tuple(candidate)
 
-        color_representation = value.get("color_representation")
+        color_representation = mapping.get("color_representation")
         return cls(
             profile_id=text("profile_id"),
             executable=text("executable"),
@@ -95,10 +96,15 @@ class ContractEvidence:
             base_theme_name=text("base_theme_name"),
             allowed_theme_fields=strings("allowed_theme_fields"),
             allowed_custom_fields=strings("allowed_custom_fields"),
-            candidate_validation=ProcedureEvidence.from_mapping(value.get("candidate_validation")),
-            server_applicability=ProcedureEvidence.from_mapping(value.get("server_applicability")),
-            reload=ProcedureEvidence.from_mapping(value.get("reload")),
-            restoration=ProcedureEvidence.from_mapping(value.get("restoration")),
+            allowed_ui_fields=strings("allowed_ui_fields"),
+            candidate_validation=ProcedureEvidence.from_mapping(
+                mapping.get("candidate_validation")
+            ),
+            server_applicability=ProcedureEvidence.from_mapping(
+                mapping.get("server_applicability")
+            ),
+            reload=ProcedureEvidence.from_mapping(mapping.get("reload")),
+            restoration=ProcedureEvidence.from_mapping(mapping.get("restoration")),
         )
 
     @property
@@ -117,6 +123,7 @@ class ContractEvidence:
                 bool(self.base_theme_name),
                 bool(self.allowed_theme_fields),
                 bool(self.allowed_custom_fields),
+                bool(self.allowed_ui_fields),
                 self.candidate_validation.is_complete,
                 self.server_applicability.is_complete,
                 self.reload.is_complete,
@@ -181,13 +188,62 @@ HERDR_073_EVIDENCE = ContractEvidence(
         "teal",
         "peach",
     ),
+    allowed_ui_fields=("accent",),
     candidate_validation=ProcedureEvidence(available=True, unambiguous=True),
     server_applicability=ProcedureEvidence(available=True, unambiguous=True),
     reload=ProcedureEvidence(available=True, unambiguous=True, observable=True),
     restoration=ProcedureEvidence(available=True, unambiguous=True),
 )
 HERDR_073_PROFILE = HerdrProfile(evidence=HERDR_073_EVIDENCE)
-SUPPORTED_PROFILES = (HERDR_073_PROFILE,)
+
+# Herdr v0.8.0 installed-binary evidence. Observed exactly: executable `herdr`,
+# version `0.8.0`, binary SHA-256
+# b872ea7e40fa2cb17e857ac9b62b1bf26db7b403c622f5d2f3f5b35f6e9acd28; default
+# config confirms `[ui] pane_scrollbars = false`; config validation is
+# `herdr config check`; reload command is `herdr server reload-config`; config
+# path `~/.config/herdr/config.toml` overridable by `HERDR_CONFIG_PATH`. No
+# fields beyond that evidence are asserted.
+HERDR_080_EVIDENCE = ContractEvidence(
+    profile_id="herdr-0.8.0",
+    executable="herdr",
+    version="0.8.0",
+    source_identity=(
+        "Herdr v0.8.0 installed-binary evidence: default config confirms "
+        "[ui] pane_scrollbars = false; validation `herdr config check`; "
+        "reload `herdr server reload-config`; HERDR_CONFIG_PATH override"
+    ),
+    source_sha256="b872ea7e40fa2cb17e857ac9b62b1bf26db7b403c622f5d2f3f5b35f6e9acd28",
+    default_config_path="<HOME>/.config/herdr/config.toml",
+    config_path_environment="HERDR_CONFIG_PATH",
+    color_representation="hex (#RRGGBB)",
+    base_theme_name="catppuccin",
+    allowed_theme_fields=("name",),
+    allowed_custom_fields=(
+        "accent",
+        "panel_bg",
+        "surface0",
+        "surface1",
+        "surface_dim",
+        "overlay0",
+        "overlay1",
+        "text",
+        "subtext0",
+        "mauve",
+        "green",
+        "yellow",
+        "red",
+        "blue",
+        "teal",
+        "peach",
+    ),
+    allowed_ui_fields=("accent", "pane_scrollbars"),
+    candidate_validation=ProcedureEvidence(available=True, unambiguous=True),
+    server_applicability=ProcedureEvidence(available=True, unambiguous=True),
+    reload=ProcedureEvidence(available=True, unambiguous=True, observable=True),
+    restoration=ProcedureEvidence(available=True, unambiguous=True),
+)
+HERDR_080_PROFILE = HerdrProfile(evidence=HERDR_080_EVIDENCE)
+SUPPORTED_PROFILES = (HERDR_073_PROFILE, HERDR_080_PROFILE)
 
 
 def detect_profile(
