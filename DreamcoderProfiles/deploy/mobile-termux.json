@@ -1,0 +1,14 @@
+{
+  "kind": "deployment",
+  "name": "mobile-termux",
+  "description": "Mobile deployment of Dreamcoder on Termux for the Moshi agent. Repository-safe: contains no device address, username, key, or host runtime state.",
+  "platform": "termux-mobile",
+  "os": "Termux (Android)",
+  "terminal_default_mode": "light",
+  "herdr": {
+    "ui": {
+      "pane_scrollbars": false
+    }
+  },
+  "notes": "Mobile profile pins Dreamcoder Light and keeps Herdr pane scrollbars disabled (matching the Herdr 0.8.0 default) for narrow screens. It carries rendering settings only; never device or session state."
+}

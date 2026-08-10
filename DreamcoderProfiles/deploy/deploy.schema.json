@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dreamcoder.dots/profiles/deploy.schema.json",
+  "title": "Dreamcoder Deployment Profile",
+  "description": "Repository-safe deployment profile. Deployment profiles describe supported platforms and rendering settings only; they never contain device addresses, usernames, hostnames, keys, tokens, or host runtime state.",
+  "type": "object",
+  "required": ["kind", "name", "description", "platform"],
+  "properties": {
+    "kind": {
+      "const": "deployment",
+      "description": "Fixed discriminator for deployment profiles."
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Unique deployment profile name (e.g., desktop-arch, mobile-termux)."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable description of the deployment target."
+    },
+    "platform": {
+      "type": "string",
+      "enum": ["arch-desktop", "termux-mobile"],
+      "description": "Supported deployment platform. termux-mobile targets Termux/Moshi."
+    },
+    "os": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable operating system label; never host-specific details."
+    },
+    "terminal_default_mode": {
+      "type": "string",
+      "enum": ["light", "dark"],
+      "default": "light",
+      "description": "Default Dreamcoder color mode for this deployment."
+    },
+    "herdr": {
+      "type": "object",
+      "description": "Repository-safe Herdr rendering settings only; never runtime state.",
+      "properties": {
+        "ui": {
+          "type": "object",
+          "description": "Rendering-only [ui] settings for generated Herdr variants.",
+          "properties": {
+            "pane_scrollbars": {
+              "type": "boolean",
+              "description": "Herdr [ui] pane_scrollbars; mobile keeps pane scrollbars disabled."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-form deployment notes without sensitive material."
+    }
+  },
+  "additionalProperties": false
+}
