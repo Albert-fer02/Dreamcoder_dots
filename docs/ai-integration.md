@@ -1,6 +1,21 @@
 # Dreamcoder AI Integration
 
+← Back to [docs/README.md](README.md)
+
 > Cómo dreamcoder se integra con Claude Code, OpenCode, Pi, y otras herramientas de IA.
+
+Dreamcoder detecta sesiones de IA activas (Claude Code, OpenCode, Codex CLI) y refleja su
+estado en el prompt de Starship, además de generar temas dedicados para los agentes de
+codificación. Esta página cubre el estado de sesión en el prompt, los temas por agente y un
+caso de uso de punta a punta.
+
+## Quick path
+
+1. Mirá el estado de la sesión IA en el prompt: [AI Session State](#ai-session-state-en-el-prompt)
+2. Configurá el tema del agente que usás: [Pi](#pi-agent-theme), [OpenCode](#opencode-theme), [Codex CLI](#codex-cli)
+3. Recorré el [caso de uso](#caso-de-uso-desarrollo-con-ia) para ver el flujo completo
+
+---
 
 ## AI Session State en el Prompt
 
@@ -90,11 +105,11 @@ Dreamcoder incluye un `CLAUDE.md` con instrucciones para Claude Code sobre cómo
 
 ## Caso de Uso: Desarrollo con IA
 
-1. Abrí Neovim (vía Gentleman.Dots) → 29 plugins, dreamcoder colorscheme
-2. Iniciá Claude Code → `⎔ claude-4` aparece en el prompt
-3. Escribí código con autocompletado (blink.cmp), fuzzy finder (fzf-lua), debugging (DAP)
-4. Need a command? `cheat tar` → TLDR para tar
-5. Need to extract something? `extract project.tar.gz`
-6. Cambiando de tarea? `tm-session` → fzf session picker
-7. Terminando el día? `sysupdate` → actualiza todo
-8. El timer systemd cambia automáticamente a Anthracite Steel a las 18:00
+- [ ] Abrí Neovim (vía Gentleman.Dots) → 29 plugins, dreamcoder colorscheme
+- [ ] Iniciá Claude Code → `⎔ claude-4` aparece en el prompt
+- [ ] Escribí código con autocompletado (blink.cmp), fuzzy finder (fzf-lua), debugging (DAP)
+- [ ] Necesitás un comando? `cheat tar` → TLDR para tar
+- [ ] Necesitás extraer algo? `extract project.tar.gz`
+- [ ] Cambiando de tarea? `tm-session` → fzf session picker
+- [ ] Terminando el día? `sysupdate` → actualiza todo
+- [ ] El timer systemd cambia automáticamente a Anthracite Steel a las 18:00

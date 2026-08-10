@@ -1,6 +1,14 @@
 # Dreamcoder Control Center
 
+← Back to [docs/README.md](README.md)
+
 Dreamcoder Dots is moving from loose dotfiles to an operator-grade desktop product. The Control Center provides stable JSON contracts for automation and Markdown output for humans.
+
+## Quick path
+
+1. Inspect the system: `./scripts/dreamcoder doctor-json` and `./scripts/dreamcoder dashboard --json`
+2. Preview any change with `--dry-run` before applying it
+3. Read the generated report at `docs/generated/DREAMCODER_OPERATOR_REPORT.md`
 
 ## Visual dashboard
 
@@ -45,12 +53,12 @@ Run it locally:
 | `installer plan --json` | `dreamcoder.install-plan.v1` | Classifies managed, missing, and conflicting stow targets. |
 | `backup create/list/restore --json` | `dreamcoder.backup.v1` | Manifest-based rollback for risky changes. |
 
-## Safety model
+## Safety checklist
 
-1. Inspect first: `doctor-json`, `dashboard --json`, and `installer plan --json` do not mutate user files.
-2. Preview risky changes: profile, motion, backup restore, and repair support dry-run flows.
-3. Back up before mutation: profile apply, motion apply, repair apply, install, and repair create manifest backups.
-4. Keep manual boundaries: only deterministic low-risk repairs are automatic; system services and installer conflicts stay manual until reviewed.
+- [ ] Inspect first: `doctor-json`, `dashboard --json`, and `installer plan --json` do not mutate user files.
+- [ ] Preview risky changes: profile, motion, backup restore, and repair support dry-run flows.
+- [ ] Back up before mutation: profile apply, motion apply, repair apply, install, and repair create manifest backups.
+- [ ] Keep manual boundaries: only deterministic low-risk repairs are automatic; system services and installer conflicts stay manual until reviewed.
 
 ## Quality gates
 

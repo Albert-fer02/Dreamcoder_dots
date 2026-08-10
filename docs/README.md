@@ -1,7 +1,16 @@
-# Dreamcoder OS — Documentación
+# Dreamcoder Workbench — Documentación
 
-Bienvenido al hub de documentación de Dreamcoder OS. Este índice centraliza
+Bienvenido al hub de documentación de Dreamcoder Workbench. Este índice centraliza
 toda la documentación técnica del proyecto.
+
+## New here? Quick path
+
+Nuevo en Dreamcoder Workbench? Este es el camino más corto:
+
+1. Empezá por el [README principal](../README.md): overview, badges e instalación en 3 pasos.
+2. Leé el [Source Manifest](sources.md) para entender qué es upstream y qué es propio del repo.
+3. Profundizá en el [Theme System](configuration/theme-system.md) si trabajás con colores o tokens.
+4. Revisá el [Design System](DREAMCODER_DESIGN_SYSTEM.md) para las guías de identidad y contraste.
 
 ---
 
@@ -11,7 +20,8 @@ Documentación de alto nivel sobre cómo está construido y cómo funciona el si
 
 | Documento | Descripción |
 |-----------|-------------|
-| [Theme Pipeline](architecture/theme-pipeline.mmd) | Cómo los tokens de `palette_tokens.py` fluyen por los renderers hasta los archivos de tema finales |
+| [Theme Pipeline](architecture/theme-pipeline.mmd) | Cómo los tokens de `tokens.json` fluyen por los renderers hasta los archivos de tema finales |
+| [AI Integration](ai-integration.md) | Cómo dreamcoder se integra con Claude Code, OpenCode, Pi, y otras herramientas de IA |
 | [Monorepo Structure](architecture/monorepo-structure.mmd) | Mapa visual del repositorio: `src/`, `scripts/`, `tests/`, y cada directorio top-level |
 | [Data Flow](architecture/data-flow.mmd) | Flujo completo de `dreamcoder-theme sync`: palette → tokens → renderers → writers → disco |
 | [Source Manifest](sources.md) | Upstream inputs (ML4W, Gentleman.Dots), ownership boundaries, y prohibiciones de secretos/estado en ejecución |
@@ -33,7 +43,7 @@ Documentación de alto nivel sobre cómo está construido y cómo funciona el si
 
 ## 🚀 Installation
 
-Guías paso a paso para instalar Dreamcoder OS en diferentes plataformas.
+Guías paso a paso para instalar Dreamcoder Workbench en diferentes plataformas.
 
 | Guía | Plataforma |
 |------|-----------|
@@ -54,6 +64,7 @@ Guías de configuración de componentes individuales.
 | [Editor](configuration/editor-config.md) | Neovim, VS Code / Antigravity |
 | [Shell](configuration/shell-config.md) | Zsh, Bash, Starship, Fish, Nushell |
 | [Multiplexer](configuration/multiplexer-config.md) | Tmux, Zellij |
+| [ML4W Integration](configuration/ml4w.md) | Keybindings profile-driven, dispatchers nativos, layout de archivos |
 | [Theme System](configuration/theme-system.md) | Arquitectura del theme engine, tokens, variantes |
 
 ---
@@ -66,7 +77,8 @@ Guías para contributors y desarrolladores.
 |---------|-------------|
 | [CONTRIBUTING](../CONTRIBUTING.md) | Cómo contribuir: setup, tests, PR guidelines |
 | [Design Docs](superpowers/specs/) | Especificaciones de diseño y planes de implementación (SDD) |
-| [Theme Preview](dreamcoder-theme-preview.md) | Preview generada automáticamente de todos los temas |
+| [Theme Preview](generated/dreamcoder-theme-preview.md) | Preview generada automáticamente de todos los temas |
+| [PyPI Publishing](pypi-publishing.md) | Publicar `dreamcoder-theme` en PyPI con Trusted Publisher |
 | [Migration Guides](migration/) | Migración desde ML4W y Gentleman Dots |
 
 ---
@@ -74,5 +86,5 @@ Guías para contributors y desarrolladores.
 ## 🏠 Root Links
 
 - [README principal](../README.md) — overview, badges, quick start
-- [GitHub Repository](https://github.com/Gentleman-Programming/dreamcoder-dots)
+- [GitHub Repository](https://github.com/Dreamcoder08/Dreamcoder_dots)
 - [PyPI Package](https://pypi.org/project/dreamcoder-theme/)

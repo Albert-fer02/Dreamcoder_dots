@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
-OUT = ROOT / "docs/dreamcoder-theme-preview.md"
+OUT = ROOT / "docs/generated/dreamcoder-theme-preview.md"
 TEXT_KEYS = [
     "text",
     "muted",

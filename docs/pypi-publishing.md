@@ -1,5 +1,7 @@
 # Publishing dreamcoder-theme to PyPI
 
+← Back to [docs/README.md](README.md)
+
 The release workflow builds the Python package as an artifact but does NOT
 automatically publish to PyPI yet, because it requires a Trusted Publisher
 to be configured on PyPI's end.

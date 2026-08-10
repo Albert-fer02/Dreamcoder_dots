@@ -1,5 +1,7 @@
 # Dreamcoder Design System
 
+← Back to [docs/README.md](README.md)
+
 Dreamcoder is a personal developer-experience design system for Arch Linux workstations. It is not only a color theme: it is a token-governed visual operating layer for terminals, editors, shell tools, desktop chrome, notes, browser chrome, and AI coding CLIs.
 
 ## Product definition
@@ -81,7 +83,7 @@ Dreamcoder changes follow this governance model:
 5. **Release notes**: user-visible theme, CLI, repair, or governance changes need a changelog entry.
 6. **Compatibility check**: repair/install flows must remain safe after ML4W, Gentleman, Waypaper, or Hyprland updates.
 
-⚠️ **Known token gaps (quedan pendientes):**
+⚠️ **Known token gaps (outstanding):**
 
 - Dark mode `diagnostic` color (#5f95ca) scores APCA Lc ~43 — below the Lc 75 advisory threshold. However WCAG 2.1 rates it at 6.00:1 (AA pass). This is a documented design tradeoff.
 
@@ -103,3 +105,7 @@ A Dreamcoder release is ready only when all items are true:
 Current strength: Dreamcoder has a strong token engine, broad target coverage, health checks, and a control-center direction.
 
 Remaining gap: global design systems also ship component APIs, formal contribution governance, public examples, adoption guides, visual regression infrastructure, and long-term versioning guarantees. Dreamcoder should grow in that order: **accessibility gates -> visual regression -> component docs -> release governance -> public examples**.
+
+## Next step
+
+Grow in the order defined by the maturity gap, starting with the accessibility gates: run `python scripts/verify-theme-health.py` after any token change, close the documented token gaps above, then add visual regression infrastructure before expanding component docs.

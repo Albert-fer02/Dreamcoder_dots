@@ -1,8 +1,16 @@
 # Source Manifest — Dreamcoder Dots
 
+← Back to [docs/README.md](README.md)
+
 > Repository-owned declaration of the upstream inputs Dreamcoder builds on, the
 > ownership boundary between them and this repository, and the material that may
 > never be imported or versioned here.
+
+## Quick path — re-pin an upstream ref
+
+1. Resolve the current remote HEAD: `git ls-remote https://github.com/<upstream>.git HEAD`
+2. Update the pinned ref in [`upstream-manifest.json`](upstream-manifest.json) and the table below
+3. Confirm everything agrees: `python3 scripts/verify-repo-sync.py`
 
 ## Role
 

@@ -1,8 +1,17 @@
 # Herdr Integration
 
+← Back to [docs/README.md](README.md)
+
 > Version-bound Herdr compatibility contracts, repository-owned generated
 > variants, and deployment profile settings. Live configuration is never part of
 > this repository.
+
+## Onboarding a new Herdr version
+
+- [ ] Detect the installed binary version (`herdr --version`) and its exact config path
+- [ ] Capture evidence: binary identity, `herdr config check`, reload command, config path (see the contract table)
+- [ ] Generate the versioned variant(s) under `DreamcoderHerdr/.config/herdr/dreamcoder/` from the canonical `tokens.json`
+- [ ] Verify repo sync: `python3 scripts/verify-repo-sync.py`
 
 ## Supported runtime contracts
 
