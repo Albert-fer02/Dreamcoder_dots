@@ -1,8 +1,8 @@
-# Dreamcoder Dots v2.0 Implementation Plan
+# Dreamcoder Workbench v2.0 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Transform Dreamcoder Dots into a full OS experience with multi-platform Go installer, 5 new terminal configs, Vim trainer, and comprehensive docs.
+**Goal:** Transform Dreamcoder Workbench into a full OS experience with multi-platform Go installer, 5 new terminal configs, Vim trainer, and comprehensive docs.
 
 **Architecture:** Token-driven theme generation (existing Python engine) + Go binary installer (Bubbletea TUI) + separate AI layer repo. Each terminal config is a renderer module that reads `tokens.json` and outputs mode-specific config files.
 

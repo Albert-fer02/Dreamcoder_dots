@@ -1,4 +1,4 @@
-# Dreamcoder Dots v2.0 — Design Spec
+# Dreamcoder Workbench v2.0 — Design Spec
 
 **Date:** 2026-06-12
 **Author:** Dreamcoder + AI Assistant
@@ -6,7 +6,7 @@
 
 ## Goal
 
-Transform Dreamcoder Dots from an Arch-focused dotfiles project into a **full OS experience** that matches or exceeds ML4W and Gentleman.Dots, while maintaining the unique Dreamcoder design system (token-based themes, health-first, day/night automation).
+Transform Dreamcoder Workbench from an Arch-focused dotfiles project into a **full OS experience** that matches or exceeds ML4W and Gentleman.Dots, while maintaining the unique Dreamcoder design system (token-based themes, health-first, day/night automation).
 
 ## Scope
 

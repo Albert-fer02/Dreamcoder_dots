@@ -1,4 +1,4 @@
-# Installing Dreamcoder OS on Linux
+# Installing Dreamcoder Workbench on Linux
 
 ## Prerequisites
 

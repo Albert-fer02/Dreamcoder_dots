@@ -2,7 +2,7 @@
 
 ← Back to [docs/README.md](README.md)
 
-Dreamcoder Dots is moving from loose dotfiles to an operator-grade desktop product. The Control Center provides stable JSON contracts for automation and Markdown output for humans.
+Dreamcoder Workbench is moving from loose dotfiles to an operator-grade desktop product. The Control Center provides stable JSON contracts for automation and Markdown output for humans.
 
 ## Quick path
 

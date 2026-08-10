@@ -1,4 +1,4 @@
-# Source Manifest — Dreamcoder Dots
+# Source Manifest — Dreamcoder Workbench
 
 ← Back to [docs/README.md](README.md)
 

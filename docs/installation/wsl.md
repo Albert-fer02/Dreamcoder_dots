@@ -1,4 +1,4 @@
-# Installing Dreamcoder OS on Windows WSL
+# Installing Dreamcoder Workbench on Windows WSL
 
 ## Prerequisites
 

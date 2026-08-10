@@ -1,4 +1,4 @@
-# Installing Dreamcoder OS on macOS
+# Installing Dreamcoder Workbench on macOS
 
 ## Prerequisites
 

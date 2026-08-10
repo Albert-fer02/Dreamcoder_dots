@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
-**Goal:** Build the first production-quality foundation that moves Dreamcoder Dots beyond simple dotfiles into a managed, verifiable desktop product.
+**Goal:** Build the first production-quality foundation that moves Dreamcoder Workbench beyond simple dotfiles into a managed, verifiable desktop product.
 
 **Architecture:** Add a Python control-center module behind the existing `scripts/dreamcoder` entrypoint. Keep bash scripts as compatibility wrappers, but move structured health, profile, motion, and settings logic into focused Python modules with tests. Avoid GUI scope in this first slice; create a stable CLI/API contract that a future TUI/GUI can consume.
 

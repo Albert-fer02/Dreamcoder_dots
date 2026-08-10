@@ -1,4 +1,4 @@
-# Installing Dreamcoder OS on Termux (Android)
+# Installing Dreamcoder Workbench on Termux (Android)
 
 ## Prerequisites
 
