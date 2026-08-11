@@ -89,9 +89,17 @@ def _rgba_to_argb(value: str, default_alpha: str = "ff") -> str:
     )
     if not match:
         return value
-    r, g, b, a = match.group(1), match.group(2), match.group(3), float(match.group(4))
-    a_hex = f"{round(a * 255):02x}"
-    return f"rgba({r.zfill(2)}{g.zfill(2)}{b.zfill(2)}{a_hex})"
+    # Regex guarantees r/g/b are 1-3 digits; alpha may be empty for a
+    # malformed-but-matching input (e.g. "rgba(1, 2, 3, )"), so conversion
+    # is guarded to honor the passthrough contract above.
+    try:
+        r, g, b = int(match.group(1)), int(match.group(2)), int(match.group(3))
+        a_hex = f"{round(float(match.group(4)) * 255):02x}"
+    except ValueError:
+        return value
+    # int() truncates 3-digit channels; zfill only pads and never truncates,
+    # which produced invalid 10-char rgba() (e.g. rgba(13811588ed)).
+    return f"rgba({r:02x}{g:02x}{b:02x}{a_hex})"
 
 
 def hypr_content(c: dict[str, str]) -> str:
