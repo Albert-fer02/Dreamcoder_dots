@@ -50,7 +50,9 @@ if status is-interactive
     alias g='git'
     alias gs='git status'
     alias gp='git push'
-    alias gl='git log --oneline --graph --all'
+    # gl is defined as an abbreviation (git log --oneline -20) in
+    # 60-abbreviations.fish; the full graph lives in glg below, so the
+    # divergent alias was removed to avoid the abbr/alias shadow trap.
     alias gd='git diff'
     alias gc='git commit'
     alias gco='git checkout'

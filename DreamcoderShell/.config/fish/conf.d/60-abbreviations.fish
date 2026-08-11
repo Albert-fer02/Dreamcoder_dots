@@ -29,16 +29,16 @@ if status is-interactive
     # Tools
     abbr -a lg lazygit
     abbr -a y yazi
-        abbr -a cat bat
+    abbr -a cat "bat --paging=never"
 
-        # Listings — abbreviations shadow the icon aliases in
-        # 16-dreamcoder-icons.fish, so they must carry --icons=always here.
-        if command -q eza
-            abbr -a ls "eza --icons=always --group-directories-first"
-            abbr -a ll "eza --icons=always --group-directories-first --long --git"
-            abbr -a la "eza --icons=always --group-directories-first --long --all --git"
-            abbr -a tree "eza --icons=always --group-directories-first --tree"
-        end
+    # Listings — abbreviations shadow the icon aliases in
+    # 16-dreamcoder-icons.fish, so they must carry --icons=always here.
+    if command -q eza
+        abbr -a ls "eza --icons=always --group-directories-first"
+        abbr -a ll "eza --icons=always --group-directories-first --long --git"
+        abbr -a la "eza --icons=always --group-directories-first --long --all --git"
+        abbr -a tree "eza --icons=always --group-directories-first --tree"
+    end
     abbr -a grep rg
     abbr -a find fd
 
