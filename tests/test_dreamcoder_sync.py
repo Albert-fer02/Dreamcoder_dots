@@ -10,7 +10,7 @@ from unittest import mock
 import pytest
 
 from dreamcoder_theme import sync
-from dreamcoder_theme.palette import load_variants
+from dreamcoder_theme.palette import load_render_profile, load_variants, night_palette
 from dreamcoder_theme.palette_tokens import VARIANTS as V
 from dreamcoder_theme.settings import ThemePaths
 
@@ -135,7 +135,14 @@ def active() -> dict[str, str]:
 
 @pytest.fixture
 def variants() -> dict[str, dict[str, str]]:
-    return {"dark": dict(V["dark"]), "light": dict(V["light"])}
+    tokens_file = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
+    params = load_render_profile(tokens_file)
+    guardrails = _canonical_guardrails()
+    return {
+        "dark": dict(V["dark"]),
+        "light": dict(V["light"]),
+        "night": night_palette(dict(V["dark"]), params, guardrails),
+    }
 
 
 def test_sync_active_targets_returns_dict(mock_paths, active):
@@ -208,6 +215,13 @@ def _main_patches(mock_paths, active, variants, **overrides):
         write_repo_enabled=True,
         valid_starship=True,
         load_guardrails=_canonical_guardrails(),
+        load_render_profile={
+            "brightness_factor": 0.86,
+            "saturation_factor": 0.72,
+            "maximum_corrective_delta": 0.12,
+            "corrective_step": 0.02,
+        },
+        night_palette=active,
         batch_theme_variants=[False],
     )
     vals.update(overrides)
@@ -221,6 +235,8 @@ def _main_patches(mock_paths, active, variants, **overrides):
         "write_repo_enabled",
         "valid_starship",
         "load_guardrails",
+        "load_render_profile",
+        "night_palette",
     ):
         if name in vals:
             result.append(mock.patch(f"dreamcoder_theme.sync.{name}", return_value=vals[name]))
@@ -268,6 +284,16 @@ def test_main_gate_failure_blocks_all_writes(mock_paths, active, variants):
         mock.patch("dreamcoder_theme.sync.adaptive_enabled", return_value=False),
         mock.patch("dreamcoder_theme.sync.write_repo_enabled", return_value=True),
         mock.patch("dreamcoder_theme.sync.load_guardrails", return_value=_canonical_guardrails()),
+        mock.patch(
+            "dreamcoder_theme.sync.load_render_profile",
+            return_value={
+                "brightness_factor": 0.86,
+                "saturation_factor": 0.72,
+                "maximum_corrective_delta": 0.12,
+                "corrective_step": 0.02,
+            },
+        ),
+        mock.patch("dreamcoder_theme.sync.night_palette", return_value=active),
         mock.patch("dreamcoder_theme.sync.validate_palette", return_value=["forced gate failure"]),
     ]
     # Every write path must be untouched when the gate fails.

@@ -185,6 +185,19 @@ def write_variant_files(
     builder: Callable[..., str],
     variants: dict[str, dict[str, str]],
 ) -> list[bool]:
+    """Write every named variant, failing closed before the first write.
+
+    The declared ``names`` must be a subset of the provided ``variants`` map
+    (dark/light/night) so a caller can never silently fall back to standard
+    dark for a missing Night palette (R5, design §6): the preflight raises
+    before any file is touched.
+    """
+    missing = set(names) - set(variants)
+    if missing:
+        raise ValueError(
+            f"variant names {sorted(missing)} missing from variants map; "
+            "aborting before any write (no silent standard-dark fallback)"
+        )
     return [
         write_if_changed(base / file_name, builder(variants[mode_name]))
         for mode_name, file_name in names.items()

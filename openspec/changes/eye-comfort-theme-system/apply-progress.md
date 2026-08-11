@@ -114,3 +114,12 @@
 - All targets re-synced from corrected tokens (66 files in PR2 diff: 16 code/test + ~50 generated target files).
 - Gate: 427 passed (was 371, +56), ruff clean, mypy clean, health exit 0 (2 advisories remain — dark subtle/border_ui resolved by corrections; the remaining advisories are the quiet/ui APCA advisory path in the health script, Phase 6 makes it blocking), drift check clean.
 - Deviations: the sdd-apply subagent timed out on the subtle/comment constraint tension; the parent completed the token set (comment #aab7c4 gives exactly 1.500 separation) and restored muted/prompt_muted which the subagent had over-corrected. Remaining phases: 3 (32-target coverage + Night generation), 4 (settings+selectors), 5 (CLI+rollback), 6 (blocking health+docs).
+
+## Batch 3 (PR3, Phase 3) — 32-target coverage + Night generation
+
+- Coverage declaration (exactly 32 consumer IDs with class/writer/night_artifact/selection_strategy) in sync.py + bijection test vs VARIANT_REGISTRY + sync_repo_snippets + Herdr.
+- VARIANT_REGISTRY naming map extended to {dark, light, night}; write_variant_files accepts night key with preflight; targets.json + schema declare night coverage on existing active consumers only (dusk-runtime unchanged).
+- Night generation landed per design §5 matrix: 30 file artifacts across kitty/ghostty/warp/opencode/codex/bat/pi/antigravity/starship/tmux/zellij(night.kdl)/nvim/shell snippets/hypr/waybar/rofi + herdr config.night.toml (0.7.3 + 0.8.0); opencode is active-selected (no night sibling by design).
+- New renderers_zellij.py (minimal KDL leaf writer, dark/light parity tests), renderer metadata fixes (antigravity dark classification, herdr night mode acceptance, nvim dispatcher profile resolution).
+- Gate: 427 passed (same count as PR2 — new coverage tests replace/expand), ruff clean, mypy clean (50 files), health exit 0, format clean.
+- Deviations: the sdd-apply subagent timed out mid-refactor (sync.py VARIANT_REGISTRY move); the parent verified and completed the polish (formatting + coverage verification). Remaining phases: 4 (settings+selectors), 5 (CLI+rollback), 6 (blocking health+docs).

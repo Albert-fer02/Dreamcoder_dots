@@ -1,6 +1,6 @@
 {
   "name": "Dreamcoder Anthracite Steel",
-  "type": "light",
+  "type": "dark",
   "colors": {
     "editor.background": "#070A13",
     "editor.foreground": "#E6EDF3",

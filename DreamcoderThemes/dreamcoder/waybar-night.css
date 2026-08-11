@@ -1,0 +1,57 @@
+/* Dreamcoder color layer for Waybar. */
+@define-color bg #07090f;
+@define-color bg-soft #0d1015;
+@define-color surface #0d1015;
+@define-color surface-2 #1e242b;
+@define-color surface-3 #283039;
+@define-color text #beccd8;
+@define-color text-heading #c6d3df;
+@define-color muted #8f9ca8;
+@define-color subtle #8c949f;
+@define-color comment #919daa;
+@define-color border #161c23;
+@define-color border-ui #6b7e8e;
+@define-color focus #95b5d5;
+@define-color accent #95b5d5;
+@define-color accent-2 #7997b1;
+@define-color diagnostic #66aac6;
+@define-color lavender #99a9b9;
+@define-color error #d28c96;
+@define-color success #65b183;
+@define-color warning #bd9b5b;
+@define-color link #95b5d5;
+@define-color link-hover #7997b1;
+
+window#waybar {
+  background: rgba(7, 9, 15, 0.80);
+  color: @text;
+  border-bottom: 1px solid alpha(@accent, 0.26);
+}
+
+#workspaces button {
+  color: @muted;
+  background: transparent;
+  border: 1px solid transparent;
+}
+
+#workspaces button.active {
+  color: @accent;
+  background: rgba(104, 154, 190, 0.24);
+  border-color: alpha(@focus, 0.82);
+}
+
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#cpu,
+#memory,
+#tray {
+  background: rgba(190, 204, 216, 0.08);
+  color: @text;
+  border: 1px solid alpha(@border-ui, 0.78);
+}
+
+#battery.warning { color: @warning; }
+#battery.critical { color: @error; }
+#network.disconnected { color: @error; }

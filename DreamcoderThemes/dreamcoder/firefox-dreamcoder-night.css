@@ -1,0 +1,138 @@
+/* ========================================================
+   Dreamcoder Anthracite Steel Night — Firefox userChrome.css
+   ========================================================
+   Place in ~/.mozilla/firefox/*.default-release/chrome/userChrome.css
+   Requires toolkit.legacyUserProfileCustomizations.stylesheets = true
+   in about:config. */
+
+:root {
+  --dreamcoder-bg: #07090f;
+  --dreamcoder-surface: #0d1015;
+  --dreamcoder-surface-1: #14181e;
+  --dreamcoder-text: #beccd8;
+  --dreamcoder-text-dim: #8f9ca8;
+  --dreamcoder-accent: #95b5d5;
+  --dreamcoder-accent-2: #7997b1;
+  --dreamcoder-border: #161c23;
+  --dreamcoder-border-ui: #6b7e8e;
+  --dreamcoder-error: #d28c96;
+  --dreamcoder-warning: #bd9b5b;
+  --dreamcoder-sage: #65b183;
+  --dreamcoder-input-bg: #0d1015;
+  --dreamcoder-toolbar-bg: #0d1015;
+  --dreamcoder-hover: #1c232d;
+  --dreamcoder-active: #2a3440;
+}
+
+/* Main window */
+#main-window,
+#navigator-toolbox {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+/* Toolbar & URL bar */
+#nav-bar,
+#nav-bar toolbarbutton,
+#urlbar,
+#urlbar-background {
+  background-color: var(--dreamcoder-toolbar-bg) !important;
+  color: var(--dreamcoder-text) !important;
+  border-color: var(--dreamcoder-border) !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  border-color: var(--dreamcoder-accent) !important;
+}
+
+/* Sidebar (bookmarks, history) */
+#sidebar-box,
+#sidebar {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+.sidebar-placesTreechildren {
+  color: var(--dreamcoder-text) !important;
+}
+
+/* Tab bar */
+#TabsToolbar,
+#tabbrowser-tabs,
+.tab-background {
+  background-color: var(--dreamcoder-bg) !important;
+}
+
+.tabbrowser-tab:not([selected]) .tab-background {
+  background-color: var(--dreamcoder-surface) !important;
+}
+
+.tabbrowser-tab[selected] .tab-background {
+  background-color: var(--dreamcoder-toolbar-bg) !important;
+  border-color: var(--dreamcoder-accent) !important;
+}
+
+.tabbrowser-tab .tab-label {
+  color: var(--dreamcoder-text-dim) !important;
+}
+
+.tabbrowser-tab[selected] .tab-label {
+  color: var(--dreamcoder-text) !important;
+}
+
+/* Context menus */
+menupopup,
+popup {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+menuitem {
+  color: var(--dreamcoder-text) !important;
+}
+
+menuitem:hover {
+  background-color: var(--dreamcoder-hover) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+/* Status panel */
+#statuspanel-label {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text-dim) !important;
+  border-color: var(--dreamcoder-border) !important;
+}
+
+/* Find bar */
+#findbar {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+#findbar input {
+  background-color: var(--dreamcoder-input-bg) !important;
+  color: var(--dreamcoder-text) !important;
+  border-color: var(--dreamcoder-border) !important;
+}
+
+/* Private browsing indicators */
+#private-browsing-indicator-with-label {
+  color: var(--dreamcoder-accent-2) !important;
+}
+
+/* Downloads panel */
+#downloadsPanel,
+#downloadsListBox {
+  background-color: var(--dreamcoder-bg) !important;
+  color: var(--dreamcoder-text) !important;
+}
+
+/* Scrollbar styling */
+:root {
+  scrollbar-color: var(--dreamcoder-border) var(--dreamcoder-bg) !important;
+}
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--dreamcoder-border) var(--dreamcoder-bg) !important;
+}

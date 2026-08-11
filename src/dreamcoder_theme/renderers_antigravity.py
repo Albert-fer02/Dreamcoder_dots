@@ -6,7 +6,10 @@ import json
 
 
 def antigravity_content(c: dict[str, str]) -> str:
-    theme_type = "dark" if "Dark" in c.get("name", "Dark") else "light"
+    # Night must be classified dark WITHOUT depending on the word "Dark" in
+    # the derived name (design §5 row 10): the transformed palette keeps
+    # dark semantics in ``details``, which is the reliable signal.
+    theme_type = "dark" if c.get("details", "darker") != "lighter" else "light"
     return json.dumps(
         {
             "name": c.get("name", "Dreamcoder"),

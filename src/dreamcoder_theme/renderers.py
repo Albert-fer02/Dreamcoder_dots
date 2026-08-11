@@ -30,6 +30,7 @@ from .renderers_pi import pi_theme_content
 from .renderers_readme import readme_content
 from .renderers_starship import starship_content
 from .renderers_tmux import tmux_content
+from .renderers_zellij import zellij_content
 
 __all__ = [
     "antigravity_content",
@@ -63,5 +64,6 @@ __all__ = [
     "warp_content",
     "waybar_content",
     "waybar_matugen_content",
+    "zellij_content",
     "zsh_syntax_content",
 ]

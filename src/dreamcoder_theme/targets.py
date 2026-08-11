@@ -131,8 +131,8 @@ def _validate_records(records: list[Any]) -> None:
             modes = set(render["modes"])
             if "dusk" in modes:
                 raise ManifestError(f"dusk is not a runtime render mode: {target_id}")
-            if modes != {"dark", "light"}:
-                raise ManifestError(f"render modes must be dark and light: {target_id}")
+            if modes != {"dark", "light", "night"}:
+                raise ManifestError(f"render modes must be dark, light and night: {target_id}")
             for output in render["repository_outputs"].values():
                 if output in outputs:
                     raise ManifestError(f"duplicate repository output: {output}")

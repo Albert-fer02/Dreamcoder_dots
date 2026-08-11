@@ -2,17 +2,20 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, NamedTuple
 
 from .herdr_contract import SUPPORTED_PROFILES, HerdrProfile
 from .palette import (
     adaptive_palette,
     load_guardrails,
+    load_render_profile,
     load_variants,
+    night_palette,
     validate_palette,
 )
 from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
@@ -47,6 +50,7 @@ from .renderers import (
     warp_content,
     waybar_content,
     waybar_matugen_content,
+    zellij_content,
     zsh_syntax_content,
 )
 from .settings import (
@@ -126,7 +130,326 @@ def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[s
 # hyprland, waybar, rofi, nvim, and opencode-transparent
 # stay as explicit calls below the loop.
 # ------------------------------------------------------------------
-D = {"dark": "dark", "light": "light"}
+D = {"dark": "dark", "light": "light", "night": "night"}
+
+# ------------------------------------------------------------------
+# Exact 32-consumer Night coverage declaration (design §5 matrix).
+# ------------------------------------------------------------------
+# ``night_artifact`` is the deterministic Night output path (relative to
+# ROOT, POSIX separators) for repo-generation rows. Active-only matugen
+# bridges carry an ``active:<path>`` marker because their Night delivery is
+# the live ``colors.css``/``colors.rasi`` file, not a repository artifact.
+# ``source`` records which sync branch owns the row (registry loop, explicit
+# sync_repo_snippets() branch, or Herdr) and is the bijection-test hook.
+
+
+class CoverageRow(NamedTuple):
+    """One row of the 32-consumer Night coverage contract (design §5)."""
+
+    consumer_id: str
+    klass: str
+    writer: str
+    night_artifact: str
+    selection_strategy: str
+    source: str
+
+
+COVERAGE: tuple[CoverageRow, ...] = (
+    CoverageRow(
+        "kitty",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; kitty_content",
+        "DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf",
+        "active symlink/file selects or receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "kitty_ui",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; kitty_ui_content",
+        "DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf",
+        "stable dreamcoder-ui.conf includes/contains Night",
+        "registry",
+    ),
+    CoverageRow(
+        "ghostty",
+        "variant file + active-selected",
+        "write_variant_files + update_ghostty_theme; ghostty_content",
+        "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night",
+        "select theme = dreamcoder-night",
+        "registry",
+    ),
+    CoverageRow(
+        "warp",
+        "variant file + active-selected",
+        "write_variant_files + update_warp_settings; warp_content",
+        "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml",
+        "active symlink/file selects it; dark opacity/blur semantics",
+        "registry",
+    ),
+    CoverageRow(
+        "starship",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; starship_content",
+        "DreamcoderShell/.config/starship-night.toml",
+        "palette section never standard-dark ([palettes.dreamcoder-night])",
+        "registry",
+    ),
+    CoverageRow(
+        "codex_app",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; opencode_content",
+        "DreamcoderCodexApp/Dreamcoder-Night.codex-theme.json",
+        "stable Dreamcoder.codex-theme.json receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "codex_theme",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; codex_tmtheme_content",
+        "DreamcoderCodexCLI/Dreamcoder-Night.tmTheme",
+        "stable Dreamcoder.tmTheme receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "bat_theme",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; codex_tmtheme_content",
+        "DreamcoderBat/.config/bat/themes/Dreamcoder-Night.tmTheme",
+        "stable Dreamcoder.tmTheme receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "pi_theme",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; pi_theme_content",
+        "DreamcoderPi/.pi/agent/themes/dreamcoder-night.json",
+        "stable dreamcoder.json receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "antigravity",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; antigravity_content",
+        "DreamcoderAntigravity/Dreamcoder-Night.json",
+        "stable Dreamcoder.json receives Night; classified dark without name detection",
+        "registry",
+    ),
+    CoverageRow(
+        "tmux",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; tmux_content",
+        "DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf",
+        "active file receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "zsh_syntax",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; zsh_syntax_content",
+        "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-night.zsh",
+        "active sourced file receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "ls_colors",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; ls_colors_content",
+        "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-night.sh",
+        "active sourced file receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "bat",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; bat_content",
+        "DreamcoderThemes/dreamcoder/bat-dreamcoder-night.sh",
+        "selects the Night TextMate sibling (BAT_THEME=Dreamcoder-Night)",
+        "registry",
+    ),
+    CoverageRow(
+        "delta",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; delta_content",
+        "DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig",
+        "active include/symlink selects Night; syntax-theme=Dreamcoder-Night",
+        "registry",
+    ),
+    CoverageRow(
+        "fzf",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; fzf_content",
+        "DreamcoderThemes/dreamcoder/fzf-dreamcoder-night.sh",
+        "active sourced file receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "btop",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; btop_content",
+        "DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme",
+        "active dreamcoder.theme symlink selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "dunst",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; dunst_content",
+        "DreamcoderThemes/dreamcoder/dunst-dreamcoder-night.conf",
+        "active included file receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "firefox",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; firefox_content",
+        "DreamcoderThemes/dreamcoder/firefox-dreamcoder-night.css",
+        "active userChrome import receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "obsidian",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; obsidian_content",
+        "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-night.css",
+        "active snippet receives/selects Night and keeps .theme-dark",
+        "registry",
+    ),
+    CoverageRow(
+        "cava",
+        "snippet + active-selected",
+        "write_variant_files + write_if_changed; cava_content",
+        "DreamcoderThemes/dreamcoder/cava-dreamcoder-night.config",
+        "active include receives/selects Night",
+        "registry",
+    ),
+    CoverageRow(
+        "opencode",
+        "active-selected",
+        "write_if_changed; opencode_content(transparent_background=True)",
+        ".opencode/themes/dreamcoder.json",
+        "stable theme ID dreamcoder overwritten with Night; no dreamcoder-night.json sibling",
+        "explicit",
+    ),
+    CoverageRow(
+        "zellij",
+        "variant file + active-selected",
+        "write_if_changed; zellij_content + update_zellij_config",
+        "DreamcoderZellij/.config/zellij/dreamcoder-night.kdl",
+        'generate KDL with themes { dreamcoder-night } and select theme "dreamcoder-night"',
+        "explicit",
+    ),
+    CoverageRow(
+        "nvim",
+        "variant file + active-selected",
+        "write_variant_files + nvim_dispatcher_content; nvim_content",
+        "DreamcoderNvim/.config/nvim/colors/dreamcoder-night.lua",
+        "dispatcher resolves DREAMCODER_THEME_PROFILE before base mode",
+        "explicit",
+    ),
+    CoverageRow(
+        "hyprland",
+        "variant file + active-selected",
+        "write_if_changed; hypr_content",
+        "DreamcoderThemes/dreamcoder/hyprland-night.conf",
+        "stable hyprland.conf receives Night; shell selector may point to the Night sibling",
+        "explicit",
+    ),
+    CoverageRow(
+        "hypr_colors_lua",
+        "snippet + active-selected",
+        "write_variant_files; hypr_colors_lua_content",
+        "DreamcoderThemes/dreamcoder/hypr-colors-night.lua",
+        "active symlink/file selects Night",
+        "explicit",
+    ),
+    CoverageRow(
+        "hypr_colors_conf",
+        "snippet + active-selected",
+        "write_variant_files; hypr_colors_conf_content",
+        "DreamcoderThemes/dreamcoder/hypr-colors-night.conf",
+        "active symlink/file selects Night",
+        "explicit",
+    ),
+    CoverageRow(
+        "waybar",
+        "variant file + active-selected",
+        "write_if_changed; waybar_content",
+        "DreamcoderThemes/dreamcoder/waybar-night.css",
+        "stable/selected Waybar CSS receives Night",
+        "explicit",
+    ),
+    CoverageRow(
+        "waybar_matugen",
+        "snippet + active-selected",
+        "write_if_changed; waybar_matugen_content",
+        "active:waybar/colors.css",
+        "write transformed Night directly; symlink-aware colors-night.css selection",
+        "explicit",
+    ),
+    CoverageRow(
+        "rofi",
+        "variant file + active-selected",
+        "write_if_changed; rofi_content",
+        "DreamcoderThemes/dreamcoder/rofi-night.rasi",
+        "stable/selected Rofi theme receives Night",
+        "explicit",
+    ),
+    CoverageRow(
+        "rofi_matugen",
+        "snippet + active-selected",
+        "write_if_changed; rofi_matugen_content",
+        "active:rofi/colors.rasi",
+        "write transformed Night directly; symlink-aware colors-night.rasi selection",
+        "explicit",
+    ),
+    CoverageRow(
+        "herdr",
+        "variant file",
+        "sync_herdr_repo_variants + write_if_changed; herdr_content",
+        "DreamcoderHerdr/.config/herdr/dreamcoder/<version>/config.night.toml",
+        "config.night.toml for every complete SUPPORTED_PROFILES entry; repository-only, no live activation",
+        "herdr",
+    ),
+)
+
+
+def validate_coverage_declaration(rows: tuple[CoverageRow, ...] = COVERAGE) -> list[str]:
+    """Fail closed on missing, duplicate, or undeclared Night coverage.
+
+    Internal consistency gate (R5): the registry loop and the explicit
+    branches must each be represented by exactly one row, with no duplicate
+    consumer IDs. The external bijection with the sync branches lives in
+    the coverage test; this helper proves the declaration itself is well
+    formed.
+    """
+    problems: list[str] = []
+    ids = [row.consumer_id for row in rows]
+    duplicates = sorted({cid for cid in ids if ids.count(cid) > 1})
+    if duplicates:
+        problems.append(f"duplicate coverage consumer ids: {duplicates}")
+    if len(rows) != 32:
+        problems.append(f"coverage declares {len(rows)} rows, expected exactly 32")
+
+    registry_night = {
+        (base / names["night"]).relative_to(ROOT).as_posix()
+        for base, names, _builder, _active in VARIANT_REGISTRY
+    }
+    declared_registry = {row.night_artifact for row in rows if row.source == "registry"}
+    missing = sorted(registry_night - declared_registry)
+    extra = sorted(declared_registry - registry_night)
+    if missing or extra:
+        problems.append(f"registry coverage mismatch: undeclared={missing}, unregistered={extra}")
+
+    declared_explicit = [row.consumer_id for row in rows if row.source == "explicit"]
+    if len(declared_explicit) != 10:
+        problems.append(f"explicit branch coverage has {len(declared_explicit)} rows, expected 10")
+    herdr_rows = [row for row in rows if row.source == "herdr"]
+    if len(herdr_rows) != 1:
+        problems.append(f"herdr coverage has {len(herdr_rows)} rows, expected 1")
+    return problems
+
+
 VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | None]] = [
     # -- Terminal targets --
     (
@@ -270,6 +593,9 @@ def sync_herdr_repo_variants(
     """Generate managed repository variants for every supported profile.
 
     Repository variants only; never select or touch a live configuration.
+    ``config.night.toml`` is emitted only when the caller supplies a night
+    palette, so standard dark/light runs keep today's exact behavior (R5,
+    design §5 row 32).
     """
     changes: list[bool] = []
     for profile in profiles:
@@ -286,6 +612,12 @@ def sync_herdr_repo_variants(
                 base / "config.light.toml", herdr_content(profile, "light", variants["light"])
             )
         )
+        if "night" in variants:
+            changes.append(
+                write_if_changed(
+                    base / "config.night.toml", herdr_content(profile, "night", variants["night"])
+                )
+            )
     return changes
 
 
@@ -328,6 +660,12 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
             hypr_content(variants["light"]),
         )
     )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "DreamcoderThemes/dreamcoder/hyprland-night.conf",
+            hypr_content(variants["night"]),
+        )
+    )
     repo_changes += write_variant_files(
         ROOT / "DreamcoderThemes/dreamcoder",
         {k: f"hypr-colors-{v}.lua" for k, v in D.items()},
@@ -354,6 +692,12 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
             waybar_content(variants["light"]),
         )
     )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "DreamcoderThemes/dreamcoder/waybar-night.css",
+            waybar_content(variants["night"]),
+        )
+    )
 
     # Rofi — per-mode + active
     repo_changes.append(
@@ -368,6 +712,12 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
             rofi_content(variants["light"]),
         )
     )
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "DreamcoderThemes/dreamcoder/rofi-night.rasi",
+            rofi_content(variants["night"]),
+        )
+    )
 
     # Desktop/WM active files (no suffix — tracks current mode)
     repo_changes.append(
@@ -378,6 +728,15 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
     )
     repo_changes.append(
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi.rasi", rofi_content(active))
+    )
+
+    # Zellij — the consumed palette artifact is generated here (design §5
+    # row 13); the active selector is patched by update_zellij_config.
+    repo_changes.append(
+        write_if_changed(
+            ROOT / "DreamcoderZellij/.config/zellij/dreamcoder-night.kdl",
+            zellij_content(variants["night"], "dreamcoder-night"),
+        )
     )
 
     # Herdr repository variants are intentionally separate from live selection.
@@ -450,27 +809,68 @@ def print_summary(
     print(f"Repo variant/snippet changes: {sum(repo_changes)}")
 
 
+def _generation_profile() -> str:
+    """Resolve the repo-generation render profile for this invocation.
+
+    Phase-3 generation hook: reads ``DREAMCODER_THEME_PROFILE`` with the
+    closed values ``standard|night`` (invalid values fail closed). Phase 4
+    (task 4.3) replaces this with the persisted ``render_profile()``
+    resolver; until then repo generation is the only Night consumer.
+    """
+    profile = os.environ.get("DREAMCODER_THEME_PROFILE", "standard").lower()
+    if profile not in {"standard", "night"}:
+        raise SystemExit("DREAMCODER_THEME_PROFILE must be 'standard' or 'night'")
+    return profile
+
+
 def main() -> None:
     gen = ROOT / "scripts" / "generate-palette-tokens.py"
     if gen.is_file():
         subprocess.run([sys.executable, str(gen)], check=True)
     paths = theme_paths()
-    mode = theme_mode()
+    guardrails = load_guardrails(paths.tokens_file)
+    params = load_render_profile(paths.tokens_file)
     variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)
-    active = adaptive_palette(variants[mode], mode, paths.wallpaper, adaptive_enabled())
+    # Night is a derived render variant (ADR-003): canonical dark +
+    # deterministic transform. The registry and explicit branches consume it
+    # through the same dict[str, str] renderer shape (ADR-004).
+    variants["night"] = night_palette(dict(variants["dark"]), params, guardrails)
+
+    profile = _generation_profile()
+    if profile == "night":
+        # Night always resolves the dark Anthracite Steel base, adapts it,
+        # then applies the transform (design §2/§4). Active-target writes and
+        # the live bat theme dir are deferred to Phase 4/5 (profile-aware
+        # selectors + activation transaction); repo generation owns the
+        # named Night artifacts and stable active files in this PR.
+        mode = "dark"
+        adapted = adaptive_palette(variants["dark"], mode, paths.wallpaper, adaptive_enabled())
+        active = night_palette(adapted, params, guardrails)
+    else:
+        mode = theme_mode()
+        active = adaptive_palette(variants[mode], mode, paths.wallpaper, adaptive_enabled())
 
     # Validation-first (R4): the final palette must pass the independent WCAG
     # 2.2 + APCA dual gate BEFORE any writer or selector runs. A failed gate
     # exits non-zero with zero writes; no profile/settings mutation occurs.
     # Thresholds are resolved from the canonical token file (ADR-002) — never
     # from literals — and a missing required guardrail fails closed.
-    guardrails = load_guardrails(paths.tokens_file)
-    gate_errors = validate_palette(active, guardrails, profile="standard", mode=mode)
+    gate_errors = validate_palette(active, guardrails, profile=profile, mode=mode)
     if gate_errors:
         raise SystemExit(
             "Theme gate failed — no writes performed:\n"
             + "\n".join(f"  - {error}" for error in gate_errors)
         )
+
+    if profile == "night":
+        # Repository-only Night generation: the 32-target coverage is
+        # produced through sync_repo_snippets(); live active paths and the
+        # active bat theme dir are left untouched until activation (Phase 5).
+        repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []
+        changed: dict[str, bool] = {}
+        print_summary(mode, paths, changed, repo_changes)
+        print("Night repository generation only — active outputs untouched (PR3)")
+        return
 
     changed = sync_active_targets(paths, active, mode)
     bat_variant_changes = sync_bat_theme_variants(paths, variants)

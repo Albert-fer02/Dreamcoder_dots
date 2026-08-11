@@ -8,7 +8,10 @@ from .palette import detect_mode, guard, mix
 def bat_content(c: dict[str, str]) -> str:
     """Return a Bat theme config snippet with modern defaults."""
     mode_name = detect_mode(c)
-    theme = f"Dreamcoder-{mode_name.title()}"
+    # The Night snippet selects the Night TextMate sibling (design §5 row
+    # 17): the derived palette name is the deterministic profile signal
+    # because the format embeds the theme name.
+    theme = f"Dreamcoder-{'Night' if 'Night' in c.get('name', '') else mode_name.title()}"
     return (
         "#!/usr/bin/env bash\n"
         "set -euo pipefail\n"
@@ -38,6 +41,12 @@ def delta_content(c: dict[str, str]) -> str:
         minus_bg = mix(c["error"], bg, 0.85)
         hunk_bg = mix(c["muted"], bg, 0.85)
 
+    # Syntax highlighting theme: the Night snippet selects the Night
+    # TextMate sibling (design §5 row 18) — the format embeds the name.
+    syntax_theme = (
+        "Dreamcoder-Night" if "Night" in c.get("name", "") else f"Dreamcoder-{mode.title()}"
+    )
+
     return f"""# ========================================================
 # {c["name"]} — Git Delta theme
 # ========================================================
@@ -47,7 +56,7 @@ def delta_content(c: dict[str, str]) -> str:
 
 [delta]
     # Syntax highlighting theme for diff content
-    syntax-theme = Dreamcoder-{mode.title()}
+    syntax-theme = {syntax_theme}
 
     # Line colors
     plus-color = "{plus_bg}"

@@ -119,7 +119,7 @@ def test_herdr_variants_are_byte_stable_and_have_matching_structure() -> None:
 
 @pytest.mark.parametrize("mode", ("dusk", "invalid"))
 def test_herdr_rejects_non_static_modes(mode: str) -> None:
-    with pytest.raises(HerdrModeError, match="only dark and light"):
+    with pytest.raises(HerdrModeError, match="only dark, light, and night"):
         herdr_content(HERDR_073_PROFILE, mode, VARIANTS["dark"])
 
 

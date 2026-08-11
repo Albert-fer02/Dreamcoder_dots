@@ -21,6 +21,11 @@ def starship_content(c: dict[str, str]) -> str:
     diag = c["diagnostic"]
     lavender_col = c["lavender"]
     mauve_col = c["mauve"]
+    # The named Night sibling must never reference a standard-dark palette
+    # section (design §5 row 11): the derived name is the deterministic
+    # profile signal because the format embeds the palette identity.
+    is_night = "Night" in c.get("name", "")
+    palette_id = "dreamcoder-night" if is_night else "dreamcoder"
 
     return f'''# ========================================================
 # {c["name"]} — Starship prompt
@@ -31,7 +36,7 @@ def starship_content(c: dict[str, str]) -> str:
 # Extra: status (exit code), AI session (hidden until active)
 
 add_newline = true
-palette = "dreamcoder"
+palette = "{palette_id}"
 command_timeout = 500
 
 format = """
@@ -50,7 +55,7 @@ $character"""
 
 right_format = ""
 
-[palettes.dreamcoder]
+[palettes.{palette_id}]
 bg = "{c["bg"]}"
 text = "{c["text"]}"
 muted = "{c["muted"]}"

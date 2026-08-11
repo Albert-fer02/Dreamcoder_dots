@@ -1,0 +1,45 @@
+# ========================================================
+# Dreamcoder Anthracite Steel Night — Git Delta theme
+# ========================================================
+# Include from ~/.config/git/config:
+#   [include]
+#       path = ~/.config/git/delta-dreamcoder.gitconfig
+
+[delta]
+    # Syntax highlighting theme for diff content
+    syntax-theme = Dreamcoder-Night
+
+    # Line colors
+    plus-color = "#416c56"
+    minus-color = "#7c5860"
+    plus-emph-color = "#65b183"
+    minus-emph-color = "#d28c96"
+
+    # Diff UI
+    file-style = "#95b5d5"
+    file-decoration-style = "bold yellow box ul"
+    hunk-header-style = "file line-number syntax"
+    hunk-header-decoration-style = "yellow box"
+    hunk-header-file-style = "#95b5d5"
+    hunk-header-line-number-style = "#8f9ca8"
+    hunk-header-color = "#646e78"
+
+    # Commit decorations
+    commit-style = "#95b5d5 bold"
+    commit-decoration-style = "bold yellow box ul"
+
+    # Line numbers
+    line-numbers = true
+    line-numbers-left-style = "#8f9ca8"
+    line-numbers-right-style = "#8f9ca8"
+    line-numbers-minus-style = "#d28c96"
+    line-numbers-plus-style = "#65b183"
+
+    # Side-by-side
+    side-by-side = true
+
+    # Whitespace highlighting
+    whitespace-error-style = "#bd9b5b"
+
+    # Navigation
+    navigate = true
