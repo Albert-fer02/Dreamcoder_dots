@@ -1,11 +1,9 @@
 # Dreamcoder icon-first terminal listings for Fish.
+# eza listings live as abbreviations in 60-abbreviations.fish
+# (abbreviations shadow aliases, so aliases here would be dead code).
+# This file only keeps plain-ls fallbacks for hosts without eza.
 if status is-interactive
-    if command -q eza
-        alias ls='eza --icons=always --group-directories-first'
-        alias ll='eza --icons=always --group-directories-first --long --git'
-        alias la='eza --icons=always --group-directories-first --long --all --git'
-        alias tree='eza --icons=always --group-directories-first --tree'
-    else
+    if not command -q eza
         alias ll='ls -lah'
         alias la='ls -lahA'
     end

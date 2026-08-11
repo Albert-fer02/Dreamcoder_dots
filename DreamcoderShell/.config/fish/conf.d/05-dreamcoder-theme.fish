@@ -2,7 +2,7 @@
 # Sources generated theme files from themes/dreamcoder/ (synced from tokens.json).
 # No hardcoded colors — the .sh files are the single source of truth.
 
-set -q DREAMCODER_THEME_MODE; or set -gx DREAMCODER_THEME_MODE light
+set -q DREAMCODER_THEME_MODE; or set -gx DREAMCODER_THEME_MODE dark
 set -q COLORTERM; or set -gx COLORTERM truecolor
 set -gx FORCE_COLOR 3
 set -gx CLICOLOR_FORCE 1

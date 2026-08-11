@@ -6,7 +6,7 @@ if status is-interactive
     abbr -a g git
     abbr -a gco git checkout
     abbr -a gb git branch
-    abbr -a gst git status
+    abbr -a gst git stash
     abbr -a gd git diff
     abbr -a gdt git difftool
     abbr -a gcm git commit -m
@@ -22,16 +22,23 @@ if status is-interactive
     abbr -a .... cd ../../..
 
     # Project quick-jump
-    abbr -a dots "cd $HOME/Documents/PROYECTOS/dreamcoder-dots"
+    # (dots is a fish function in functions/dots.fish — no abbr, so the
+    # function's DREAMCODER_DOTS_DIR-aware lookup is what runs)
     abbr -a gdots "cd $HOME/Gentleman.Dots"
 
     # Tools
     abbr -a lg lazygit
     abbr -a y yazi
-    abbr -a cat bat
-    abbr -a ls eza
-    abbr -a ll "eza -la --icons --group-directories-first"
-    abbr -a tree "eza --tree --icons"
+        abbr -a cat bat
+
+        # Listings — abbreviations shadow the icon aliases in
+        # 16-dreamcoder-icons.fish, so they must carry --icons=always here.
+        if command -q eza
+            abbr -a ls "eza --icons=always --group-directories-first"
+            abbr -a ll "eza --icons=always --group-directories-first --long --git"
+            abbr -a la "eza --icons=always --group-directories-first --long --all --git"
+            abbr -a tree "eza --icons=always --group-directories-first --tree"
+        end
     abbr -a grep rg
     abbr -a find fd
 

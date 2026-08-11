@@ -2,7 +2,7 @@ set -gx EDITOR nvim
 set -gx VISUAL nvim
 set -q COLORTERM; or set -gx COLORTERM truecolor
 set -q STARSHIP_CONFIG; or set -gx STARSHIP_CONFIG "$HOME/.config/starship.toml"
-set -q DREAMCODER_THEME_MODE; or set -gx DREAMCODER_THEME_MODE light
+set -q DREAMCODER_THEME_MODE; or set -gx DREAMCODER_THEME_MODE dark
 set -g fish_greeting ""
 
 # Pre-set TMUX_PLUGIN_MANAGER_PATH for plugins (Kanagawa, etc.) that need it
