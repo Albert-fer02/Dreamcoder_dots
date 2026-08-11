@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from .backups import create_backup
-from .core import ROOT, active_kitty_ui
+from .core import ROOT, active_kitty_ui, config_home
 from .doctor import doctor_checks
 
 SAFE_REPAIR_CATALOG = {
@@ -37,13 +37,20 @@ def repair_catalog() -> dict[str, Any]:
 
 
 def safe_action(
-    action_id: str, check: Any, description: str, source: Path | None = None
+    action_id: str,
+    check: Any,
+    description: str,
+    source: Path | None = None,
+    target: str | None = None,
 ) -> dict[str, Any]:
+    # check.detail is a diagnostic string (sometimes a mode name, e.g.
+    # "unknown"), not always a filesystem path — callers that restore a file
+    # must pass an explicit absolute target.
     action = {
         "id": action_id,
         "check": check.name,
         "safe": True,
-        "target": check.detail,
+        "target": target if target is not None else check.detail,
         "description": description,
         "command": "./scripts/dreamcoder repair apply --json",
     }
@@ -86,6 +93,7 @@ def repair_plan() -> dict[str, Any]:
                     check,
                     "Restore active Kitty colors file from the repository.",
                     source,
+                    target=str(config_home() / "kitty" / "colors-dreamcoder.conf"),
                 )
             )
         elif check.name == "installer conflicts":
@@ -137,6 +145,10 @@ def repair_plan() -> dict[str, Any]:
 def restore_managed_path(action: dict[str, Any]) -> None:
     source = Path(action["source"])
     target = Path(action["target"])
+    # Fail closed instead of dropping a stray symlink in the cwd: a repair
+    # target must be an absolute path (config_home managed paths).
+    if not target.is_absolute():
+        raise ValueError(f"refusing to restore to non-absolute target: {target}")
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists() or target.is_symlink():
         return

@@ -6,6 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from dreamcoder_theme.repair_engine import restore_managed_path
+
 ROOT = Path(__file__).resolve().parents[1]
 CONTROL = ROOT / "src" / "dreamcoder_theme" / "control.py"
 
@@ -67,6 +69,28 @@ class DreamcoderRepairCatalogTest(unittest.TestCase):
                 / "manifest.json"
             )
             self.assertTrue(manifest.exists())
+
+    def test_active_theme_mode_repair_targets_absolute_kitty_colors_path(self):
+        """The mode-string detail must never leak into the repair target.
+
+        Regression: `detail` of the "active theme mode" check is the detected
+        mode (e.g. "unknown"), which was used verbatim as the symlink target,
+        dropping a stray `./unknown` symlink in the cwd.
+        """
+        with tempfile.TemporaryDirectory() as tmpdir:
+            home = Path(tmpdir)
+            result = run_control("repair", "plan", "--json", home=home)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            actions = {a["id"]: a for a in json.loads(result.stdout)["actions"]}
+            action = actions["restore-active-kitty-colors"]
+            target = Path(action["target"])
+            self.assertTrue(target.is_absolute())
+            self.assertEqual(target, home / ".config" / "kitty" / "colors-dreamcoder.conf")
+            self.assertNotIn("unknown", action["target"])
+
+    def test_restore_managed_path_rejects_non_absolute_target(self):
+        with self.assertRaises(ValueError):
+            restore_managed_path({"source": "/tmp/kitty/colors.conf", "target": "unknown"})
 
 
 if __name__ == "__main__":

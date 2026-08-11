@@ -75,7 +75,9 @@ class ThemePaths:
 
 
 def theme_mode() -> str:
-    mode = os.environ.get("DREAMCODER_THEME_MODE", "light").lower()
+    # Dark (Anthracite Steel) is the repo default; a clean env (CI, fresh
+    # shell) must not silently regenerate the legacy light palette.
+    mode = os.environ.get("DREAMCODER_THEME_MODE", "dark").lower()
     if mode not in {"dark", "light"}:
         raise SystemExit("DREAMCODER_THEME_MODE must be 'dark' or 'light'")
     return mode
