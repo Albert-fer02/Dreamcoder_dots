@@ -23,6 +23,8 @@
         "minimum_terminal_selection_contrast",
         "minimum_apca_body",
         "minimum_apca_body_dark",
+        "minimum_apca_heading_light",
+        "minimum_apca_heading_dark",
         "minimum_apca_quiet",
         "minimum_apca_ui",
         "minimum_apca_ui_dark",

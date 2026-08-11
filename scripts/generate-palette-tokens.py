@@ -163,6 +163,29 @@ def enrich_mode(mode: dict[str, str]) -> dict[str, str]:
     return c
 
 
+def _add_trailing_commas(text: str) -> str:
+    """Convert json.dumps output to ruff-format multiline style.
+
+    json.dumps never emits trailing commas; the repository formatter
+    (ruff-format) keeps trailing commas on multiline collections, so a
+    regenerated file would otherwise drift from the committed style and
+    fail the generated-artifact check. Add a trailing comma to every value
+    line (and nested closing brace/bracket) that is followed by a closing
+    brace or bracket.
+    """
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    for index, line in enumerate(lines):
+        stripped = line.rstrip()
+        nxt = lines[index + 1].lstrip() if index + 1 < len(lines) else ""
+        ends_value = bool(stripped) and not stripped.endswith(("{", "[", ","))
+        if ends_value and (nxt.startswith("}") or nxt.startswith("]")):
+            out.append(stripped + ",\n")
+        else:
+            out.append(line)
+    return "".join(out)
+
+
 def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
     lines = [
         '"""Static palette token data for Dreamcoder themes.',
@@ -173,9 +196,9 @@ def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
         "",
         "from __future__ import annotations",
         "",
-        "VARIANTS = " + json.dumps(variants, indent=4) + "",
+        "VARIANTS = " + _add_trailing_commas(json.dumps(variants, indent=4)) + "",
         "",
-        "ANSI_KEY_NAMES = " + json.dumps(ANSI_KEY_NAMES, indent=4) + "",
+        "ANSI_KEY_NAMES = " + _add_trailing_commas(json.dumps(ANSI_KEY_NAMES, indent=4)) + "",
         "",
     ]
     return "\n".join(lines)

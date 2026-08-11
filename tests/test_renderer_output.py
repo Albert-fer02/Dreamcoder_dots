@@ -6,8 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from dreamcoder_theme.palette import make_guard
+from dreamcoder_theme.palette import guard, make_guard
 from dreamcoder_theme.renderers_codex import codex_tmtheme_content
+from dreamcoder_theme.renderers_extra_nvim import nvim_content
 from dreamcoder_theme.renderers_kitty import kitty_content, kitty_ui_content
 from dreamcoder_theme.renderers_opencode import opencode_content, opencode_tokens
 from dreamcoder_theme.renderers_pi import pi_theme_content
@@ -34,7 +35,6 @@ def dark():
 class TestMakeGuard:
     def test_produces_same_as_direct_guard(self, dark):
         g = make_guard(dark, minimum=3.0)
-        from dreamcoder_theme.palette import guard
 
         expected = guard(dark["accent"], dark["bg"], "dark", minimum=3.0)
         assert g(dark["accent"]) == expected
@@ -187,9 +187,9 @@ class TestCodexTmTheme:
             scope = item.get("scope", "")
             if scope in scope_map:
                 expected = t[scope_map[scope]]
-                assert (
-                    item["settings"]["foreground"] == expected
-                ), f"scope '{scope}': expected {expected}"
+                assert item["settings"]["foreground"] == expected, (
+                    f"scope '{scope}': expected {expected}"
+                )
 
 
 # ── Pi theme JSON structure tests ─────────────────────────────
@@ -258,30 +258,24 @@ class TestNvimColorsName:
     """colors_name must accurately identify the mode, not be swapped."""
 
     def test_dark_sets_correct_colors_name(self, dark):
-        from dreamcoder_theme.renderers_extra_nvim import nvim_content
-
         content = nvim_content(dark)
-        assert (
-            'colors_name = "dreamcoder-dark"' in content
-        ), "dark variant must report dreamcoder-dark"
+        assert 'colors_name = "dreamcoder-dark"' in content, (
+            "dark variant must report dreamcoder-dark"
+        )
 
     def test_light_sets_correct_colors_name(self):
-        from dreamcoder_theme.renderers_extra_nvim import nvim_content
-
         light = VARIANTS["light"]
         content = nvim_content(light)
-        assert (
-            'colors_name = "dreamcoder-light"' in content
-        ), "light variant must report dreamcoder-light"
+        assert 'colors_name = "dreamcoder-light"' in content, (
+            "light variant must report dreamcoder-light"
+        )
 
     def test_dusk_sets_correct_colors_name(self):
-        from dreamcoder_theme.renderers_extra_nvim import nvim_content
-
         dusk = VARIANTS["dusk"]
         content = nvim_content(dusk)
-        assert (
-            'colors_name = "dreamcoder-light"' in content
-        ), "dusk variant (lighter) must report dreamcoder-light"
+        assert 'colors_name = "dreamcoder-light"' in content, (
+            "dusk variant (lighter) must report dreamcoder-light"
+        )
 
 
 # ── Cross-mode consistency ────────────────────────────────────
@@ -297,6 +291,6 @@ class TestCrossModeConsistency:
         dark_t = opencode_tokens(VARIANTS["dark"])
         light_t = opencode_tokens(VARIANTS["light"])
         for key in ("keyword", "function", "type", "string", "variable"):
-            assert (
-                dark_t[key] != light_t[key]
-            ), f"{key} should differ between modes: dark={dark_t[key]} light={light_t[key]}"
+            assert dark_t[key] != light_t[key], (
+                f"{key} should differ between modes: dark={dark_t[key]} light={light_t[key]}"
+            )

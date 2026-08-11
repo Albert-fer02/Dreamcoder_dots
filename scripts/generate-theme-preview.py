@@ -2,6 +2,8 @@
 import json
 from pathlib import Path
 
+from dreamcoder_theme._math import apca_lc
+
 ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
 OUT = ROOT / "docs/generated/dreamcoder-theme-preview.md"
@@ -56,82 +58,6 @@ def rgb(value):
     return tuple(int(value[i : i + 2], 16) for i in (0, 2, 4))
 
 
-def srgb_lin(channel):
-    """APCA uses simple 2.4 exponent, not WCAG piecewise linearization."""
-    return (channel / 255) ** 2.4
-
-
-# APCA color coefficients (sRGB D65)
-_APCA_R = 0.2126729
-_APCA_G = 0.7151522
-_APCA_B = 0.0721750
-
-# APCA exponents
-_NORM_TXT = 0.57  # normal polarity: text exponent
-_NORM_BG = 0.56  # normal polarity: background exponent
-_REV_TXT = 0.62  # reverse polarity: text exponent
-_REV_BG = 0.65  # reverse polarity: background exponent
-
-# APCA clamps and scalers
-_BLK_THRS = 0.022
-_BLK_CLMP = 1.414
-_SCALE = 1.14
-_LO_THRESH = 0.035991
-_LO_FACTOR = 27.7847239587675
-_OFFSET = 0.027
-
-
-def apca_y(value: str) -> float:
-    """Calculate APCA luminance Y for a color (no polarity exponent - applied later)."""
-    r, g, b = (srgb_lin(part) for part in rgb(value))
-    return _APCA_R * r + _APCA_G * g + _APCA_B * b
-
-
-def apca_lc(foreground: str, background: str) -> float:
-    """Calculate APCA contrast (Lc) for text on background.
-
-    Uses correct polarity-aware exponents and black soft-clamp per APCA 0.0.98G-4g spec.
-    """
-    y_fg = apca_y(foreground)
-    y_bg = apca_y(background)
-
-    # Determine polarity: higher Y = lighter
-    if y_bg >= y_fg:  # normal polarity (dark text on light bg)
-        exp_bg = _NORM_BG
-        exp_txt = _NORM_TXT
-        is_reverse = False
-    else:  # reverse polarity (light text on dark bg)
-        exp_bg = _REV_BG
-        exp_txt = _REV_TXT
-        is_reverse = True
-
-    # Apply black soft-clamp if needed (only to colors below threshold)
-    def soft_clamp(y, exponent):
-        if y < _BLK_THRS:
-            return (y + (0.022 - y) ** _BLK_CLMP) ** exponent
-        return y**exponent
-
-    # Calculate SAPC
-    y_bg_pow = soft_clamp(y_bg, exp_bg)
-    y_fg_pow = soft_clamp(y_fg, exp_txt)
-
-    if is_reverse:
-        sapc = (y_bg_pow - y_fg_pow) * _SCALE
-    else:
-        sapc = (y_bg_pow - y_fg_pow) * _SCALE
-
-    # Apply low-contrast offset (hysteresis)
-    if abs(sapc) >= _LO_THRESH:
-        if is_reverse:
-            out = (sapc + _OFFSET) * 100
-        else:
-            out = (sapc - _OFFSET) * 100
-    else:
-        out = sapc * _LO_FACTOR * 100
-
-    return abs(out)
-
-
 def lum(value):
     def channel(part):
         part /= 255
@@ -180,11 +106,11 @@ def apca_table(name, palette, body_min, ui_min):
     ]
     bg = palette["bg"]
     for key in TEXT_KEYS:
-        lc = apca_lc(palette[key], bg)
+        lc = abs(apca_lc(palette[key], bg))
         target = "body" if lc >= body_min else "FAIL"
         rows.append(f"| `{key}` | {lc:.1f} | ≥{body_min} ({target}) |")
     for key in ["border_ui", "focus"]:
-        lc = apca_lc(palette[key], bg)
+        lc = abs(apca_lc(palette[key], bg))
         target = "UI" if lc >= ui_min else "FAIL"
         rows.append(f"| `{key}` | {lc:.1f} | ≥{ui_min} ({target}) |")
     return "\n".join(rows)

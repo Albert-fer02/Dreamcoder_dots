@@ -4,6 +4,8 @@ import importlib
 import inspect
 from pathlib import Path
 
+from dreamcoder_theme import renderers
+
 RENDERERS_DIR = Path(__file__).resolve().parents[1] / "src/dreamcoder_theme"
 
 
@@ -51,7 +53,6 @@ def _get_renderer_functions(module_name: str) -> set[str]:
 
 def test_renderers_all_contains_all_public_functions():
     """Every public function in every renderers_*.py must be in renderers.__all__."""
-    from dreamcoder_theme import renderers
 
     exported = set(renderers.__all__)
     missing: list[str] = []
@@ -69,7 +70,6 @@ def test_renderers_all_contains_all_public_functions():
 
 def test_renderers_all_no_stale_exports():
     """Every name in renderers.__all__ must exist in some renderer module."""
-    from dreamcoder_theme import renderers
 
     exported = set(renderers.__all__)
     all_funcs: set[str] = set()

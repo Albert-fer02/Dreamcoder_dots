@@ -11,6 +11,7 @@ from pathlib import Path
 
 # Re-export pure color math
 from ._math import (
+    apca_lc,
     compute_on_color,
     contrast,
     guard,
@@ -24,6 +25,7 @@ from .palette_tokens import ANSI_KEY_NAMES
 
 # Re-export domain functions for backward compatibility
 __all__ = [
+    "apca_lc",
     "compute_on_color",
     "contrast",
     "guard",
@@ -195,27 +197,121 @@ def make_guard(palette: dict[str, str], minimum: float = 3.0) -> Callable[[str],
     return lambda color: guard(color, bg, mode, minimum=minimum)
 
 
+# ------------------------------------------------------------------
+# Declarative APCA pair classes (ADR-002).
+#
+# Each class names its token pairs and the guardrail keys that own the
+# threshold — light/dusk floor and dark/night floor. No numeric policy
+# literals are allowed here; a missing guardrail key fails validation.
+# ------------------------------------------------------------------
+_APCA_PAIR_CLASSES: tuple[tuple[str, tuple[tuple[str, str], ...], str, str], ...] = (
+    (
+        "body",
+        (
+            ("text", "bg"),
+            ("error", "bg"),
+            ("warning", "bg"),
+            ("success", "bg"),
+            ("info", "bg"),
+            ("diagnostic", "bg"),
+        ),
+        "minimum_apca_body",
+        "minimum_apca_body_dark",
+    ),
+    (
+        "heading",
+        (("text_heading", "bg"),),
+        "minimum_apca_heading_light",
+        "minimum_apca_heading_dark",
+    ),
+    (
+        "quiet",
+        (
+            ("muted", "bg"),
+            ("comment", "bg"),
+            ("subtle", "bg"),
+            ("disabled", "bg"),
+        ),
+        "minimum_apca_quiet",
+        "minimum_apca_quiet",
+    ),
+    (
+        "ui",
+        (
+            ("border_ui", "bg"),
+            ("border_hi", "bg"),
+            ("focus", "bg"),
+        ),
+        "minimum_apca_ui",
+        "minimum_apca_ui_dark",
+    ),
+    (
+        "on-accent",
+        (("on_accent", "accent"),),
+        "minimum_apca_on_accent",
+        "minimum_apca_on_accent",
+    ),
+)
+
+
 def validate_palette(
-    palette: dict[str, str], guardrails: dict[str, float] | None = None
+    palette: dict[str, str],
+    guardrails: dict[str, float] | None = None,
+    *,
+    profile: str = "standard",
+    mode: str | None = None,
 ) -> list[str]:
-    """Return human-readable validation errors for a mode palette."""
+    """Return stable validation errors for a mode palette.
+
+    Dual gate (ADR-002): WCAG 2.2 and APCA are independently blocking and
+    both metrics are fully evaluated — a pass on one metric never waives a
+    failure on the other. Thresholds are resolved from ``guardrails`` by
+    key; APCA thresholds must be present or validation fails closed.
+
+    ``profile`` is the rendering profile (``standard`` today; ``night``
+    arrives with the transform). ``mode`` defaults to the palette-derived
+    base mode (``dark`` for ``details=darker``, otherwise ``light``).
+
+    Metric diagnostics use the stable shape::
+
+        {metric} fail: mode={mode} profile={profile} pair={fg}/{bg} \
+            measured={value} guardrail={key}={threshold}
+    """
     g = guardrails or {}
     errors: list[str] = []
     bg = palette["bg"]
-    mode = detect_mode(palette)
+    effective_mode = mode if mode is not None else detect_mode(palette)
     text_min = g.get("minimum_text_contrast", 4.5)
     main_min = g.get("preferred_main_text_contrast", 7.0)
     sel_min = g.get("minimum_terminal_selection_contrast", 7.0)
 
+    def wcag_diag(fg_key: str, bg_key: str, measured: float, key: str, threshold: float) -> str:
+        return (
+            f"WCAG fail: mode={effective_mode} profile={profile} "
+            f"pair={fg_key}/{bg_key} measured={measured:.2f} "
+            f"guardrail={key}={threshold}"
+        )
+
+    def apca_diag(cls: str, fg_key: str, bg_key: str, lc: float, key: str, threshold: float) -> str:
+        return (
+            f"APCA fail: mode={effective_mode} profile={profile} "
+            f"pair={fg_key}/{bg_key} class={cls} measured={abs(lc):.1f} "
+            f"guardrail={key}={threshold}"
+        )
+
+    # -- WCAG 2.2 gate --------------------------------------------------
     for key in ("text", "muted", "comment", "accent", "error", "warning", "diagnostic"):
         if key not in palette:
             errors.append(f"missing token: {key}")
             continue
-        if contrast(bg, palette[key]) < text_min:
-            errors.append(f"{key} contrast {contrast(bg, palette[key]):.2f} < {text_min}")
+        ratio = contrast(bg, palette[key])
+        if ratio < text_min:
+            errors.append(wcag_diag(key, "bg", ratio, "minimum_text_contrast", text_min))
 
-    if contrast(bg, palette["text"]) < main_min:
-        errors.append(f"main text contrast {contrast(bg, palette['text']):.2f} < {main_min}")
+    if "text" in palette:
+        ratio = contrast(bg, palette["text"])
+        if ratio < main_min:
+            errors.append(wcag_diag("text", "bg", ratio, "preferred_main_text_contrast", main_min))
 
     for fg_key, bg_key in (
         ("selection_fg", "selection_bg"),
@@ -225,18 +321,44 @@ def validate_palette(
         if fg_key in palette and bg_key in palette:
             ratio = contrast(palette[fg_key], palette[bg_key])
             if fg_key == "selection_fg" and ratio < sel_min:
-                errors.append(f"selection pair {ratio:.2f} < {sel_min}")
-            if fg_key.startswith("on_") and ratio < 4.5:
-                errors.append(f"{fg_key}/{bg_key} contrast {ratio:.2f} < 4.5")
+                errors.append(
+                    wcag_diag(fg_key, bg_key, ratio, "minimum_terminal_selection_contrast", sel_min)
+                )
+            elif fg_key.startswith("on_") and ratio < text_min:
+                errors.append(wcag_diag(fg_key, bg_key, ratio, "minimum_text_contrast", text_min))
 
-    if "on_accent" in palette and "accent" in palette:
-        if contrast(palette["on_accent"], palette["accent"]) < 4.5:
-            errors.append("on_accent/accent WCAG contrast below 4.5")
-
+    ansi_min = g.get("minimum_terminal_ansi_contrast", 4.5)
     for index, color in enumerate(ansi(palette)):
-        if contrast(color, bg) < g.get("minimum_terminal_ansi_contrast", 4.5):
-            errors.append(f"ANSI color{index} contrast too low")
+        ratio = contrast(color, bg)
+        if ratio < ansi_min:
+            errors.append(
+                wcag_diag(f"ansi{index}", "bg", ratio, "minimum_terminal_ansi_contrast", ansi_min)
+            )
 
+    # -- APCA gate (independent; never short-circuits WCAG) -------------
+    if mode is not None and mode not in ("light", "dark", "dusk"):
+        errors.append(f"invalid mode: {mode}")
+    for cls, pairs, light_key, dark_key in _APCA_PAIR_CLASSES:
+        key = light_key if effective_mode in ("light", "dusk") else dark_key
+        threshold = g.get(key)
+        if threshold is None:
+            errors.append(f"missing guardrail key: {key}")
+            continue
+        for fg_key, bg_key in pairs:
+            if fg_key not in palette or bg_key not in palette:
+                errors.append(f"missing token: {fg_key} (declared {cls} pair)")
+                continue
+            lc = apca_lc(palette[fg_key], palette[bg_key])
+            if abs(lc) < threshold:
+                errors.append(apca_diag(cls, fg_key, bg_key, lc, key, threshold))
+            # Independent WCAG floor on the SAME declared pair (ADR-002 dual
+            # gate): both metrics are required for every declared class, so
+            # an APCA-boosted near-invisible pair cannot pass unremarked.
+            ratio = contrast(palette[fg_key], palette[bg_key])
+            if ratio < text_min:
+                errors.append(wcag_diag(fg_key, bg_key, ratio, "minimum_text_contrast", text_min))
+
+    # -- Structural checks ----------------------------------------------
     for step in ("bg_soft", "surface0", "surface1", "surface2", "surface3"):
         if step in palette and contrast(palette[step], bg) < 1.02:
             errors.append(f"{step} too close to bg")
@@ -245,6 +367,6 @@ def validate_palette(
         errors.append("comment and subtle must differ")
     if palette.get("accent") == palette.get("accent_2"):
         errors.append("accent and accent_2 must differ")
-    if mode == "light" and "surface3" not in palette:
+    if effective_mode == "light" and "surface3" not in palette:
         errors.append("light mode missing surface3")
     return errors

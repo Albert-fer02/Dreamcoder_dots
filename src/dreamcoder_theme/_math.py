@@ -5,6 +5,8 @@ Domain layer of the Dreamcoder theme engine. Imports only stdlib math types.
 
 from __future__ import annotations
 
+import math
+
 
 def hex_to_rgb(value: str) -> tuple[int, int, int]:
     """Convert hex color string to RGB tuple."""
@@ -25,7 +27,7 @@ def mix(left: str, right: str, amount: float) -> str:
 
 
 def rel_luminance(value: str) -> float:
-    """WCAG 2.1 relative luminance of a hex color."""
+    """WCAG 2.2 relative luminance of a hex color."""
     r, g, b = hex_to_rgb(value)
     sr, sg, sb = r / 255, g / 255, b / 255
     lr = sr / 12.92 if sr <= 0.03928 else ((sr + 0.055) / 1.055) ** 2.4
@@ -35,7 +37,7 @@ def rel_luminance(value: str) -> float:
 
 
 def contrast(fg: str, bg: str) -> float:
-    """WCAG 2.1 contrast ratio between two hex colors."""
+    """WCAG 2.2 contrast ratio between two hex colors."""
     a, b = sorted((rel_luminance(fg), rel_luminance(bg)), reverse=True)
     return (a + 0.05) / (b + 0.05)
 
@@ -96,3 +98,83 @@ def surface_guard(
                 return safe
         return safe
     return color
+
+
+# ------------------------------------------------------------------
+# SAPC/APCA 0.0.98G-4g constants (canonical, ADR-001)
+#
+# Values cross-validated against the former duplicated implementations
+# in scripts/verify-theme-health.py, scripts/generate-theme-preview.py,
+# and tests/test_dreamcoder_global_design_system.py, which now import
+# this module. Do not change these without updating the known-vector
+# evidence in tests/test_apca_implementation.py.
+# ------------------------------------------------------------------
+_APCA_COEFF_R = 0.2126729
+_APCA_COEFF_G = 0.7151522
+_APCA_COEFF_B = 0.0721750
+_APCA_NORM_TXT = 0.57  # normal polarity: text exponent
+_APCA_NORM_BG = 0.56  # normal polarity: background exponent
+_APCA_REV_TXT = 0.62  # reverse polarity: text exponent
+_APCA_REV_BG = 0.65  # reverse polarity: background exponent
+_APCA_BLACK_THRESHOLD = 0.022
+_APCA_BLACK_CLAMP = 1.414
+_APCA_SCALE = 1.14
+_APCA_LOW_THRESHOLD = 0.035991
+_APCA_LOW_FACTOR = 27.7847239587675
+_APCA_OFFSET = 0.027
+
+
+def apca_luminance(value: str) -> float:
+    """APCA luminance Y for a color (no polarity exponent applied).
+
+    Internal helper of the canonical SAPC/APCA implementation. APCA uses
+    the simple 2.4 exponent, not WCAG piecewise linearization.
+    """
+    r, g, b = hex_to_rgb(value)
+    lin_r = math.pow(r / 255, 2.4)
+    lin_g = math.pow(g / 255, 2.4)
+    lin_b = math.pow(b / 255, 2.4)
+    return _APCA_COEFF_R * lin_r + _APCA_COEFF_G * lin_g + _APCA_COEFF_B * lin_b
+
+
+def apca_lc(foreground: str, background: str) -> float:
+    """SAPC/APCA 0.0.98G-4g contrast (Lc) for text on a background.
+
+    Returns a SIGNED, polarity-aware value: positive when the background
+    is lighter than the foreground (dark text on light background), and
+    negative when the foreground is lighter than the background (light
+    text on dark background). Threshold comparisons MUST use ``abs(lc)``;
+    diagnostics retain the signed value and polarity.
+    """
+    y_fg = apca_luminance(foreground)
+    y_bg = apca_luminance(background)
+
+    # Determine polarity: higher Y = lighter.
+    if y_bg >= y_fg:  # normal polarity (dark text on light bg)
+        exp_bg = _APCA_NORM_BG
+        exp_txt = _APCA_NORM_TXT
+        is_reverse = False
+    else:  # reverse polarity (light text on dark bg)
+        exp_bg = _APCA_REV_BG
+        exp_txt = _APCA_REV_TXT
+        is_reverse = True
+
+    # Black soft-clamp: only colors below the threshold are clamped.
+    def soft_clamp(y: float, exponent: float) -> float:
+        if y < _APCA_BLACK_THRESHOLD:
+            return math.pow(y + math.pow(_APCA_BLACK_THRESHOLD - y, _APCA_BLACK_CLAMP), exponent)
+        return math.pow(y, exponent)
+
+    y_bg_pow = soft_clamp(y_bg, exp_bg)
+    y_fg_pow = soft_clamp(y_fg, exp_txt)
+
+    # SAPC with the polarity-aware exponents.
+    sapc = (y_bg_pow - y_fg_pow) * _APCA_SCALE
+
+    # Low-contrast offset (hysteresis).
+    if abs(sapc) >= _APCA_LOW_THRESHOLD:
+        out = ((sapc + _APCA_OFFSET) if is_reverse else (sapc - _APCA_OFFSET)) * 100
+    else:
+        out = sapc * _APCA_LOW_FACTOR * 100
+
+    return out
