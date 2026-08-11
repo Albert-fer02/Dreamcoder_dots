@@ -56,3 +56,45 @@ terminal_colors:
     cyan: '{p[14]}'
     white: '{p[15]}'
 """
+
+
+# --- Hexagonal-architecture-v2: adjacent immutable registrations (design §5) ---
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="ghostty",
+        renderer=ghostty_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.PROFILE_AWARE_SELECTOR,
+        ),
+        summary_label="Ghostty terminal theme",
+    ),
+    RendererRegistration(
+        consumer_id="warp",
+        renderer=warp_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.PROFILE_AWARE_SELECTOR,
+        ),
+        summary_label="Warp terminal theme",
+    ),
+)

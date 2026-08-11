@@ -336,3 +336,114 @@ def rofi_matugen_content(c: dict[str, str]) -> str:
     surface-container-high: {c["surface1"]};
     surface-container-highest: {c["surface2"]};
 }}"""
+
+
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="hyprland",
+        renderer=hypr_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Hyprland main colors",
+    ),
+    RendererRegistration(
+        consumer_id="hypr_colors_lua",
+        renderer=hypr_colors_lua_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.NO_VARIANTS,
+            mutation=MutationStrategy.ACTIVE_ONLY_BRIDGE,
+        ),
+        summary_label="Hyprland Lua colors",
+    ),
+    RendererRegistration(
+        consumer_id="hypr_colors_conf",
+        renderer=hypr_colors_conf_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.NO_VARIANTS,
+            mutation=MutationStrategy.ACTIVE_ONLY_BRIDGE,
+        ),
+        summary_label="Hyprland conf colors",
+    ),
+    RendererRegistration(
+        consumer_id="waybar",
+        renderer=waybar_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Waybar CSS",
+    ),
+    RendererRegistration(
+        consumer_id="waybar_matugen",
+        renderer=waybar_matugen_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.NO_VARIANTS,
+            mutation=MutationStrategy.ACTIVE_ONLY_BRIDGE,
+        ),
+        summary_label="Waybar matugen bridge",
+    ),
+    RendererRegistration(
+        consumer_id="rofi",
+        renderer=rofi_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Rofi theme",
+    ),
+    RendererRegistration(
+        consumer_id="rofi_matugen",
+        renderer=rofi_matugen_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.NO_VARIANTS,
+            mutation=MutationStrategy.ACTIVE_ONLY_BRIDGE,
+        ),
+        summary_label="Rofi matugen bridge",
+    ),
+)

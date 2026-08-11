@@ -218,3 +218,59 @@ def fzf_content(c: dict[str, str]) -> str:
         f"preview-border:{c['border']}",
     ]
     return f'#!/usr/bin/env bash\nset -euo pipefail\n# {c["name"]} — fzf\nexport FZF_DEFAULT_OPTS="${{FZF_DEFAULT_OPTS:-}} --color={",".join(parts)}"\n'
+
+
+# --- Hexagonal-architecture-v2: adjacent immutable registrations (design §5) ---
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="zsh_syntax",
+        renderer=zsh_syntax_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Zsh syntax highlighting",
+    ),
+    RendererRegistration(
+        consumer_id="ls_colors",
+        renderer=ls_colors_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="LS_COLORS snippet",
+    ),
+    RendererRegistration(
+        consumer_id="fzf",
+        renderer=fzf_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Fzf snippet",
+    ),
+)

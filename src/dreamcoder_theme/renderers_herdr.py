@@ -105,3 +105,32 @@ def herdr_token_mapping() -> tuple[tuple[str, str], ...]:
 def herdr_ui_field_rhs() -> dict[str, str]:
     """Expose the evidence-bound [ui] field right-hand sides for tests."""
     return dict(_UI_FIELD_RHS)
+
+
+from .herdr_contract import HERDR_073_PROFILE  # noqa: E402
+from .renderer_adapters import VersionedHerdrAdapter  # noqa: E402
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="herdr",
+        renderer=VersionedHerdrAdapter(HERDR_073_PROFILE, "dark"),
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.VERSIONED_HERDR,
+            active=ActiveStrategy.REPOSITORY_ONLY,
+            repository=RepositoryStrategy.VERSIONED_VARIANTS,
+            mutation=MutationStrategy.REPOSITORY_VARIANT_WRITER,
+        ),
+        summary_label="Herdr repository profiles",
+    ),
+)

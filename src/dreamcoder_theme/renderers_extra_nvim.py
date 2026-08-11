@@ -182,3 +182,31 @@ end
     lines.extend(nvim_plugin_groups(*group_args))
 
     return "\n".join(lines)
+
+
+from .renderer_adapters import NvimDispatcherAdapter  # noqa: E402
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="nvim",
+        renderer=NvimDispatcherAdapter(),
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.NVIM_DISPATCHER,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Neovim dispatcher + variants",
+    ),
+)

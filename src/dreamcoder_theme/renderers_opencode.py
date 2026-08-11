@@ -213,3 +213,31 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
   }}
 }}
 """
+
+
+from .renderer_adapters import TransparentOpenCodeAdapter  # noqa: E402
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="opencode",
+        renderer=TransparentOpenCodeAdapter(),
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.TRANSPARENT_OPENCODE,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.NO_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="OpenCode transparent theme",
+    ),
+)

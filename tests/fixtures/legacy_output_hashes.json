@@ -1,0 +1,329 @@
+{
+  "artifacts": {
+    "antigravity": {
+      "dark": {
+        "path": "DreamcoderAntigravity/Dreamcoder-Dark.json",
+        "sha256": "676cb9378fffd4e393fcbe30d67f7a5824628542b0919f0bcab5b9ecacadd17f"
+      },
+      "light": {
+        "path": "DreamcoderAntigravity/Dreamcoder-Light.json",
+        "sha256": "1f0355d1d15467d3a28b55350b334f79da3870cb43d5c219bfbf2d34575e53e2"
+      }
+    },
+    "bat": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/bat-dreamcoder-dark.sh",
+        "sha256": "b0f639db5318703c0bd9617a7718aa684d0c61839d44ebf01c15db7e1432608a"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/bat-dreamcoder-light.sh",
+        "sha256": "acc15ff51062b481703880e568d6b599815fcc77f9e3714ff33548e3c520b5e0"
+      }
+    },
+    "bat_theme": {
+      "dark": {
+        "path": "DreamcoderBat/.config/bat/themes/Dreamcoder-Dark.tmTheme",
+        "sha256": "1c4292d75d472ea80d912824139ca39b0f66cae7bdb65303a991da129d6a8371"
+      },
+      "light": {
+        "path": "DreamcoderBat/.config/bat/themes/Dreamcoder-Light.tmTheme",
+        "sha256": "f05888d0605c756ace6e35961f7ace5b867c316e5c66c36ab2230b30b13f7cba"
+      }
+    },
+    "btop": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/btop-dreamcoder-dark.theme",
+        "sha256": "976c876c7d52db51c91d3b7f0092f0ecf322acdc17eaf45f90a30b335c3ee3bb"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/btop-dreamcoder-light.theme",
+        "sha256": "3b67d8d4118e45f4570c20ba51496b352fed666c50ff45388d11eec3a6dd132c"
+      }
+    },
+    "cava": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/cava-dreamcoder-dark.config",
+        "sha256": "bd9f0ca007cdb8bfe165f35b2d394366dd1326b9a31d1b58f35d4b5d45aa0646"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/cava-dreamcoder-light.config",
+        "sha256": "6e6240f80e710a0ff702ae54341aa97e0376f2879492648737d8f577b806fd1a"
+      }
+    },
+    "codex_app": {
+      "dark": {
+        "path": "DreamcoderCodexApp/Dreamcoder-Dark.codex-theme.json",
+        "sha256": "78f39c37d08e14dcc0a05d07958b52cde2873dd325f562587fae12400e226bf9"
+      },
+      "light": {
+        "path": "DreamcoderCodexApp/Dreamcoder-Light.codex-theme.json",
+        "sha256": "c82c66585719a326070d2b68c106391e18d2f1768cc9707bc9092ee88b55e105"
+      }
+    },
+    "codex_theme": {
+      "dark": {
+        "path": "DreamcoderCodexCLI/Dreamcoder-Dark.tmTheme",
+        "sha256": "1c4292d75d472ea80d912824139ca39b0f66cae7bdb65303a991da129d6a8371"
+      },
+      "light": {
+        "path": "DreamcoderCodexCLI/Dreamcoder-Light.tmTheme",
+        "sha256": "f05888d0605c756ace6e35961f7ace5b867c316e5c66c36ab2230b30b13f7cba"
+      }
+    },
+    "delta": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/delta-dreamcoder-dark.gitconfig",
+        "sha256": "39c1d49a0db5542458eb32005ba9dee400558b297fb70f22ee520029d4c6d16a"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/delta-dreamcoder-light.gitconfig",
+        "sha256": "226b65b725a0294b51621e34ae39186fda3eb735f2afafc4acc8507f9fb4636f"
+      }
+    },
+    "dunst": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-dark.conf",
+        "sha256": "731551bd7a0b4e425ad0288f25171b06c841c9cba0bdb0e7049ded0c1ce7409b"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-light.conf",
+        "sha256": "6cc8c0f406c71886a2379321487e420abf41f3eae0a5fc7fb9587c11d4fb6a05"
+      }
+    },
+    "firefox": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-dark.css",
+        "sha256": "412d126c309da44c1d476c4e63fe77d4f44ed6b924fcade93120affdcb4aff72"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-light.css",
+        "sha256": "653c6663cfbf8b846d68551d22dbeb690a97f0d2f33da718929e38186a32b497"
+      }
+    },
+    "fzf": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-dark.sh",
+        "sha256": "9101b2df3f7ee4555bd940614e91ad581283229e5eb551dbca4485bdd60af388"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-light.sh",
+        "sha256": "4b501b5382ae8d8d31ae97a19cbff9f3a41d7530ef93e7a7043040370f5c4033"
+      }
+    },
+    "ghostty": {
+      "dark": {
+        "path": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-dark",
+        "sha256": "2bec52837f9b1ce5f0ae65d83a9a79329a81c48498a4f6200ff89053f393d756"
+      },
+      "light": {
+        "path": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-light",
+        "sha256": "0d711dee73cdf529e5d808ee7317effb73a9c41d7b10fb8730269e31152b0628"
+      }
+    },
+    "herdr": {
+      "dark": {
+        "path": "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3/config.dark.toml",
+        "sha256": "a2791dbc18beed0c5fa8e1f511d3c834937885f0baa1a7b7742d90a91f125c6c"
+      },
+      "light": {
+        "path": "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3/config.light.toml",
+        "sha256": "882ee12a54b317f22bb8d68fbd1d7ce2f42b42885dcff13b2947b5bc91ac3a2d"
+      }
+    },
+    "hypr_colors_conf": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/hypr-colors-dark.conf",
+        "sha256": "088849f6402b62811a3b04f11701b62dcf3717a7be29eaf38af30548da9586cd"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/hypr-colors-light.conf",
+        "sha256": "f484c258eb06d5807bf3e9231cad9b505d3aae9f0fc54fe1d8dad3b82c29211f"
+      }
+    },
+    "hypr_colors_lua": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/hypr-colors-dark.lua",
+        "sha256": "268ad3e3c7ece2dd3c225f1261c779e499e568d7fbf0690eaed03ae823132a33"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/hypr-colors-light.lua",
+        "sha256": "c798b40f7358517f60423927677cc80d9ad2c45007db10cb21fdbdae34e006e0"
+      }
+    },
+    "hyprland": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/hyprland-dark.conf",
+        "sha256": "f97373f5316f5ba722500d77bde65c6f706cbac59c7f18da461c5c06e2291343"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/hyprland-light.conf",
+        "sha256": "2a51ddc8cb411589e4ea3c6873dd4b4e5aceebadf04e8c5c6927b6897868e127"
+      }
+    },
+    "kitty": {
+      "dark": {
+        "path": "DreamcoderKitty/.config/kitty/colors-dreamcoder-dark.conf",
+        "sha256": "2c9716587e2359cfb326ef89c27b3fd2d97520b436231dff7dfc8f59400d542b"
+      },
+      "light": {
+        "path": "DreamcoderKitty/.config/kitty/colors-dreamcoder-light.conf",
+        "sha256": "ecf04dda4f80627e86579ad69a7310ddd624af300727223beb3547ef21c48408"
+      }
+    },
+    "kitty_ui": {
+      "dark": {
+        "path": "DreamcoderKitty/.config/kitty/dreamcoder-ui-dark.conf",
+        "sha256": "2c82e80bc7a667f6ea055e16f51f54664075ff4711e4ee4d3dc886338eaa8854"
+      },
+      "light": {
+        "path": "DreamcoderKitty/.config/kitty/dreamcoder-ui-light.conf",
+        "sha256": "994a246c65114429edf0849e0a591a9680e0af461fa11022c3bc1aee2c140979"
+      }
+    },
+    "ls_colors": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-dark.sh",
+        "sha256": "ef7bfc5bdf9a564a9b4e1751369913b14eb694117744fe121fe0f161cc2fd364"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-light.sh",
+        "sha256": "62f555c2bdd472d9c188747201b25568394bf1df86830d6e6e6649391ab3ac85"
+      }
+    },
+    "nvim": {
+      "dark": {
+        "path": "DreamcoderNvim/.config/nvim/colors/dreamcoder-dark.lua",
+        "sha256": "ca2ac12b4958797a770273ee8311b74273fe93ac0355c1a74821210589b8c5df"
+      },
+      "light": {
+        "path": "DreamcoderNvim/.config/nvim/colors/dreamcoder-light.lua",
+        "sha256": "1c15ed96d58822744ac7fb17fd4de0b955c0957a635893db4c2ff80e2ef53085"
+      }
+    },
+    "obsidian": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-dark.css",
+        "sha256": "338df9078717eda4dc23ad69d0bf168a3e197fc34ca312d40a3457c4da261a6c"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-light.css",
+        "sha256": "43004cd867424362e67348b552b366bfc8a98ec03f0522b5669d7a7c0f5560b6"
+      }
+    },
+    "opencode": {
+      "dark": {
+        "path": ".opencode/themes/dreamcoder.json",
+        "sha256": "a696d0202d57b76e04ac3b57624fa5aa7c2357dd6223dd3f33ea4262ee9a1a82"
+      },
+      "light": {
+        "path": ".opencode/themes/dreamcoder.json",
+        "sha256": "ae1d05c54e712a5950c4f3b8e6e8f96356e012fcc6b892b97e9f0cf5244de1df"
+      }
+    },
+    "pi_theme": {
+      "dark": {
+        "path": "DreamcoderPi/.pi/agent/themes/dreamcoder-dark.json",
+        "sha256": "09aca704177d6a31c5656f02dbb6774f6c141cb64417c54c8d57646663209703"
+      },
+      "light": {
+        "path": "DreamcoderPi/.pi/agent/themes/dreamcoder-light.json",
+        "sha256": "59843de33f2c6f6f2c3f914c74afae52c3c27455c983f261fd2e414585e544f2"
+      }
+    },
+    "rofi": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/rofi-dark.rasi",
+        "sha256": "88f43eb63bf36e27aecca4603d483d7d6786a0f6ad942f498078fb4e26f4b1e0"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/rofi-light.rasi",
+        "sha256": "9bac3cd0211b3de17edee1774d3a32cad2e5db1ae144e4000487c055f1232290"
+      }
+    },
+    "rofi_matugen": {
+      "dark": {
+        "path": "active:rofi/colors.rasi",
+        "sha256": "fc27a15d3085c8d72a30ac7f75769a09327f8f8c34e2591c98e7577f6498cf6d"
+      },
+      "light": {
+        "path": "active:rofi/colors.rasi",
+        "sha256": "201ebd5b52efe03d34ef5f4714c9f559650669ff4d370f176a5457ac2c70c200"
+      }
+    },
+    "starship": {
+      "dark": {
+        "path": "DreamcoderShell/.config/starship-dark.toml",
+        "sha256": "1d87038104d2533cd9d0c6df736fe0225b0eaad615b53288e18e644a3290a1cc"
+      },
+      "light": {
+        "path": "DreamcoderShell/.config/starship-light.toml",
+        "sha256": "32d8745fe2ba6d4f3189c0aa8e699096c607c44f90bd6c3b5846ee61121bf753"
+      }
+    },
+    "tmux": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-dark.conf",
+        "sha256": "1f63ec023ac1c3755201a0bfcea37f39ddf92f3f41b71eb7e190db598bd947a7"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-light.conf",
+        "sha256": "ebe418a3f39452c60342c6f855b1840fb60959dae14c9860337f237599a2790d"
+      }
+    },
+    "warp": {
+      "dark": {
+        "path": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Dark.yaml",
+        "sha256": "352ed6c77e52d54ead217cb22b146774ec2e7b05af63c17f29b202136f920e29"
+      },
+      "light": {
+        "path": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
+        "sha256": "e4696bf15664f8732370e70198968cb7f9dd7c196d2add180f33a5572c9c48a8"
+      }
+    },
+    "waybar": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/waybar-dark.css",
+        "sha256": "014ec39034f5a632f1b7c10baa02e303423d81c61e4c97156be4a6e0dd857d71"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/waybar-light.css",
+        "sha256": "ff7939e74b36702932547e5fe533646e0fc8d9af68bc62e3659ddd977a7b8ee7"
+      }
+    },
+    "waybar_matugen": {
+      "dark": {
+        "path": "active:waybar/colors.css",
+        "sha256": "b164ba2aee50ee6e8a9b074117664ceb13b34c9052cd8bc81f24887713faaf5c"
+      },
+      "light": {
+        "path": "active:waybar/colors.css",
+        "sha256": "63888ac87c3a513f02c4833b9bc9a3ff18d54184843d0d6d364c99299c5781a5"
+      }
+    },
+    "zellij": {
+      "dark": {
+        "path": null,
+        "sha256": null
+      },
+      "light": {
+        "path": null,
+        "sha256": null
+      }
+    },
+    "zsh_syntax": {
+      "dark": {
+        "path": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-dark.zsh",
+        "sha256": "ce9b3ab611e7721fa1c3a8be319144963ae30a7caac387669fef7e74267065b6"
+      },
+      "light": {
+        "path": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-light.zsh",
+        "sha256": "e0ebed6e1908cc49566abf4a8787ad4796478fc47c1cb99995646b0914143af3"
+      }
+    }
+  },
+  "modes": [
+    "dark",
+    "light"
+  ],
+  "schema": "dreamcoder.legacy-output-hashes.v1"
+}

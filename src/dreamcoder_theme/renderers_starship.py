@@ -172,3 +172,31 @@ style = "fg:diag bold"
 format = "[ $symbol $context]($style)"
 only_with_files = true
 '''
+
+
+# --- Hexagonal-architecture-v2: adjacent immutable registrations (design §5) ---
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="starship",
+        renderer=starship_content,
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.DIRECT_CONTENT,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.WRITE_IF_CHANGED,
+        ),
+        summary_label="Starship prompt theme",
+    ),
+)

@@ -1,0 +1,699 @@
+{
+  "consumer_rows": [
+    {
+      "active_path": "DreamcoderKitty/.config/kitty/colors-dreamcoder-dark.conf",
+      "consumer_id": "kitty",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf",
+      "selection_strategy": "active symlink/file selects or receives Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderKitty/.config/kitty/colors-dreamcoder-dark.conf",
+        "light": "DreamcoderKitty/.config/kitty/colors-dreamcoder-light.conf",
+        "night": "DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf"
+      },
+      "writer": "write_variant_files + write_if_changed; kitty_content"
+    },
+    {
+      "active_path": "DreamcoderKitty/.config/kitty/dreamcoder-ui-dark.conf",
+      "consumer_id": "kitty_ui",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf",
+      "selection_strategy": "stable dreamcoder-ui.conf includes/contains Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderKitty/.config/kitty/dreamcoder-ui-dark.conf",
+        "light": "DreamcoderKitty/.config/kitty/dreamcoder-ui-light.conf",
+        "night": "DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf"
+      },
+      "writer": "write_variant_files + write_if_changed; kitty_ui_content"
+    },
+    {
+      "active_path": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder",
+      "consumer_id": "ghostty",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night",
+      "selection_strategy": "select theme = dreamcoder-night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-dark",
+        "light": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-light",
+        "night": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night"
+      },
+      "writer": "write_variant_files + update_ghostty_theme; ghostty_content"
+    },
+    {
+      "active_path": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
+      "consumer_id": "warp",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml",
+      "selection_strategy": "active symlink/file selects it; dark opacity/blur semantics",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Dark.yaml",
+        "light": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
+        "night": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml"
+      },
+      "writer": "write_variant_files + update_warp_settings; warp_content"
+    },
+    {
+      "active_path": "DreamcoderShell/.config/starship.toml",
+      "consumer_id": "starship",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderShell/.config/starship-night.toml",
+      "selection_strategy": "palette section never standard-dark ([palettes.dreamcoder-night])",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderShell/.config/starship-dark.toml",
+        "light": "DreamcoderShell/.config/starship-light.toml",
+        "night": "DreamcoderShell/.config/starship-night.toml"
+      },
+      "writer": "write_variant_files + write_if_changed; starship_content"
+    },
+    {
+      "active_path": null,
+      "consumer_id": "codex_app",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderCodexApp/Dreamcoder-Night.codex-theme.json",
+      "selection_strategy": "stable Dreamcoder.codex-theme.json receives Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderCodexApp/Dreamcoder-Dark.codex-theme.json",
+        "light": "DreamcoderCodexApp/Dreamcoder-Light.codex-theme.json",
+        "night": "DreamcoderCodexApp/Dreamcoder-Night.codex-theme.json"
+      },
+      "writer": "write_variant_files + write_if_changed; opencode_content"
+    },
+    {
+      "active_path": "DreamcoderCodexCLI/Dreamcoder.tmTheme",
+      "consumer_id": "codex_theme",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderCodexCLI/Dreamcoder-Night.tmTheme",
+      "selection_strategy": "stable Dreamcoder.tmTheme receives Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderCodexCLI/Dreamcoder-Dark.tmTheme",
+        "light": "DreamcoderCodexCLI/Dreamcoder-Light.tmTheme",
+        "night": "DreamcoderCodexCLI/Dreamcoder-Night.tmTheme"
+      },
+      "writer": "write_variant_files + write_if_changed; codex_tmtheme_content"
+    },
+    {
+      "active_path": "DreamcoderBat/.config/bat/themes",
+      "consumer_id": "bat_theme",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderBat/.config/bat/themes/Dreamcoder-Night.tmTheme",
+      "selection_strategy": "stable Dreamcoder.tmTheme receives Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderBat/.config/bat/themes/Dreamcoder-Dark.tmTheme",
+        "light": "DreamcoderBat/.config/bat/themes/Dreamcoder-Light.tmTheme",
+        "night": "DreamcoderBat/.config/bat/themes/Dreamcoder-Night.tmTheme"
+      },
+      "writer": "write_variant_files + write_if_changed; codex_tmtheme_content"
+    },
+    {
+      "active_path": "DreamcoderPi/.pi/agent/themes/dreamcoder-light.json",
+      "consumer_id": "pi_theme",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderPi/.pi/agent/themes/dreamcoder-night.json",
+      "selection_strategy": "stable dreamcoder.json receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderPi/.pi/agent/themes/dreamcoder-dark.json",
+        "light": "DreamcoderPi/.pi/agent/themes/dreamcoder-light.json",
+        "night": "DreamcoderPi/.pi/agent/themes/dreamcoder-night.json"
+      },
+      "writer": "write_variant_files + write_if_changed; pi_theme_content"
+    },
+    {
+      "active_path": null,
+      "consumer_id": "antigravity",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderAntigravity/Dreamcoder-Night.json",
+      "selection_strategy": "stable Dreamcoder.json receives Night; classified dark without name detection",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderAntigravity/Dreamcoder-Dark.json",
+        "light": "DreamcoderAntigravity/Dreamcoder-Light.json",
+        "night": "DreamcoderAntigravity/Dreamcoder-Night.json"
+      },
+      "writer": "write_variant_files + write_if_changed; antigravity_content"
+    },
+    {
+      "active_path": "DreamcoderTmux/.config/tmux/tmux-dreamcoder.conf",
+      "consumer_id": "tmux",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf",
+      "selection_strategy": "active file receives Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-dark.conf",
+        "light": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-light.conf",
+        "night": "DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf"
+      },
+      "writer": "write_variant_files + write_if_changed; tmux_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/zsh-syntax-highlighting-dreamcoder.zsh",
+      "consumer_id": "zsh_syntax",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-night.zsh",
+      "selection_strategy": "active sourced file receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-dark.zsh",
+        "light": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-light.zsh",
+        "night": "DreamcoderThemes/dreamcoder/zsh-syntax-highlighting-dreamcoder-night.zsh"
+      },
+      "writer": "write_variant_files + write_if_changed; zsh_syntax_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/ls-colors-dreamcoder.sh",
+      "consumer_id": "ls_colors",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-night.sh",
+      "selection_strategy": "active sourced file receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-dark.sh",
+        "light": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-light.sh",
+        "night": "DreamcoderThemes/dreamcoder/ls-colors-dreamcoder-night.sh"
+      },
+      "writer": "write_variant_files + write_if_changed; ls_colors_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/bat-dreamcoder.sh",
+      "consumer_id": "bat",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/bat-dreamcoder-night.sh",
+      "selection_strategy": "selects the Night TextMate sibling (BAT_THEME=Dreamcoder-Night)",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/bat-dreamcoder-dark.sh",
+        "light": "DreamcoderThemes/dreamcoder/bat-dreamcoder-light.sh",
+        "night": "DreamcoderThemes/dreamcoder/bat-dreamcoder-night.sh"
+      },
+      "writer": "write_variant_files + write_if_changed; bat_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/delta-dreamcoder.gitconfig",
+      "consumer_id": "delta",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig",
+      "selection_strategy": "active include/symlink selects Night; syntax-theme=Dreamcoder-Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/delta-dreamcoder-dark.gitconfig",
+        "light": "DreamcoderThemes/dreamcoder/delta-dreamcoder-light.gitconfig",
+        "night": "DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig"
+      },
+      "writer": "write_variant_files + write_if_changed; delta_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/fzf-dreamcoder.sh",
+      "consumer_id": "fzf",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-night.sh",
+      "selection_strategy": "active sourced file receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-dark.sh",
+        "light": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-light.sh",
+        "night": "DreamcoderThemes/dreamcoder/fzf-dreamcoder-night.sh"
+      },
+      "writer": "write_variant_files + write_if_changed; fzf_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/btop-dreamcoder.theme",
+      "consumer_id": "btop",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme",
+      "selection_strategy": "active dreamcoder.theme symlink selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/btop-dreamcoder-dark.theme",
+        "light": "DreamcoderThemes/dreamcoder/btop-dreamcoder-light.theme",
+        "night": "DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme"
+      },
+      "writer": "write_variant_files + write_if_changed; btop_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/dunst-dreamcoder.conf",
+      "consumer_id": "dunst",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-night.conf",
+      "selection_strategy": "active included file receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-dark.conf",
+        "light": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-light.conf",
+        "night": "DreamcoderThemes/dreamcoder/dunst-dreamcoder-night.conf"
+      },
+      "writer": "write_variant_files + write_if_changed; dunst_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/firefox-dreamcoder.css",
+      "consumer_id": "firefox",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-night.css",
+      "selection_strategy": "active userChrome import receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-dark.css",
+        "light": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-light.css",
+        "night": "DreamcoderThemes/dreamcoder/firefox-dreamcoder-night.css"
+      },
+      "writer": "write_variant_files + write_if_changed; firefox_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/obsidian-dreamcoder.css",
+      "consumer_id": "obsidian",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-night.css",
+      "selection_strategy": "active snippet receives/selects Night and keeps .theme-dark",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-dark.css",
+        "light": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-light.css",
+        "night": "DreamcoderThemes/dreamcoder/obsidian-dreamcoder-night.css"
+      },
+      "writer": "write_variant_files + write_if_changed; obsidian_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/cava-dreamcoder.config",
+      "consumer_id": "cava",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/cava-dreamcoder-night.config",
+      "selection_strategy": "active include receives/selects Night",
+      "source": "registry",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/cava-dreamcoder-dark.config",
+        "light": "DreamcoderThemes/dreamcoder/cava-dreamcoder-light.config",
+        "night": "DreamcoderThemes/dreamcoder/cava-dreamcoder-night.config"
+      },
+      "writer": "write_variant_files + write_if_changed; cava_content"
+    },
+    {
+      "active_path": "/home/dreamcoder08/.config/opencode/themes/dreamcoder.json",
+      "consumer_id": "opencode",
+      "klass": "active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": ".opencode/themes/dreamcoder.json",
+      "selection_strategy": "stable theme ID dreamcoder overwritten with Night; no dreamcoder-night.json sibling",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": ".opencode/themes/dreamcoder.json",
+        "light": ".opencode/themes/dreamcoder.json",
+        "night": ".opencode/themes/dreamcoder.json"
+      },
+      "writer": "write_if_changed; opencode_content(transparent_background=True)"
+    },
+    {
+      "active_path": null,
+      "consumer_id": "zellij",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderZellij/.config/zellij/dreamcoder-night.kdl",
+      "selection_strategy": "generate KDL with themes { dreamcoder-night } and select theme \"dreamcoder-night\"",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": null,
+        "light": null,
+        "night": "DreamcoderZellij/.config/zellij/dreamcoder-night.kdl"
+      },
+      "writer": "write_if_changed; zellij_content + update_zellij_config"
+    },
+    {
+      "active_path": "DreamcoderNvim/.config/nvim/colors/dreamcoder.lua",
+      "consumer_id": "nvim",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderNvim/.config/nvim/colors/dreamcoder-night.lua",
+      "selection_strategy": "dispatcher resolves DREAMCODER_THEME_PROFILE before base mode",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderNvim/.config/nvim/colors/dreamcoder-dark.lua",
+        "light": "DreamcoderNvim/.config/nvim/colors/dreamcoder-light.lua",
+        "night": "DreamcoderNvim/.config/nvim/colors/dreamcoder-night.lua"
+      },
+      "writer": "write_variant_files + nvim_dispatcher_content; nvim_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/dreamcoder/hyprland.conf",
+      "consumer_id": "hyprland",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/hyprland-night.conf",
+      "selection_strategy": "stable hyprland.conf receives Night; shell selector may point to the Night sibling",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/hyprland-dark.conf",
+        "light": "DreamcoderThemes/dreamcoder/hyprland-light.conf",
+        "night": "DreamcoderThemes/dreamcoder/hyprland-night.conf"
+      },
+      "writer": "write_if_changed; hypr_content"
+    },
+    {
+      "active_path": "/home/dreamcoder08/.config/hypr/colors.lua",
+      "consumer_id": "hypr_colors_lua",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/hypr-colors-night.lua",
+      "selection_strategy": "active symlink/file selects Night",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/hypr-colors-dark.lua",
+        "light": "DreamcoderThemes/dreamcoder/hypr-colors-light.lua",
+        "night": "DreamcoderThemes/dreamcoder/hypr-colors-night.lua"
+      },
+      "writer": "write_variant_files; hypr_colors_lua_content"
+    },
+    {
+      "active_path": "/home/dreamcoder08/.config/hypr/colors.conf",
+      "consumer_id": "hypr_colors_conf",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/hypr-colors-night.conf",
+      "selection_strategy": "active symlink/file selects Night",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/hypr-colors-dark.conf",
+        "light": "DreamcoderThemes/dreamcoder/hypr-colors-light.conf",
+        "night": "DreamcoderThemes/dreamcoder/hypr-colors-night.conf"
+      },
+      "writer": "write_variant_files; hypr_colors_conf_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/dreamcoder/waybar.css",
+      "consumer_id": "waybar",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/waybar-night.css",
+      "selection_strategy": "stable/selected Waybar CSS receives Night",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/waybar-dark.css",
+        "light": "DreamcoderThemes/dreamcoder/waybar-light.css",
+        "night": "DreamcoderThemes/dreamcoder/waybar-night.css"
+      },
+      "writer": "write_if_changed; waybar_content"
+    },
+    {
+      "active_path": "active:waybar/colors.css",
+      "consumer_id": "waybar_matugen",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "active:waybar/colors.css",
+      "selection_strategy": "write transformed Night directly; symlink-aware colors-night.css selection",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "active:waybar/colors.css",
+        "light": "active:waybar/colors.css",
+        "night": "active:waybar/colors.css"
+      },
+      "writer": "write_if_changed; waybar_matugen_content"
+    },
+    {
+      "active_path": "DreamcoderThemes/dreamcoder/rofi.rasi",
+      "consumer_id": "rofi",
+      "klass": "variant file + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderThemes/dreamcoder/rofi-night.rasi",
+      "selection_strategy": "stable/selected Rofi theme receives Night",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "DreamcoderThemes/dreamcoder/rofi-dark.rasi",
+        "light": "DreamcoderThemes/dreamcoder/rofi-light.rasi",
+        "night": "DreamcoderThemes/dreamcoder/rofi-night.rasi"
+      },
+      "writer": "write_if_changed; rofi_content"
+    },
+    {
+      "active_path": "active:rofi/colors.rasi",
+      "consumer_id": "rofi_matugen",
+      "klass": "snippet + active-selected",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "active:rofi/colors.rasi",
+      "selection_strategy": "write transformed Night directly; symlink-aware colors-night.rasi selection",
+      "source": "explicit",
+      "variant_paths": {
+        "dark": "active:rofi/colors.rasi",
+        "light": "active:rofi/colors.rasi",
+        "night": "active:rofi/colors.rasi"
+      },
+      "writer": "write_if_changed; rofi_matugen_content"
+    },
+    {
+      "active_path": null,
+      "consumer_id": "herdr",
+      "klass": "variant file",
+      "modes": [
+        "dark",
+        "light",
+        "night"
+      ],
+      "night_artifact": "DreamcoderHerdr/.config/herdr/dreamcoder/<version>/config.night.toml",
+      "selection_strategy": "config.night.toml for every complete SUPPORTED_PROFILES entry; repository-only, no live activation",
+      "source": "herdr",
+      "variant_paths": {
+        "dark": "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3/config.dark.toml",
+        "light": "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3/config.light.toml",
+        "night": "DreamcoderHerdr/.config/herdr/dreamcoder/0.7.3/config.night.toml"
+      },
+      "writer": "sync_herdr_repo_variants + write_if_changed; herdr_content"
+    }
+  ],
+  "schema": "dreamcoder.legacy-sync-characterization.v1",
+  "selector_paths": {
+    "codex_config": "/home/dreamcoder08/.codex/config.toml",
+    "ghostty_config": "DreamcoderGhostty/.config/ghostty/config",
+    "pi_settings": "/home/dreamcoder08/.pi/agent/settings.json",
+    "warp_settings": "/home/dreamcoder08/.local/share/warp-terminal/settings.toml",
+    "zellij_config": "DreamcoderZellij/.config/zellij/config.kdl"
+  },
+  "summary_output": [
+    "Synced Dreamcoder dark identity",
+    "Kitty: /home/dreamcoder08/.config/kitty/colors-dreamcoder.conf",
+    "Kitty UI: /home/dreamcoder08/.config/kitty/dreamcoder-ui.conf",
+    "Ghostty: /home/dreamcoder08/.config/ghostty/themes/dreamcoder",
+    "Herdr repository variants: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderHerdr/.config/herdr/dreamcoder",
+    "Warp: /home/dreamcoder08/.local/share/warp-terminal/themes/Dreamcoder.yaml",
+    "opencode: /home/dreamcoder08/.config/opencode/themes/dreamcoder.json",
+    "opencode tui: /home/dreamcoder08/.config/opencode/tui.json",
+    "Codex CLI theme: /home/dreamcoder08/.codex/themes/Dreamcoder.tmTheme",
+    "Bat theme dir: /home/dreamcoder08/.config/bat/themes",
+    "PI CLI theme: /home/dreamcoder08/.pi/agent/themes/dreamcoder.json",
+    "PI CLI settings: /home/dreamcoder08/.pi/agent/settings.json",
+    "Starship: /home/dreamcoder08/.config/starship.toml",
+    "Neovim: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderNvim/.config/nvim/colors/dreamcoder.lua",
+    "Zsh-syntax-highlighting: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/zsh-syntax-highlighting-dreamcoder.zsh",
+    "LS_COLORS: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/ls-colors-dreamcoder.sh",
+    "Bat: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/bat-dreamcoder.sh",
+    "Delta: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/delta-dreamcoder.gitconfig",
+    "Fzf: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/fzf-dreamcoder.sh",
+    "Btop: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/btop-dreamcoder.theme",
+    "Dunst: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/dunst-dreamcoder.conf",
+    "Firefox: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/firefox-dreamcoder.css",
+    "Obsidian: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/obsidian-dreamcoder.css",
+    "Cava: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/cava-dreamcoder.config",
+    "Hyprland: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/hyprland.conf",
+    "Hyprland colors.lua: /home/dreamcoder08/.config/hypr/colors.lua",
+    "Hyprland colors.conf: /home/dreamcoder08/.config/hypr/colors.conf",
+    "Waybar: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/waybar.css",
+    "Waybar matugen: /home/dreamcoder08/.config/waybar/colors.css",
+    "Rofi: /home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots/DreamcoderThemes/rofi.rasi",
+    "Rofi matugen: /home/dreamcoder08/.config/rofi/colors.rasi",
+    "Changed: ",
+    "Repo variant/snippet changes: 0"
+  ],
+  "theme_paths": {
+    "bat": "DreamcoderThemes/bat-dreamcoder.sh",
+    "bat_theme_dir": "DreamcoderBat/.config/bat/themes",
+    "btop": "DreamcoderThemes/btop-dreamcoder.theme",
+    "cava": "DreamcoderThemes/cava-dreamcoder.config",
+    "codex_config": "/home/dreamcoder08/.codex/config.toml",
+    "codex_theme": "DreamcoderCodexCLI/Dreamcoder.tmTheme",
+    "delta": "DreamcoderThemes/delta-dreamcoder.gitconfig",
+    "dunst": "DreamcoderThemes/dunst-dreamcoder.conf",
+    "firefox": "DreamcoderThemes/firefox-dreamcoder.css",
+    "fzf": "DreamcoderThemes/fzf-dreamcoder.sh",
+    "ghostty": "DreamcoderGhostty/.config/ghostty/themes/dreamcoder",
+    "ghostty_config": "DreamcoderGhostty/.config/ghostty/config",
+    "herdr_lock": "/home/dreamcoder08/.config/herdr/dreamcoder/activate.lock",
+    "herdr_managed_root": "/home/dreamcoder08/.config/herdr/dreamcoder/0.7.3",
+    "herdr_repo_variants": "DreamcoderHerdr/.config/herdr/dreamcoder",
+    "herdr_selector": "/home/dreamcoder08/.config/herdr/config.toml",
+    "herdr_state": "/home/dreamcoder08/.config/herdr/dreamcoder/state.json",
+    "hypr_colors_conf": "/home/dreamcoder08/.config/hypr/colors.conf",
+    "hypr_colors_lua": "/home/dreamcoder08/.config/hypr/colors.lua",
+    "hyprland": "DreamcoderThemes/hyprland.conf",
+    "kitty": "DreamcoderKitty/.config/kitty/colors-dreamcoder-dark.conf",
+    "kitty_config": "DreamcoderKitty/.config/kitty/kitty.conf",
+    "kitty_ui": "DreamcoderKitty/.config/kitty/dreamcoder-ui-dark.conf",
+    "ls_colors": "DreamcoderThemes/ls-colors-dreamcoder.sh",
+    "nvim": "DreamcoderNvim/.config/nvim/colors/dreamcoder.lua",
+    "obsidian": "DreamcoderThemes/obsidian-dreamcoder.css",
+    "opencode": "/home/dreamcoder08/.config/opencode/themes/dreamcoder.json",
+    "opencode_tui": "/home/dreamcoder08/.config/opencode/tui.json",
+    "pi_settings": "/home/dreamcoder08/.pi/agent/settings.json",
+    "pi_theme": "DreamcoderPi/.pi/agent/themes/dreamcoder-light.json",
+    "rofi": "DreamcoderThemes/rofi.rasi",
+    "rofi_matugen": "/home/dreamcoder08/.config/rofi/colors.rasi",
+    "starship": "DreamcoderShell/.config/starship.toml",
+    "tmux": "DreamcoderTmux/.config/tmux/tmux-dreamcoder.conf",
+    "tokens_file": "DreamcoderThemes/dreamcoder/tokens.json",
+    "wallpaper": ".",
+    "warp": "DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Light.yaml",
+    "warp_settings": "/home/dreamcoder08/.local/share/warp-terminal/settings.toml",
+    "waybar": "DreamcoderThemes/waybar.css",
+    "waybar_matugen": "/home/dreamcoder08/.config/waybar/colors.css",
+    "zellij_config": "DreamcoderZellij/.config/zellij/config.kdl",
+    "zsh_syntax": "DreamcoderThemes/zsh-syntax-highlighting-dreamcoder.zsh"
+  }
+}

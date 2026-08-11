@@ -56,3 +56,31 @@ themes {{
     }}
 }}
 """
+
+
+from .renderer_adapters import NamedZellijAdapter  # noqa: E402
+from .renderer_contract import (  # noqa: E402
+    ActiveStrategy,
+    MutationStrategy,
+    RendererRegistration,
+    RendererStrategy,
+    RepositoryStrategy,
+    SyncDefinition,
+)
+
+REGISTRATIONS: tuple[RendererRegistration, ...] = (
+    RendererRegistration(
+        consumer_id="zellij",
+        renderer=NamedZellijAdapter("dreamcoder"),
+        contract_version=1,
+        modes=frozenset({"dark", "light", "night"}),
+        output_kind="active-and-repository",
+        sync=SyncDefinition(
+            renderer=RendererStrategy.NAMED_ZELLIJ,
+            active=ActiveStrategy.RESOLVED_ACTIVE_PATH,
+            repository=RepositoryStrategy.MODE_VARIANTS,
+            mutation=MutationStrategy.PROFILE_AWARE_SELECTOR,
+        ),
+        summary_label="Zellij KDL theme",
+    ),
+)
