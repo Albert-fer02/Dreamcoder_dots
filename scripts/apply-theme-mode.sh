@@ -15,11 +15,24 @@ ML4W_CACHE_DIR="${ML4W_CACHE_DIR:-${CACHE_HOME}/ml4w/hyprland-dotfiles}"
 
 MODE="${1:-light}"
 WALLPAPER="${2:-${DREAMCODER_WALLPAPER:-}}"
+PROFILE="${3:-${DREAMCODER_THEME_PROFILE:-standard}}"
 ML4W_WALLPAPER="${ML4W_CACHE_DIR}/current_wallpaper"
 [[ "${MODE}" == "light" || "${MODE}" == "dark" ]] || {
   printf 'Invalid mode: %s\n' "${MODE}" >&2
   exit 1
 }
+case "${PROFILE}" in
+standard | night) ;;
+*)
+  printf 'Invalid render profile: %s (expected standard|night)\n' "${PROFILE}" >&2
+  exit 1
+  ;;
+esac
+# Night is an orthogonal render profile on top of the base mode: while
+# DREAMCODER_THEME_MODE stays "dark", DREAMCODER_THEME_PROFILE=night selects
+# the generated *-night artifacts instead of the standard dark ones.
+VARIANT="${MODE}"
+[[ "${PROFILE}" == "night" ]] && VARIANT="night"
 if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
 
 CURSOR_CLI_ENV="${CACHE_HOME:-${HOME}/.cache}/dreamcoder/cursor-cli.env"
@@ -27,8 +40,38 @@ case "${MODE}" in
 light) CLI_COLORFGBG="0;15" ;;
 dark) CLI_COLORFGBG="15;0" ;;
 esac
-mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
-printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" >"${CURSOR_CLI_ENV}"
+    mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
+    # Preparation gate: never mutate symlinks or system mode until the Night
+    # plan is ready. For profile=night every repo-generated *-night artifact
+    # referenced by the selectors below must already exist (Phase 3 generation
+    # plus the Python validation-first gate are the other halves); a missing
+    # artifact aborts with ZERO mutations.
+    if [[ "${PROFILE}" == "night" ]]; then
+      REQUIRED_NIGHT_ARTIFACTS=(
+        "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderPi/.pi/agent/themes/dreamcoder-night.json"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderZellij/.config/zellij/dreamcoder-night.kdl"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hyprland-night.conf"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.lua"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.conf"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/waybar-night.css"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/rofi-night.rasi"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig"
+        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf"
+      )
+      for _artifact in "${REQUIRED_NIGHT_ARTIFACTS[@]}"; do
+        if [[ ! -f "${_artifact}" ]]; then
+          printf '✗ Night preparation failed: missing artifact %s\n' "${_artifact}" >&2
+          printf '  Run repository Night generation first (DREAMCODER_THEME_PROFILE=night sync).\n' >&2
+          exit 1
+        fi
+      done
+    fi
+    printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport DREAMCODER_THEME_PROFILE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" "${PROFILE}" >"${CURSOR_CLI_ENV}"
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && optional_command matugen; then
@@ -41,26 +84,26 @@ fi
 # instead of overwriting the wrong one through a stale symlink.
 WAYBAR_COLORS="${HOME}/.config/waybar/colors.css"
 if [[ -L "${WAYBAR_COLORS}" ]]; then
-  ln -sf "colors-${MODE}.css" "${WAYBAR_COLORS}"
+  ln -sf "colors-${VARIANT}.css" "${WAYBAR_COLORS}"
 fi
 # --- Rofi: same treatment for colors.rasi symlink ---
 ROFI_COLORS="${HOME}/.config/rofi/colors.rasi"
 if [[ -L "${ROFI_COLORS}" ]]; then
-  ln -sf "colors-${MODE}.rasi" "${ROFI_COLORS}"
+  ln -sf "colors-${VARIANT}.rasi" "${ROFI_COLORS}"
 fi
 # --- Hyprland: flip colors.lua and colors.conf symlinks ---
 HYPR_LUA="${HOME}/.config/hypr/colors.lua"
 HYPR_CONF="${HOME}/.config/hypr/colors.conf"
 if [[ -L "${HYPR_LUA}" ]]; then
-  ln -sf "colors-${MODE}.lua" "${HYPR_LUA}"
+  ln -sf "colors-${VARIANT}.lua" "${HYPR_LUA}"
 fi
 if [[ -L "${HYPR_CONF}" ]]; then
-  ln -sf "colors-${MODE}.conf" "${HYPR_CONF}"
+  ln -sf "colors-${VARIANT}.conf" "${HYPR_CONF}"
 fi
 # --- Hyprland: flip dreamcoder-colors.lua ---
 HYPR_DC_LUA="${HOME}/.config/hypr/dreamcoder-colors.lua"
 if [[ -L "${HYPR_DC_LUA}" ]]; then
-  ln -sf "hypr-colors-${MODE}.lua" "${HYPR_DC_LUA}"
+  ln -sf "hypr-colors-${VARIANT}.lua" "${HYPR_DC_LUA}"
 fi
 # --- Kitty: flip colors-dreamcoder.conf and dreamcoder-ui.conf symlinks BEFORE sync ---
 # This ensures the Python sync writes to the correct variant file
@@ -70,7 +113,7 @@ if [[ -d "${KITTY_DIR}" ]]; then
   for _link in colors-dreamcoder.conf dreamcoder-ui.conf; do
     _target="${KITTY_DIR}/${_link}"
     if [[ -L "${_target}" ]]; then
-      ln -sf "${_link%.conf}-${MODE}.conf" "${_target}"
+      ln -sf "${_link%.conf}-${VARIANT}.conf" "${_target}"
     fi
   done
 fi
@@ -79,11 +122,11 @@ fi
 # --- Pi CLI: flip theme symlink ---
 PI_SCRIPT="${DREAMCODER_DOTS_DIR}/DreamcoderPi/.pi/agent/scripts/pi-theme.sh"
 if [[ -f "${PI_SCRIPT}" ]]; then
-  DREAMCODER_THEME_MODE="${MODE}" bash "${PI_SCRIPT}" &>/dev/null || true
-  printf '  pi theme switched to %s mode\n' "${MODE}"
+  DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_THEME_PROFILE="${PROFILE}" bash "${PI_SCRIPT}" &>/dev/null || true
+  printf '  pi theme switched to %s mode (profile: %s)\n' "${MODE}" "${PROFILE}"
 fi
 
-DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
+DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_THEME_PROFILE="${PROFILE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
   PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
   "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
 signal_kitty
@@ -99,13 +142,15 @@ if command -v tmux >/dev/null 2>&1; then
   fi
   # Update global environment so NEW panes/windows inherit the right vars
   tmux set-environment -g DREAMCODER_THEME_MODE "${MODE}" 2>/dev/null || true
+  tmux set-environment -g DREAMCODER_THEME_PROFILE "${PROFILE}" 2>/dev/null || true
   tmux set-environment -g COLORFGBG "${CLI_COLORFGBG}" 2>/dev/null || true
 
-  # Switch tmux-kanagawa theme variant to match Dreamcoder mode
+  # Switch tmux-kanagawa theme variant to match Dreamcoder mode/profile
   # SOURCE OF TRUTH: colors MUST match DreamcoderThemes/dreamcoder/tokens.json
-  # When updating tokens, update BOTH light AND dark sections here.
+  # When updating tokens, update BOTH light AND dark sections here (and
+  # night, derived through the canonical night transform in the package).
   if [[ -d "${KANAGAWA_DIR}" ]]; then
-    case "${MODE}" in
+    case "${VARIANT}" in
     light)
       KANAGAWA_VARIANT="lotus"
       # Dreamcoder Light palette — source: tokens.json modes.light.{text,accent,error,...}
@@ -144,6 +189,26 @@ if command -v tmux >/dev/null 2>&1; then
       tmux set-option -g @ukiyo-cpu-usage-colors "notice bg_bar" 2>/dev/null || true
       tmux set-option -g @ukiyo-ram-usage-colors "info bg_bar" 2>/dev/null || true
       ;;
+    night)
+      KANAGAWA_VARIANT="dragon"
+      # Dreamcoder Anthracite Steel Night — derived from tokens.json modes.dark
+      # via the canonical night transform (brightness 0.86 / saturation 0.72).
+      tmux set-option -g @ukiyo-color-text "#beccd8" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-bg-bar "#0d1015" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-bg-pane "#07090f" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-accent "#95b5d5" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-info "#66aac6" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-notice "#7997b1" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-muted "#8f9ca8" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-error "#d28c96" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-alert "#bd9b5b" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-highlight "#95b5d5" 2>/dev/null || true
+      tmux set-option -g @ukiyo-color-selection "#1e242b" 2>/dev/null || true
+      # Swap plugin color order (same as dark: fg=bg_bar sobre bg=color)
+      tmux set-option -g @ukiyo-git-colors "accent bg_bar" 2>/dev/null || true
+      tmux set-option -g @ukiyo-cpu-usage-colors "notice bg_bar" 2>/dev/null || true
+      tmux set-option -g @ukiyo-ram-usage-colors "info bg_bar" 2>/dev/null || true
+      ;;
     esac
     tmux set-option -g @ukiyo-theme "kanagawa/${KANAGAWA_VARIANT}" 2>/dev/null || true
     # Reload plugin to apply new theme colors immediately
@@ -173,7 +238,7 @@ if [[ -f "${HERDR_SCRIPT}" ]]; then
 fi
 # --- /Herdr ---
 
-printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
+printf '✓ Dreamcoder %s mode applied (profile: %s)\n' "${MODE}" "${PROFILE}"
 
 # --- Post-sync: fix any stale symlinks ---
 # Waybar colors.css, Rofi colors.rasi, and Hyprland colors.lua/colors.conf
@@ -182,35 +247,35 @@ printf '✓ Dreamcoder %s mode applied\n' "${MODE}"
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
 WARP_THEME="${HOME}/.local/share/warp-terminal/themes/Dreamcoder.yaml"
-WARP_VARIANT="${DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-${MODE^}.yaml"
+WARP_VARIANT="${DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-${VARIANT^}.yaml"
 
 if [[ -L "${DUNST_CONF}" ]]; then
   target=$(readlink "${DUNST_CONF}")
   case "${target}" in
-  *dunst-dreamcoder-dark.conf | *dunst-dreamcoder-light.conf)
+  *dunst-dreamcoder-dark.conf | *dunst-dreamcoder-light.conf | *dunst-dreamcoder-night.conf)
     ln -sf "${DOTS_DIR}/DreamcoderThemes/dreamcoder/dunst-dreamcoder.conf" "${DUNST_CONF}"
     ;;
   esac
 fi
 
-# Warp: flip active theme symlink to mode-specific variant
+# Warp: flip active theme symlink to variant-specific artifact
 [[ -f "${WARP_VARIANT}" ]] && ln -sf "${WARP_VARIANT}" "${WARP_THEME}"
 
-# Btop: flip theme symlink to mode-specific variant
+# Btop: flip theme symlink to variant-specific artifact
 BTOP_THEME="${HOME}/.config/btop/themes/dreamcoder.theme"
 if [[ -L "${BTOP_THEME}" ]]; then
-  ln -sf "dreamcoder-${MODE}.theme" "${BTOP_THEME}"
+  ln -sf "dreamcoder-${VARIANT}.theme" "${BTOP_THEME}"
 fi
 
 # Zellij: update theme in config.kdl
 ZELLIJ_CONF="${HOME}/.config/zellij/config.kdl"
 if [[ -f "${ZELLIJ_CONF}" ]]; then
-  sed -i "s/^theme \".*\"/theme \"dreamcoder-${MODE}\"/" "${ZELLIJ_CONF}"
+  sed -i "s/^theme \".*\"/theme \"dreamcoder-${VARIANT}\"/" "${ZELLIJ_CONF}"
 fi
 
-# Delta: flip git diff theme symlink to mode-specific variant
+# Delta: flip git diff theme symlink to variant-specific artifact
 DELTA_LINK="${HOME}/.config/git/delta-dreamcoder.gitconfig"
-DELTA_VARIANT="${DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-${MODE}.gitconfig"
+DELTA_VARIANT="${DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-${VARIANT}.gitconfig"
 if [[ -f "${DELTA_VARIANT}" ]]; then
   ln -sf "${DELTA_VARIANT}" "${DELTA_LINK}"
 fi

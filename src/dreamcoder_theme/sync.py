@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import subprocess
 import sys
 from collections.abc import Callable
@@ -56,6 +55,7 @@ from .renderers import (
 from .settings import (
     ROOT,
     adaptive_enabled,
+    render_profile,
     theme_mode,
     theme_paths,
     write_repo_enabled,
@@ -75,15 +75,17 @@ from .writers import (
 )
 
 
-def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[str, bool]:
+def sync_active_targets(
+    paths: Any, active: dict[str, str], mode: str, profile: str = "standard"
+) -> dict[str, bool]:
     return {
         "kitty": write_if_changed(paths.kitty, kitty_content(active)),
         "kitty_ui": write_if_changed(paths.kitty_ui, kitty_ui_content(active)),
         "kitty_config": ensure_kitty_ui_include(paths.kitty_config),
         "ghostty": write_if_changed(paths.ghostty, ghostty_content(active)),
-        "ghostty_config": update_ghostty_theme(paths.ghostty_config, mode),
+        "ghostty_config": update_ghostty_theme(paths.ghostty_config, mode, profile),
         "warp": write_if_changed(paths.warp, warp_content(active)),
-        "warp_settings": update_warp_settings(paths.warp_settings, mode),
+        "warp_settings": update_warp_settings(paths.warp_settings, mode, profile),
         "opencode": write_if_changed(
             paths.opencode, opencode_content(active, transparent_background=True)
         ),
@@ -98,7 +100,7 @@ def sync_active_targets(paths: Any, active: dict[str, str], mode: str) -> dict[s
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
         "tmux": write_if_changed(paths.tmux, tmux_content(active)),
-        "zellij": update_zellij_config(paths.zellij_config, mode),
+        "zellij": update_zellij_config(paths.zellij_config, mode, profile),
         # New targets
         "nvim": write_if_changed(paths.nvim, nvim_dispatcher_content()),
         "zsh_syntax": write_if_changed(paths.zsh_syntax, zsh_syntax_content(active)),
@@ -812,15 +814,12 @@ def print_summary(
 def _generation_profile() -> str:
     """Resolve the repo-generation render profile for this invocation.
 
-    Phase-3 generation hook: reads ``DREAMCODER_THEME_PROFILE`` with the
-    closed values ``standard|night`` (invalid values fail closed). Phase 4
-    (task 4.3) replaces this with the persisted ``render_profile()``
-    resolver; until then repo generation is the only Night consumer.
+    Task 4.3 replaced the Phase-3 env-only hook with the persisted
+    ``render_profile()`` resolver: ``DREAMCODER_THEME_PROFILE`` (process-only,
+    never mutates) -> persisted ``theme.render_profile`` -> schema default
+    ``standard`` (design §3).
     """
-    profile = os.environ.get("DREAMCODER_THEME_PROFILE", "standard").lower()
-    if profile not in {"standard", "night"}:
-        raise SystemExit("DREAMCODER_THEME_PROFILE must be 'standard' or 'night'")
-    return profile
+    return render_profile()
 
 
 def main() -> None:
@@ -872,7 +871,7 @@ def main() -> None:
         print("Night repository generation only — active outputs untouched (PR3)")
         return
 
-    changed = sync_active_targets(paths, active, mode)
+    changed = sync_active_targets(paths, active, mode, profile)
     bat_variant_changes = sync_bat_theme_variants(paths, variants)
     repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []
     changed["bat_theme_variants"] = any(bat_variant_changes)

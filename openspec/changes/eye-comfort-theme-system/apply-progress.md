@@ -123,3 +123,84 @@
 - New renderers_zellij.py (minimal KDL leaf writer, dark/light parity tests), renderer metadata fixes (antigravity dark classification, herdr night mode acceptance, nvim dispatcher profile resolution).
 - Gate: 427 passed (same count as PR2 — new coverage tests replace/expand), ruff clean, mypy clean (50 files), health exit 0, format clean.
 - Deviations: the sdd-apply subagent timed out mid-refactor (sync.py VARIANT_REGISTRY move); the parent verified and completed the polish (formatting + coverage verification). Remaining phases: 4 (settings+selectors), 5 (CLI+rollback), 6 (blocking health+docs).
+
+## Batch 4 (PR4, Phase 4) — Settings + profile-aware selectors
+
+**Status: COMPLETE — implementation-owned tasks 4.1–4.6 all checked in `tasks.md`.**
+
+### Scope of this batch
+
+- **4.1 [TDD RED]**: `tests/test_render_profile_settings.py` (12 tests) — schema entry, closed values, invalid rejection, unknown-setting preservation, default, env-override precedence without mutation, persisted resolution, fail-closed invalid env/persisted values, effective-base conflict rule. RED confirmed: 10 failed (KeyError on missing schema entry, no rejection, missing `render_profile`/`effective_base_mode`), 2 regression passes.
+- **4.2 [TDD GREEN]**: `"theme.render_profile"` added to `SETTINGS_SCHEMA` (`enum: ["standard","night"]`, `default: "standard"`). Unknown-setting preservation and `settings_set()` rejection of invalid known values kept via existing machinery (verified by tests).
+- **4.3**: `render_profile()` in `settings.py` with precedence `DREAMCODER_THEME_PROFILE` (process-only, never mutates) → persisted `settings_get("theme.render_profile")` → schema default `standard`; `effective_base_mode()` enforcing `profile == night -> mode == dark` with actionable conflict error (`MODE=light` + `PROFILE=night` → SystemExit naming the dark base requirement); `theme_mode()` unchanged, never accepts Night. `sync.py` `_generation_profile()` now delegates to the persisted resolver (its documented Phase-4 replacement).
+- **4.4**: profile-aware writers — `update_ghostty_theme(path, mode, profile)` (night → `dreamcoder-night`; legacy `dreamcoder` only standard light), `update_zellij_config(path, mode, profile, kdl_ready)` (night selects `theme "dreamcoder-night"` only when KDL exists in the prepared plan; `kdl_ready=False` fails closed), `update_warp_settings(path, mode, profile)` (night keeps dark opacity 76/blur 20, never the light branch); `write_variant_files_and_active()` now renders all content in memory before the first write (prepared; full snapshot/rollback is the Phase 5 activation transaction). `sync_active_targets()` accepts `profile` and passes it to the three selectors.
+- **4.5**: `scripts/apply-theme-mode.sh` accepts base mode + render profile (`$3` or `DREAMCODER_THEME_PROFILE`, default `standard`, validated); computes `VARIANT` (night when profile=night); adds a preparation gate — for profile=night all 14 repo-generated `*-night` artifacts referenced by its selectors must exist before ANY mutation (missing → exit 1 with zero mutation); selects Night artifacts via `VARIANT` for Kitty, Waybar, Rofi, Hyprland (lua/conf/dreamcoder-colors.lua), Pi (profile passed through), Warp (`Dreamcoder-${VARIANT^}.yaml`), btop, Zellij, Delta, Dunst; passes `DREAMCODER_THEME_PROFILE` to the sync script and writes it to `cursor-cli.env` + tmux environment; Kanagawa bridge gains a `night` case with Night-derived values (`dragon` variant, colors from the canonical transform). `pi-theme.sh` made profile-aware (selects `dreamcoder-night.json`, rejects invalid profiles, fails closed on missing artifact).
+- **4.6**: `tests/test_night_naming_selection.py` (23 tests) — every VARIANT_REGISTRY entry declares a distinct `*-night` name, never equal to dark/light; COVERAGE registry rows match names byte-for-byte; `validate_coverage_declaration()` clean; Ghostty/Zellij/Warp/Neovim/Pi selector behavior incl. standard-dark-substitution detection; opencode documented stable-ID exception and `active:` matugen-bridge rows carry night in their selection strategy.
+
+### Precedence rule implemented (design §3)
+
+`DREAMCODER_THEME_PROFILE` (process-only, never mutates persisted settings) → persisted `settings_get("theme.render_profile")` → schema default `standard`. Invalid values fail closed (`SystemExit`) instead of being interpreted. Effective-base resolver: `profile == night -> mode == dark`, conflict fails with an actionable error (no Dusk reinterpretation, no silent coercion).
+
+### Selector behavior changes
+
+| Selector | Standard | Night |
+| --- | --- | --- |
+| Ghostty `update_ghostty_theme` | light → `dreamcoder`; dark → `dreamcoder-dark` | `dreamcoder-night` (wins over light base) |
+| Zellij `update_zellij_config` | `dreamcoder-{mode}` | `theme "dreamcoder-night"` only when KDL ready (fail-closed) |
+| Warp `update_warp_settings` | light 96/1, dark 76/20 | dark 76/20 (never light branch) |
+| Pi `pi-theme.sh` | `dreamcoder-{mode}.json` | `dreamcoder-night.json` |
+| `apply-theme-mode.sh` | `*-{mode}` artifacts | `*-night` artifacts via VARIANT; prep gate before any mutation |
+| Neovim dispatcher | background=dark → `dreamcoder-dark.lua` | resolves `DREAMCODER_THEME_PROFILE` before base mode → `dreamcoder-night.lua` |
+
+### Test commands run
+
+- `pytest tests/test_render_profile_settings.py` → RED (10 failed) then GREEN (12 passed)
+- `pytest tests/test_night_naming_selection.py -v` → 23 passed
+- `pytest tests/` → **462 passed** (was 427 at PR3; +35), 31 subtests, 1 pre-existing warning
+- `ruff check src/ tests/` → clean
+- `mypy src/` → clean (50 files)
+- `shellcheck --shell=bash scripts/apply-theme-mode.sh DreamcoderPi/.pi/agent/scripts/pi-theme.sh` → only pre-existing SC1091 (lib sources); added code clean
+- `bats tests/shell/` → 23/23 passed (6 apply-theme incl. new profile/guard tests + 4 pi-theme + existing)
+- `PYTHONPATH=src python scripts/verify-theme-health.py` → exit 0 (regression check)
+
+### Files changed (this batch)
+
+- `src/dreamcoder_theme/settings_store.py` — `theme.render_profile` schema entry.
+- `src/dreamcoder_theme/settings.py` — `render_profile()`, `effective_base_mode()`, `VALID_RENDER_PROFILES`.
+- `src/dreamcoder_theme/writers.py` — profile-aware `update_ghostty_theme`/`update_zellij_config`/`update_warp_settings`; prepared `write_variant_files_and_active`.
+- `src/dreamcoder_theme/sync.py` — `_generation_profile()` → persisted `render_profile()`; `sync_active_targets(..., profile)` wired to selectors.
+- `scripts/apply-theme-mode.sh` — profile arg + validation, VARIANT selection, preparation gate, Night selectors, Kanagawa night case, profile pass-through (sync, cursor-cli.env, tmux env, pi-theme).
+- `DreamcoderPi/.pi/agent/scripts/pi-theme.sh` — profile-aware selector.
+- `tests/test_render_profile_settings.py` — **new** (12 tests).
+- `tests/test_night_naming_selection.py` — **new** (23 tests).
+- `tests/shell/test_apply_theme.bats` — profile validation, zero-mutation prep gate, night-selection trace, Kanagawa night colors.
+- `tests/shell/test_pi_theme.bats` — **new** (4 tests).
+- `docs/generated/DREAMCODER_OPERATOR_REPORT.md` — generated doc regenerated by the schema addition (new `theme.render_profile` row).
+- `openspec/changes/eye-comfort-theme-system/tasks.md` — 4.1–4.6 checked.
+
+### Deviations from design / notes
+
+- **"Prepared/snapshotted" scope (4.4)**: `write_variant_files_and_active()` now renders all content in memory before the first write (fail-closed preflight already in `write_variant_files`); the full activation snapshot/rollback transaction is owned by Phase 5 (task 5.5) per the PR-slice plan.
+- **Preparation gate (4.5)**: Phase-4 interpretation of "no mutation until preparation succeeds" is a repo-artifact readiness gate (all 14 referenced `*-night` artifacts must exist before any symlink/system mutation) plus the existing validation-first Python gate; the post-validation bounded adapter ordering is Phase 5 (task 5.6).
+- **Kanagawa bridge**: added a `night` case derived from the canonical Night transform (tokens `modes.dark` → brightness 0.86 / saturation 0.72). Pre-existing dark-branch `info` value (#7CB3D9) drifts from tokens `info` (#4DAED6) — untouched, out of scope.
+- **`docs/generated/DREAMCODER_OPERATOR_REPORT.md`**: regenerated by the schema change (faithful new row); kept.
+
+### Remaining tasks (unchanged, unchecked `- [ ]` in tasks.md)
+
+- Phase 5: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7 (CLI activation + transaction/rollback)
+- Phase 6: 6.1, 6.2, 6.3, 6.4, 6.5 (blocking health + docs)
+- Parent-owned: bounded review per PR slice; native review receipt validation at gates.
+
+### Workload / PR boundary
+
+- **PR 4 (this batch):** Phase 4 — settings + profile-aware selectors. Changed lines ≈ 480 net (2 new Python test files ~23 KB, 2 bats files, 5 source files, 2 shell scripts); reviewable as one focused slice; **no CLI activation change** (Phase 5), no blocking-health change (Phase 6).
+- Next PR (PR 5): Phase 5 — CLI activation + transaction/rollback (5.1–5.7).
+- Chain: stacked-to-main per `tasks.md` forecast; delivery strategy `ask-on-risk` resolved by the parent for this slice.
+
+### Structured status consumed
+
+- `schemaName: spec-driven`; `changeName: eye-comfort-theme-system`; `artifactStore: openspec` (authoritative — file-based artifacts under `openspec/changes/eye-comfort-theme-system/`).
+- `actionContext`: repo-local mode; workspace root `/home/dreamcoder08/Documents/PROYECTOS/dreamcoder-dots`; all edits confined to the authoritative workspace.
+- Task ownership: all Phase 4 rows carry valid terminal `<!-- sdd-owner: implementation -->`; parent-owned rows untouched (deferred lifecycle).
+- `applyState`: `ready` → this batch advances implementation-owned progress; verify/archive remain `blocked` pending parent-owned bounded review per PR slice.
+- `nextRecommended`: `parent-lifecycle` (bounded review for PR 4, then `sdd-verify` after review approval).

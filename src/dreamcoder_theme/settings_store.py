@@ -24,6 +24,12 @@ SETTINGS_SCHEMA: dict[str, dict[str, Any]] = {
         "default": "balanced",
         "description": "Active motion preset.",
     },
+    "theme.render_profile": {
+        "type": "string",
+        "enum": ["standard", "night"],
+        "default": "standard",
+        "description": "Theme rendering profile (standard or night).",
+    },
 }
 
 
