@@ -204,3 +204,12 @@
 - Task ownership: all Phase 4 rows carry valid terminal `<!-- sdd-owner: implementation -->`; parent-owned rows untouched (deferred lifecycle).
 - `applyState`: `ready` → this batch advances implementation-owned progress; verify/archive remain `blocked` pending parent-owned bounded review per PR slice.
 - `nextRecommended`: `parent-lifecycle` (bounded review for PR 4, then `sdd-verify` after review approval).
+
+## Batch 5 (PR5, Phase 5) — CLI activation + transaction/rollback
+
+- sync.prepare(base, profile) boundary: loads canonical variants/guardrails/profile params, resolves base+profile, adapts, transforms, validates (dual gate), renders all 32 targets in memory, asserts coverage — zero writes; main() consumes it.
+- CLI: theme apply {light,dark,night} (--json) in cli_parser.py, handle_theme() in cli_handlers.py (desired base/profile per design §7), control.py registration; scripts/dreamcoder routes light|dark|night through CONTROL theme apply; generic settings get/set theme.render_profile intact.
+- Activation transaction (5.5): snapshot mutable active paths + selector files + settings BEFORE first mutation; on exception/failed selector/reload/incomplete coverage restore snapshots + prior settings and regenerate prior profile; write_if_changed() semantics preserved. _restore_snapshots/_restore_directory helpers.
+- apply-theme-mode.sh (5.6): bounded post-validation adapter — profile arg (standard|night), night variant selection, base/profile conflict rejection, mutation ordering after settings persist; theme-auto.sh keeps Light/Dark schedule and pins standard (never auto-Night).
+- 8 CLI activation tests: night persists + 32/32, light/dark exit night, failing gate no-mutation non-zero, reload/write failure restore bytes/symlinks/settings, night-light-dark end-to-end transitions, generic settings intact. 470 passed total.
+- Deviations: sdd-apply subagent timed out at 5.6 mid-restructure; parent verified + completed the adapter ordering, regenerated stale opencode artifact (STALE_ARTIFACT transient), and formatted. Remaining phase: 6 (blocking health + docs).

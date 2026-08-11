@@ -12,6 +12,7 @@ from dreamcoder_theme.cli_handlers import (
     handle_profile,
     handle_repair,
     handle_settings,
+    handle_theme,
     handle_tui,
     handle_visual,
 )
@@ -37,6 +38,7 @@ def main(argv: list[str] | None = None) -> int:
         "repair": handle_repair,
         "backup": handle_backup,
         "visual": handle_visual,
+        "theme": handle_theme,
     }
     return handlers[args.cmd](args)
 

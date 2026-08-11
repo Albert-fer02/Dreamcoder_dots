@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import subprocess
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, NamedTuple
 
@@ -54,6 +55,7 @@ from .renderers import (
 )
 from .settings import (
     ROOT,
+    VALID_RENDER_PROFILES,
     adaptive_enabled,
     render_profile,
     theme_mode,
@@ -73,6 +75,41 @@ from .writers import (
     write_opencode_tui,
     write_variant_files,
 )
+
+
+class ThemeGateError(RuntimeError):
+    """Raised by ``prepare()`` when the dual gate or coverage assertion fails.
+
+    Carries the structured failure list (metric/profile/pair/measured/
+    threshold for WCAG+APCA, or the coverage problems) and renders the
+    fail-closed message main() and the CLI handler surface. It is raised
+    before any writer, selector, or settings mutation (R4/R8, design §4/§8).
+    """
+
+    def __init__(self, errors: Sequence[str], *, kind: str = "Theme gate failed") -> None:
+        self.errors = tuple(errors)
+        super().__init__(
+            f"{kind} — no writes performed:\n" + "\n".join(f"  - {error}" for error in errors)
+        )
+
+
+@dataclass(frozen=True)
+class PreparedSync:
+    """Immutable result of validation-first preparation (design §4, ADR-004).
+
+    ``prepare()`` produces this with ZERO filesystem writes: the validated
+    active palette, the dark/light/night render-variant map, the frozen
+    32-consumer coverage declaration, and the in-memory render of every
+    coverage consumer. The caller (``main()`` or the CLI activation
+    transaction) owns the commit.
+    """
+
+    mode: str
+    profile: str
+    active: dict[str, str]
+    variants: dict[str, dict[str, str]]
+    coverage: tuple[CoverageRow, ...]
+    render_plan: Mapping[str, str]
 
 
 def sync_active_targets(
@@ -822,60 +859,163 @@ def _generation_profile() -> str:
     return render_profile()
 
 
+def render_coverage_plan(
+    paths: Any,
+    active: dict[str, str],
+    mode: str,
+    profile: str,
+    variants: dict[str, dict[str, str]],
+) -> dict[str, str]:
+    """Render content for every one of the 32 coverage consumers in memory.
+
+    Pure rendering: no writer, selector, or filesystem mutation (R5, ADR-004).
+    This is the preparation boundary's in-memory 32-target render — the subject
+    of the coverage assertion and the render-variant plan the activation
+    transaction commits. Renderers still receive only ``dict[str, str]``.
+    """
+    plan: dict[str, str] = {
+        "kitty": kitty_content(active),
+        "kitty_ui": kitty_ui_content(active),
+        "ghostty": ghostty_content(active),
+        "warp": warp_content(active),
+        "opencode": opencode_content(active, transparent_background=True),
+        "codex_theme": codex_tmtheme_content(active),
+        "bat_theme": codex_tmtheme_content(active),
+        "pi_theme": pi_theme_content(active),
+        "starship": starship_content(active),
+        "tmux": tmux_content(active),
+        "nvim": nvim_dispatcher_content(),
+        "zsh_syntax": zsh_syntax_content(active),
+        "ls_colors": ls_colors_content(active),
+        "bat": bat_content(active),
+        "delta": delta_content(active),
+        "fzf": fzf_content(active),
+        "btop": btop_content(active),
+        "dunst": dunst_content(active),
+        "firefox": firefox_content(active),
+        "obsidian": obsidian_content(active),
+        "cava": cava_content(active),
+        "hyprland": hypr_content(active),
+        "hypr_colors_lua": hypr_colors_lua_content(active),
+        "hypr_colors_conf": hypr_colors_conf_content(active),
+        "waybar": waybar_content(active),
+        "waybar_matugen": waybar_matugen_content(active),
+        "rofi": rofi_content(active),
+        "rofi_matugen": rofi_matugen_content(active),
+        # Named-profile selector consumers (design §5 rows 13/6/10/32): the
+        # selector line and the repo-only artifacts are rendered here too.
+        "zellij": (
+            'theme "dreamcoder-night"\n' if profile == "night" else f'theme "dreamcoder-{mode}"\n'
+        ),
+        "codex_app": opencode_content(variants["night"]),
+        "antigravity": antigravity_content(variants["night"]),
+    }
+    complete = next((p for p in SUPPORTED_PROFILES if p is not None and p.is_complete), None)
+    plan["herdr"] = herdr_content(complete, "night", variants["night"]) if complete else ""
+    return plan
+
+
+def prepare(base: str, profile: str) -> PreparedSync:
+    """Validate-first preparation boundary (design §4, ADR-004; task 5.1).
+
+    Loads canonical variants/guardrails/profile parameters, resolves the
+    base+profile pair, adapts, transforms (Night), validates the final palette
+    with the independent WCAG 2.2 + APCA dual gate, renders all 32 coverage
+    consumers in memory, and asserts the coverage declaration — with ZERO
+    filesystem writes. ``main()`` and the CLI activation transaction commit the
+    returned immutable plan; a failed gate raises ``ThemeGateError`` before any
+    writer, selector, or settings mutation (R4/R8).
+    """
+    if base not in {"light", "dark"}:
+        raise SystemExit(f"base mode must be 'light' or 'dark' (got '{base}')")
+    if profile not in VALID_RENDER_PROFILES:
+        raise SystemExit(f"render profile must be 'standard' or 'night' (got '{profile}')")
+    if profile == "night" and base != "dark":
+        raise SystemExit(
+            f"render profile 'night' requires base mode 'dark' (got '{base}'): "
+            "Night always derives from the dark Anthracite Steel base (ADR-003)."
+        )
+
+    paths = theme_paths()
+    guardrails = load_guardrails(paths.tokens_file)
+    params = load_render_profile(paths.tokens_file)
+    variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)
+    # Night is a derived render variant (ADR-003): canonical dark + the
+    # deterministic transform. Registry and explicit branches consume it through
+    # the same dict[str, str] renderer shape (ADR-004).
+    variants["night"] = night_palette(dict(variants["dark"]), params, guardrails)
+
+    if profile == "night":
+        adapted = adaptive_palette(variants["dark"], "dark", paths.wallpaper, adaptive_enabled())
+        active = night_palette(adapted, params, guardrails)
+    else:
+        adapted = adaptive_palette(variants[base], base, paths.wallpaper, adaptive_enabled())
+        active = adapted
+
+    gate_errors = validate_palette(active, guardrails, profile=profile, mode=base)
+    if gate_errors:
+        raise ThemeGateError(gate_errors)
+
+    coverage_problems = validate_coverage_declaration(COVERAGE)
+    if coverage_problems:
+        raise ThemeGateError(coverage_problems, kind="Coverage gate failed")
+
+    render_plan = render_coverage_plan(paths, active, base, profile, variants)
+    missing = [row.consumer_id for row in COVERAGE if row.consumer_id not in render_plan]
+    if missing:
+        raise ThemeGateError(
+            [f"coverage consumer not rendered in preparation: {sorted(missing)}"],
+            kind="Coverage gate failed",
+        )
+
+    return PreparedSync(
+        mode=base,
+        profile=profile,
+        active=active,
+        variants=variants,
+        coverage=COVERAGE,
+        render_plan=render_plan,
+    )
+
+
 def main() -> None:
     gen = ROOT / "scripts" / "generate-palette-tokens.py"
     if gen.is_file():
         subprocess.run([sys.executable, str(gen)], check=True)
     paths = theme_paths()
-    guardrails = load_guardrails(paths.tokens_file)
-    params = load_render_profile(paths.tokens_file)
-    variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)
-    # Night is a derived render variant (ADR-003): canonical dark +
-    # deterministic transform. The registry and explicit branches consume it
-    # through the same dict[str, str] renderer shape (ADR-004).
-    variants["night"] = night_palette(dict(variants["dark"]), params, guardrails)
-
     profile = _generation_profile()
-    if profile == "night":
-        # Night always resolves the dark Anthracite Steel base, adapts it,
-        # then applies the transform (design §2/§4). Active-target writes and
-        # the live bat theme dir are deferred to Phase 4/5 (profile-aware
-        # selectors + activation transaction); repo generation owns the
-        # named Night artifacts and stable active files in this PR.
-        mode = "dark"
-        adapted = adaptive_palette(variants["dark"], mode, paths.wallpaper, adaptive_enabled())
-        active = night_palette(adapted, params, guardrails)
-    else:
-        mode = theme_mode()
-        active = adaptive_palette(variants[mode], mode, paths.wallpaper, adaptive_enabled())
+    # Night always resolves the dark Anthracite Steel base; otherwise the
+    # Light/Dark base comes from theme_mode() (unchanged responsibility).
+    base = "dark" if profile == "night" else theme_mode()
 
-    # Validation-first (R4): the final palette must pass the independent WCAG
-    # 2.2 + APCA dual gate BEFORE any writer or selector runs. A failed gate
-    # exits non-zero with zero writes; no profile/settings mutation occurs.
-    # Thresholds are resolved from the canonical token file (ADR-002) — never
-    # from literals — and a missing required guardrail fails closed.
-    gate_errors = validate_palette(active, guardrails, profile=profile, mode=mode)
-    if gate_errors:
-        raise SystemExit(
-            "Theme gate failed — no writes performed:\n"
-            + "\n".join(f"  - {error}" for error in gate_errors)
+    # Validation-first preparation (R4, design §4): the final palette must pass
+    # the independent WCAG 2.2 + APCA dual gate and the 32-consumer coverage
+    # assertion BEFORE any writer or selector runs. A failed gate exits non-zero
+    # with zero writes and no profile/settings mutation.
+    try:
+        prepared = prepare(base, profile)
+    except ThemeGateError as exc:
+        raise SystemExit(str(exc)) from None
+
+    if profile == "night":
+        # Repository-only Night generation: the 32-target coverage is produced
+        # through sync_repo_snippets(); live active paths and the active bat
+        # theme dir are left untouched (CLI activation owns them, Phase 5).
+        repo_changes = (
+            sync_repo_snippets(prepared.variants, prepared.active) if write_repo_enabled() else []
         )
-
-    if profile == "night":
-        # Repository-only Night generation: the 32-target coverage is
-        # produced through sync_repo_snippets(); live active paths and the
-        # active bat theme dir are left untouched until activation (Phase 5).
-        repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []
         changed: dict[str, bool] = {}
-        print_summary(mode, paths, changed, repo_changes)
+        print_summary(prepared.mode, paths, changed, repo_changes)
         print("Night repository generation only — active outputs untouched (PR3)")
         return
 
-    changed = sync_active_targets(paths, active, mode, profile)
-    bat_variant_changes = sync_bat_theme_variants(paths, variants)
-    repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []
+    changed = sync_active_targets(paths, prepared.active, prepared.mode, prepared.profile)
+    bat_variant_changes = sync_bat_theme_variants(paths, prepared.variants)
+    repo_changes = (
+        sync_repo_snippets(prepared.variants, prepared.active) if write_repo_enabled() else []
+    )
     changed["bat_theme_variants"] = any(bat_variant_changes)
 
     if not valid_starship(paths.starship):
         raise SystemExit(f"Generated Starship config is invalid: {paths.starship}")
-    print_summary(mode, paths, changed, repo_changes)
+    print_summary(prepared.mode, paths, changed, repo_changes)

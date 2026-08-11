@@ -111,4 +111,12 @@ def build_parser() -> argparse.ArgumentParser:
     backup_restore.add_argument("backup_id")
     backup_restore.add_argument("--dry-run", action="store_true")
     backup_restore.add_argument("--json", action="store_true")
+
+    theme = sub.add_parser("theme", help="Activate a theme base mode and render profile")
+    theme_sub = theme.add_subparsers(dest="theme_cmd", required=True)
+    theme_apply = theme_sub.add_parser("apply", help="Apply a theme choice as one transaction")
+    theme_apply.add_argument(
+        "choice", choices=["light", "dark", "night"], help="Theme choice to activate"
+    )
+    theme_apply.add_argument("--json", action="store_true")
     return parser

@@ -28,12 +28,18 @@ standard | night) ;;
   exit 1
   ;;
 esac
-# Night is an orthogonal render profile on top of the base mode: while
-# DREAMCODER_THEME_MODE stays "dark", DREAMCODER_THEME_PROFILE=night selects
-# the generated *-night artifacts instead of the standard dark ones.
-VARIANT="${MODE}"
-[[ "${PROFILE}" == "night" ]] && VARIANT="night"
-if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
+    # Night is an orthogonal render profile on top of the base mode: while
+    # DREAMCODER_THEME_MODE stays "dark", DREAMCODER_THEME_PROFILE=night selects
+    # the generated *-night artifacts instead of the standard dark ones.
+    VARIANT="${MODE}"
+    [[ "${PROFILE}" == "night" ]] && VARIANT="night"
+    # Night always resolves the dark Anthracite Steel base (ADR-003): a light
+    # base with profile=night is a conflict, never a silent coercion.
+    if [[ "${PROFILE}" == "night" && "${MODE}" != "dark" ]]; then
+      printf 'Invalid combination: render profile night requires base mode dark (got %s)\n' "${MODE}" >&2
+      exit 1
+    fi
+    if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
 
 CURSOR_CLI_ENV="${CACHE_HOME:-${HOME}/.cache}/dreamcoder/cursor-cli.env"
 case "${MODE}" in
@@ -69,9 +75,26 @@ esac
           printf '  Run repository Night generation first (DREAMCODER_THEME_PROFILE=night sync).\n' >&2
           exit 1
         fi
-      done
-    fi
-    printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport DREAMCODER_THEME_PROFILE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" "${PROFILE}" >"${CURSOR_CLI_ENV}"
+          done
+        fi
+        # Bounded preparation + settings persistence (control path). Runs only
+        # when this script is the entry point (theme-auto / manual). When
+        # invoked by the control transaction (DREAMCODER_SYNC_DONE=1),
+        # preparation, validation, and settings persistence already succeeded;
+        # this script is then purely the post-validation system/reload adapter
+        # (design §7/§8): system mode, symlink flips, and reloads run only
+        # after preparation and settings persistence succeed.
+        if [[ "${DREAMCODER_SYNC_DONE:-0}" != "1" ]]; then
+          _CONTROL_CHOICE="${MODE}"
+          [[ "${PROFILE}" == "night" ]] && _CONTROL_CHOICE="night"
+          DREAMCODER_SYNC_DONE=1 \
+          DREAMCODER_THEME_MODE="${MODE}" \
+          DREAMCODER_THEME_PROFILE="${PROFILE}" \
+          DREAMCODER_WALLPAPER="${WALLPAPER}" \
+            PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
+            python3 -m dreamcoder_theme.control theme apply "${_CONTROL_CHOICE}" --json >/dev/null
+        fi
+        printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport DREAMCODER_THEME_PROFILE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" "${PROFILE}" >"${CURSOR_CLI_ENV}"
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && optional_command matugen; then
@@ -126,9 +149,9 @@ if [[ -f "${PI_SCRIPT}" ]]; then
   printf '  pi theme switched to %s mode (profile: %s)\n' "${MODE}" "${PROFILE}"
 fi
 
-DREAMCODER_THEME_MODE="${MODE}" DREAMCODER_THEME_PROFILE="${PROFILE}" DREAMCODER_WALLPAPER="${WALLPAPER}" \
-  PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
-  "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py"
+# The Python preparation + validation + settings persistence + commit ran
+# above (or, when invoked by the control transaction, in that caller). This
+# section is purely the post-validation system/reload surface.
 signal_kitty
 restart_waybar
 
@@ -242,8 +265,9 @@ printf '✓ Dreamcoder %s mode applied (profile: %s)\n' "${MODE}" "${PROFILE}"
 
 # --- Post-sync: fix any stale symlinks ---
 # Waybar colors.css, Rofi colors.rasi, and Hyprland colors.lua/colors.conf
-# are written directly by sync-dreamcoder-theme.py (which runs AFTER matugen).
-# Only Dunst needs a symlink check since its config is a plain file in the repo.
+# are written by the activation transaction (which owns the bridge symlink
+# selection before commit). Only Dunst needs a symlink check since its
+# config is a plain file in the repo.
 DOTS_DIR="${DREAMCODER_DOTS_DIR:-${HOME}/Documents/PROYECTOS/dreamcoder-dots}"
 DUNST_CONF="${HOME}/.config/dunst/dreamcoder-dunst.conf"
 WARP_THEME="${HOME}/.local/share/warp-terminal/themes/Dreamcoder.yaml"
