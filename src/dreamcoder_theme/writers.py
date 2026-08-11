@@ -12,7 +12,19 @@ from pathlib import Path
 from typing import Any
 
 
+def _ensure_single_trailing_newline(content: str) -> str:
+    """Normalize to end with exactly one newline (POSIX text files).
+
+    Matches the repo's end-of-file-fixer hook so generated output commits
+    cleanly instead of being re-fixed at every commit.
+    """
+    if not content:
+        return content
+    return content.rstrip() + "\n"
+
+
 def write_if_changed(path: Path, content: str) -> bool:
+    content = _ensure_single_trailing_newline(content)
     old = path.read_text() if path.exists() else ""
     if old == content:
         return False

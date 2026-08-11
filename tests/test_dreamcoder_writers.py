@@ -28,24 +28,46 @@ class TestWriteIfChanged:
     def test_creates_new_file(self, tmp_path: Path) -> None:
         path = tmp_path / "new.txt"
         assert write_if_changed(path, "hello") is True
-        assert path.read_text() == "hello"
+        assert path.read_text() == "hello\n"
 
     def test_skips_identical_content(self, tmp_path: Path) -> None:
         path = tmp_path / "same.txt"
-        path.write_text("hello")
+        path.write_text("hello\n")
         assert write_if_changed(path, "hello") is False
-        assert path.read_text() == "hello"
+        assert path.read_text() == "hello\n"
 
     def test_updates_different_content(self, tmp_path: Path) -> None:
         path = tmp_path / "diff.txt"
-        path.write_text("old")
+        path.write_text("old\n")
         assert write_if_changed(path, "new") is True
-        assert path.read_text() == "new"
+        assert path.read_text() == "new\n"
 
     def test_creates_parent_directories(self, tmp_path: Path) -> None:
         path = tmp_path / "a" / "b" / "deep.txt"
         assert write_if_changed(path, "deep") is True
-        assert path.read_text() == "deep"
+        assert path.read_text() == "deep\n"
+
+    def test_rewrites_file_without_trailing_newline(self, tmp_path: Path) -> None:
+        """Files missing the final newline are normalized on the next write."""
+        path = tmp_path / "legacy.txt"
+        path.write_text("hello")
+        assert write_if_changed(path, "hello") is True
+        assert path.read_text() == "hello\n"
+
+    def test_collapses_multiple_trailing_newlines(self, tmp_path: Path) -> None:
+        path = tmp_path / "spaces.txt"
+        assert write_if_changed(path, "a\n\n\n") is True
+        assert path.read_text() == "a\n"
+
+    def test_strips_trailing_whitespace_on_last_line(self, tmp_path: Path) -> None:
+        path = tmp_path / "trail.txt"
+        assert write_if_changed(path, "a\n  ") is True
+        assert path.read_text() == "a\n"
+
+    def test_empty_content_skipped(self, tmp_path: Path) -> None:
+        path = tmp_path / "empty.txt"
+        assert write_if_changed(path, "") is False
+        assert not path.exists()
 
 
 class TestValidStarship:
