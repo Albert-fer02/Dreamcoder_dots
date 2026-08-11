@@ -11,9 +11,9 @@
 
     # Line colors
     plus-color = "#387657"
-    minus-color = "#88616b"
+    minus-color = "#86585c"
     plus-emph-color = "#55C080"
-    minus-emph-color = "#E69AA4"
+    minus-emph-color = "#E38989"
 
     # Diff UI
     file-style = "#A5C7E8"
@@ -32,14 +32,14 @@
     line-numbers = true
     line-numbers-left-style = "#A8B5C2"
     line-numbers-right-style = "#A8B5C2"
-    line-numbers-minus-style = "#E69AA4"
+    line-numbers-minus-style = "#E38989"
     line-numbers-plus-style = "#55C080"
 
     # Side-by-side
     side-by-side = true
 
     # Whitespace highlighting
-    whitespace-error-style = "#D9B36C"
+    whitespace-error-style = "#E1C16D"
 
     # Navigation
     navigate = true

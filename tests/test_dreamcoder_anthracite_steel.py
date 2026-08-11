@@ -22,8 +22,8 @@ class DreamcoderDarkIdentityTest(unittest.TestCase):
     def test_dark_mode_has_cool_steel_blue_signature(self):
         self.assertEqual(self.dark["accent"], "#A5C7E8")
         self.assertEqual(self.dark["accent_2"], "#8FAFCB")
-        self.assertEqual(self.dark["error"], "#E69AA4")
-        self.assertEqual(self.dark["warning"], "#D9B36C")
+        self.assertEqual(self.dark["error"], "#E38989")
+        self.assertEqual(self.dark["warning"], "#E1C16D")
 
     def test_dark_mode_keeps_cool_text_and_steel_focus(self):
         self.assertEqual(self.dark["text"], "#E6EDF3")

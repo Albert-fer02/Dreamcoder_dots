@@ -60,3 +60,4 @@ alias sdd-status='~/.pi/gentle-ai/sdd-swap status'
 # Redirección de directorios temporales para evitar saturar tmpfs
 set -gx TMPDIR "$HOME/.tmp"
 set -gx BUN_TMPDIR "$HOME/.tmp"
+set -gx ENGRAM_URL http://127.0.0.1:7437

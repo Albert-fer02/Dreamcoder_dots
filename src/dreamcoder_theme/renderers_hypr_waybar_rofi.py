@@ -100,7 +100,7 @@ def hypr_content(c: dict[str, str]) -> str:
 # Import after ML4W/Gentleman defaults; this changes colors only.
 
 general {{
-    col.active_border = rgba({c["accent"][1:]}ff) rgba({c["diagnostic"][1:]}ff) 45deg
+    col.active_border = rgba({c["text"][1:]}ff) rgba({c["muted"][1:]}ff) 45deg
     col.inactive_border = {inactive}
 }}
 

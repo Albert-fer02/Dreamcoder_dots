@@ -142,7 +142,7 @@
         "border_hi": "accent",
         "on_focus": "on_accent",
         "border_ui": "border",
-        "warning": "accent"
+        "warning": "warning"
       }
     },
     "ghostty": {
@@ -181,7 +181,7 @@
         "muted": "text",
         "focus": "accent",
         "on_focus": "on_accent",
-        "warning": "accent"
+        "warning": "warning"
       }
     },
     "warp": {
@@ -212,7 +212,7 @@
       "mappings": {
         "surface": "background",
         "focus": "accent",
-        "warning": "accent"
+        "warning": "warning"
       }
     },
     "starship": {
@@ -237,8 +237,8 @@
         "focus": "palette.focus",
         "error": "palette.error",
         "warning": "palette.warning",
-        "success": "palette.sage",
-        "info": "palette.diagnostic"
+        "success": "palette.success",
+        "info": "palette.info"
       },
       "mappings": {
         "accent": "renderer:guard(prompt_accent,bg)"
@@ -315,7 +315,7 @@
         "border_hi": "theme.borderActive"
       },
       "mappings": {
-        "focus": "info",
+        "focus": "focus",
         "border_hi": "accent",
         "border": "border_ui"
       }

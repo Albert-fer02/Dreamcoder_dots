@@ -13,8 +13,8 @@
   --background-modifier-border: #161c23;
   --background-modifier-border-hover: #6b7e8e;
   --background-modifier-form-field: #0d1015;
-  --background-modifier-success: #1e332c;
-  --background-modifier-error: #3a2a31;
+  --background-modifier-success: #192e27;
+  --background-modifier-error: #3a2a2e;
   --background-modifier-message: #14181e;
 
   /* Text — guarded against background for accessibility */
@@ -23,9 +23,9 @@
   --text-faint: #8c949f;
   --text-accent: #95b5d5;
   --text-accent-hover: #7997b1;
-  --text-error: #d28c96;
-  --text-warning: #bd9b5b;
-  --text-success: #65b183;
+  --text-error: #d48d8d;
+  --text-warning: #c4a75b;
+  --text-success: #6bb090;
   --text-selection: #1e242b;
   --text-on-accent: #07090f;
 
@@ -34,7 +34,7 @@
   --interactive-hover: #14181e;
   --interactive-accent: #95b5d5;
   --interactive-accent-hover: #7997b1;
-  --interactive-success: #65b183;
+  --interactive-success: #6bb090;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -48,10 +48,10 @@
   --code-keyword: #95b5d5;
   --code-operator: #7997b1;
   --code-function: #7997b1;
-  --code-string: #65b183;
-  --code-number: #7a91a6;
+  --code-string: #509e6f;
+  --code-number: #9b7995;
   --code-tag: #95b5d5;
-  --code-important: #d28c96;
+  --code-important: #d48d8d;
   --code-background: #0d1015;
 
   /* Heading */
@@ -65,7 +65,7 @@
   /* Link */
   --link-color: #95b5d5;
   --link-color-hover: #7997b1;
-  --link-external-color: #66aac6;
+  --link-external-color: #7ea6d4;
   --link-external-color-hover: #7997b1;
 
   /* Checkbox */
@@ -85,7 +85,7 @@
   --graph-node: #8f9ca8;
   --graph-node-focused: #95b5d5;
   --graph-node-tag: #66aac6;
-  --graph-node-attachment: #65b183;
+  --graph-node-attachment: #509e6f;
 }
 
 /* Headings */

@@ -16,9 +16,9 @@
 @define-color accent-2 #7997b1;
 @define-color diagnostic #66aac6;
 @define-color lavender #99a9b9;
-@define-color error #d28c96;
-@define-color success #65b183;
-@define-color warning #bd9b5b;
+@define-color error #d48d8d;
+@define-color success #6bb090;
+@define-color warning #c4a75b;
 @define-color link #95b5d5;
 @define-color link-hover #7997b1;
 

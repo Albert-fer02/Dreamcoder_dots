@@ -22,14 +22,14 @@
     <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#8FAFCB</string></dict></dict>
     <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#A8B5C2</string></dict></dict>
     <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#55C080</string></dict></dict>
-    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#8FA9C0</string></dict></dict>
+    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#B48EAD</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#4DAED6</string></dict></dict>
     <dict><key>scope</key><string>punctuation</string><key>settings</key><dict><key>foreground</key><string>#A8B5C2</string></dict></dict>
     <dict><key>scope</key><string>keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#8FAFCB</string></dict></dict>
     <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#55C080</string></dict></dict>
     <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#A5C7E8</string></dict></dict>
     <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#53b1d7</string></dict></dict>
-    <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#E69AA4</string></dict></dict>
+    <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#E38989</string></dict></dict>
     <dict><key>scope</key><string>markup.heading, markup.bold</string><key>settings</key><dict><key>foreground</key><string>#A5C7E8</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>markup.italic</string><key>settings</key><dict><key>foreground</key><string>#4DAED6</string><key>fontStyle</key><string>italic</string></dict></dict>
     <dict><key>scope</key><string>meta.diff, meta.diff.header</string><key>settings</key><dict><key>foreground</key><string>#B6C5D4</string></dict></dict>

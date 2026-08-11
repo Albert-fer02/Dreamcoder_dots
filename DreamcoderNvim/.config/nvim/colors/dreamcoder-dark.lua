@@ -21,9 +21,9 @@ local c = {
   diagnostic = "#4DAED6",
   sage      = "#55C080",
   lavender  = "#B6C5D4",
-  mauve     = "#8FA9C0",
-  error     = "#E69AA4",
-  warning   = "#D9B36C",
+  mauve     = "#B48EAD",
+  error     = "#E38989",
+  warning   = "#E1C16D",
   border    = "#17202B",
   border_ui = "#647c8f",
   selection = "#202A35",
@@ -235,11 +235,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "DiffChange", {
-    bg = "#4a4233"
+    bg = "#4d4733"
   })
 
   vim.api.nvim_set_hl(0, "DiffDelete", {
-    bg = "#4e3b43"
+    bg = "#4d363b"
   })
 
   vim.api.nvim_set_hl(0, "DiffText", {
@@ -249,12 +249,12 @@ end
 
   -- ── Spell ─────────────────────────────────────────────
   vim.api.nvim_set_hl(0, "SpellBad", {
-    sp = "#E69AA4",
+    sp = "#E38989",
     undercurl = true
   })
 
   vim.api.nvim_set_hl(0, "SpellCap", {
-    sp = "#D9B36C",
+    sp = "#E1C16D",
     undercurl = true
   })
 
@@ -264,7 +264,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "SpellRare", {
-    sp = "#8FA9C0",
+    sp = "#B48EAD",
     undercurl = true
   })
 
@@ -279,11 +279,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WarningMsg", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "ErrorMsg", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "Question", {
@@ -318,7 +318,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Constant", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "String", {
@@ -330,7 +330,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Number", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "Boolean", {
@@ -338,7 +338,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Float", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "Identifier", {
@@ -375,7 +375,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Exception", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "PreProc", {
@@ -427,7 +427,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Debug", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "Underlined", {
@@ -440,11 +440,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Error", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "Todo", {
-    fg = "#D9B36C",
+    fg = "#E1C16D",
     bold = true
   })
 
@@ -459,7 +459,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@variable.parameter", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "@variable.member", {
@@ -467,7 +467,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@constant", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "@constant.builtin", {
@@ -500,11 +500,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@string.regex", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "@string.escape", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "@character", {
@@ -516,7 +516,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@number", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "@boolean", {
@@ -524,7 +524,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@float", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "@function", {
@@ -553,7 +553,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@parameter", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "@method", {
@@ -581,7 +581,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@debug", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "@include", {
@@ -611,7 +611,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@exception", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "@type", {
@@ -661,15 +661,15 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@comment.error", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "@comment.warning", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "@comment.todo", {
-    fg = "#D9B36C",
+    fg = "#E1C16D",
     bold = true
   })
 
@@ -735,11 +735,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@diff.minus", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "@diff.delta", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "@tag", {
@@ -757,11 +757,11 @@ end
 
   -- ── LSP / Diagnostics ────────────────────────────────
   vim.api.nvim_set_hl(0, "DiagnosticError", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticWarn", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticInfo", {
@@ -777,12 +777,12 @@ end
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", {
-    sp = "#E69AA4",
+    sp = "#E38989",
     undercurl = true
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
-    sp = "#D9B36C",
+    sp = "#E1C16D",
     undercurl = true
   })
 
@@ -797,11 +797,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", {
@@ -813,11 +813,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticFloatingError", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticFloatingWarn", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticFloatingInfo", {
@@ -829,11 +829,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticSignError", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticSignWarn", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "DiagnosticSignInfo", {
@@ -940,7 +940,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeGitDirty", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeGitNew", {
@@ -948,7 +948,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeGitDeleted", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeOpenedFile", {
@@ -1029,7 +1029,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyValue", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
 
@@ -1052,7 +1052,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "LazyReasonRt", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "LazyReasonCmd", {
@@ -1060,7 +1060,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "LazyValue", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "LazyCommit", {
@@ -1125,7 +1125,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindSnippet", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindKeyword", {
@@ -1153,7 +1153,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindVariable", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindClass", {
@@ -1177,7 +1177,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindValue", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindEnum", {
@@ -1185,7 +1185,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", {
-    fg = "#8FA9C0"
+    fg = "#B48EAD"
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindColor", {
@@ -1205,7 +1205,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindEvent", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "CmpItemKindOperator", {
@@ -1227,11 +1227,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "GitSignsChange", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsDelete", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsAddNr", {
@@ -1239,11 +1239,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "GitSignsChangeNr", {
-    fg = "#D9B36C"
+    fg = "#E1C16D"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsDeleteNr", {
-    fg = "#E69AA4"
+    fg = "#E38989"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsAddLn", {
@@ -1251,14 +1251,13 @@ end
   })
 
   vim.api.nvim_set_hl(0, "GitSignsChangeLn", {
-    bg = "#18181a"
+    bg = "#18191a"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsDeleteLn", {
-    bg = "#19161f"
+    bg = "#19141c"
   })
 
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     fg = "#A8B5C2"
   })
-

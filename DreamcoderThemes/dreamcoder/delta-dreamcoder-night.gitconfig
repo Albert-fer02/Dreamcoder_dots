@@ -10,10 +10,10 @@
     syntax-theme = Dreamcoder-Night
 
     # Line colors
-    plus-color = "#416c56"
-    minus-color = "#7c5860"
-    plus-emph-color = "#65b183"
-    minus-emph-color = "#d28c96"
+    plus-color = "#35624b"
+    minus-color = "#7e585b"
+    plus-emph-color = "#509e6f"
+    minus-emph-color = "#d48d8d"
 
     # Diff UI
     file-style = "#95b5d5"
@@ -32,14 +32,14 @@
     line-numbers = true
     line-numbers-left-style = "#8f9ca8"
     line-numbers-right-style = "#8f9ca8"
-    line-numbers-minus-style = "#d28c96"
-    line-numbers-plus-style = "#65b183"
+    line-numbers-minus-style = "#d48d8d"
+    line-numbers-plus-style = "#509e6f"
 
     # Side-by-side
     side-by-side = true
 
     # Whitespace highlighting
-    whitespace-error-style = "#bd9b5b"
+    whitespace-error-style = "#c4a75b"
 
     # Navigation
     navigate = true

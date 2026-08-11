@@ -14,7 +14,7 @@
   --background-modifier-border-hover: #647c8f;
   --background-modifier-form-field: #0D121A;
   --background-modifier-success: #1a382e;
-  --background-modifier-error: #3f2e37;
+  --background-modifier-error: #3e2a30;
   --background-modifier-message: #151C25;
 
   /* Text — guarded against background for accessibility */
@@ -23,9 +23,9 @@
   --text-faint: #8795a2;
   --text-accent: #A5C7E8;
   --text-accent-hover: #8FAFCB;
-  --text-error: #E69AA4;
-  --text-warning: #D9B36C;
-  --text-success: #55C080;
+  --text-error: #E38989;
+  --text-warning: #E1C16D;
+  --text-success: #76C7A1;
   --text-selection: #202A35;
   --text-on-accent: #070A13;
 
@@ -34,7 +34,7 @@
   --interactive-hover: #151C25;
   --interactive-accent: #A5C7E8;
   --interactive-accent-hover: #8FAFCB;
-  --interactive-success: #55C080;
+  --interactive-success: #76C7A1;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -49,9 +49,9 @@
   --code-operator: #8FAFCB;
   --code-function: #8FAFCB;
   --code-string: #55C080;
-  --code-number: #8FA9C0;
+  --code-number: #B48EAD;
   --code-tag: #A5C7E8;
-  --code-important: #E69AA4;
+  --code-important: #E38989;
   --code-background: #0D121A;
 
   /* Heading */
@@ -65,7 +65,7 @@
   /* Link */
   --link-color: #A5C7E8;
   --link-color-hover: #8FAFCB;
-  --link-external-color: #4DAED6;
+  --link-external-color: #7CB0E6;
   --link-external-color-hover: #8FAFCB;
 
   /* Checkbox */

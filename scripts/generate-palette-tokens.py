@@ -16,18 +16,18 @@ OUTPUT = ROOT / "src" / "dreamcoder_theme" / "palette_tokens.py"
 ANSI_KEY_NAMES = [
     "surface0",
     "error",
-    "sage",
-    "accent",
-    "diagnostic",
+    "success",
+    "warning",
+    "info",
     "mauve",
     "lavender",
     "muted",
     "subtle",
     "error_bright",
-    "sage_bright",
-    "warning",
-    "diagnostic_bright",
-    "lavender_bright",
+    "success_bright",
+    "warning_bright",
+    "info_bright",
+    "mauve_bright",
     "focus_bright",
     "text",
 ]
@@ -206,7 +206,11 @@ def render_palette_tokens(variants: dict[str, dict[str, str]]) -> str:
 
 def load_tokens(path: Path = TOKENS_FILE) -> dict[str, object]:
     """Load canonical tokens without modifying their source file."""
-    return json.loads(path.read_text(encoding="utf-8"))
+    try:
+        data: dict[str, object] = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"cannot load canonical tokens from {path}: {exc}") from exc
+    return data
 
 
 def enrich_tokens(tokens: dict[str, object]) -> dict[str, object]:
@@ -218,7 +222,10 @@ def enrich_tokens(tokens: dict[str, object]) -> dict[str, object]:
     result["modes"] = {
         name: enrich_mode(palette) for name, palette in modes.items() if isinstance(palette, dict)
     }
-    guardrails = dict(tokens.get("guardrails", {}))
+    guardrails_raw = tokens.get("guardrails", {})
+    if not isinstance(guardrails_raw, dict):
+        raise ValueError("tokens.guardrails must be an object")
+    guardrails = dict(guardrails_raw)
     guardrails.setdefault("minimum_apca_on_accent", 60)
     guardrails.setdefault("minimum_apca_heading_light", 60)
     guardrails.setdefault("minimum_apca_heading_dark", 45)
