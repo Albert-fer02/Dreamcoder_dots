@@ -348,7 +348,11 @@ def check_dual_gate_candidates():
     (Night = night_palette of canonical dark with canonical render_profiles,
     wallpaper adaptation disabled for the gate). Any dual-gate error blocks."""
     tokens = load_tokens(TOKEN_FILE)
-    guardrails = {k: v for k, v in tokens["guardrails"].items() if isinstance(v, int | float)}
+    # float() narrows the comprehension to dict[str, float] (mirrors
+    # palette.load_guardrails), satisfying the dict-invariance typing.
+    guardrails = {
+        k: float(v) for k, v in tokens["guardrails"].items() if isinstance(v, int | float)
+    }
     night_params = tokens.get("render_profiles", {}).get("night")
     require(
         isinstance(night_params, dict),
