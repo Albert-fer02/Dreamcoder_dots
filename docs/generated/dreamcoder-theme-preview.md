@@ -35,12 +35,12 @@ Semantic tokens are intentionally distinct:
 | `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8FAFCB'></span> `#8FAFCB` |
 | `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#4DAED6'></span> `#4DAED6` |
 | `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#55C080'></span> `#55C080` |
-| `success` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#55C080'></span> `#55C080` |
-| `info` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#4DAED6'></span> `#4DAED6` |
+| `success` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#76C7A1'></span> `#76C7A1` |
+| `info` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#7CB0E6'></span> `#7CB0E6` |
 | `lavender` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#B6C5D4'></span> `#B6C5D4` |
-| `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8FA9C0'></span> `#8FA9C0` |
-| `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E69AA4'></span> `#E69AA4` |
-| `warning` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#D9B36C'></span> `#D9B36C` |
+| `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#B48EAD'></span> `#B48EAD` |
+| `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E38989'></span> `#E38989` |
+| `warning` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E1C16D'></span> `#E1C16D` |
 | `on_accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#070A13'></span> `#070A13` |
 | `on_error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#070A13'></span> `#070A13` |
 | `link` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5C7E8'></span> `#A5C7E8` |
@@ -137,8 +137,8 @@ Semantic tokens are intentionally distinct:
 | `accent_2` | 8.63:1 | AA |
 | `diagnostic` | 7.86:1 | AA |
 | `sage` | 8.70:1 | AA |
-| `error` | 8.97:1 | AA |
-| `warning` | 10.00:1 | AA |
+| `error` | 7.73:1 | AA |
+| `warning` | 11.35:1 | AA |
 
 ### Dreamcoder Anthracite Steel APCA
 
@@ -151,8 +151,8 @@ Semantic tokens are intentionally distinct:
 | `accent_2` | 56.8 | ≥75 (FAIL) |
 | `diagnostic` | 52.7 | ≥75 (FAIL) |
 | `sage` | 57.4 | ≥75 (FAIL) |
-| `error` | 58.7 | ≥75 (FAIL) |
-| `warning` | 64.1 | ≥75 (FAIL) |
+| `error` | 51.9 | ≥75 (FAIL) |
+| `warning` | 70.9 | ≥75 (FAIL) |
 | `border_ui` | 31.3 | ≥60 (FAIL) |
 | `focus` | 70.3 | ≥60 (UI) |
 
@@ -250,9 +250,9 @@ Semantic tokens are intentionally distinct:
 | `accent` | 9.33:1 | AA |
 | `accent_2` | 6.52:1 | AA |
 | `diagnostic` | 7.71:1 | AA |
-| `sage` | 7.74:1 | AA |
-| `error` | 7.52:1 | AA |
-| `warning` | 7.59:1 | AA |
+| `sage` | 6.12:1 | AA |
+| `error` | 7.58:1 | AA |
+| `warning` | 8.56:1 | AA |
 
 ### Night (derived from Anthracite Steel) APCA
 
@@ -264,9 +264,9 @@ Semantic tokens are intentionally distinct:
 | `accent` | 60.3 | ≥75 (FAIL) |
 | `accent_2` | 44.3 | ≥75 (FAIL) |
 | `diagnostic` | 51.4 | ≥75 (FAIL) |
-| `sage` | 51.7 | ≥75 (FAIL) |
-| `error` | 50.4 | ≥75 (FAIL) |
-| `warning` | 50.7 | ≥75 (FAIL) |
+| `sage` | 42.0 | ≥75 (FAIL) |
+| `error` | 50.7 | ≥75 (FAIL) |
+| `warning` | 56.1 | ≥75 (FAIL) |
 | `border_ui` | 32.6 | ≥60 (FAIL) |
 | `focus` | 60.3 | ≥60 (UI) |
 
