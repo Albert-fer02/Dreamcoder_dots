@@ -769,6 +769,37 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         write_if_changed(ROOT / "DreamcoderThemes/dreamcoder/rofi.rasi", rofi_content(active))
     )
 
+    # Repo-root active files — the tracked copies users install to apps that
+    # COPY the theme (firefox userChrome, obsidian, bat, delta, ...), as
+    # opposed to the subdir actives above which symlinked desktop targets
+    # consume. sync_active_targets writes the same paths from live config;
+    # writing them here too keeps repo-only generation from leaving the two
+    # active sets out of sync.
+    repo_changes += [
+        write_if_changed(
+            ROOT / "DreamcoderThemes/zsh-syntax-highlighting-dreamcoder.zsh",
+            zsh_syntax_content(active),
+        ),
+        write_if_changed(
+            ROOT / "DreamcoderThemes/ls-colors-dreamcoder.sh", ls_colors_content(active)
+        ),
+        write_if_changed(ROOT / "DreamcoderThemes/bat-dreamcoder.sh", bat_content(active)),
+        write_if_changed(
+            ROOT / "DreamcoderThemes/delta-dreamcoder.gitconfig", delta_content(active)
+        ),
+        write_if_changed(ROOT / "DreamcoderThemes/fzf-dreamcoder.sh", fzf_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/btop-dreamcoder.theme", btop_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/dunst-dreamcoder.conf", dunst_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/firefox-dreamcoder.css", firefox_content(active)),
+        write_if_changed(
+            ROOT / "DreamcoderThemes/obsidian-dreamcoder.css", obsidian_content(active)
+        ),
+        write_if_changed(ROOT / "DreamcoderThemes/cava-dreamcoder.config", cava_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/hyprland.conf", hypr_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/waybar.css", waybar_content(active)),
+        write_if_changed(ROOT / "DreamcoderThemes/rofi.rasi", rofi_content(active)),
+    ]
+
     # Zellij — the consumed palette artifact is generated here (design §5
     # row 13); the active selector is patched by update_zellij_config.
     repo_changes.append(
