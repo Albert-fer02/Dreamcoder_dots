@@ -19,7 +19,7 @@ switch "$DREAMCODER_THEME_MODE"
         set -gx BAT_THEME Dreamcoder-Light
 end
 set -q BAT_STYLE; or set -gx BAT_STYLE "auto,changes,header,grid"
-set -q BAT_TABS; or set -gx BAT_TABS "4"
+set -q BAT_TABS; or set -gx BAT_TABS 4
 
 # LS_COLORS / EZA_COLORS — source from generated theme file
 set -l ls_file "$theme_dir/ls-colors-dreamcoder-$DREAMCODER_THEME_MODE.sh"

@@ -12,11 +12,11 @@ function tmux-kill-all --description "Mata TODAS las sesiones tmux (cuidado)"
         end
         echo ""
         read -l -p 'echo "¿Matar TODAS? (s/N): "' confirm
-        if test "$confirm" = "s"
+        if test "$confirm" = s
             tmux kill-server
             echo "✅ Todas las sesiones tmux fueron terminadas"
         else
-            echo "Cancelado"
+            echo Cancelado
         end
     end
 end

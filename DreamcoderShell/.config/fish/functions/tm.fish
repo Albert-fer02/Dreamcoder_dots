@@ -1,7 +1,7 @@
 function tm --description "tmux smart attach — crea o adjunta a una sesión"
     # Uso: tm [nombre-sesion]
     # Si se omite el nombre, usa "mobile" por defecto (ideal para Termius)
-    set -l session_name "mobile"
+    set -l session_name mobile
     if test (count $argv) -ge 1
         set session_name $argv[1]
     end

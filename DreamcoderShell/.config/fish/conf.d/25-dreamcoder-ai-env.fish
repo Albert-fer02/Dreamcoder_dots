@@ -39,7 +39,7 @@ if not test -s "$STATE_FILE"
     set -l OPENCODE_STATE "$HOME/.opencode/state"
     if test -f "$OPENCODE_STATE"
         set -l model (jq -r '.model // "opencode"' "$OPENCODE_STATE" 2>/dev/null)
-        if test -n "$model" -a "$model" != "null"
+        if test -n "$model" -a "$model" != null
             printf '%s' "$model" >"$STATE_FILE"
         end
     end

@@ -5,6 +5,6 @@
 # -----------------------------------------------------
 # Fastfetch
 # -----------------------------------------------------
-if status is-interactive; and test "$DREAMCODER_FASTFETCH_ON_START" != "0"
+if status is-interactive; and test "$DREAMCODER_FASTFETCH_ON_START" != 0
     fastfetch
 end
