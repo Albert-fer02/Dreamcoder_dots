@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from dreamcoder_theme._math import apca_lc
+from dreamcoder_theme.palette import night_palette
 
 ROOT = Path(__file__).resolve().parent.parent
 TOKENS = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
@@ -168,6 +169,16 @@ def main():
         parts.append("")
         parts.append(ui_contrast_table(label, palette))
         parts.append("")
+    night_params = tokens.get("render_profiles", {}).get("night", {})
+    guardrail_numbers = {k: v for k, v in guardrails.items() if isinstance(v, (int, float))}
+    night = night_palette(tokens["modes"]["dark"], night_params, guardrail_numbers)
+    night_label = "Night (derived from Anthracite Steel)"
+    parts.append(contrast_table(night_label, night))
+    parts.append("")
+    parts.append(apca_table(night_label, night, body_min, ui_min))
+    parts.append("")
+    parts.append(ui_contrast_table(night_label, night))
+    parts.append("")
     parts += [
         "## Usage",
         "",

@@ -213,3 +213,13 @@
 - apply-theme-mode.sh (5.6): bounded post-validation adapter — profile arg (standard|night), night variant selection, base/profile conflict rejection, mutation ordering after settings persist; theme-auto.sh keeps Light/Dark schedule and pins standard (never auto-Night).
 - 8 CLI activation tests: night persists + 32/32, light/dark exit night, failing gate no-mutation non-zero, reload/write failure restore bytes/symlinks/settings, night-light-dark end-to-end transitions, generic settings intact. 470 passed total.
 - Deviations: sdd-apply subagent timed out at 5.6 mid-restructure; parent verified + completed the adapter ordering, regenerated stale opencode artifact (STALE_ARTIFACT transient), and formatted. Remaining phase: 6 (blocking health + docs).
+
+## Batch 6 (PR6, Phase 6) — blocking health + docs + CI (FINAL)
+
+- verify-theme-health.py: all declared guardrail pairs now BLOCKING (check_apca_or_warn removed); new check_dual_gate_candidates() validates Light/Dark/Dusk/Night via the package dual gate (Night = night_palette of canonical dark, adaptive disabled); check_night_coverage() enforces the exact 32-consumer sync declaration; local duplicate contrast removed (package import used).
+- generate-theme-preview.py: Night contrast/APCA/UI tables added (derived from Anthracite Steel).
+- docs/DREAMCODER_DESIGN_SYSTEM.md: dual gate documented as independently blocking; APCA advisory "public beta" language and stale exceptions removed (subtle/diagnostic debt resolved in PR2).
+- CI theme-validation.yml: continue-on-error removed (preview + uncommitted-changes steps now blocking); preview path fixed to docs/generated/.
+- LIVE BUG FIX (user-reported): scripts/dreamcoder CONTROL() pointed PYTHONPATH at scripts/ instead of src/ (package import failed on `dreamcoder light`); added missing `theme` case. Verified end-to-end: `dreamcoder light` and `dreamcoder night` both exit 0, 32/32 coverage, rollback_state none.
+- Gate: 470 passed, ruff/mypy/format clean, health exit 0 (4 candidates + coverage), bats 23/23, drift clean.
+- SDD 1 complete: all 6 PR slices delivered (proposal -> spec -> design -> tasks -> apply x6 -> verify PR1 -> archive pending).

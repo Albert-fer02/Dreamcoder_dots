@@ -44,7 +44,7 @@ Every new target must map these primitives explicitly. If a target lacks one pri
 
 ## Accessibility policy
 
-Dreamcoder uses WCAG 2.1 contrast as the authoritative standard. APCA is evaluated as an advisory metric (it remains in public beta per Myndex/apca-w3, not yet approved for WCAG 3).
+Dreamcoder uses a **dual contrast gate**: WCAG 2.2 remains the legal accessibility floor, and APCA is an **independently blocking** perceptual gate. A pass on one metric never waives a failure on the other (ADR-002). Thresholds are read from `tokens.json` guardrails — never duplicated as policy literals.
 
 Minimums:
 
@@ -54,15 +54,15 @@ Minimums:
 - Terminal cursor and selection pairs have explicit contrast floors in `tokens.json`.
 - Meaningful borders use `border_ui` or `border_hi`; decorative borders may use `border`.
 
-**APCA advisory thresholds (public beta, non-binding):**
+**APCA blocking floors (both metrics required on every declared pair):**
 
-- Body text: Lc 75 (matches WCAG AAA target)
-- UI affordances: Lc 30 (matches WCAG any-text minimum)
-- Quiet text: Lc 45 (matches WCAG large/heavy text tier)
+- Body text: Lc 75 light / 50 dark
+- UI affordances: Lc 60 light / 28 dark
+- Quiet text: Lc 44
+- On-accent text: Lc 60
+- Heading text: Lc 60 light / 45 dark
 
-See `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values.
-
-The dark `subtle` token measures APCA Lc 36.8 against the quiet advisory target of 44, while retaining WCAG contrast of 5.19:1. This is a documented non-blocking advisory and must remain visible in health-command output.
+See `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values. `scripts/verify-theme-health.py` validates Light, Dark, Dusk, and the derived Night candidate, and any below-floor pair blocks the command.
 
 ## Health verification policy
 
@@ -83,9 +83,7 @@ Dreamcoder changes follow this governance model:
 5. **Release notes**: user-visible theme, CLI, repair, or governance changes need a changelog entry.
 6. **Compatibility check**: repair/install flows must remain safe after ML4W, Gentleman, Waypaper, or Hyprland updates.
 
-⚠️ **Known token gaps (outstanding):**
-
-- Dark mode `diagnostic` color (#5f95ca) scores APCA Lc ~43 — below the Lc 75 advisory threshold. However WCAG 2.1 rates it at 6.00:1 (AA pass). This is a documented design tradeoff.
+⚠️ **Known token gaps:** the corrected dual gate surfaces pre-existing debt that Phase 2 corrected in tokens (dark `subtle` → Lc 44.0, `border_ui` WCAG ≥ 4.5, light `disabled` WCAG ≥ 4.5, light/dusk `success` APCA ≥ 75). The gate is now passing on all canonical palettes; any future below-floor pair blocks health verification.
 
 ## Release readiness checklist
 

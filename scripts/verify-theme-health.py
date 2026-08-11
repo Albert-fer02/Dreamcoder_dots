@@ -7,9 +7,10 @@ from pathlib import Path
 
 import jsonschema
 
-from dreamcoder_theme._math import apca_lc
+from dreamcoder_theme._math import apca_lc, contrast
 from dreamcoder_theme.design_system import evaluate_contract, load_contract, load_tokens
 from dreamcoder_theme.palette import ansi as terminal_ansi
+from dreamcoder_theme.palette import night_palette, validate_palette
 from dreamcoder_theme.renderers_opencode import opencode_content
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -176,11 +177,6 @@ def lum(value):
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
-def contrast(left, right):
-    high, low = sorted((lum(left), lum(right)), reverse=True)
-    return (high + 0.05) / (low + 0.05)
-
-
 def require(condition, message):
     if not condition:
         raise SystemExit(message)
@@ -223,15 +219,6 @@ def check_apca_require(mode, key, value, bg, threshold):
         lc >= threshold,
         f"tokens:{mode}:{key} APCA Lc {lc:.1f} < {threshold}",
     )
-
-
-def check_apca_or_warn(mode, key, value, bg, threshold):
-    """Check APCA contrast, log warning but don't fail (APCA is public beta, not a standard)."""
-    lc = abs(apca_lc(value, bg))
-    if lc < threshold:
-        print(
-            f"  ⚠ APCA advisory: tokens:{mode}:{key} Lc {lc:.1f} < {threshold} (WCAG {contrast(bg, value):.2f}:1 passes)"
-        )
 
 
 def check_token_parity(tokens):
@@ -299,12 +286,12 @@ def check_tokens():
             check_apca_require(mode, "text_heading", palette["text_heading"], bg, heading_target)
         for key in apca_accent_keys:
             value = palette[key]
-            check_apca_or_warn(mode, key, value, bg, apca_accent)
+            check_apca_require(mode, key, value, bg, apca_accent)
         for key in TOKEN_QUIET_APCA_KEYS:
             if key not in palette:
                 continue
             value = palette[key]
-            check_apca_or_warn(mode, key, value, bg, apca_quiet)
+            check_apca_require(mode, key, value, bg, apca_quiet)
         require(contrast(bg, palette["text"]) >= 7, f"tokens:{mode}: main text below AAA")
         check_apca_require(mode, "text", palette["text"], bg, apca_body)
         for fg_key, bg_key in ON_PAIRS:
@@ -352,7 +339,41 @@ def check_tokens():
             value = palette[key]
             require(HEX.match(value), f"tokens:{mode}:{key}: invalid hex")
             require(contrast(bg, value) >= 3, f"tokens:{mode}:{key} contrast below 3.0")
-            check_apca_or_warn(mode, key, value, bg, apca_ui)
+            check_apca_require(mode, key, value, bg, apca_ui)
+
+
+def check_dual_gate_candidates():
+    """Validate the package dual gate on all four deterministic candidates:
+    standard Light, standard Dark, design-system Dusk, and derived Night
+    (Night = night_palette of canonical dark with canonical render_profiles,
+    wallpaper adaptation disabled for the gate). Any dual-gate error blocks."""
+    tokens = load_tokens(TOKEN_FILE)
+    guardrails = {k: v for k, v in tokens["guardrails"].items() if isinstance(v, (int, float))}
+    night_params = tokens.get("render_profiles", {}).get("night")
+    require(
+        isinstance(night_params, dict),
+        "tokens: render_profiles.night missing (canonical Night parameters required)",
+    )
+    candidates = [
+        ("light", tokens["modes"]["light"], "light"),
+        ("dark", tokens["modes"]["dark"], "dark"),
+        ("dusk", tokens["modes"]["dusk"], "dusk"),
+        ("night", night_palette(tokens["modes"]["dark"], night_params, guardrails), "dark"),
+    ]
+    for label, palette, mode in candidates:
+        errors = validate_palette(palette, guardrails, profile=label, mode=mode)
+        require(not errors, f"dual gate {label}:\n" + "\n".join(errors))
+
+
+def check_night_coverage():
+    """Fail when the sync 32-consumer Night coverage declaration is missing,
+    duplicated, or not exactly the design matrix's 32 IDs."""
+    from dreamcoder_theme.sync import COVERAGE
+
+    ids = [row.consumer_id for row in COVERAGE]
+    require(len(ids) == 32, f"coverage: expected 32 consumer IDs, got {len(ids)}")
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    require(not dupes, f"coverage: duplicate consumer IDs: {dupes}")
 
 
 def check_theme_file(file, mode=None):
@@ -612,6 +633,8 @@ for file in CODEX_CLI_FILES:
     check_codex_cli_theme(file)
 check_opencode_repo()
 check_design_system_contract()
+check_dual_gate_candidates()
+check_night_coverage()
 for file in KITTY_FILES:
     check_kitty_colors(file)
 for file in STARSHIP_FILES:

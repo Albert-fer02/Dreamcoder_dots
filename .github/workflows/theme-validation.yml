@@ -48,12 +48,10 @@ jobs:
         run: python scripts/verify-theme-health.py
 
       - name: Generate theme preview
-        continue-on-error: true
         run: python scripts/generate-theme-preview.py
 
       - name: Check for uncommitted changes
-        continue-on-error: true
         run: |
-          git diff --exit-code docs/dreamcoder-theme-preview.md || (echo "::error::Theme preview not regenerated" && exit 1)
+          git diff --exit-code docs/generated/dreamcoder-theme-preview.md || (echo "::error::Theme preview not regenerated" && exit 1)
 
   # publish job removed — use Release workflow for PyPI publishing

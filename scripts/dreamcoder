@@ -6,7 +6,7 @@ ENV_FILE="${DREAMCODER_DOTS_ENV:-${0%/*}/dreamcoder-env.sh}"
 [[ -f "${ENV_FILE}" ]] && source "${ENV_FILE}"
 CMD="${1:-help}"
 shift || true
-CONTROL() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/scripts${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
+CONTROL() { PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" python3 -m dreamcoder_theme.control "$@"; }
 
 case "${CMD}" in
     install) exec "${DREAMCODER_DOTS_DIR}/scripts/install.sh" "$@" ;;
@@ -38,6 +38,7 @@ case "${CMD}" in
     # path (prepare -> validate -> persist -> commit -> reload adapter); the
     # generic settings interface continues to serve theme.render_profile.
     light|dark|night) CONTROL theme apply "${CMD}" "$@" ;;
+    theme) CONTROL theme "$@" ;;
     sync) exec "${DREAMCODER_DOTS_DIR}/scripts/sync-dreamcoder-theme.py" "$@" ;;
     *)
         printf 'Usage: dreamcoder {install|repair|doctor|doctor-json|dashboard|tui|docs|audit|control|settings|profile|motion|backup|visual|installer|status|verify|upstream-diff|preview|auto|light|dark|night|theme|sync}\n' >&2
