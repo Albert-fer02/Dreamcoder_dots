@@ -85,6 +85,22 @@ def run_sync(tmp: Path, mode: str = "dark") -> subprocess.CompletedProcess[str]:
             "OPENCODE_TUI": str(tmp / "opencode" / "tui.json"),
             "CODEX_THEME": str(tmp / "codex" / "themes" / "Dreamcoder.tmTheme"),
             "CODEX_CONFIG": str(tmp / "codex" / "config.toml"),
+            # Repo-root active theme files: without these, sync_active_targets
+            # writes the DreamcoderThemes/* files in the repository itself.
+            "DREAMCODER_ZSH_SYNTAX_THEME": str(tmp / "themes" / "zsh-syntax.zsh"),
+            "DREAMCODER_LS_COLORS_THEME": str(tmp / "themes" / "ls-colors.sh"),
+            "DREAMCODER_BAT_THEME": str(tmp / "themes" / "bat.sh"),
+            "DREAMCODER_DELTA_THEME": str(tmp / "themes" / "delta.gitconfig"),
+            "DREAMCODER_FZF_THEME": str(tmp / "themes" / "fzf.sh"),
+            "DREAMCODER_BTOP_THEME": str(tmp / "themes" / "btop.theme"),
+            "DREAMCODER_DUNST_THEME": str(tmp / "themes" / "dunst.conf"),
+            "DREAMCODER_FIREFOX_THEME": str(tmp / "themes" / "firefox.css"),
+            "DREAMCODER_OBSIDIAN_THEME": str(tmp / "themes" / "obsidian.css"),
+            "DREAMCODER_CAVA_THEME": str(tmp / "themes" / "cava.config"),
+            "DREAMCODER_HYPRLAND_THEME": str(tmp / "themes" / "hyprland.conf"),
+            "DREAMCODER_WAYBAR_THEME": str(tmp / "themes" / "waybar.css"),
+            "DREAMCODER_ROFI_THEME": str(tmp / "themes" / "rofi.rasi"),
+            "DREAMCODER_NVIM_THEME": str(tmp / "nvim" / "colors" / "dreamcoder.lua"),
             "PYTHONPATH": str(ROOT / "src"),
         }
     )
