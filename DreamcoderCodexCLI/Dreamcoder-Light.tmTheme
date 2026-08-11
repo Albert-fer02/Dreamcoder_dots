@@ -21,12 +21,12 @@
     <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#824f16</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#a7471c</string></dict></dict>
     <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#352e22</string></dict></dict>
-    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
+    <dict><key>scope</key><string>string</string><key>settings</key><dict><key>foreground</key><string>#315b31</string></dict></dict>
     <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#7d3e64</string></dict></dict>
     <dict><key>scope</key><string>entity.name.type, support.type</string><key>settings</key><dict><key>foreground</key><string>#0d4a68</string></dict></dict>
     <dict><key>scope</key><string>punctuation</string><key>settings</key><dict><key>foreground</key><string>#352e22</string></dict></dict>
     <dict><key>scope</key><string>keyword.operator</string><key>settings</key><dict><key>foreground</key><string>#a7471c</string></dict></dict>
-    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#3d723d</string></dict></dict>
+    <dict><key>scope</key><string>constant.character.escape</string><key>settings</key><dict><key>foreground</key><string>#315b31</string></dict></dict>
     <dict><key>scope</key><string>entity.name.tag</string><key>settings</key><dict><key>foreground</key><string>#824f16</string></dict></dict>
     <dict><key>scope</key><string>entity.other.attribute-name</string><key>settings</key><dict><key>foreground</key><string>#0d4864</string></dict></dict>
     <dict><key>scope</key><string>invalid</string><key>settings</key><dict><key>foreground</key><string>#842f24</string></dict></dict>

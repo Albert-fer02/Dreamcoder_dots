@@ -10,9 +10,9 @@
     "coral": "#E69AA4",
     "warning": "#D9B36C",
     "muted": "#A8B5C2",
-    "subtle": "#708090",
-    "comment": "#9AA9B8",
-    "borderUi": "#526575",
+    "subtle": "#8795a2",
+    "comment": "#aab7c4",
+    "borderUi": "#647c8f",
     "borderMuted": "#17202B"
   },
   "colors": {

@@ -6,10 +6,10 @@
   muted: #A8B5C2;
   selected: rgba(124, 179, 217, 0.24);
   active: #A5C7E8;
-  border-ui: #526575;
+  border-ui: #647c8f;
   focus: #A5C7E8;
   urgent: #E69AA4;
-  border-color: #526575;
+  border-color: #647c8f;
 }
 
 window {

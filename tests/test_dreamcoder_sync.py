@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 from unittest import mock
@@ -12,6 +13,15 @@ from dreamcoder_theme import sync
 from dreamcoder_theme.palette import load_variants
 from dreamcoder_theme.palette_tokens import VARIANTS as V
 from dreamcoder_theme.settings import ThemePaths
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _canonical_guardrails() -> dict[str, float]:
+    tokens_file = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
+    tokens = json.loads(tokens_file.read_text())
+    return {k: v for k, v in tokens["guardrails"].items() if isinstance(v, (int, float))}
+
 
 _CONTENT_FUNCS = [
     "kitty_content",
@@ -197,6 +207,7 @@ def _main_patches(mock_paths, active, variants, **overrides):
         adaptive_enabled=False,
         write_repo_enabled=True,
         valid_starship=True,
+        load_guardrails=_canonical_guardrails(),
         batch_theme_variants=[False],
     )
     vals.update(overrides)
@@ -209,6 +220,7 @@ def _main_patches(mock_paths, active, variants, **overrides):
         "adaptive_enabled",
         "write_repo_enabled",
         "valid_starship",
+        "load_guardrails",
     ):
         if name in vals:
             result.append(mock.patch(f"dreamcoder_theme.sync.{name}", return_value=vals[name]))
@@ -238,6 +250,60 @@ def test_main_fails_on_invalid_starship(mock_paths, active, variants):
         for p in patches:
             p.stop()
     assert "Starship" in str(exc.value)
+
+
+def test_main_gate_failure_blocks_all_writes(mock_paths, active, variants):
+    """R4: a failed dual gate performs zero writes and exits non-zero.
+
+    No writer, selector, variant, or repo writer may run when validation
+    fails, and no settings/profile mutation occurs (Phase 2 main() performs
+    none; persisted profile state is Phase 4/5 — here the fail-closed contract
+    is: non-zero exit, zero writes, prior profile untouched by construction).
+    """
+    patches = [
+        mock.patch("dreamcoder_theme.sync.theme_paths", return_value=mock_paths),
+        mock.patch("dreamcoder_theme.sync.theme_mode", return_value="dark"),
+        mock.patch("dreamcoder_theme.sync.load_variants", return_value=variants),
+        mock.patch("dreamcoder_theme.sync.adaptive_palette", return_value=active),
+        mock.patch("dreamcoder_theme.sync.adaptive_enabled", return_value=False),
+        mock.patch("dreamcoder_theme.sync.write_repo_enabled", return_value=True),
+        mock.patch("dreamcoder_theme.sync.load_guardrails", return_value=_canonical_guardrails()),
+        mock.patch("dreamcoder_theme.sync.validate_palette", return_value=["forced gate failure"]),
+    ]
+    # Every write path must be untouched when the gate fails.
+    for name in (
+        "sync_active_targets",
+        "sync_bat_theme_variants",
+        "sync_repo_snippets",
+        "valid_starship",
+        "write_if_changed",
+        "ensure_kitty_ui_include",
+        "update_ghostty_theme",
+        "update_warp_settings",
+        "write_opencode_tui",
+        "cleanup_opencode_themes",
+        "ensure_codex_theme_config",
+        "ensure_pi_theme_settings",
+        "update_zellij_config",
+        "write_variant_files",
+    ):
+        patches.append(
+            mock.patch(
+                f"dreamcoder_theme.sync.{name}",
+                side_effect=RuntimeError(f"{name} must not run when the gate fails"),
+            )
+        )
+    for p in patches:
+        p.start()
+    try:
+        with pytest.raises(SystemExit) as exc:
+            sync.main()
+    finally:
+        for p in patches:
+            p.stop()
+    assert "Theme gate failed" in str(exc.value)
+    assert "no writes performed" in str(exc.value)
+    assert "forced gate failure" in str(exc.value)
 
 
 def test_main_skips_sync_repo_when_disabled(mock_paths, active, variants):
@@ -351,6 +417,6 @@ def test_variant_registry_write_order_deterministic(variants, active) -> None:
     for called_base in called_bases:
         if reg_idx < len(registry_bases) and called_base == registry_bases[reg_idx]:
             reg_idx += 1
-    assert reg_idx == len(
-        registry_bases
-    ), f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
+    assert reg_idx == len(registry_bases), (
+        f"Only {reg_idx}/{len(registry_bases)} registry entries called in order"
+    )

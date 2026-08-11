@@ -9,7 +9,12 @@ from pathlib import Path
 from typing import Any
 
 from .herdr_contract import SUPPORTED_PROFILES, HerdrProfile
-from .palette import adaptive_palette, load_variants
+from .palette import (
+    adaptive_palette,
+    load_guardrails,
+    load_variants,
+    validate_palette,
+)
 from .palette_tokens import VARIANTS as DEFAULT_VARIANTS
 from .renderers import (
     antigravity_content,
@@ -453,6 +458,20 @@ def main() -> None:
     mode = theme_mode()
     variants = load_variants(DEFAULT_VARIANTS, paths.tokens_file)
     active = adaptive_palette(variants[mode], mode, paths.wallpaper, adaptive_enabled())
+
+    # Validation-first (R4): the final palette must pass the independent WCAG
+    # 2.2 + APCA dual gate BEFORE any writer or selector runs. A failed gate
+    # exits non-zero with zero writes; no profile/settings mutation occurs.
+    # Thresholds are resolved from the canonical token file (ADR-002) — never
+    # from literals — and a missing required guardrail fails closed.
+    guardrails = load_guardrails(paths.tokens_file)
+    gate_errors = validate_palette(active, guardrails, profile="standard", mode=mode)
+    if gate_errors:
+        raise SystemExit(
+            "Theme gate failed — no writes performed:\n"
+            + "\n".join(f"  - {error}" for error in gate_errors)
+        )
+
     changed = sync_active_targets(paths, active, mode)
     bat_variant_changes = sync_bat_theme_variants(paths, variants)
     repo_changes = sync_repo_snippets(variants, active) if write_repo_enabled() else []

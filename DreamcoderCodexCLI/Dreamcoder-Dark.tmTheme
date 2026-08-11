@@ -15,9 +15,9 @@
       <key>lineHighlight</key><string>#151C25</string>
       <key>gutter</key><string>#202A35</string>
       <key>gutterForeground</key><string>#A8B5C2</string>
-      <key>invisibles</key><string>#9AA9B8</string>
+      <key>invisibles</key><string>#aab7c4</string>
     </dict></dict>
-    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#9AA9B8</string><key>fontStyle</key><string>italic</string></dict></dict>
+    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#aab7c4</string><key>fontStyle</key><string>italic</string></dict></dict>
     <dict><key>scope</key><string>keyword, storage</string><key>settings</key><dict><key>foreground</key><string>#A5C7E8</string><key>fontStyle</key><string>bold</string></dict></dict>
     <dict><key>scope</key><string>entity.name.function, support.function</string><key>settings</key><dict><key>foreground</key><string>#8FAFCB</string></dict></dict>
     <dict><key>scope</key><string>variable, meta.definition.variable</string><key>settings</key><dict><key>foreground</key><string>#A8B5C2</string></dict></dict>

@@ -8,7 +8,7 @@ terminal_colors:
   normal:
     black: '#5e5c57'
     red: '#842f24'
-    green: '#3d723d'
+    green: '#315b31'
     yellow: '#824f16'
     blue: '#0d4a68'
     magenta: '#7d3e64'
@@ -17,7 +17,7 @@ terminal_colors:
   bright:
     black: '#554638'
     red: '#985145'
-    green: '#4d704a'
+    green: '#456042'
     yellow: '#654300'
     blue: '#36677d'
     magenta: '#5e527e'

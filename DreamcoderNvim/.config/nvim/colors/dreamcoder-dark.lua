@@ -14,8 +14,8 @@ local c = {
   surface2  = "#202A35",
   text      = "#E6EDF3",
   muted     = "#A8B5C2",
-  subtle    = "#708090",
-  comment   = "#9AA9B8",
+  subtle    = "#8795a2",
+  comment   = "#aab7c4",
   accent    = "#A5C7E8",
   accent2   = "#8FAFCB",
   diagnostic = "#4DAED6",
@@ -25,7 +25,7 @@ local c = {
   error     = "#E69AA4",
   warning   = "#D9B36C",
   border    = "#17202B",
-  border_ui = "#526575",
+  border_ui = "#647c8f",
   selection = "#202A35",
 }
 
@@ -48,7 +48,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "FloatBorder", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#0D121A"
   })
 
@@ -58,7 +58,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NonText", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "SpecialKey", {
@@ -66,7 +66,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Whitespace", {
-    fg = "#526575"
+    fg = "#647c8f"
   })
 
   vim.api.nvim_set_hl(0, "EndOfBuffer", {
@@ -198,7 +198,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WinSeparator", {
-    fg = "#526575"
+    fg = "#647c8f"
   })
 
 
@@ -313,7 +313,7 @@ end
 
   -- ── Classic Syntax ────────────────────────────────────
   vim.api.nvim_set_hl(0, "Comment", {
-    fg = "#9AA9B8",
+    fg = "#aab7c4",
     italic = true
   })
 
@@ -379,19 +379,19 @@ end
   })
 
   vim.api.nvim_set_hl(0, "PreProc", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "Include", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "Define", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "PreCondit", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "Type", {
@@ -423,7 +423,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "SpecialComment", {
-    fg = "#9AA9B8"
+    fg = "#aab7c4"
   })
 
   vim.api.nvim_set_hl(0, "Debug", {
@@ -585,7 +585,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@include", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "@operator", {
@@ -636,7 +636,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@attribute", {
-    fg = "#708090"
+    fg = "#8795a2"
   })
 
   vim.api.nvim_set_hl(0, "@symbol", {
@@ -656,7 +656,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@comment", {
-    fg = "#9AA9B8",
+    fg = "#aab7c4",
     italic = true
   })
 
@@ -699,7 +699,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "@markup.quote", {
-    fg = "#9AA9B8",
+    fg = "#aab7c4",
     italic = true
   })
 
@@ -857,7 +857,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "LspInlayHint", {
-    fg = "#9AA9B8",
+    fg = "#aab7c4",
     bg = "#0D121A"
   })
 
@@ -869,7 +869,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeBorder", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#070A13"
   })
 
@@ -884,7 +884,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#0D121A"
   })
 
@@ -913,7 +913,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopePreviewBorder", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#0D121A"
   })
 
@@ -923,7 +923,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsBorder", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#070A13"
   })
 
@@ -984,11 +984,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", {
-    fg = "#526575"
+    fg = "#647c8f"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", {
-    fg = "#526575",
+    fg = "#647c8f",
     bg = "#070A13"
   })
 
@@ -1025,7 +1025,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyBorder", {
-    fg = "#526575"
+    fg = "#647c8f"
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyValue", {
@@ -1261,3 +1261,4 @@ end
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     fg = "#A8B5C2"
   })
+

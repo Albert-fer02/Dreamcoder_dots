@@ -11,7 +11,7 @@
   --background-secondary: #0D121A;
   --background-secondary-alt: #151C25;
   --background-modifier-border: #17202B;
-  --background-modifier-border-hover: #526575;
+  --background-modifier-border-hover: #647c8f;
   --background-modifier-form-field: #0D121A;
   --background-modifier-success: #1a382e;
   --background-modifier-error: #3f2e37;
@@ -20,7 +20,7 @@
   /* Text — guarded against background for accessibility */
   --text-normal: #E6EDF3;
   --text-muted: #A8B5C2;
-  --text-faint: #708090;
+  --text-faint: #8795a2;
   --text-accent: #A5C7E8;
   --text-accent-hover: #8FAFCB;
   --text-error: #E69AA4;
@@ -39,11 +39,11 @@
   /* Scrollbar */
   --scrollbar-bg: transparent;
   --scrollbar-thumb-bg: #17202B;
-  --scrollbar-active-thumb-bg: #526575;
+  --scrollbar-active-thumb-bg: #647c8f;
 
   /* Code — syntax highlighting colors */
   --code-normal: #E6EDF3;
-  --code-comment: #9AA9B8;
+  --code-comment: #aab7c4;
   --code-punctuation: #A8B5C2;
   --code-keyword: #A5C7E8;
   --code-operator: #8FAFCB;
@@ -60,7 +60,7 @@
   --h3-color: #8FAFCB;
   --h4-color: #4DAED6;
   --h5-color: #A8B5C2;
-  --h6-color: #708090;
+  --h6-color: #8795a2;
 
   /* Link */
   --link-color: #A5C7E8;

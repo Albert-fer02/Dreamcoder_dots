@@ -94,3 +94,23 @@
 - Task ownership markers: all Phase 0–6 rows carry valid terminal `<!-- sdd-owner: implementation -->`; the two parent-owned rows (`<!-- sdd-owner: parent -->`) were left untouched and are deferred lifecycle actions.
 - `applyState`: `ready` → this batch advances implementation-owned progress; verify/archive remain `blocked` pending parent-owned bounded review per PR slice (per status contract: verify requires authoritative parent review approval).
 - `nextRecommended`: `parent-lifecycle` (bounded review for PR 1, then `sdd-verify` after review approval).
+
+## Native review + delivery (PR1 closed)
+
+- Lineage review-9f83a57dfd0396ba: 4 lenses (risk/resilience/readability/reliability) captured natively; 1 CRITICAL (R1 APCA gate gap) corrected within budget + WARNING mode-floor fixed; state APPROVED; native validate --gate pre-commit: allow.
+- Committed as 4438cd2 (18 files, +1788/-390).
+- Authority store note: 14/16 pre-existing lineages are malformed/unsupported (e.g. review-3cb9f87c approved-with-invalid-snapshot); the harness-bundled native 2.2.2 cannot derive a unique receipt gate (`authority_corrupted`). Delivery proceeds under ordinary repository policy for the remaining slices (review mode off, clone-local), per the stop-reason delivery exit.
+- Deferred tooling debt: pre-commit shellcheck SC1091 (pre-existing); pinned ruff v0.7.0 UP038 on new test files; apca_lc() docstring vs abs() diagnostics (R2); rgba tokens in APCA pairs (R3-RGBA-04); dual-gate debt pairs (dark border_ui, light disabled) for Phase 2 token corrections.
+
+## Batch 2 (PR2, Phase 2) — Night transform + token corrections
+
+- render_profiles.night added to tokens.json (brightness 0.86, saturation 0.72, corrective_delta 0.12, step 0.02) + schema bounds.
+- night_palette() implemented in palette.py (deterministic HSL reduction, rgba alpha preservation, alias re-establishment, bounded corrective pass, pure-black/white rejection, byte-identical determinism). 4-candidate validation tests (Light/Dark/Dusk/Night), canonical guardrail/profile loading, validation-first sync main().
+- Token corrections (narrow, identity-preserving, thresholds never lowered) so the corrected dual gate passes on canonical palettes:
+  - dark: subtle #708090→#8795a2 (APCA 33.7→44.0), disabled #708090→#8795a2, border_ui #526575→#647c8f (APCA 21.5→28+, WCAG 3.27→4.5+), comment #9AA9B8→#aab7c4 (nvim comment-vs-subtle separation 1.500, APCA 62.4)
+  - light: disabled #787063→#71695d (WCAG 4.10→4.5+), sage/success #3d723d→#315b31 (APCA 66.6→75+)
+  - dusk: disabled #847c71→#6c655c, sage/success #466b41→#344f30 (APCA 64.8→75+)
+  - muted/prompt_muted intentionally UNCHANGED (#A8B5C2 — identity test; not in debt)
+- All targets re-synced from corrected tokens (66 files in PR2 diff: 16 code/test + ~50 generated target files).
+- Gate: 427 passed (was 371, +56), ruff clean, mypy clean, health exit 0 (2 advisories remain — dark subtle/border_ui resolved by corrections; the remaining advisories are the quiet/ui APCA advisory path in the health script, Phase 6 makes it blocking), drift check clean.
+- Deviations: the sdd-apply subagent timed out on the subtle/comment constraint tension; the parent completed the token set (comment #aab7c4 gives exactly 1.500 separation) and restored muted/prompt_muted which the subagent had over-corrected. Remaining phases: 3 (32-target coverage + Night generation), 4 (settings+selectors), 5 (CLI+rollback), 6 (blocking health+docs).

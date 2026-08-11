@@ -13,7 +13,7 @@
   --background-modifier-border: #8a7358;
   --background-modifier-border-hover: #66513b;
   --background-modifier-form-field: #fff7ea;
-  --background-modifier-success: #c6ccb4;
+  --background-modifier-success: #c2c6b1;
   --background-modifier-error: #d7bbae;
   --background-modifier-message: #decbb1;
 
@@ -25,7 +25,7 @@
   --text-accent-hover: #a7471c;
   --text-error: #842f24;
   --text-warning: #654300;
-  --text-success: #3d723d;
+  --text-success: #315b31;
   --text-selection: #decbb1;
   --text-on-accent: #fff7ea;
 
@@ -34,7 +34,7 @@
   --interactive-hover: #decbb1;
   --interactive-accent: #824f16;
   --interactive-accent-hover: #a7471c;
-  --interactive-success: #3d723d;
+  --interactive-success: #315b31;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
@@ -48,7 +48,7 @@
   --code-keyword: #824f16;
   --code-operator: #a7471c;
   --code-function: #a7471c;
-  --code-string: #3d723d;
+  --code-string: #315b31;
   --code-number: #7d3e64;
   --code-tag: #824f16;
   --code-important: #842f24;
@@ -85,7 +85,7 @@
   --graph-node: #352e22;
   --graph-node-focused: #824f16;
   --graph-node-tag: #0d4a68;
-  --graph-node-attachment: #3d723d;
+  --graph-node-attachment: #315b31;
 }
 
 /* Headings */
