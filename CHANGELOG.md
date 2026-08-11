@@ -13,6 +13,24 @@
   tests, docs, CI workflows, .gitignore, CODEOWNERS.
 - Symlink `unknown` convertido de absoluto a relativo.
 
+### Fixed
+
+- **Hyprland rgba converter**: `_rgba_to_argb` usaba `zfill(2)`, que solo rellena y nunca trunca, generando `rgba()` inválidos de 10 chars (p.ej. `rgba(13811588ed)`). Ahora clamp con `int():02x` + guard de conversión + tests de regresión.
+- **Migración Anthracite Steel**: paleta dark propagada a los 24 consumers trackeados (opencode, firefox, waybar, dunst, rofi, btop, obsidian, hyprland, zsh-syntax, etc.), regenerada con el engine y verificada por idempotencia.
+- **Writers del engine**: `write_if_changed` normaliza a exactamente un newline final (POSIX), eliminando el churn del hook `end-of-file-fixer` en cada commit.
+- **Health gate opencode**: el check de `.opencode/themes/dreamcoder.json` ahora es mode-aware (acepta dark/light/dusk según el contrato declarado) en vez de hardcodear light — el checkout limpio volvía a fallar tras la migración.
+- **Iconos de `ls` en fish**: los abbrs shadowean a los aliases; los listings ahora son abbrs con `--icons=always` y guard de eza, y `16-dreamcoder-icons.fish` queda solo como fallback sin eza.
+- **Symlink `unknown` (causa raíz)**: el repair planner copiaba el string del modo detectado (`detail`) como target del symlink; ahora target absoluto explícito (kitty colors) + guard que rechaza targets no absolutos. El bug no debería volver a aparecer.
+- **Suite de tests hermética**: `test_pi_theme_generation` spawnaba el sync sin aislar los `DREAMCODER_*_THEME`, escribiendo los activos del repo (una corrida light dejaba los archivos en light). Aislado con env vars → `pytest` ya no ensucia el working tree.
+- **Generación repo-only**: `sync_repo_snippets` ahora escribe también los activos del repo-root (dos sets de consumidores: apps que copian vs desktop con symlinks), eliminando el drift entre ambos.
+
+### Changed
+
+- **Default dark**: `theme_mode()` del engine y `DREAMCODER_THEME_MODE` de fish ahora default a `dark` (Anthracite Steel) — un env limpio (CI, shell nueva) ya no regenera/sourcea la paleta light legacy.
+- **Untrack `colors-matugen.conf`**: la paleta de matugen (derivada del wallpaper) dejó de trackearse; el `.gitignore` ahora funciona como se pretendía.
+- **`cat`/`gl` en fish**: `cat` alineado a `bat --paging=never`; alias muerto de `gl` eliminado (redundante con `glg` y shadoweado por el abbr `--oneline -20`).
+- **Theme preview regenerado** para la migración Anthracite Steel (desbloquea el gate de CI de uncommitted changes).
+
 ### Added
 
 - PEP 621 packaging: `pyproject.toml` with setuptools build backend, `__version__` in package.
