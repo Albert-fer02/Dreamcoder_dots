@@ -348,7 +348,7 @@ def check_dual_gate_candidates():
     (Night = night_palette of canonical dark with canonical render_profiles,
     wallpaper adaptation disabled for the gate). Any dual-gate error blocks."""
     tokens = load_tokens(TOKEN_FILE)
-    guardrails = {k: v for k, v in tokens["guardrails"].items() if isinstance(v, (int, float))}
+    guardrails = {k: v for k, v in tokens["guardrails"].items() if isinstance(v, int | float)}
     night_params = tokens.get("render_profiles", {}).get("night")
     require(
         isinstance(night_params, dict),
@@ -492,9 +492,17 @@ def _health_findings():
     else:
         try:
             actual = theme_path.read_text(encoding="utf-8")
-            expected = opencode_content(tokens["modes"]["light"], transparent_background=True)
             json.loads(actual)
-            if actual != expected:
+            # The design contract declares the opencode renderer for
+            # dark/light/dusk; accept an artifact that exactly matches the
+            # generator output for any declared mode (deterministic, not
+            # coupled to the runner's live theme mode).
+            expected_by_mode = {
+                mode: opencode_content(tokens["modes"][mode], transparent_background=True)
+                for mode in ("dark", "light", "dusk")
+                if mode in tokens["modes"]
+            }
+            if actual not in set(expected_by_mode.values()):
                 findings.append(
                     "STALE_ARTIFACT: .opencode/themes/dreamcoder.json "
                     "regeneration command=PYTHONPATH=src python -m dreamcoder_theme.sync"
