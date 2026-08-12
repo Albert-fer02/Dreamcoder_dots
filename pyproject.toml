@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta:__legacy__"
 [project]
 name = "dreamcoder-theme"
 version = "0.1.0"
-description = "Dreamcoder OS — personal Arch Linux dotfiles with a premium color theme engine"
+description = "Dreamcoder Workbench — health-first, terminal-native dotfiles with a token-governed theme engine"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }

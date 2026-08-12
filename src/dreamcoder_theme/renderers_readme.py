@@ -8,7 +8,7 @@ def readme_content() -> str:
 
 This directory contains the Dreamcoder visual contract and generated color-only snippets for ML4W/Gentleman Dots.
 
-- `tokens.json`: canonical Dreamcoder OS design tokens and guardrails.
+- `tokens.json`: canonical Dreamcoder Workbench design tokens and guardrails.
 - `tokens.schema.json`: machine-readable token contract.
 - `*-dark.*`: Dreamcoder Anthracite Steel mode with near-black bg, cool steel-blue accents, and muted slate surfaces.
 - `*-light.*`: paper-like daytime mode with flat surface ladder and distinct semantic tokens.
