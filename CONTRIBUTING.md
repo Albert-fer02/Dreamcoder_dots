@@ -179,13 +179,25 @@ flowchart LR
 
 ### Checklist
 
-- [ ] `renderers_<target>.py` — función pura que recibe `dict[str, str]` y devuelve `str`
-- [ ] Registrada en `renderers.py` (import + `__all__`)
-- [ ] Llamada en `sync.py` → `sync_active_targets()` o `sync_repo_snippets()`
-- [ ] Path definido en `settings.py` → `theme_paths()`
-- [ ] Path generado en `control.py` si aplica
-- [ ] `print_summary()` muestra el nuevo target
-- [ ] Tests en `tests/`
+- [ ] `renderers_<target>.py` — pure function that takes `dict[str, str]` and returns `str`
+- [ ] Registered in `renderers.py` (import + `__all__`)
+- [ ] Called in `sync.py` → `sync_active_targets()` or `sync_repo_snippets()`
+- [ ] Path defined in `settings.py` → `theme_paths()`
+- [ ] Path generated in `control.py` if applicable
+- [ ] `print_summary()` shows the new target
+- [ ] Tests in `tests/`
+
+## Documentation changes
+
+Documentation changes are reviewed like code changes.
+
+- [ ] Run `python scripts/validate-markdown-links.py` and fix any broken links.
+- [ ] Update the smallest relevant page; do not duplicate content that already lives in another doc — link to it instead.
+- [ ] The changed page is reachable from the [docs index](docs/README.md) or the README documentation table; add it there if it is a new page.
+- [ ] Keep the identity string "Dreamcoder Workbench" and mode names `dark/light/night` consistent with the rest of the docs.
+- [ ] Commit with the `docs:` conventional commit type.
+
+Do not duplicate references: link to the source page for detailed behavior.
 
 ## Pull Request Guidelines
 
