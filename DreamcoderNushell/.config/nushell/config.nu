@@ -13,8 +13,10 @@ alias g = git
 alias gs = git status
 alias gp = git push
 alias gl = git log --oneline --graph
-alias ll = ls -la
-alias la = ls -a
+# eza with icons (^ escapes to the external command; nushell's builtin
+# ls has no --icons flag). Same contract as the fish abbreviations.
+alias ll = ^eza -la --icons --group-directories-first
+alias la = ^eza -a --icons --group-directories-first
 alias cat = bat
 alias find = fd
 alias grep = rg
