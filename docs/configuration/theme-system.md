@@ -49,8 +49,8 @@ After editing `tokens.json`:
 
 ## Design decisions
 
-- **accent** = lúcuma/ember orange (identity, tabs, CTAs)
-- **focus** = teal ring (keyboard focus, inputs) — separate from brand orange on purpose
+- **accent** = lúcuma `#A5C7E8` (identity, tabs, CTAs) — Anthracite Steel dark palette
+- **focus** = accent (lúcuma) — same token by design; no separate focus hue in the current palette
 - **adaptive/matugen** may tint surfaces but identity tokens win per `CLAUDE.md`
 
 ## Adding new targets
