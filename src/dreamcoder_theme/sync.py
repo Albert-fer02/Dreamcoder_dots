@@ -1050,3 +1050,7 @@ def main() -> None:
     if not valid_starship(paths.starship):
         raise SystemExit(f"Generated Starship config is invalid: {paths.starship}")
     print_summary(prepared.mode, paths, changed, repo_changes)
+
+
+if __name__ == "__main__":
+    main()

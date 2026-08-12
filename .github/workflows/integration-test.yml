@@ -37,8 +37,8 @@ jobs:
           ln -sf "$PWD/DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish" ~/.config/fish/conf.d/05-dreamcoder-theme.fish
           mkdir -p ~/.config/ghostty/themes
 
-      - name: Run dreamcoder-theme sync
-        run: dreamcoder-theme sync
+      - name: Run theme sync
+        run: PYTHONPATH=src python -m dreamcoder_theme.sync
 
       - name: Verify critical theme files exist
         run: |

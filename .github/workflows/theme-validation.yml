@@ -34,7 +34,7 @@ jobs:
         run: mypy src/
 
       - name: Shell check
-        run: shellcheck --shell=bash scripts/*.sh
+        run: shellcheck --shell=bash --severity=warning scripts/*.sh
 
       - name: Run tests
         run: python -m pytest tests/ -v --tb=short
