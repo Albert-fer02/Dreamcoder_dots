@@ -23,6 +23,8 @@
 - **Symlink `unknown` (causa raíz)**: el repair planner copiaba el string del modo detectado (`detail`) como target del symlink; ahora target absoluto explícito (kitty colors) + guard que rechaza targets no absolutos. El bug no debería volver a aparecer.
 - **Suite de tests hermética**: `test_pi_theme_generation` spawnaba el sync sin aislar los `DREAMCODER_*_THEME`, escribiendo los activos del repo (una corrida light dejaba los archivos en light). Aislado con env vars → `pytest` ya no ensucia el working tree.
 - **Generación repo-only**: `sync_repo_snippets` ahora escribe también los activos del repo-root (dos sets de consumidores: apps que copian vs desktop con symlinks), eliminando el drift entre ambos.
+- **CI pipeline desbloqueado**: los 3 workflows (CI, Integration Test, Repository Sync Enforcement) volvieron a pasar. El sync module ganó el guard `__main__` (el comando documentado `python -m dreamcoder_theme.sync` no hacía nada); shellcheck en CI usa `--severity=warning` (SC1091 info); el integration test completa el install mock (symlinks de themes dir + variantes kitty, fish/starship instalados) y el test de contrato bat se alinea al formato canónico.
+- **Toolchain al día (ago 2026)**: pre-commit-hooks v6.0.0, ruff-pre-commit v0.16.2 (PLR0917 al ignore, consistente con PLR0913), mirrors-mypy v2.3.0, shellcheck-py v0.11.0.1. Actions de GitHub pineados por commit SHA en majors actuales (checkout v7.0.1, setup-node/python/go v7, upload-artifact v7.0.1); commitlint a Node 24; matrix de Python +3.14. uv y ruff actualizados localmente (uv 0.12.3, ruff 0.16.2).
 
 ### Changed
 
