@@ -3,17 +3,17 @@ name: CI (Go)
 on:
   push:
     branches: [main]
-    paths: ['installer/**']
+    paths: ["installer/**"]
   pull_request:
     branches: [main]
-    paths: ['installer/**']
+    paths: ["installer/**"]
 
 jobs:
   go:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: ['1.26']
+        go-version: ["1.26"]
 
     defaults:
       run:
