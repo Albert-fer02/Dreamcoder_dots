@@ -8,19 +8,41 @@
 
 ## Install
 
-```bash
-brew install dreamcoder08/tap/dreamcoder-dots
-dreamcoder-dots
-```
-
-## Manual Install
+Dreamcoder Workbench is distributed as a git repository, not a Homebrew formula.
 
 ```bash
-# Install dependencies
-brew install stow git neovim fish starship fzf zoxide
+# Install base dependencies
+brew install stow git python
 
 # Clone and install
-git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/dreamcoder-dots
-cd ~/dreamcoder-dots
+git clone https://github.com/Dreamcoder08/Dreamcoder-Workbench.git ~/Dreamcoder-Workbench
+cd ~/Dreamcoder-Workbench
+
+# Install the Python theme engine
+pip install -e .
+# or, with uv:
+uv sync
+
+# Run the installer
 ./scripts/dreamcoder install
 ```
+
+## Verify
+
+```bash
+./scripts/dreamcoder doctor    # Health check
+./scripts/dreamcoder status    # System status
+```
+
+If the installer was skipped, you can still use the theme engine directly:
+
+```bash
+dreamcoder-theme sync
+```
+
+## Rollback
+
+- The installer writes a backup manifest under `~/.local/share/dreamcoder/backups/` before changing configs. To restore, run `./scripts/dreamcoder backup restore <backup_id> --json` with the backup id shown during install.
+- To remove the environment entirely, delete the symlinks the installer created (listed in the backup manifest) and remove the `~/Dreamcoder-Workbench` directory.
+
+> **Note**: terminal, shell, and multiplexer overlays assume a Linux-style environment; GUI and systemd-timer features are limited on macOS.

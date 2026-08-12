@@ -1,15 +1,23 @@
 # Contributing
 
-Thanks for your interest in Dreamcoder OS! This project is a personal dotfiles
+Thanks for your interest in Dreamcoder Workbench! This project is a personal dotfiles
 repository with an open-source theme engine. Contributions, ideas, and bug
 reports are welcome.
 
+## How to contribute — quick path
+
+1. **Report a bug** or request a feature: open an issue on the [GitHub repository](https://github.com/Dreamcoder08/Dreamcoder-Workbench).
+2. **Propose a change**: fork the repo, create a branch, and commit focused changes (see [Pull Request Guidelines](#pull-request-guidelines)).
+3. **Open a PR**: push your branch and open a pull request against `main`. CI runs lint, type checks, and tests automatically; pre-commit hooks run locally on every commit.
+
+Need a smaller first step? Pick an open issue, fix a docs typo, or add a renderer test.
+
 ## Project Structure
 
-```
+```text
 src/dreamcoder_theme/     # Python theme engine (pip-installable package)
   ├── palette.py              # Color math, adaptive palette derivation
-  ├── palette_tokens.py       # Static design tokens (dark/light/dusk)
+  ├── palette_tokens.py       # Static design tokens (dark/light/night)
   ├── renderers.py            # Public renderer import hub
   ├── renderers_kitty.py      # Kitty format renderer
   ├── renderers_ghostty_warp.py
@@ -62,8 +70,8 @@ and is installed via GNU Stow.
 
 ```bash
 # Clone and enter
-git clone git@github.com:Gentleman-Programming/dreamcoder-dots.git
-cd dreamcoder-dots
+git clone git@github.com:Dreamcoder08/Dreamcoder-Workbench.git
+cd Dreamcoder-Workbench
 
 # Install with dev dependencies (using pip)
 pip install -e ".[dev]"
@@ -162,8 +170,7 @@ make build
 
 ## How to Add a New Renderer
 
-Los renderers siguen una arquitectura de funciones puras. Agregar un nuevo target
-sigue este flujo:
+Renderers follow a pure-function architecture. Adding a new target follows this flow:
 
 ```mermaid
 flowchart LR

@@ -1,4 +1,4 @@
-# Dreamcoder Theme System
+# Dreamcoder Workbench Theme System
 
 ## Architecture
 
@@ -12,14 +12,15 @@ Pipeline:
 
 ```txt
 tokens.json → generate-palette-tokens.py → palette_tokens.py
-           → dreamcoder sync → 48+ config files → 22+ targets
+           → dreamcoder sync → generated theme files for every configured renderer
 ```
 
 ## Canonical tokens
 
 Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../DreamcoderThemes/dreamcoder/tokens.json)
 
-Dark (**Anthracite Steel OLED**) and light (**Cocoa/Lúcuma**) share the same semantic key set:
+Dark (**Anthracite Steel OLED**), light (**Cocoa/Lúcuma**), and the derived night
+variant share the same semantic key set:
 
 | Layer       | Examples                                                       |
 | ----------- | -------------------------------------------------------------- |

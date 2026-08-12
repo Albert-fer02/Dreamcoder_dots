@@ -9,7 +9,7 @@
 
 ## Step 1: Install Gentleman.Dots
 
-Gentleman.Dots provides: Neovim (29 plugins LazyVim), Ghostty shaders (45+), Tmux/Zellij, Fish/Zsh/Nushell.
+Gentleman.Dots provides: Neovim (29 plugins LazyVim), Ghostty shaders (53), Tmux/Zellij, Fish/Zsh/Nushell.
 
 ```bash
 # Option A: Homebrew (recommended)
@@ -36,14 +36,14 @@ bash <(curl -s https://ml4w.com/os/stable)
 
 > **Important:** After installation, reboot or restart Hyprland for changes to take effect.
 
-## Step 3: Install Dreamcoder
+## Step 3: Install Dreamcoder Workbench
 
-Dreamcoder provides: Token-based color engine, Starship prompt with AI session state, auto-theme switching, 9 shell functions.
+Dreamcoder Workbench provides: Token-based color engine, Starship prompt with AI session state, auto-theme switching, 19 shell functions.
 
 ```bash
 # Clone
-git clone https://github.com/dreamcoder08/dreamcoder-dots.git ~/Documents/PROYECTOS/dreamcoder-dots
-cd ~/Documents/PROYECTOS/dreamcoder-dots
+git clone https://github.com/Dreamcoder08/Dreamcoder-Workbench.git ~/Documents/PROYECTOS/Dreamcoder-Workbench
+cd ~/Documents/PROYECTOS/Dreamcoder-Workbench
 
 # Install Python package (required for theme engine)
 pip install -e .
@@ -60,7 +60,7 @@ Run the comprehensive health check:
 dreamcoder doctor
 ```
 
-Expected output: All 20+ checks pass ✅
+Expected output: all checks pass
 
 ### Quick verification checklist
 
@@ -98,7 +98,7 @@ dreamcoder light    # → Cocoa/Lúcuma
 dreamcoder status   # → System overview
 
 # Automatic (via systemd timer)
-# Switches at 07:00 (light), 16:00 (dusk), 18:00 (dark)
+# Switches at 07:00 (light), 16:00 (night), 18:00 (dark)
 systemctl --user status dreamcoder-theme-auto.timer
 ```
 
@@ -107,8 +107,8 @@ systemctl --user status dreamcoder-theme-auto.timer
 ```bash
 # Option A: From backup manifest
 ls ~/.local/share/dreamcoder/backups/
-# Pick the latest and run:
-~/.local/share/dreamcoder/backups/{timestamp}/rollback.sh
+# Pick the latest backup id and restore it:
+./scripts/dreamcoder backup restore <backup_id> --json
 
 # Option B: Manual per component
 rm ~/.config/hypr/dreamcoder-colors.lua

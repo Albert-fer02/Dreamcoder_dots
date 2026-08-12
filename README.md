@@ -1,12 +1,12 @@
 # Dreamcoder Workbench
 
 > A health-first, terminal-native engineering environment built on **Gentleman.Dots + ML4W**.
-> Café/Lúcuma. Anthracite Steel. Contraste saludable. Identidad.
+> Cocoa/Lúcuma. Anthracite Steel. Healthy contrast. Identity.
 
 Dreamcoder Workbench is a personal distribution layer for developers who live in the terminal: it adds token-governed themes (WCAG/APCA-validated), machine-specific ML4W keybinding profiles, AI-aware tooling, and a verification layer on top of Gentleman.Dots and ML4W — without replacing either upstream. It is built for people who want reproducible, health-conscious setups and are ready to keep configuration as code. The what/who/why is covered in the sections below; the docs index ([docs/README.md](docs/README.md)) is the entry point for everything else.
 
-[![Theme CI](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/theme-validation.yml)
-[![ML4W Setup CI](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder_dots/actions/workflows/test-ml4w-setup.yml)
+[![Theme CI](https://github.com/Dreamcoder08/Dreamcoder-Workbench/actions/workflows/theme-validation.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder-Workbench/actions/workflows/theme-validation.yml)
+[![ML4W Setup CI](https://github.com/Dreamcoder08/Dreamcoder-Workbench/actions/workflows/test-ml4w-setup.yml/badge.svg)](https://github.com/Dreamcoder08/Dreamcoder-Workbench/actions/workflows/test-ml4w-setup.yml)
 [![WCAG 4.5:1](https://img.shields.io/badge/WCAG-4.5%3A1-brightgreen)](docs/DREAMCODER_DESIGN_SYSTEM.md#accessibility-policy)
 [![APCA](https://img.shields.io/badge/APCA-75-brightgreen)](docs/DREAMCODER_DESIGN_SYSTEM.md#accessibility-policy)
 [![PyPI](https://img.shields.io/pypi/v/dreamcoder-theme)](https://pypi.org/project/dreamcoder-theme/)
@@ -25,9 +25,9 @@ brew install Gentleman-Programming/tap/gentleman-dots
 gentleman-dots
 ```
 
-→ O descargá desde [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots)
+→ Or download it from [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots)
 
-**Te da**: Neovim (29 plugins LazyVim), Ghostty shaders (45+), Tmux/Zellij, Vim Trainer, Fish/Zsh/Nushell
+**Provides**: Neovim (29 plugins LazyVim), Ghostty shaders (53), Tmux/Zellij, Vim Trainer, Fish/Zsh/Nushell
 
 ### 2. Install ML4W OS
 
@@ -35,27 +35,27 @@ gentleman-dots
 bash <(curl -s https://ml4w.com/os/stable)
 ```
 
-→ [Documentación ML4W](https://ml4w.com/os/)
+→ [ML4W documentation](https://ml4w.com/os/)
 
-**Te da**: Hyprland completo (animaciones, keybinds, monitores), Waybar, Rofi, Dunst, GTK, Btop
+**Provides**: full Hyprland (animations, keybinds, monitors), Waybar, Rofi, Dunst, GTK, Btop
 
-### 3. Install Dreamcoder
+### 3. Install Dreamcoder Workbench
 
 ```bash
-git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
-cd ~/Documents/PROYECTOS/dreamcoder-dots
+git clone git@github.com:Dreamcoder08/Dreamcoder-Workbench.git ~/Documents/PROYECTOS/Dreamcoder-Workbench
+cd ~/Documents/PROYECTOS/Dreamcoder-Workbench
 ./scripts/dreamcoder install
 ```
 
-**Aplica**: Dreamcoder dark/light/dusk sobre toda la base de Gentleman + ML4W
+**Applies**: dark/light/night modes over the whole Gentleman + ML4W base
 
-**Agrega**: Starship prompt con AI session state, 9 funciones shell, aliases modernos, auto-theme-switching
+**Adds**: Starship prompt with AI session state, 19 shell functions, modern aliases, auto-theme switching
 
 ---
 
 ## ML4W Integration — Profile-Driven Keybinding System
 
-Dreamcoder integrates with [ML4W](https://ml4w.com) through a modular, profile-driven system: machine-specific keybindings live in JSON profiles under `DreamcoderProfiles/dreamcoder/` and compile into `~/.config/hypr/custom.lua`, validated in CI.
+Dreamcoder Workbench integrates with [ML4W](https://ml4w.com) through a modular, profile-driven system: machine-specific keybindings live in JSON profiles under `DreamcoderProfiles/dreamcoder/` and compile into `~/.config/hypr/custom.lua`, validated in CI.
 
 - Profiles → generator → `custom.lua`; native `hl.dsp.*` dispatchers (hyprctl dispatch is broken on Hyprland 0.55+)
 - Theme toggle: `SUPER + SHIFT + D`; blue light: `SUPER + SHIFT + U` / `I`
@@ -64,58 +64,58 @@ Full binding contract, dispatcher tables, file layout, and testing commands: [do
 
 ---
 
-## ¿Por qué Dreamcoder?
+## Why Dreamcoder Workbench?
 
-| Feature               | Gentleman.Dots      | ML4W         | **dreamcoder-dots**            |
-| --------------------- | ------------------- | ------------ | ------------------------------ |
-| **Theme Engine**      | ❌ Catppuccin       | ✅ Matugen   | ✅ **Token-based + WCAG/APCA** |
-| **Light/Dark/Dusk**   | ❌                  | ✅           | ✅ **+ Dusk transition**       |
-| **AI Session Prompt** | ❌                  | ❌           | ✅ **Session-aware prompt**    |
-| **Accesibilidad**     | ❌                  | ❌           | ✅ **WCAG 4.5:1 + APCA 75**    |
-| **Neovim**            | ✅ 29 plugins       | ❌           | 🔶 Dreamcoder colorscheme      |
-| **Hyprland**          | ❌                  | ✅ Completo  | 🔶 Color overlay               |
-| **Shell Configs**     | ✅ Fish/Zsh/Nushell | ✅ Fish/Bash | 🔶 Aliases + functions         |
-| **Ghostty Shaders**   | ✅ 45+ GLSL         | ❌           | 🔶 Usa los de Gentleman        |
-| **Installer**         | ✅ Go TUI           | ✅ bash      | ✅ **Go TUI + Vim Trainer**    |
-| **Prompt**            | ❌ Básico           | ❌ Básico    | ✅ **Starship 23 módulos**     |
+| Feature               | Gentleman.Dots      | ML4W         | **Dreamcoder Workbench**        |
+| --------------------- | ------------------- | ------------ | ------------------------------- |
+| **Theme Engine**      | — Catppuccin        | ✓ Matugen    | ✓ **Token-based + WCAG/APCA**   |
+| **Dark/Light/Night**  | —                   | ✓            | ✓ **+ night transition**        |
+| **AI Session Prompt** | —                   | —            | ✓ **Session-aware prompt**      |
+| **Accessibility**     | —                   | —            | ✓ **WCAG 4.5:1 + APCA 75**      |
+| **Neovim**            | ✓ 29 plugins        | —            | ◐ Dreamcoder colorscheme        |
+| **Hyprland**          | —                   | ✓ Full       | ◐ Color overlay                 |
+| **Shell Configs**     | ✓ Fish/Zsh/Nushell  | ✓ Fish/Bash  | ◐ Aliases + functions           |
+| **Ghostty Shaders**   | ✓ 53 GLSL           | —            | ◐ Uses Gentleman's shaders      |
+| **Installer**         | ✓ Go TUI            | ✓ bash       | ✓ **Go TUI + Vim Trainer**      |
+| **Prompt**            | — Basic             | — Basic      | ✓ **Starship 17 modules**       |
 
-> ✅ = lo tiene completo · 🔶 = dreamcoder aporta overlay · ❌ = no lo tiene
+> ✓ = full support · ◐ = Dreamcoder Workbench adds an overlay · — = not provided
 
 ---
 
-## Lo que dreamcoder NO reemplaza
+## What Dreamcoder Workbench does not replace
 
-Dreamcoder es una **capa visual**, no un reemplazo. Mantenés todo lo que ya te dan Gentleman y ML4W:
+Dreamcoder Workbench is a **visual layer**, not a replacement. You keep everything Gentleman and ML4W already give you:
 
-**De Gentleman.Dots se queda:**
+**Kept from Gentleman.Dots:**
 
-- Neovim con 29 plugins (avante, copilot, blink, fzf-lua, oil, DAP...)
-- Ghostty shaders (45+ GLSL effects)
-- Tmux/Zellij con TPM y plugins
+- Neovim with 29 plugins (avante, copilot, blink, fzf-lua, oil, DAP...)
+- Ghostty shaders (53 GLSL effects)
+- Tmux/Zellij with TPM and plugins
 - Vim Mastery Trainer
 - Fish/Zsh/Nushell base config
 
-**De ML4W se queda:**
+**Kept from ML4W:**
 
-- Hyprland completo (animaciones, keybinds, monitores, layouts)
+- Full Hyprland (animations, keybinds, monitors, layouts)
 - Waybar, Rofi, Dunst configs
 - GTK 3.0/4.0 settings
 - Matugen color generation pipeline
 - Btop, Chromium/Edge configs
 
-**Dreamcoder aporta:**
+**Dreamcoder Workbench adds:**
 
-- Tokens de color validados con WCAG 4.5:1 + APCA
-- 3 modos: Anthracite Steel (dark), Cocoa/Lúcuma (light), Dusk (transición)
-- Starship prompt con 23 módulos y AI session state
-- 9 funciones shell (extract, sysupdate, killport, etc.)
-- Aliases modernos con graceful fallback (eza, bat, fd, rg, zoxide)
-- Auto-theme-switching por horario (systemd timer)
-- Python library para generación de temas (PyPI)
+- Color tokens validated with WCAG 4.5:1 + APCA
+- 3 modes: Anthracite Steel (dark), Cocoa/Lúcuma (light), Night (low-light transition)
+- Starship prompt with 17 modules and AI session state
+- 19 shell functions (extract, sysupdate, killport, dots, cheat, http, logs, tm-session, tm, tmux-kill-all, identity, id-dev, id-founder, id-personal, id-research, dev-dots, sdd-swap, tl)
+- Modern aliases with graceful fallback (eza, bat, fd, rg, zoxide)
+- Auto-theme switching by schedule (systemd timer)
+- Python library for theme generation (PyPI)
 
 ---
 
-## Uso
+## Usage
 
 ### CLI
 
@@ -136,14 +136,14 @@ dreamcoder-theme doctor # Check health
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```mermaid
 flowchart LR
     subgraph Tokens["Design Tokens"]
-        PT["tokens.json<br/>dark / light / dusk"]
+        PT["tokens.json<br/>dark / light / night"]
     end
-    subgraph Render["Renderers (28+ targets)"]
+    subgraph Render["Renderers (23 modules)"]
         R["renderers.py<br/>hub → leaf modules"]
     end
     subgraph Write["Writers"]
@@ -157,13 +157,13 @@ flowchart LR
 
 ---
 
-## Filosofía
+## Philosophy
 
-Dreamcoder no es un rice neon. Es un banco de trabajo:
+Dreamcoder Workbench is not a neon rice. It is a workbench:
 
-- **Salud primero**: sin blanco/negro puro, contraste fuerte, bajo brillo
-- **Confort diario**: tipografía más grande, densidad de prompt calmada, modo día/noche automático
-- **Identidad segundo**: calidez Cocoa/Lúcuma, cyan diagnóstico, colores editoriales
+- **Health first**: no pure black/white, strong contrast, low brightness
+- **Daily comfort**: larger typography, calm prompt density, automatic day/night mode
+- **Identity second**: Cocoa/Lúcuma warmth, diagnostic cyan, editorial colors
 
 ---
 
@@ -193,18 +193,18 @@ Work through the docs by task — pick what you want to do and start there. The 
 - [ ] Pick a component from the [Documentation](#documentation) table and read its guide.
 - [ ] Report an issue or open a PR — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Projecto
+## Project
 
-| Aspecto        | Detalle                            |
-| -------------- | ---------------------------------- |
-| **Estado**     | Active                             |
-| **Versión**    | 1.0                                |
-| **Licencia**   | MIT                                |
-| **Docs**       | [docs/README.md](docs/README.md)   |
-| **Contribuir** | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Aspect        | Detail                             |
+| ------------- | ---------------------------------- |
+| **Status**    | Active                             |
+| **Version**   | 1.0                                |
+| **License**   | MIT                                |
+| **Docs**      | [docs/README.md](docs/README.md)   |
+| **Contribute**| [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 ---
 
 ## SDD
 
-Este proyecto usa Spec-Driven Development. Los planes están en [docs/superpowers/plans/](docs/superpowers/plans/).
+This project uses Spec-Driven Development. Plans live in [docs/superpowers/plans/](docs/superpowers/plans/).

@@ -44,7 +44,7 @@ binary identity above.
 
 ## Generated repository variants
 
-Versioned variants are generated from the Dreamcoder canonical tokens
+Versioned variants are generated from the Dreamcoder Workbench canonical tokens
 (`DreamcoderThemes/dreamcoder/tokens.json`) by the theme sync and checked in so
 drift is detectable:
 

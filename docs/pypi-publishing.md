@@ -13,7 +13,7 @@ to be configured on PyPI's end.
    - **PyPI Project**: `dreamcoder-theme`
    - **Publisher**: `GitHub`
    - **Owner**: `Dreamcoder08`
-   - **Repository**: `Dreamcoder_dots`
+   - **Repository**: `Dreamcoder-Workbench`
    - **Workflow**: `release.yml`
    - **Environment**: (leave empty)
 

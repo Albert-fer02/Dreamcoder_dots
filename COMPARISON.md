@@ -1,61 +1,60 @@
-# Dreamcoder OS — Comparison
+# Dreamcoder Workbench — Comparison
 
-> ¿Por qué necesitás Dreamcoder si ya tenés Gentleman.Dots + ML4W?
-> Porque Dreamcoder es la capa que ninguno de los dos tiene: **salud visual, identidad, y AI integration**.
+> Why do you need Dreamcoder Workbench if you already have Gentleman.Dots + ML4W?
+> Because Dreamcoder Workbench is the layer neither of them has: **visual health, identity, and AI integration**.
 
 ## Feature Comparison
 
-| Feature               | Gentleman.Dots         | ML4W                | **dreamcoder-dots**            |
+| Feature               | Gentleman.Dots         | ML4W                | **Dreamcoder Workbench**       |
 | --------------------- | ---------------------- | ------------------- | ------------------------------ |
-| **Theme Engine**      | ❌ Catppuccin estático | ✅ Matugen dinámico | ✅ **Token-based + WCAG/APCA** |
-| **Dark/Light/Dusk**   | ❌ Solo dark           | ✅ Light/Dark       | ✅ **+ Dusk transition mode**  |
-| **Accesibilidad**     | ❌                     | ❌                  | ✅ **WCAG 4.5:1 + APCA 75**    |
-| **AI Session Prompt** | ❌                     | ❌                  | ✅ **Bleeding edge en 2026**   |
-| **Neovim Plugins**    | ✅ 29 (LazyVim)        | ❌                  | 🔶 Dreamcoder colorscheme      |
-| **Hyprland Config**   | ❌                     | ✅ Completo         | 🔶 Color overlay               |
-| **Shell Configs**     | ✅ Fish/Zsh/Nushell    | ✅ Fish/Bash        | 🔶 Aliases + 9 functions       |
-| **Ghostty Shaders**   | ✅ 45+ GLSL            | ❌                  | 🔶 Usa los de Gentleman        |
-| **Go TUI Installer**  | ✅ Bubbletea           | ✅ bash             | ✅ Bubbletea + Vim Trainer     |
-| **Starship Prompt**   | ❌ Básico              | ❌ Básico           | ✅ **23 módulos + AI state**   |
-| **Python Theme Lib**  | ❌                     | ❌                  | ✅ **Publicada en PyPI**       |
-| **Homebrew Formula**  | ✅                     | ❌                  | ✅                             |
-| **Vim Trainer**       | ✅ RPG-style           | ❌                  | ✅ RPG-style                   |
-| **Auto Theme Switch** | ❌                     | ✅ Manual           | ✅ **Systemd timer**           |
-| **CI/CD**             | ❌                     | ❌                  | ✅ GitHub Actions              |
+| **Theme Engine**      | — Catppuccin static    | ✓ Matugen dynamic   | ✓ **Token-based + WCAG/APCA**  |
+| **Dark/Light/Night**  | — Dark only            | ✓ Light/Dark        | ✓ **+ night transition mode**  |
+| **Accessibility**     | —                      | —                   | ✓ **WCAG 4.5:1 + APCA 75**     |
+| **AI Session Prompt** | —                      | —                   | ✓ **Live AI session state**    |
+| **Neovim Plugins**    | ✓ 29 (LazyVim)         | —                   | ◐ Dreamcoder colorscheme       |
+| **Hyprland Config**   | —                      | ✓ Full              | ◐ Color overlay                |
+| **Shell Configs**     | ✓ Fish/Zsh/Nushell     | ✓ Fish/Bash         | ◐ Aliases + 19 functions       |
+| **Ghostty Shaders**   | ✓ 53 GLSL              | —                   | ◐ Uses Gentleman's shaders     |
+| **Go TUI Installer**  | ✓ Bubbletea            | ✓ bash              | ✓ Bubbletea + Vim Trainer      |
+| **Starship Prompt**   | — Basic                | — Basic             | ✓ **17 modules + AI state**    |
+| **Python Theme Lib**  | —                      | —                   | ✓ **Published on PyPI**        |
+| **Vim Trainer**       | ✓ RPG-style            | —                   | ✓ RPG-style                    |
+| **Auto Theme Switch** | —                      | ✓ Manual            | ✓ **Systemd timer**            |
+| **CI/CD**             | —                      | —                   | ✓ GitHub Actions               |
 
-> ✅ = lo provee · 🔶 = dreamcoder overlay · ❌ = no lo provee
-
----
-
-## Lo que se queda de Gentleman.Dots
-
-Después de instalar Dreamcoder, TODO lo de Gentleman sigue funcionando exactamente igual:
-
-| Componente           | Qué se queda                      | Cómo lo usa Dreamcoder                              |
-| -------------------- | --------------------------------- | --------------------------------------------------- |
-| **Neovim**           | init.lua + 29 plugins             | Agrega `colorscheme dreamcoder` al init.lua         |
-| **Ghostty shaders**  | 45+ GLSL                          | Usa `dreamcoder-cursor-pulse.glsl` por defecto      |
-| **Tmux**             | `~/.tmux.conf` con TPM + kanagawa | `apply-theme-mode.sh` sobreescribe colores kanagawa |
-| **Zellij**           | `config.kdl` con plugins          | Cambia `theme "dreamcoder-{mode}"`                  |
-| **Fish/Zsh/Nushell** | Configs base                      | Agrega `conf.d/dreamcoder-*.fish`                   |
-| **Vim Trainer**      | RPG completo                      | Sin cambios                                         |
-| **Starship**         | Config base (si existe)           | Reemplaza con 23 módulos                            |
-
-## Lo que se queda de ML4W
-
-| Componente      | Qué se queda                           | Cómo lo usa Dreamcoder                            |
-| --------------- | -------------------------------------- | ------------------------------------------------- |
-| **Hyprland**    | hyprland.conf + animaciones + keybinds | Agrega `colors.{conf,lua}` con variables de color |
-| **Waybar**      | `config.jsonc` + `style.css`           | Genera `colors.css` con `@import`                 |
-| **Rofi**        | `config.rasi`                          | Genera `colors.rasi` con `@import`                |
-| **Dunst**       | `dunstrc`                              | Genera `dreamcoder-dunst.conf` con `[include]`    |
-| **GTK 3.0/4.0** | `settings.ini`                         | Switchea `prefer-dark-theme` en runtime           |
-| **Btop**        | `btop.conf`                            | Agrega `dreamcoder.theme`                         |
-| **Matugen**     | Pipeline de colores                    | Dreamcoder corre matugen en cada mode switch      |
+> ✓ = full support · ◐ = Dreamcoder Workbench overlay · — = not provided
 
 ---
 
-## Lo que Dreamcoder AGREGA
+## What stays from Gentleman.Dots
+
+After installing Dreamcoder Workbench, everything Gentleman provides keeps working exactly the same:
+
+| Component           | What stays                    | How Dreamcoder Workbench uses it                       |
+| ------------------- | ----------------------------- | ------------------------------------------------------ |
+| **Neovim**          | init.lua + 29 plugins         | Adds `colorscheme dreamcoder` to init.lua              |
+| **Ghostty shaders** | 53 GLSL                       | Uses `dreamcoder-cursor-pulse.glsl` by default         |
+| **Tmux**            | `~/.tmux.conf` with TPM + kanagawa | `apply-theme-mode.sh` overwrites kanagawa colors  |
+| **Zellij**          | `config.kdl` with plugins     | Switches `theme "dreamcoder-{mode}"`                   |
+| **Fish/Zsh/Nushell**| Base configs                  | Adds `conf.d/dreamcoder-*.fish`                        |
+| **Vim Trainer**     | Full RPG                      | No changes                                            |
+| **Starship**        | Base config (if any)          | Replaces it with 17 modules                            |
+
+## What stays from ML4W
+
+| Component      | What stays                           | How Dreamcoder Workbench uses it                 |
+| -------------- | ------------------------------------ | ------------------------------------------------ |
+| **Hyprland**   | hyprland.conf + animations + keybinds| Adds `colors.{conf,lua}` with color variables    |
+| **Waybar**     | `config.jsonc` + `style.css`         | Generates `colors.css` with `@import`            |
+| **Rofi**       | `config.rasi`                        | Generates `colors.rasi` with `@import`           |
+| **Dunst**      | `dunstrc`                            | Generates `dreamcoder-dunst.conf` with `[include]` |
+| **GTK 3.0/4.0**| `settings.ini`                       | Switches `prefer-dark-theme` at runtime          |
+| **Btop**       | `btop.conf`                          | Adds `dreamcoder.theme`                          |
+| **Matugen**    | Color pipeline                       | Dreamcoder Workbench runs matugen on each mode switch |
+
+---
+
+## What Dreamcoder Workbench ADDS
 
 ### Token Engine with WCAG/APCA
 
@@ -69,74 +68,85 @@ Después de instalar Dreamcoder, TODO lo de Gentleman sigue funcionando exactame
 }
 ```
 
-Ningún otro dotfiles hace esto. Cada color está validado contra WCAG 4.5:1 y APCA.
+No other dotfiles setup does this. Every color is validated against WCAG 4.5:1 and APCA.
 
-### 3 Modos de Color
+### 3 Color Modes
 
-| Modo     | Nombre          | BG        | Accent    | Uso         |
-| -------- | --------------- | --------- | --------- | ----------- |
-| 🌙 Dark  | Anthracite Steel OLED | `#100f0d` | `#d99555` | 18:00-07:00 |
-| ☀️ Light | Cocoa/Lúcuma    | `#f3eadc` | `#824f16` | 07:00-16:00 |
-| 🌆 Dusk  | Transición      | `#ebe4d6` | `#8a5520` | 16:00-18:00 |
+| Mode    | Name              | Schedule       |
+| ------- | ----------------- | -------------- |
+| 🌙 Dark | Anthracite Steel  | 18:00-07:00    |
+| ☀️ Light| Cocoa/Lúcuma      | 07:00-16:00    |
+| 🌆 Night| Low-light transition | 16:00-18:00 |
 
-### AI Session State en el Prompt
+### AI Session State in the Prompt
 
-Cuando Claude Code o OpenCode están activos, el prompt muestra:
+When Claude Code or OpenCode are active, the prompt shows:
 
 ```
 ⎔ claude-4 42K
 ```
 
-(solo visible cuando hay una sesión activa)
+(only visible when a session is active)
 
-### 9 Shell Functions
+### 19 Shell Functions
 
-| Función      | Para qué                          |
-| ------------ | --------------------------------- |
-| `extract`    | Descomprime CUALQUIER formato     |
-| `sysupdate`  | Actualiza pacman + brew + flatpak |
-| `ports`      | Muestra puertos en escucha        |
-| `killport`   | Mata proceso en un puerto         |
-| `dots`       | Cd al repo dreamcoder             |
-| `cheat`      | TLDR para help rápido             |
-| `http`       | HTTPie wrapper                    |
-| `logs`       | Journalctl wrapper                |
-| `tm-session` | Tmux session picker               |
+| Function      | Purpose                                      |
+| ------------- | -------------------------------------------- |
+| `extract`     | Extract any archive format                   |
+| `sysupdate`   | Update pacman + brew + flatpak               |
+| `ports`       | Show listening ports                         |
+| `killport`    | Kill a process on a port                     |
+| `dots`        | cd to the repo                               |
+| `cheat`       | Quick cheat sheet (tldr wrapper)             |
+| `http`        | HTTP request with pretty output (HTTPie wrapper) |
+| `logs`        | Tail system logs with filters                |
+| `tm-session`  | Tmux session picker                          |
+| `tm`          | Smart tmux attach (create or attach)         |
+| `tmux-kill-all` | Kill all tmux sessions (careful)          |
+| `identity`    | Switch to an identity workspace (personal, founder, dev, research) |
+| `id-dev`      | Switch to Dev identity                       |
+| `id-founder`  | Switch to Founder identity                   |
+| `id-personal` | Switch to Personal identity                  |
+| `id-research` | Switch to Research identity                  |
+| `dev-dots`    | Launch the dev workspace with Herdr          |
+| `sdd-swap`    | Switch SDD profile between chatgpt and deepseek |
+| `tl`          | List tmux sessions                           |
 
 ### Modern CLI Aliases
 
 ```bash
-alias ll='eza -la --icons'     # mejor ls
-alias cat='bat --paging=never' # mejor cat
-alias find='fd'                # mejor find
-alias grep='rg'                # mejor grep
+alias ll='eza -la --icons'     # better ls
+alias cat='bat --paging=never' # better cat
+alias find='fd'                # better find
+alias grep='rg'                # better grep
 alias cd='z'                   # zoxide smart cd
-alias ps='procs'               # mejor ps
-alias top='btm'                # mejor htop
-alias du='dua'                 # mejor du
-alias df='duf'                 # mejor df
-alias sed='sd'                 # mejor sed
-alias help='tldr'              # mejor man
+alias ps='procs'               # better ps
+alias top='btm'                # better htop
+alias du='dua'                 # better du
+alias df='duf'                 # better df
+alias sed='sd'                 # better sed
+alias help='tldr'              # better man
 ```
 
-Todos con graceful fallback si la herramienta no está instalada.
+All with graceful fallback if the tool is not installed.
 
 ---
 
-## Resumen Visual
+## Visual Summary
 
 ```
-Sin Dreamcoder:
+Without Dreamcoder Workbench:
 ┌─────────────────────────────────────────────┐
 │  Gentleman.Dots: Catppuccin                │
 │  ML4W: Matugen colors                      │
-│  Sin WCAG, sin AI prompt, sin dusk mode    │
+│  No WCAG, no AI prompt, no night mode      │
 └─────────────────────────────────────────────┘
 
-Con Dreamcoder:
+With Dreamcoder Workbench:
 ┌─────────────────────────────────────────────┐
 │  Gentleman.Dots: Neovim, shaders, tmux     │
 │  ML4W: Hyprland, waybar, rofi, dunst       │
-│  Dreamcoder: tokens WCAG/APCA + AI prompt  │
+│  Dreamcoder Workbench: WCAG/APCA tokens    │
+│  + AI prompt                               │
 └─────────────────────────────────────────────┘
 ```

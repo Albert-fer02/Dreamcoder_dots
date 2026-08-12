@@ -1,47 +1,46 @@
-# Dreamcoder AI Integration
+# Dreamcoder Workbench — AI Integration
 
 ← Back to [docs/README.md](README.md)
 
-> Cómo dreamcoder se integra con Claude Code, OpenCode, Pi, y otras herramientas de IA.
+> How Dreamcoder Workbench integrates with Claude Code, OpenCode, Pi, and other AI tools.
 
-Dreamcoder detecta sesiones de IA activas (Claude Code, OpenCode, Codex CLI) y refleja su
-estado en el prompt de Starship, además de generar temas dedicados para los agentes de
-codificación. Esta página cubre el estado de sesión en el prompt, los temas por agente y un
-caso de uso de punta a punta.
+Dreamcoder Workbench detects active AI sessions (Claude Code, OpenCode, Codex CLI) and reflects their
+state in the Starship prompt, and it generates dedicated themes for coding agents.
+This page covers session state in the prompt, per-agent themes, and an end-to-end use case.
 
 ## Quick path
 
-1. Mirá el estado de la sesión IA en el prompt: [AI Session State](#ai-session-state-en-el-prompt)
-2. Configurá el tema del agente que usás: [Pi](#pi-agent-theme), [OpenCode](#opencode-theme), [Codex CLI](#codex-cli)
-3. Recorré el [caso de uso](#caso-de-uso-desarrollo-con-ia) para ver el flujo completo
+1. Check the AI session state in the prompt: [AI Session State in the Prompt](#ai-session-state-in-the-prompt)
+2. Configure the theme for the agent you use: [Pi](#pi-agent-theme), [OpenCode](#opencode-theme), [Codex CLI](#codex-cli)
+3. Walk through the [use case](#use-case-ai-assisted-development) to see the full flow
 
 ---
 
-## AI Session State en el Prompt
+## AI Session State in the Prompt
 
-Dreamcoder tiene un módulo de Starship (`[custom.ai_session]`) que muestra el estado de tu sesión de IA actual en el prompt:
+Dreamcoder Workbench ships a Starship module (`[custom.ai_session]`) that shows your current AI session state in the prompt:
 
 ```
 ⎔ claude-4 42K
 ```
 
-Esto se lee de `~/.cache/dreamcoder/ai-session.state`, que se actualiza automáticamente cuando:
+It reads from `~/.cache/dreamcoder/ai-session.state`, which updates automatically when:
 
-- **Claude Code** tiene una sesión activa (`~/.claude/sessions/`)
-- **OpenCode** está corriendo (`~/.opencode/state`)
-- **Codex CLI** tiene contexto activo
+- **Claude Code** has an active session (`~/.claude/sessions/`)
+- **OpenCode** is running (`~/.opencode/state`)
+- **Codex CLI** has active context
 
-### Cómo funciona
+### How it works
 
 ```mermaid
 flowchart LR
-    A["Claude/OpenCode<br/>Session Active"] --> B["25-dreamcoder-ai-env.fish<br/>Detecta y escribe estado"]
+    A["Claude/OpenCode<br/>Session Active"] --> B["25-dreamcoder-ai-env.fish<br/>Detects and writes state"]
     B --> C["~/.cache/dreamcoder/<br/>ai-session.state"]
     C --> D["Starship<br/>custom.ai_session module"]
-    D --> E["Prompt muestra:<br/>⎔ claude-4 42K"]
+    D --> E["Prompt shows:<br/>⎔ claude-4 42K"]
 ```
 
-### Deshabilitar
+### Disabling
 
 ```fish
 set -gx DREAMCODER_AI_SESSION_DISABLED 1
@@ -51,17 +50,17 @@ set -gx DREAMCODER_AI_SESSION_DISABLED 1
 
 ## Pi Agent Theme
 
-Dreamcoder genera un tema para Pi (el coding agent) que se escribe en:
+Dreamcoder Workbench generates a theme for Pi (the coding agent), written to:
 
 - `~/.pi/agent/themes/dreamcoder.json`
 - `~/.pi/agent/themes/dreamcoder-dark.json`
 - `~/.pi/agent/themes/dreamcoder-light.json`
 
-El tema se activa automáticamente via `ensure_pi_theme_settings()` que setea `theme: "dreamcoder"` en `~/.pi/agent/settings.json`.
+The theme activates automatically via `ensure_pi_theme_settings()`, which sets `theme: "dreamcoder"` in `~/.pi/agent/settings.json`.
 
-### Mode Switching
+### Mode switching
 
-Cuando cambiás de modo (`dreamcoder dark` / `dreamcoder light`), el tema de Pi se actualiza automáticamente:
+When you switch modes (`dreamcoder dark` / `dreamcoder light`), the Pi theme updates automatically:
 
 ```bash
 dreamcoder dark   # Pi → dreamcoder-dark.json
@@ -72,44 +71,44 @@ dreamcoder light  # Pi → dreamcoder-light.json
 
 ## OpenCode Theme
 
-Dreamcoder genera temas para OpenCode en:
+Dreamcoder Workbench generates themes for OpenCode at:
 
 - `~/.config/opencode/themes/dreamcoder.json`
 - `.opencode/themes/dreamcoder.json` (repo copy)
 
-El TUI de OpenCode usa el tema dreamcoder con fondo transparente para mejor integración visual.
+The OpenCode TUI uses the dreamcoder theme with a transparent background for better visual integration.
 
 ---
 
 ## Codex CLI
 
-Dreamcoder genera temas `.tmTheme` para Codex CLI:
+Dreamcoder Workbench generates `.tmTheme` files for Codex CLI:
 
 - `~/.codex/themes/Dreamcoder.tmTheme`
 - `~/.codex/themes/Dreamcoder-Dark.tmTheme`
 - `~/.codex/themes/Dreamcoder-Light.tmTheme`
 
-Y también temas `.codex-theme.json` para Codex App.
+It also generates `.codex-theme.json` files for the Codex App.
 
 ---
 
 ## CLAUDE.md
 
-Dreamcoder incluye un `CLAUDE.md` con instrucciones para Claude Code sobre cómo trabajar con el repositorio. Cubre:
+Dreamcoder Workbench includes a `CLAUDE.md` with instructions for Claude Code on how to work with the repository. It covers:
 
-- Reglas de shell scripts (`set -euo pipefail`, quoting, `[[ ]]`)
-- Modularidad (un archivo = un propósito)
-- Safety (safe sourcing, sin hardcoded paths)
+- Shell script rules (`set -euo pipefail`, quoting, `[[ ]]`)
+- Modularity (one file = one purpose)
+- Safety (safe sourcing, no hardcoded paths)
 
 ---
 
-## Caso de Uso: Desarrollo con IA
+## Use Case: AI-Assisted Development
 
-- [ ] Abrí Neovim (vía Gentleman.Dots) → 29 plugins, dreamcoder colorscheme
-- [ ] Iniciá Claude Code → `⎔ claude-4` aparece en el prompt
-- [ ] Escribí código con autocompletado (blink.cmp), fuzzy finder (fzf-lua), debugging (DAP)
-- [ ] Necesitás un comando? `cheat tar` → TLDR para tar
-- [ ] Necesitás extraer algo? `extract project.tar.gz`
-- [ ] Cambiando de tarea? `tm-session` → fzf session picker
-- [ ] Terminando el día? `sysupdate` → actualiza todo
-- [ ] El timer systemd cambia automáticamente a Anthracite Steel a las 18:00
+- [ ] Open Neovim (via Gentleman.Dots) → 29 plugins, dreamcoder colorscheme
+- [ ] Start Claude Code → `⎔ claude-4` appears in the prompt
+- [ ] Write code with autocompletion (blink.cmp), fuzzy finder (fzf-lua), debugging (DAP)
+- [ ] Need a command? `cheat tar` → TLDR for tar
+- [ ] Need to extract something? `extract project.tar.gz`
+- [ ] Switching tasks? `tm-session` → fzf session picker
+- [ ] Ending the day? `sysupdate` → updates everything
+- [ ] The systemd timer switches to Anthracite Steel automatically at 18:00

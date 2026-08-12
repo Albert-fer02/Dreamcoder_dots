@@ -8,7 +8,7 @@
 
 ## Theme Integration
 
-Each shell config sources Dreamcoder themes based on `DREAMCODER_THEME_MODE`:
+Each shell config sources Dreamcoder Workbench themes based on `DREAMCODER_THEME_MODE`:
 
 ```bash
 # In .zshrc

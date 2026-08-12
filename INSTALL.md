@@ -1,27 +1,27 @@
-# Dreamcoder OS — Installation Guide
+# Dreamcoder Workbench — Installation Guide
 
-> Instalación completa en 3 pasos: Gentleman.Dots → ML4W → Dreamcoder.
+> Complete installation in 3 steps: Gentleman.Dots → ML4W → Dreamcoder Workbench.
 
-## Prerequisitos
+## Prerequisites
 
-- **Arch Linux** (o derivado)
-- `git`, `stow`, `python3` instalados
-- Conexión a internet
+- **Arch Linux** (or a derivative)
+- `git`, `stow`, `python3` installed
+- Internet connection
 
 ---
 
-## Paso 1: Gentleman.Dots
+## Step 1: Gentleman.Dots
 
-Gentleman.Dots provee la base para Neovim, shells, terminales, y multiplexers.
+Gentleman.Dots provides the base for Neovim, shells, terminals, and multiplexers.
 
-### Opción A: Homebrew (recomendado)
+### Option A: Homebrew (recommended)
 
 ```bash
 brew install Gentleman-Programming/tap/gentleman-dots
 gentleman-dots
 ```
 
-### Opción B: Descarga directa
+### Option B: Direct download
 
 ```bash
 curl -fsSL https://github.com/Gentleman-Programming/Gentleman.Dots/releases/latest/download/gentleman-installer-linux-amd64 -o gentleman.dots
@@ -29,7 +29,7 @@ chmod +x gentleman.dots
 ./gentleman.dots
 ```
 
-### Opción C: Manual
+### Option C: Manual
 
 ```bash
 git clone https://github.com/Gentleman-Programming/Gentleman.Dots.git
@@ -37,87 +37,95 @@ cd Gentleman.Dots
 ./install.sh
 ```
 
-Seguí el installer TUI para seleccionar:
+Follow the installer TUI to select:
 
-- Shell: Fish (recomendado), Zsh, o Nushell
-- Terminal: Ghostty (recomendado) o Kitty
-- Multiplexer: Tmux o Zellij
+- Shell: Fish (recommended), Zsh, or Nushell
+- Terminal: Ghostty (recommended) or Kitty
+- Multiplexer: Tmux or Zellij
 - Editor: Neovim
 
-> Más info: [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots)
+> More info: [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots)
 
 ---
 
-## Paso 2: ML4W OS
+## Step 2: ML4W OS
 
-ML4W provee la base completa de escritorio Hyprland.
+ML4W provides the full Hyprland desktop base.
 
 ```bash
 bash <(curl -s https://ml4w.com/os/stable)
 ```
 
-Esto instala:
+This installs:
 
-- **Hyprland**: animaciones, keybinds, monitores, layouts, ventanas, workspaces
-- **Waybar**: barra de estado con módulos
-- **Rofi**: lanzador de apps
-- **Dunst**: notificaciones
-- **GTK 3.0/4.0**: tema y config
-- **Btop**: monitor de sistema
-- **Matugen**: generación dinámica de colores
+- **Hyprland**: animations, keybinds, monitors, layouts, windows, workspaces
+- **Waybar**: status bar with modules
+- **Rofi**: app launcher
+- **Dunst**: notifications
+- **GTK 3.0/4.0**: theme and config
+- **Btop**: system monitor
+- **Matugen**: dynamic color generation
 
-> Más info: [ML4W OS](https://ml4w.com/os/)
+> More info: [ML4W OS](https://ml4w.com/os/)
 
 ---
 
-## Paso 3: Dreamcoder
+## Step 3: Dreamcoder Workbench
 
-Dreamcoder aplica su capa visual sobre Gentleman + ML4W.
+Dreamcoder Workbench applies its visual layer over Gentleman + ML4W.
 
-### Clonar
+### Clone
 
 ```bash
-git clone git@github.com:Dreamcoder08/Dreamcoder_dots.git ~/Documents/PROYECTOS/dreamcoder-dots
-cd ~/Documents/PROYECTOS/dreamcoder-dots
+git clone git@github.com:Dreamcoder08/Dreamcoder-Workbench.git ~/Documents/PROYECTOS/Dreamcoder-Workbench
+cd ~/Documents/PROYECTOS/Dreamcoder-Workbench
 ```
 
-### Instalar
+### Install the Python package (theme engine)
+
+```bash
+pip install -e .
+# or, with uv:
+uv sync
+```
+
+### Install
 
 ```bash
 ./scripts/dreamcoder install
 ```
 
-Esto:
+This:
 
-1. Crea backups de configs existentes
-2. Stowea los módulos (DreamcoderShell, DreamcoderKitty, DreamcoderGhostty, DreamcoderFastfetch, DreamcoderWarp, DreamcoderBat, DreamcoderSystemd)
-3. Instala los hooks de tema para cada app
-4. Activa el timer systemd para auto-theme-switching
-5. Corre el primer sync de temas
+1. Creates backups of existing configs
+2. Stows the modules (DreamcoderShell, DreamcoderKitty, DreamcoderGhostty, DreamcoderFastfetch, DreamcoderWarp, DreamcoderBat, DreamcoderSystemd)
+3. Installs the theme hooks for each app
+4. Activates the systemd timer for auto-theme switching
+5. Runs the first theme sync
 
-### Verificar
+### Verify
 
 ```bash
-./scripts/dreamcoder doctor     # Health check completo
+./scripts/dreamcoder doctor     # Full health check
 ./scripts/dreamcoder status      # System status
 ```
 
 ---
 
-## Post-Instalación
+## Post-Installation
 
 ### Tmux
 
-Si usás Tmux con TPM:
+If you use Tmux with TPM:
 
 ```bash
 tmux
-prefix + I   # Instalar plugins
+prefix + I   # Install plugins
 ```
 
 ### Neovim
 
-Abrí Neovim. LazyVim instala los plugins automáticamente:
+Open Neovim. LazyVim installs the plugins automatically:
 
 ```bash
 nvim
@@ -126,16 +134,16 @@ nvim
 
 ### Auto Theme Switching
 
-El timer systemd se activa automáticamente. Para verificar:
+The systemd timer activates automatically. To verify:
 
 ```bash
 systemctl --user status dreamcoder-theme-auto.timer
 ```
 
-El timer cambia entre modos según el horario:
+The timer switches modes by schedule:
 
 - **07:00-16:00** → Light
-- **16:00-18:00** → Dusk
+- **16:00-18:00** → Night
 - **18:00-07:00** → Dark
 
 ---
@@ -144,7 +152,7 @@ El timer cambia entre modos según el horario:
 
 ### "Theme files not found"
 
-Asegurate de haber instalado Gentleman.Dots y ML4W primero. Dreamcoder es un overlay, no un reemplazo.
+Make sure you installed Gentleman.Dots and ML4W first. Dreamcoder Workbench is an overlay, not a replacement.
 
 ### "Error: stow not found"
 
@@ -161,7 +169,7 @@ dreamcoder light   # Force light mode
 
 ### "Neovim colorscheme not loading"
 
-Agregá esto a `~/.config/nvim/init.lua`:
+Add this to `~/.config/nvim/init.lua`:
 
 ```lua
 vim.cmd.colorscheme("dreamcoder")
@@ -169,9 +177,9 @@ vim.cmd.colorscheme("dreamcoder")
 
 ---
 
-## Referencias
+## References
 
 - [Gentleman.Dots](https://github.com/Gentleman-Programming/Gentleman.Dots)
 - [ML4W OS](https://ml4w.com/os/)
-- [Dreamcoder SDD Plans](docs/superpowers/plans/)
+- [Dreamcoder Workbench docs index](docs/README.md)
 - [Architecture Docs](docs/architecture/)

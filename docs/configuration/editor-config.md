@@ -22,14 +22,14 @@ Dreamcoder colorscheme generated from `tokens.json`:
 return {
   "dreamcoder.nvim",
   opts = {
-    variant = "dark", -- or "light" or "dusk"
+    variant = "dark", -- or "light" or "night"
   },
 }
 ```
 
 ### Key Maps
 
-See `docs/neovim-keymaps.md` for complete reference.
+LazyVim provides the default keymaps for this setup. See the [Theme](#theme) section above for the Dreamcoder colorscheme setup.
 
 ### Plugins
 

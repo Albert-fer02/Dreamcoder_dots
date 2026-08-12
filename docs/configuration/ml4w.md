@@ -2,7 +2,7 @@
 
 ← Back to [docs/README.md](../README.md)
 
-Dreamcoder integrates with [ML4W](https://ml4w.com) through a modular, profile-driven system.
+Dreamcoder Workbench integrates with [ML4W](https://ml4w.com) through a modular, profile-driven system.
 All machine-specific keybindings live in JSON profiles, avoiding manual editing of ML4W-managed files.
 Profiles are compiled into `~/.config/hypr/custom.lua` by the generator and validated in CI.
 
@@ -52,7 +52,7 @@ was a bug: hosts named `archlinux` never matched `*asus*`, so the wrong profile
 
 ## Binding contract (avoid duplicate binds)
 
-`~/.config/hypr/conf/keybindings/dreamcoder.lua` (our curated ML4W variant) and
+`~/.config/hypr/conf/keybindings/dreamcoder.lua` (the curated ML4W variant) and
 the generated `custom.lua` are BOTH loaded by `hyprland.lua`. They must not
 define the same key — Hyprland executes ALL matching duplicate binds in
 declaration order (e.g. `SUPER + F` fullscreens and immediately unfullscreens).
@@ -109,7 +109,7 @@ Any other command still falls back to `hl.dsp.exec_cmd(...)`.
 
 | Shortcut            | Action                             |
 | ------------------- | ---------------------------------- |
-| `SUPER + SHIFT + D` | Toggle Dreamcoder light/dark theme |
+| `SUPER + SHIFT + D` | Toggle light/dark theme |
 | `SUPER + SHIFT + U` | Activate blue light filter (4000K) |
 | `SUPER + SHIFT + I` | Deactivate blue light filter       |
 

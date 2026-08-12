@@ -1,6 +1,6 @@
 # Security
 
-Security rules for DreamcoderDots.
+Security rules for Dreamcoder Workbench.
 
 ## Secrets
 

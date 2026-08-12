@@ -2,7 +2,7 @@
 
 ← Back to [docs/README.md](README.md)
 
-> Repository-owned declaration of the upstream inputs Dreamcoder builds on, the
+> Repository-owned declaration of the upstream inputs Dreamcoder Workbench builds on, the
 > ownership boundary between them and this repository, and the material that may
 > never be imported or versioned here.
 
@@ -14,9 +14,9 @@
 
 ## Role
 
-**Dreamcoder is the overlay and source of truth** for every file shipped in this
+**Dreamcoder Workbench is the overlay and source of truth** for every file shipped in this
 repository. Upstream projects (ML4W and Gentleman.Dots) provide the base
-environment that Dreamcoder layers profiles, tokens, renderers, and verification
+environment that Dreamcoder Workbench layers profiles, tokens, renderers, and verification
 on top of. This repository never vendors upstream trees wholesale, never mutates
 upstream-owned files outside its managed overlay surface, and never claims
 authorship of upstream content.
@@ -66,15 +66,15 @@ keeps its ref cell explicitly `Unpinned — ref to be recorded`.
 
 ## Ownership boundary
 
-- **Dreamcoder owns**: every `Dreamcoder*` prefixed module, the theme engine in
+- **Dreamcoder Workbench owns**: every `Dreamcoder*` prefixed module, the theme engine in
   `src/`, the renderers and writers, canonical tokens in
   `DreamcoderThemes/dreamcoder/tokens.json`, machine and deployment profiles in
   `DreamcoderProfiles/`, generated repository variants (for example Herdr
   versioned variants under `DreamcoderHerdr/`), scripts, tests, and docs.
-- **Upstreams own**: the base installs they ship. Dreamcoder integration points
+- **Upstreams own**: the base installs they ship. Dreamcoder Workbench integration points
   (hooks, selectors, profile overlays) are documented and applied through this
   repository's own managed surface only.
-- **Generated variants** are repository-owned artifacts derived from Dreamcoder
+- **Generated variants** are repository-owned artifacts derived from Dreamcoder Workbench
   canonical tokens. They are checked in so sync drift is detectable; they are
   never treated as upstream files.
 
@@ -106,7 +106,7 @@ python3 scripts/upstream-diff.py                   # network: diff declared owne
 ```
 
 The offline verifier confirms generated variants match the renderer, deployment
-profiles are valid, the mobile profile selects Dreamcoder Light with Herdr pane
+profiles are valid, the mobile profile selects Dreamcoder Workbench Light with Herdr pane
 scrollbars disabled, the upstream manifest validates (schema, 40-hex pinned
 refs, HTTPS-only URLs, confined owned paths, sources.md consistency), and no
 sensitive material exists in the synchronization surface. Optional host-tool
