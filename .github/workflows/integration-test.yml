@@ -20,6 +20,13 @@ jobs:
       - name: Install dreamcoder-theme
         run: pip install -e .
 
+      - name: Install runtime check binaries (fish + starship)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish
+          curl -fsSL https://starship.rs/install.sh | sh -s -- -y
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
       - name: Create mock base directories (Gentleman.Dots + ML4W)
         run: |
           mkdir -p ~/Gentleman.Dots/{GentlemanTmux,GentlemanGhostty,GentlemanKitty,GentlemanFish}
@@ -28,6 +35,7 @@ jobs:
           mkdir -p ~/.pi/agent/themes
           mkdir -p ~/.local/share/dreamcoder/backups
           touch ~/Gentleman.Dots/GentlemanTmux/tmux.conf
+          touch ~/.config/fish/config.fish
 
       - name: Set up symlinks (simulating install)
         run: |
