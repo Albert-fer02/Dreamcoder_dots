@@ -13,7 +13,7 @@ class BatVisualCoherenceTest(unittest.TestCase):
         self.assertIn("set -gx BAT_THEME Dreamcoder-Dark", content)
         self.assertIn("set -gx BAT_THEME Dreamcoder-Light", content)
         self.assertIn('set -q BAT_STYLE; or set -gx BAT_STYLE "auto,changes,header,grid"', content)
-        self.assertIn('set -q BAT_TABS; or set -gx BAT_TABS "4"', content)
+        self.assertIn("set -q BAT_TABS; or set -gx BAT_TABS 4", content)
         self.assertIn("set -e NO_COLOR", content)
 
     def test_bat_tmthemes_mirror_dreamcoder_cli_themes(self):

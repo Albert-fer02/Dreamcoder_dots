@@ -35,7 +35,14 @@ jobs:
           ln -sf "$PWD/DreamcoderKitty/.config/kitty/kitty.conf" ~/.config/kitty/kitty.conf
           ln -sf "$PWD/DreamcoderTmux/.tmux.conf" ~/.tmux.conf
           ln -sf "$PWD/DreamcoderShell/.config/fish/conf.d/05-dreamcoder-theme.fish" ~/.config/fish/conf.d/05-dreamcoder-theme.fish
-          mkdir -p ~/.config/ghostty/themes
+          # Deploy theme variant files from the repo, mirroring the real
+          # install (ghostty dual-mode and kitty theme switching reference
+          # the -dark/-light/-night variants at runtime).
+          rm -rf ~/.config/ghostty/themes
+          ln -sfn "$PWD/DreamcoderGhostty/.config/ghostty/themes" ~/.config/ghostty/themes
+          for f in colors-dreamcoder.conf colors-dreamcoder-dark.conf colors-dreamcoder-light.conf colors-dreamcoder-night.conf; do
+            ln -sf "$PWD/DreamcoderKitty/.config/kitty/$f" ~/.config/kitty/$f
+              done
 
       - name: Run theme sync
         run: PYTHONPATH=src python -m dreamcoder_theme.sync
