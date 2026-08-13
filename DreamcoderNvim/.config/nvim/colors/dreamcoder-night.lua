@@ -25,7 +25,7 @@ local c = {
   error     = "#d48d8d",
   warning   = "#c4a75b",
   border    = "#161c23",
-  border_ui = "#6b7e8e",
+  border_ui = "#687b89",
   selection = "#1e242b",
 }
 
@@ -48,7 +48,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "FloatBorder", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#0d1015"
   })
 
@@ -66,7 +66,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "Whitespace", {
-    fg = "#6b7e8e"
+    fg = "#687b89"
   })
 
   vim.api.nvim_set_hl(0, "EndOfBuffer", {
@@ -198,7 +198,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WinSeparator", {
-    fg = "#6b7e8e"
+    fg = "#687b89"
   })
 
 
@@ -869,7 +869,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeBorder", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#07090f"
   })
 
@@ -884,7 +884,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopePromptBorder", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#0d1015"
   })
 
@@ -913,7 +913,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopePreviewBorder", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#0d1015"
   })
 
@@ -923,7 +923,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "TelescopeResultsBorder", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#07090f"
   })
 
@@ -984,11 +984,11 @@ end
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", {
-    fg = "#6b7e8e"
+    fg = "#687b89"
   })
 
   vim.api.nvim_set_hl(0, "NvimTreeWinSeparator", {
-    fg = "#6b7e8e",
+    fg = "#687b89",
     bg = "#07090f"
   })
 
@@ -1025,7 +1025,7 @@ end
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyBorder", {
-    fg = "#6b7e8e"
+    fg = "#687b89"
   })
 
   vim.api.nvim_set_hl(0, "WhichKeyValue", {

@@ -48,7 +48,7 @@ Semantic tokens are intentionally distinct:
 | `selection_bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#202A35'></span> `#202A35` |
 | `selection_fg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E6EDF3'></span> `#E6EDF3` |
 | `border` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#17202B'></span> `#17202B` |
-| `border_ui` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#647c8f'></span> `#647c8f` |
+| `border_ui` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#6A8497'></span> `#6A8497` |
 | `border_hi` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#758A9C'></span> `#758A9C` |
 | `focus` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5C7E8'></span> `#A5C7E8` |
 
@@ -153,14 +153,14 @@ Semantic tokens are intentionally distinct:
 | `sage` | 57.4 | ≥75 (FAIL) |
 | `error` | 51.9 | ≥75 (FAIL) |
 | `warning` | 70.9 | ≥75 (FAIL) |
-| `border_ui` | 31.3 | ≥60 (FAIL) |
+| `border_ui` | 34.9 | ≥60 (FAIL) |
 | `focus` | 70.3 | ≥60 (UI) |
 
 ### Dreamcoder Anthracite Steel UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `border_ui` | 4.54:1 | PASS |
+| `border_ui` | 5.05:1 | PASS |
 | `border_hi` | 5.53:1 | PASS |
 | `focus` | 11.24:1 | PASS |
 
@@ -267,14 +267,14 @@ Semantic tokens are intentionally distinct:
 | `sage` | 42.0 | ≥75 (FAIL) |
 | `error` | 50.7 | ≥75 (FAIL) |
 | `warning` | 56.1 | ≥75 (FAIL) |
-| `border_ui` | 32.6 | ≥60 (FAIL) |
+| `border_ui` | 31.1 | ≥60 (FAIL) |
 | `focus` | 60.3 | ≥60 (UI) |
 
 ### Night (derived from Anthracite Steel) UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `border_ui` | 4.74:1 | PASS |
+| `border_ui` | 4.53:1 | PASS |
 | `border_hi` | 4.57:1 | PASS |
 | `focus` | 9.33:1 | PASS |
 

@@ -11,7 +11,7 @@
   --background-secondary: #0d1015;
   --background-secondary-alt: #14181e;
   --background-modifier-border: #161c23;
-  --background-modifier-border-hover: #6b7e8e;
+  --background-modifier-border-hover: #687b89;
   --background-modifier-form-field: #0d1015;
   --background-modifier-success: #192e27;
   --background-modifier-error: #3a2a2e;
@@ -39,7 +39,7 @@
   /* Scrollbar */
   --scrollbar-bg: transparent;
   --scrollbar-thumb-bg: #161c23;
-  --scrollbar-active-thumb-bg: #6b7e8e;
+  --scrollbar-active-thumb-bg: #687b89;
 
   /* Code — syntax highlighting colors */
   --code-normal: #beccd8;
