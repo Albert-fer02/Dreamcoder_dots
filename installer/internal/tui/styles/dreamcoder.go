@@ -2,28 +2,37 @@ package styles
 
 import "github.com/charmbracelet/lipgloss"
 
-// Dreamcoder Dark palette — matches palette_tokens.py exactly
-// for consistent legibility across all Dreamcoder surfaces.
+// Dreamcoder dark palette — mirrors the canonical Anthracite Steel dark
+// tokens from DreamcoderThemes/dreamcoder/tokens.json (regenerated into
+// src/dreamcoder_theme/palette_tokens.py). Values must stay byte-for-byte
+// aligned with the canonical dark mode so every Dreamcoder surface shares one
+// palette; dreamcoder_test.go locks the mapping and the WCAG contrast floors.
+//
+// Border semantics: the canonical "border" token (#17202B) is a low-contrast
+// structural separator that fails the WCAG 3:1 UI floor against Primary, so
+// the TUI's visible border role deliberately uses "border_ui" (#6A8497).
+// BoxStyle binds its visible border to BorderUI, never to the canonical
+// border token.
 var (
-	Primary    = lipgloss.Color("#100f0d")  // bg
-	Secondary  = lipgloss.Color("#181512")  // bg_soft
-	Surface    = lipgloss.Color("#2b231b")  // surface1
-	Text       = lipgloss.Color("#e8dfd0")  // text
-	Muted      = lipgloss.Color("#c7b9aa")  // muted
-	Subtle     = lipgloss.Color("#938274")  // subtle
-	Accent     = lipgloss.Color("#d99555")  // accent
-	Accent2    = lipgloss.Color("#c96a45")  // accent_2
-	Diagnostic = lipgloss.Color("#5f95ca")  // diagnostic
-	Sage       = lipgloss.Color("#4db35f")  // sage
-	Lavender   = lipgloss.Color("#d4b4e6")  // lavender
-	Mauve      = lipgloss.Color("#e29cb4")  // mauve
-	Success    = lipgloss.Color("#4db35f")  // sage (green)
-	Error      = lipgloss.Color("#ed8a7a")  // error
-	Warning    = lipgloss.Color("#e8b866")  // warning
-	Comment    = lipgloss.Color("#b8a99a")  // comment (was #6b5f52 — too dark!)
-	Border     = lipgloss.Color("#756052")  // border (was #2a2520 — invisible!)
-	BorderHi   = lipgloss.Color("#c8b195")  // border_hi
-	Focus      = lipgloss.Color("#5f8f8f")  // focus
+	Primary    = lipgloss.Color("#070A13") // bg
+	Secondary  = lipgloss.Color("#0D121A") // bg_soft / surface0
+	Surface    = lipgloss.Color("#151C25") // surface1
+	Text       = lipgloss.Color("#E6EDF3") // text
+	Muted      = lipgloss.Color("#A8B5C2") // muted
+	Subtle     = lipgloss.Color("#8795a2") // subtle
+	Accent     = lipgloss.Color("#A5C7E8") // accent
+	Accent2    = lipgloss.Color("#8FAFCB") // accent_2
+	Diagnostic = lipgloss.Color("#4DAED6") // diagnostic
+	Sage       = lipgloss.Color("#55C080") // sage
+	Lavender   = lipgloss.Color("#B6C5D4") // lavender
+	Mauve      = lipgloss.Color("#B48EAD") // mauve
+	Success    = lipgloss.Color("#55C080") // sage — TUI success role uses the sage hue
+	Error      = lipgloss.Color("#E38989") // error
+	Warning    = lipgloss.Color("#E1C16D") // warning
+	Comment    = lipgloss.Color("#aab7c4") // comment
+	BorderUI   = lipgloss.Color("#6A8497") // border_ui — visible border role (see note above)
+	BorderHi   = lipgloss.Color("#758A9C") // border_hi
+	Focus      = lipgloss.Color("#A5C7E8") // focus
 )
 
 var (
@@ -57,7 +66,7 @@ var (
 	BoxStyle = lipgloss.NewStyle().
 			Background(Primary).
 			Border(lipgloss.RoundedBorder()).
-			BorderForeground(Border).
+			BorderForeground(BorderUI).
 			Padding(1, 2)
 
 	CommentStyle = lipgloss.NewStyle().
