@@ -4,7 +4,7 @@ Contract under test (design §2, ADR-003):
 
 - ``night_palette(base, profile_parameters, guardrails) -> dict[str, str]``
   never mutates its input, preserves every token key, and returns lowercase hex.
-- The derived display name is "Dreamcoder Anthracite Steel Night" while
+- The derived display name is "Dreamcoder Dark Black OLED Night" while
   ``details`` stays "darker".
 - HSL lightness/saturation are multiplied by the canonical factors with
   deterministic integer-rounded RGB; ``rgba()`` tokens preserve alpha exactly.
@@ -12,7 +12,8 @@ Contract under test (design §2, ADR-003):
 - A bounded corrective pass moves only declared foreground tokens toward the
   contrast-safe endpoint, never brightens background/surface roles, and never
   exceeds ``maximum_corrective_delta`` of lightness movement.
-- Pure ``#000000``/``#ffffff`` is rejected when ``avoid_pure_black_white``.
+- New pure ``#000000``/``#ffffff`` values are rejected when
+  ``avoid_pure_black_white``; explicitly authored OLED black roles are preserved.
 - The transform never silently falls back to the standard dark palette.
 
 The HSL helpers below are test-side color plumbing (a generic conversion, not
@@ -131,7 +132,7 @@ def test_night_never_mutates_input():
 
 def test_night_metadata_and_details():
     night = night_palette(_dark_base(), CANONICAL_PARAMS, _guardrails())
-    assert night["name"] == "Dreamcoder Anthracite Steel Night"
+    assert night["name"] == "Dreamcoder Dark Black OLED Night"
     assert night["details"] == "darker"
 
 
@@ -163,10 +164,12 @@ def test_night_preserves_rgba_alpha_exactly():
 
 
 def test_night_reduces_lightness_and_saturation():
-    night = night_palette(_dark_base(), CANONICAL_PARAMS, _guardrails())
-    assert _hsl(night["bg"])[2] < _hsl(_dark_base()["bg"])[2]
-    assert _hsl(night["accent"])[2] < _hsl(_dark_base()["accent"])[2]
-    assert _hsl(night["accent"])[1] < _hsl(_dark_base()["accent"])[1]
+    base = _dark_base()
+    night = night_palette(base, CANONICAL_PARAMS, _guardrails())
+    assert night["bg"] == base["bg"]
+    assert _hsl(night["surface1"])[2] < _hsl(base["surface1"])[2]
+    assert _hsl(night["accent"])[2] < _hsl(base["accent"])[2]
+    assert _hsl(night["accent"])[1] < _hsl(base["accent"])[1]
 
 
 def test_night_is_byte_identical_across_runs():
@@ -176,11 +179,25 @@ def test_night_is_byte_identical_across_runs():
     assert first == second
 
 
-def test_night_never_produces_pure_black_or_white():
-    night = night_palette(_dark_base(), CANONICAL_PARAMS, _guardrails())
-    hex_tokens = {v for v in night.values() if v.startswith("#")}
-    assert "#000000" not in hex_tokens
+def test_night_only_preserves_pure_black_for_explicit_oled_roles():
+    base = _dark_base()
+    night = night_palette(base, CANONICAL_PARAMS, _guardrails())
+    pure_black_keys = {key for key, value in night.items() if value == base["bg"]}
+    hex_tokens = {value for value in night.values() if value.startswith("#")}
+
+    assert pure_black_keys == {"bg", "prompt_bg", "on_accent", "on_error", "on_focus"}
     assert "#ffffff" not in hex_tokens
+
+
+def test_night_preserves_explicit_oled_black_roles():
+    base = _dark_base()
+    for key in ("bg", "prompt_bg", "on_accent", "on_error", "on_focus"):
+        base[key] = "#000000"
+
+    night = night_palette(base, CANONICAL_PARAMS, _guardrails())
+
+    for key in ("bg", "prompt_bg", "on_accent", "on_error", "on_focus"):
+        assert night[key] == "#000000"
 
 
 @pytest.mark.parametrize("token", ["#000000"])
@@ -317,5 +334,5 @@ def test_night_derivation_differs_from_standard_dark():
     """The Night palette must not silently substitute standard dark bytes."""
     base = _dark_base()
     night = night_palette(base, CANONICAL_PARAMS, _guardrails())
-    assert night["bg"] != base["bg"]
+    assert night["surface1"] != base["surface1"]
     assert night["text"] != base["text"]

@@ -1,91 +1,91 @@
 /* ========================================================
-   Dreamcoder Anthracite Steel — Obsidian CSS snippet
+   Dreamcoder Dark Black OLED — Obsidian CSS snippet
    ========================================================
    Place in your vault's .obsidian/snippets/ folder.
    Enable in Settings → Appearance → CSS snippets. */
 
 .theme-dark {
   /* Base — raw palette colors for backgrounds and surfaces */
-  --background-primary: #070A13;
-  --background-primary-alt: #0D121A;
-  --background-secondary: #0D121A;
-  --background-secondary-alt: #151C25;
-  --background-modifier-border: #17202B;
-  --background-modifier-border-hover: #6A8497;
-  --background-modifier-form-field: #0D121A;
-  --background-modifier-success: #1a382e;
-  --background-modifier-error: #3e2a30;
-  --background-modifier-message: #151C25;
+  --background-primary: #000000;
+  --background-primary-alt: #060608;
+  --background-secondary: #060608;
+  --background-secondary-alt: #0D0D11;
+  --background-modifier-border: #68788F;
+  --background-modifier-border-hover: #68788F;
+  --background-modifier-form-field: #060608;
+  --background-modifier-success: #0d3526;
+  --background-modifier-error: #3f2121;
+  --background-modifier-message: #0D0D11;
 
   /* Text — guarded against background for accessibility */
-  --text-normal: #E6EDF3;
-  --text-muted: #A8B5C2;
-  --text-faint: #8795a2;
-  --text-accent: #A5C7E8;
-  --text-accent-hover: #8FAFCB;
-  --text-error: #E38989;
-  --text-warning: #E1C16D;
-  --text-success: #76C7A1;
-  --text-selection: #202A35;
-  --text-on-accent: #070A13;
+  --text-normal: #E2E8F0;
+  --text-muted: #94A3B8;
+  --text-faint: #8795AA;
+  --text-accent: #A5B4FC;
+  --text-accent-hover: #C4B5FD;
+  --text-error: #FB8585;
+  --text-warning: #FBBF24;
+  --text-success: #34D399;
+  --text-selection: #16161D;
+  --text-on-accent: #000000;
 
   /* Interactive */
-  --interactive-normal: #151C25;
-  --interactive-hover: #151C25;
-  --interactive-accent: #A5C7E8;
-  --interactive-accent-hover: #8FAFCB;
-  --interactive-success: #76C7A1;
+  --interactive-normal: #0D0D11;
+  --interactive-hover: #22222D;
+  --interactive-accent: #A5B4FC;
+  --interactive-accent-hover: #C4B5FD;
+  --interactive-success: #34D399;
 
   /* Scrollbar */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: #17202B;
-  --scrollbar-active-thumb-bg: #6A8497;
+  --scrollbar-thumb-bg: #68788F;
+  --scrollbar-active-thumb-bg: #68788F;
 
   /* Code — syntax highlighting colors */
-  --code-normal: #E6EDF3;
-  --code-comment: #aab7c4;
-  --code-punctuation: #A8B5C2;
-  --code-keyword: #A5C7E8;
-  --code-operator: #8FAFCB;
-  --code-function: #8FAFCB;
-  --code-string: #55C080;
-  --code-number: #B48EAD;
-  --code-tag: #A5C7E8;
-  --code-important: #E38989;
-  --code-background: #0D121A;
+  --code-normal: #E2E8F0;
+  --code-comment: #C0B5C0;
+  --code-punctuation: #94A3B8;
+  --code-keyword: #A5B4FC;
+  --code-operator: #C4B5FD;
+  --code-function: #C4B5FD;
+  --code-string: #34D399;
+  --code-number: #D8B4FE;
+  --code-tag: #A5B4FC;
+  --code-important: #FB8585;
+  --code-background: #060608;
 
   /* Heading */
   --h1-color: #F1F5F9;
   --h2-color: #F1F5F9;
-  --h3-color: #8FAFCB;
-  --h4-color: #4DAED6;
-  --h5-color: #A8B5C2;
-  --h6-color: #8795a2;
+  --h3-color: #C4B5FD;
+  --h4-color: #7DD3FC;
+  --h5-color: #94A3B8;
+  --h6-color: #8795AA;
 
   /* Link */
-  --link-color: #A5C7E8;
-  --link-color-hover: #8FAFCB;
-  --link-external-color: #7CB0E6;
-  --link-external-color-hover: #8FAFCB;
+  --link-color: #A5B4FC;
+  --link-color-hover: #C4B5FD;
+  --link-external-color: #7DD3FC;
+  --link-external-color-hover: #C4B5FD;
 
   /* Checkbox */
-  --checkbox-color: #A5C7E8;
-  --checkbox-color-hover: #8FAFCB;
-  --checkbox-border-color: #17202B;
-  --checkbox-mark-color: #070A13;
+  --checkbox-color: #A5B4FC;
+  --checkbox-color-hover: #C4B5FD;
+  --checkbox-border-color: #68788F;
+  --checkbox-mark-color: #000000;
 
   /* Table */
-  --table-header-background: #151C25;
-  --table-header-background-hover: #202A35;
-  --table-row-background-hover: #0D121A;
-  --table-border-color: #17202B;
+  --table-header-background: #0D0D11;
+  --table-header-background-hover: #16161D;
+  --table-row-background-hover: #060608;
+  --table-border-color: #68788F;
 
   /* Graph */
-  --graph-line: #17202B;
-  --graph-node: #A8B5C2;
-  --graph-node-focused: #A5C7E8;
-  --graph-node-tag: #4DAED6;
-  --graph-node-attachment: #55C080;
+  --graph-line: #68788F;
+  --graph-node: #94A3B8;
+  --graph-node-focused: #A5B4FC;
+  --graph-node-tag: #7DD3FC;
+  --graph-node-attachment: #34D399;
 }
 
 /* Headings */
@@ -98,46 +98,46 @@
 
 /* Tags */
 .tag {
-  background-color: #1f2633;
-  color: #A5C7E8;
+  background-color: #191b26;
+  color: #A5B4FC;
   border-radius: 4px;
   padding: 0 6px;
 }
 
 /* Blockquotes */
 blockquote {
-  border-color: #A5C7E8 !important;
+  border-color: #A5B4FC !important;
 }
 
 /* Search highlights */
 .search-result-file-matched-text,
 .is-selected .search-result-file-matched-text,
 mark {
-  background-color: #27303e !important;
-  color: #E6EDF3 !important;
+  background-color: #212432 !important;
+  color: #E2E8F0 !important;
 }
 
 /* Active line in edit mode */
 .cm-active {
-  background-color: #0D121A !important;
+  background-color: #060608 !important;
 }
 
 /* Selection */
 ::selection {
-  background-color: #0f141d !important;
+  background-color: #070709 !important;
 }
 
 /* Tooltip */
 .tooltip {
-  background-color: #151C25 !important;
-  color: #E6EDF3 !important;
+  background-color: #0D0D11 !important;
+  color: #E2E8F0 !important;
 }
 
 /* Menu */
 .menu {
-  background-color: #0D121A !important;
+  background-color: #060608 !important;
 }
 
 .menu-item:hover {
-  background-color: #151C25 !important;
+  background-color: #0D0D11 !important;
 }

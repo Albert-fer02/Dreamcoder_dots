@@ -1,27 +1,27 @@
 /* ========================================================
-   Dreamcoder Anthracite Steel — Firefox userChrome.css
+   Dreamcoder Dark Black OLED — Firefox userChrome.css
    ========================================================
    Place in ~/.mozilla/firefox/*.default-release/chrome/userChrome.css
    Requires toolkit.legacyUserProfileCustomizations.stylesheets = true
    in about:config. */
 
 :root {
-  --dreamcoder-bg: #070A13;
-  --dreamcoder-surface: #0D121A;
-  --dreamcoder-surface-1: #151C25;
-  --dreamcoder-text: #E6EDF3;
-  --dreamcoder-text-dim: #A8B5C2;
-  --dreamcoder-accent: #A5C7E8;
-  --dreamcoder-accent-2: #8FAFCB;
-  --dreamcoder-border: #17202B;
-  --dreamcoder-border-ui: #6A8497;
-  --dreamcoder-error: #E38989;
-  --dreamcoder-warning: #E1C16D;
-  --dreamcoder-sage: #55C080;
-  --dreamcoder-input-bg: #0D121A;
-  --dreamcoder-toolbar-bg: #0D121A;
-  --dreamcoder-hover: #1f2633;
-  --dreamcoder-active: #2e3948;
+  --dreamcoder-bg: #000000;
+  --dreamcoder-surface: #060608;
+  --dreamcoder-surface-1: #0D0D11;
+  --dreamcoder-text: #E2E8F0;
+  --dreamcoder-text-dim: #94A3B8;
+  --dreamcoder-accent: #A5B4FC;
+  --dreamcoder-accent-2: #C4B5FD;
+  --dreamcoder-border: #68788F;
+  --dreamcoder-border-ui: #68788F;
+  --dreamcoder-error: #FB8585;
+  --dreamcoder-warning: #FBBF24;
+  --dreamcoder-sage: #34D399;
+  --dreamcoder-input-bg: #060608;
+  --dreamcoder-toolbar-bg: #060608;
+  --dreamcoder-hover: #191b26;
+  --dreamcoder-active: #292d3f;
 }
 
 /* Main window */

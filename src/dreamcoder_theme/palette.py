@@ -696,8 +696,9 @@ def night_palette(
     name while ``details`` stays ``darker``, reduce HSL lightness/saturation
     with deterministic integer-rounded RGB (lowercase hex), preserve ``rgba()``
     alpha exactly, re-establish input aliases, apply the bounded corrective
-    pass to declared foreground tokens, and reject pure black/white when
-    ``avoid_pure_black_white`` is set.
+    pass to declared foreground tokens, and reject newly introduced pure
+    black/white when ``avoid_pure_black_white`` is set. Canonical OLED roles
+    explicitly authored as black remain black.
 
     Parameters and guardrails are canonical (``load_render_profile`` /
     ``load_guardrails``); invalid values fail closed with ``ValueError`` and
@@ -708,7 +709,7 @@ def night_palette(
     groups = _alias_groups(base)
 
     out = dict(base)
-    out["name"] = "Dreamcoder Anthracite Steel Night"
+    out["name"] = f"{base.get('name', 'Dreamcoder Dark')} Night"
     # details intentionally untouched: the transform keeps dark semantics.
 
     for key, value in base.items():
@@ -730,7 +731,10 @@ def night_palette(
 
     if guardrails.get("avoid_pure_black_white"):
         for key, value in out.items():
-            if _HEX_RE.match(value) and value.lower() in ("#000000", "#ffffff"):
+            is_pure = _HEX_RE.match(value) and value.lower() in ("#000000", "#ffffff")
+            oled_black_roles = {"bg", "prompt_bg", "on_accent", "on_error", "on_focus"}
+            preserves_authored_extreme = key in oled_black_roles and base.get(key) == value
+            if is_pure and not preserves_authored_extreme:
                 raise ValueError(
                     f"night transform produced pure {value} for {key} with "
                     "avoid_pure_black_white enabled"

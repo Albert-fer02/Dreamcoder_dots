@@ -47,11 +47,12 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
 
     # Mode-aware surface formulas
     if mode_name == "dark":
+        panel_bg = c["surface1"]
         element_bg = c["surface1"]
         hover_bg = c["hover"]
         # Use a canonical surface tier that clears the distinct-surface guardrail.
         line_bg = c["surface1"]
-        code_bg = mix(c["surface0"], c["surface1"], 0.20)
+        code_bg = c["surface1"]
         assistant_bg = mix(c["bg"], c["diagnostic"], 0.12)
         user_bg = mix(c["bg"], c["accent"], 0.12)
         tool_bg = mix(c["bg"], c["lavender"], 0.12)
@@ -59,6 +60,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
         inline_code_bg = mix(c["sage"], c["border_ui"], 0.45)
         mix_base = c["border_ui"]
     else:
+        panel_bg = c["surface0"]
         element_bg = mix(c["bg_soft"], c["surface1"], 0.4)
         hover_bg = c["hover"]
         line_bg = c["bg_soft"]
@@ -101,7 +103,7 @@ def opencode_content(c: dict[str, str], transparent_background: bool = False) ->
   }},
   "theme": {{
     "background": "{background}",
-    "backgroundPanel": "{c["surface0"]}",
+    "backgroundPanel": "{panel_bg}",
     "backgroundElement": "{element_bg}",
     "backgroundHover": "{hover_bg}",
     "backgroundSelected": "{t["selection"]}",

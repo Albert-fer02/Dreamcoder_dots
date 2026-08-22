@@ -19,8 +19,11 @@ tokens.json → generate-palette-tokens.py → palette_tokens.py
 
 Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../DreamcoderThemes/dreamcoder/tokens.json)
 
-Dark (**Anthracite Steel OLED**), light (**Cocoa/Lúcuma**), and the derived night
-variant share the same semantic key set:
+Dark (**Dark Black OLED**), light (**Cocoa/Lúcuma**), and the derived night
+variant share the same semantic key set. Dark uses pure black only for the root
+canvas; scrollable workspaces and editors use `surface0` (`#060608`) to reduce
+OLED smear, panels use `surface1`, cards use `surface2`, and modals use
+`surface3`.
 
 | Layer       | Examples                                                       |
 | ----------- | -------------------------------------------------------------- |
@@ -37,9 +40,17 @@ variant share the same semantic key set:
 After editing `tokens.json`:
 
 ```bash
-./scripts/generate-palette-tokens.py   # sync palette_tokens.py + derived tokens
-./scripts/dreamcoder sync              # propagate to all targets
-./scripts/verify-theme-health.py       # WCAG + APCA gates (light and dark)
+./scripts/generate-palette-tokens.py       # sync palette_tokens.py + derived tokens
+python scripts/generate-dark-oled-css.py   # sync dark-black-oled.css variables
+./scripts/dreamcoder sync                  # propagate to all targets
+./scripts/verify-theme-health.py           # WCAG + APCA gates (light and dark)
+```
+
+CI or local drift checks can use:
+
+```bash
+python scripts/generate-palette-tokens.py --check
+python scripts/generate-dark-oled-css.py --check
 ```
 
 ## Quality gates
@@ -50,8 +61,10 @@ After editing `tokens.json`:
 
 ## Design decisions
 
-- **accent** = lúcuma `#A5C7E8` (identity, tabs, CTAs) — Anthracite Steel dark palette
-- **focus** = accent (lúcuma) — same token by design; no separate focus hue in the current palette
+- **brand alias** = indigo `#6366F1`; the runtime `accent` is a lighter accessible role where filled controls must pass the existing WCAG/APCA gates
+- **focus** = blue `#3B82F6`, kept distinct from brand and diagnostic colors
+- **border aliases** = `#12121A` (subtle) and `#1F1F2B` (medium); significant runtime borders remain brighter because the non-text contrast gate is not weakened
+- **generated CSS** = [`dark-black-oled.css`](../../DreamcoderThemes/dreamcoder/dark-black-oled.css), sourced only from `tokens.json`
 - **adaptive/matugen** may tint surfaces but identity tokens win per `CLAUDE.md`
 
 ## Adding new targets

@@ -7,29 +7,36 @@ TOKENS = ROOT / "DreamcoderThemes" / "dreamcoder" / "tokens.json"
 
 
 class DreamcoderDarkIdentityTest(unittest.TestCase):
-    """Verify Anthracite Steel dark theme identity and key token values."""
+    """Verify Dark Black OLED identity and canonical runtime roles."""
 
     def setUp(self):
-        self.dark = json.loads(TOKENS.read_text())["modes"]["dark"]
+        tokens = json.loads(TOKENS.read_text())
+        self.dark = tokens["modes"]["dark"]
+        self.oled = tokens["dark_oled"]
 
-    def test_dark_mode_uses_anthracite_steel_identity(self):
-        self.assertEqual(self.dark["name"], "Dreamcoder Anthracite Steel")
-        self.assertEqual(self.dark["bg"], "#070A13")
-        self.assertEqual(self.dark["surface0"], "#0D121A")
-        self.assertEqual(self.dark["surface1"], "#151C25")
-        self.assertEqual(self.dark["surface2"], "#202A35")
+    def test_dark_mode_uses_black_oled_surface_ladder(self):
+        self.assertEqual(self.dark["name"], "Dreamcoder Dark Black OLED")
+        self.assertEqual(self.dark["bg"], "#000000")
+        self.assertEqual(
+            [self.dark[f"surface{index}"] for index in range(4)],
+            ["#060608", "#0D0D11", "#16161D", "#1E1E24"],
+        )
+        self.assertEqual(self.dark["hover"], "#22222D")
 
-    def test_dark_mode_has_cool_steel_blue_signature(self):
-        self.assertEqual(self.dark["accent"], "#A5C7E8")
-        self.assertEqual(self.dark["accent_2"], "#8FAFCB")
-        self.assertEqual(self.dark["error"], "#E38989")
-        self.assertEqual(self.dark["warning"], "#E1C16D")
+    def test_dark_mode_has_accessible_runtime_semantics(self):
+        self.assertEqual(self.dark["accent"], "#A5B4FC")
+        self.assertEqual(self.dark["focus"], "#3B82F6")
+        self.assertEqual(self.dark["error"], "#FB8585")
+        self.assertEqual(self.dark["warning"], "#FBBF24")
+        self.assertEqual(self.dark["success"], "#34D399")
 
-    def test_dark_mode_keeps_cool_text_and_steel_focus(self):
-        self.assertEqual(self.dark["text"], "#E6EDF3")
-        self.assertEqual(self.dark["muted"], "#A8B5C2")
-        self.assertEqual(self.dark["focus"], "#A5C7E8")
-        self.assertEqual(self.dark["diagnostic"], "#4DAED6")
+    def test_dark_mode_keeps_requested_oled_aliases(self):
+        aliases = self.oled["aliases"]
+        self.assertEqual(aliases["brand"], "#6366F1")
+        self.assertEqual(aliases["text_muted"], "#64748B")
+        self.assertEqual(aliases["border_subtle"], "#12121A")
+        self.assertEqual(aliases["border_medium"], "#1F1F2B")
+        self.assertEqual(aliases["error_requested"], "#F87171")
 
 
 if __name__ == "__main__":

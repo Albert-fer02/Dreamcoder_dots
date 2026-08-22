@@ -80,6 +80,7 @@ def run_sync(tmp: Path, mode: str = "dark") -> subprocess.CompletedProcess[str]:
             "KITTY_DREAMCODER_UI": str(tmp / "kitty" / "dreamcoder-ui.conf"),
             "GHOSTTY_THEME": str(tmp / "ghostty" / "themes" / "dreamcoder"),
             "STARSHIP_CONFIG": str(tmp / "starship.toml"),
+            "DREAMCODER_LAZYGIT_THEME": str(tmp / "lazygit" / "config.yml"),
             "WARP_THEME": str(tmp / "warp" / "Dreamcoder.yaml"),
             "OPENCODE_THEME": str(tmp / "opencode" / "themes" / "dreamcoder.json"),
             "OPENCODE_TUI": str(tmp / "opencode" / "tui.json"),
@@ -129,7 +130,7 @@ class PiThemeGenerationTest(unittest.TestCase):
             self.assertEqual(theme["name"], "dreamcoder")
             self.assertEqual(set(theme["colors"].keys()), REQUIRED_PI_TOKENS)
             self.assertEqual(theme["colors"]["accent"], "lucuma")
-            self.assertEqual(theme["vars"]["lucuma"], "#A5C7E8")
+            self.assertEqual(theme["vars"]["lucuma"], "#A5B4FC")
 
     def test_opencode_preserves_terminal_transparent_background(self):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -141,9 +142,9 @@ class PiThemeGenerationTest(unittest.TestCase):
             theme = json.loads(theme_path.read_text())["theme"]
 
             self.assertEqual(theme["background"], "none")
-            self.assertEqual(theme["backgroundPanel"], "#0D121A")
-            self.assertEqual(theme["primary"], "#A5C7E8")
-            self.assertEqual(theme["secondary"], "#8FAFCB")
+            self.assertEqual(theme["backgroundPanel"], "#0D0D11")
+            self.assertEqual(theme["primary"], "#A5B4FC")
+            self.assertEqual(theme["secondary"], "#C4B5FD")
 
     def test_selects_dreamcoder_theme_without_overwriting_existing_pi_settings(self):
         with tempfile.TemporaryDirectory() as tmpdir:

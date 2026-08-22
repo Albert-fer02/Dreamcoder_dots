@@ -125,4 +125,4 @@ def test_night_transform_uses_loaded_profile_parameters(tmp_path):
     base = dict(tokens["modes"]["dark"])
     night_0_86 = night_palette(base, load_render_profile(THEME_ROOT / "tokens.json"), g)
     night_0_90 = night_palette(base, params, g)
-    assert night_0_90["bg"] != night_0_86["bg"]
+    assert night_0_90["surface1"] != night_0_86["surface1"]

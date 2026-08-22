@@ -6,51 +6,51 @@ Generated from `DreamcoderThemes/dreamcoder/tokens.json`.
 
 Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.
 
-Dreamcoder dark uses an **Anthracite Steel** identity: near-black base (#070A13), cool steel-blue accents (#A5C7E8), icy diagnostics (#4DAED6), and muted sage strings (#55C080). Surfaces ladder from deep slate to lighter steel. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the steel glass color.
+Dreamcoder dark uses a **Dark Black OLED** identity: a pure-black canvas, scroll-safe near-black surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the OLED canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.
 
 Semantic tokens are intentionally distinct:
 
-- `comment` is softer and lower-chroma than `subtle` (syntax vs UI chrome).
-- Dark `accent` (cool steel-blue), `accent_2` (muted slate-blue), `error` (soft rose), and `warning` (pale gold) form the cool steel signature.
-- `accent` carries brand CTAs and active chrome; `focus` is teal for keyboard/input affordance (WCAG ring).
+- `comment` is a desaturated pastel syntax color, while `subtle` remains reserved for low-emphasis UI chrome.
+- Dark `accent` (pastel indigo), `accent_2` (soft violet), `error` (soft rose), and `warning` (pale gold) form the OLED signature.
+- `accent` carries runtime CTAs and active chrome; the explicit `brand` alias preserves the requested indigo identity while `focus` remains a blue keyboard/input affordance.
 - `on_accent`, `on_error`, and `selection_bg`/`selection_fg` are explicit pairs validated in CI.
 ## Palette
 
-### Dreamcoder Anthracite Steel
+### Dreamcoder Dark Black OLED
 
 | Role | Color |
 | --- | --- |
-| `bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#070A13'></span> `#070A13` |
-| `bg_soft` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#0D121A'></span> `#0D121A` |
-| `surface0` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#0D121A'></span> `#0D121A` |
-| `surface1` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#151C25'></span> `#151C25` |
-| `surface2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#202A35'></span> `#202A35` |
-| `surface3` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#2B3846'></span> `#2B3846` |
-| `text` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E6EDF3'></span> `#E6EDF3` |
+| `bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#000000'></span> `#000000` |
+| `bg_soft` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#060608'></span> `#060608` |
+| `surface0` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#060608'></span> `#060608` |
+| `surface1` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#0D0D11'></span> `#0D0D11` |
+| `surface2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#16161D'></span> `#16161D` |
+| `surface3` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#1E1E24'></span> `#1E1E24` |
+| `text` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E2E8F0'></span> `#E2E8F0` |
 | `text_heading` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#F1F5F9'></span> `#F1F5F9` |
-| `muted` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A8B5C2'></span> `#A8B5C2` |
-| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8795a2'></span> `#8795a2` |
-| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#aab7c4'></span> `#aab7c4` |
-| `accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5C7E8'></span> `#A5C7E8` |
-| `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8FAFCB'></span> `#8FAFCB` |
-| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#4DAED6'></span> `#4DAED6` |
-| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#55C080'></span> `#55C080` |
-| `success` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#76C7A1'></span> `#76C7A1` |
-| `info` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#7CB0E6'></span> `#7CB0E6` |
-| `lavender` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#B6C5D4'></span> `#B6C5D4` |
-| `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#B48EAD'></span> `#B48EAD` |
-| `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E38989'></span> `#E38989` |
-| `warning` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E1C16D'></span> `#E1C16D` |
-| `on_accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#070A13'></span> `#070A13` |
-| `on_error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#070A13'></span> `#070A13` |
-| `link` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5C7E8'></span> `#A5C7E8` |
-| `link_hover` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8FAFCB'></span> `#8FAFCB` |
-| `selection_bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#202A35'></span> `#202A35` |
-| `selection_fg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E6EDF3'></span> `#E6EDF3` |
-| `border` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#17202B'></span> `#17202B` |
-| `border_ui` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#6A8497'></span> `#6A8497` |
-| `border_hi` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#758A9C'></span> `#758A9C` |
-| `focus` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5C7E8'></span> `#A5C7E8` |
+| `muted` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#94A3B8'></span> `#94A3B8` |
+| `subtle` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#8795AA'></span> `#8795AA` |
+| `comment` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#C0B5C0'></span> `#C0B5C0` |
+| `accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5B4FC'></span> `#A5B4FC` |
+| `accent_2` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#C4B5FD'></span> `#C4B5FD` |
+| `diagnostic` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#7DD3FC'></span> `#7DD3FC` |
+| `sage` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#34D399'></span> `#34D399` |
+| `success` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#34D399'></span> `#34D399` |
+| `info` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#7DD3FC'></span> `#7DD3FC` |
+| `lavender` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#C4B5FD'></span> `#C4B5FD` |
+| `mauve` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#D8B4FE'></span> `#D8B4FE` |
+| `error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#FB8585'></span> `#FB8585` |
+| `warning` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#FBBF24'></span> `#FBBF24` |
+| `on_accent` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#000000'></span> `#000000` |
+| `on_error` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#000000'></span> `#000000` |
+| `link` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#A5B4FC'></span> `#A5B4FC` |
+| `link_hover` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#C4B5FD'></span> `#C4B5FD` |
+| `selection_bg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#16161D'></span> `#16161D` |
+| `selection_fg` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#E2E8F0'></span> `#E2E8F0` |
+| `border` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#68788F'></span> `#68788F` |
+| `border_ui` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#68788F'></span> `#68788F` |
+| `border_hi` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#94A3B8'></span> `#94A3B8` |
+| `focus` | <span style='display:inline-block;width:0.9em;height:0.9em;border:1px solid #888;background:#3B82F6'></span> `#3B82F6` |
 
 ### Dreamcoder Light
 
@@ -126,43 +126,43 @@ Semantic tokens are intentionally distinct:
 
 ## Contrast audit
 
-### Dreamcoder Anthracite Steel contrast (WCAG 2)
+### Dreamcoder Dark Black OLED contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `text` | 16.74:1 | AAA |
-| `muted` | 9.47:1 | AA |
-| `comment` | 9.68:1 | AA |
-| `accent` | 11.24:1 | AA |
-| `accent_2` | 8.63:1 | AA |
-| `diagnostic` | 7.86:1 | AA |
-| `sage` | 8.70:1 | AA |
-| `error` | 7.73:1 | AA |
-| `warning` | 11.35:1 | AA |
+| `text` | 17.03:1 | AAA |
+| `muted` | 8.19:1 | AA |
+| `comment` | 10.61:1 | AA |
+| `accent` | 10.53:1 | AA |
+| `accent_2` | 11.38:1 | AA |
+| `diagnostic` | 12.60:1 | AA |
+| `sage` | 10.92:1 | AA |
+| `error` | 8.80:1 | AA |
+| `warning` | 12.58:1 | AA |
 
-### Dreamcoder Anthracite Steel APCA
+### Dreamcoder Dark Black OLED APCA
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 95.3 | ≥75 (body) |
-| `muted` | 61.2 | ≥75 (FAIL) |
-| `comment` | 62.4 | ≥75 (FAIL) |
-| `accent` | 70.3 | ≥75 (FAIL) |
-| `accent_2` | 56.8 | ≥75 (FAIL) |
-| `diagnostic` | 52.7 | ≥75 (FAIL) |
-| `sage` | 57.4 | ≥75 (FAIL) |
-| `error` | 51.9 | ≥75 (FAIL) |
-| `warning` | 70.9 | ≥75 (FAIL) |
-| `border_ui` | 34.9 | ≥60 (FAIL) |
-| `focus` | 70.3 | ≥60 (UI) |
+| `text` | 92.5 | ≥75 (body) |
+| `muted` | 51.7 | ≥75 (FAIL) |
+| `comment` | 64.2 | ≥75 (FAIL) |
+| `accent` | 63.8 | ≥75 (FAIL) |
+| `accent_2` | 67.9 | ≥75 (FAIL) |
+| `diagnostic` | 73.7 | ≥75 (FAIL) |
+| `sage` | 66.2 | ≥75 (FAIL) |
+| `error` | 55.4 | ≥75 (FAIL) |
+| `warning` | 73.7 | ≥75 (FAIL) |
+| `border_ui` | 30.5 | ≥60 (FAIL) |
+| `focus` | 37.8 | ≥60 (FAIL) |
 
-### Dreamcoder Anthracite Steel UI affordance contrast
+### Dreamcoder Dark Black OLED UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `border_ui` | 5.05:1 | PASS |
-| `border_hi` | 5.53:1 | PASS |
-| `focus` | 11.24:1 | PASS |
+| `border_ui` | 4.67:1 | PASS |
+| `border_hi` | 8.19:1 | PASS |
+| `focus` | 5.71:1 | PASS |
 
 ### Dreamcoder Light contrast (WCAG 2)
 
@@ -240,43 +240,43 @@ Semantic tokens are intentionally distinct:
 | `border_hi` | 8.10:1 | PASS |
 | `focus` | 4.92:1 | PASS |
 
-### Night (derived from Anthracite Steel) contrast (WCAG 2)
+### Night (derived from Dark Black OLED) contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `text` | 12.15:1 | AAA |
-| `muted` | 7.10:1 | AA |
-| `comment` | 7.21:1 | AA |
-| `accent` | 9.33:1 | AA |
-| `accent_2` | 6.52:1 | AA |
-| `diagnostic` | 7.71:1 | AA |
-| `sage` | 6.12:1 | AA |
-| `error` | 7.58:1 | AA |
-| `warning` | 8.56:1 | AA |
+| `text` | 12.27:1 | AAA |
+| `muted` | 7.00:1 | AA |
+| `comment` | 7.86:1 | AA |
+| `accent` | 9.95:1 | AA |
+| `accent_2` | 7.40:1 | AA |
+| `diagnostic` | 9.56:1 | AA |
+| `sage` | 8.14:1 | AA |
+| `error` | 8.06:1 | AA |
+| `warning` | 8.84:1 | AA |
 
-### Night (derived from Anthracite Steel) APCA
+### Night (derived from Dark Black OLED) APCA
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
-| `text` | 74.4 | ≥75 (FAIL) |
-| `muted` | 47.7 | ≥75 (FAIL) |
-| `comment` | 48.4 | ≥75 (FAIL) |
-| `accent` | 60.3 | ≥75 (FAIL) |
-| `accent_2` | 44.3 | ≥75 (FAIL) |
-| `diagnostic` | 51.4 | ≥75 (FAIL) |
-| `sage` | 42.0 | ≥75 (FAIL) |
-| `error` | 50.7 | ≥75 (FAIL) |
-| `warning` | 56.1 | ≥75 (FAIL) |
-| `border_ui` | 31.1 | ≥60 (FAIL) |
-| `focus` | 60.3 | ≥60 (UI) |
+| `text` | 72.0 | ≥75 (FAIL) |
+| `muted` | 45.1 | ≥75 (FAIL) |
+| `comment` | 49.9 | ≥75 (FAIL) |
+| `accent` | 60.9 | ≥75 (FAIL) |
+| `accent_2` | 47.5 | ≥75 (FAIL) |
+| `diagnostic` | 59.1 | ≥75 (FAIL) |
+| `sage` | 51.8 | ≥75 (FAIL) |
+| `error` | 51.4 | ≥75 (FAIL) |
+| `warning` | 55.4 | ≥75 (FAIL) |
+| `border_ui` | 30.3 | ≥60 (FAIL) |
+| `focus` | 31.3 | ≥60 (FAIL) |
 
-### Night (derived from Anthracite Steel) UI affordance contrast
+### Night (derived from Dark Black OLED) UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
-| `border_ui` | 4.53:1 | PASS |
-| `border_hi` | 4.57:1 | PASS |
-| `focus` | 9.33:1 | PASS |
+| `border_ui` | 4.64:1 | PASS |
+| `border_hi` | 7.00:1 | PASS |
+| `focus` | 4.74:1 | PASS |
 
 ## Usage
 
@@ -290,8 +290,8 @@ Semantic tokens are intentionally distinct:
 
 ## Design notes
 
-- Main backgrounds avoid pure black and pure white.
+- Dark mode uses a pure-black OLED canvas; light and dusk modes avoid pure black and pure white.
 - Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.
-- Cocoa/Lúcuma accents are identity colors in light; Anthracite Steel uses cool steel-blue, muted slate, soft rose, and pale gold for dark-mode personality.
+- Cocoa/Lúcuma accents are identity colors in light; Dark Black OLED uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.
 - UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.
 - opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.

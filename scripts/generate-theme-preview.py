@@ -132,7 +132,11 @@ def ui_contrast_table(name, palette):
 
 
 def main():
-    tokens = json.loads(TOKENS.read_text())
+    try:
+        tokens = json.loads(TOKENS.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise SystemExit(f"unable to load theme tokens from {TOKENS}: {error}") from error
+
     guardrails = tokens["guardrails"]
     body_min = guardrails.get("minimum_apca_body", 75)
     ui_min = guardrails.get("minimum_apca_ui", 60)
@@ -147,13 +151,13 @@ def main():
         "",
         "Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.",
         "",
-        "Dreamcoder dark uses an **Anthracite Steel** identity: near-black base (#070A13), cool steel-blue accents (#A5C7E8), icy diagnostics (#4DAED6), and muted sage strings (#55C080). Surfaces ladder from deep slate to lighter steel. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the steel glass color.",
+        "Dreamcoder dark uses a **Dark Black OLED** identity: a pure-black canvas, scroll-safe near-black surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the OLED canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.",
         "",
         "Semantic tokens are intentionally distinct:",
         "",
-        "- `comment` is softer and lower-chroma than `subtle` (syntax vs UI chrome).",
-        "- Dark `accent` (cool steel-blue), `accent_2` (muted slate-blue), `error` (soft rose), and `warning` (pale gold) form the cool steel signature.",
-        "- `accent` carries brand CTAs and active chrome; `focus` is teal for keyboard/input affordance (WCAG ring).",
+        "- `comment` is a desaturated pastel syntax color, while `subtle` remains reserved for low-emphasis UI chrome.",
+        "- Dark `accent` (pastel indigo), `accent_2` (soft violet), `error` (soft rose), and `warning` (pale gold) form the OLED signature.",
+        "- `accent` carries runtime CTAs and active chrome; the explicit `brand` alias preserves the requested indigo identity while `focus` remains a blue keyboard/input affordance.",
         "- `on_accent`, `on_error`, and `selection_bg`/`selection_fg` are explicit pairs validated in CI.",
     ]
     parts += ["## Palette", ""]
@@ -170,9 +174,11 @@ def main():
         parts.append(ui_contrast_table(label, palette))
         parts.append("")
     night_params = tokens.get("render_profiles", {}).get("night", {})
-    guardrail_numbers = {k: v for k, v in guardrails.items() if isinstance(v, (int, float))}
+    guardrail_numbers: dict[str, float] = {
+        k: float(v) for k, v in guardrails.items() if isinstance(v, (int, float))
+    }
     night = night_palette(tokens["modes"]["dark"], night_params, guardrail_numbers)
-    night_label = "Night (derived from Anthracite Steel)"
+    night_label = "Night (derived from Dark Black OLED)"
     parts.append(contrast_table(night_label, night))
     parts.append("")
     parts.append(apca_table(night_label, night, body_min, ui_min))
@@ -194,9 +200,9 @@ def main():
     parts += [
         "## Design notes",
         "",
-        "- Main backgrounds avoid pure black and pure white.",
+        "- Dark mode uses a pure-black OLED canvas; light and dusk modes avoid pure black and pure white.",
         "- Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.",
-        "- Cocoa/Lúcuma accents are identity colors in light; Anthracite Steel uses cool steel-blue, muted slate, soft rose, and pale gold for dark-mode personality.",
+        "- Cocoa/Lúcuma accents are identity colors in light; Dark Black OLED uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.",
         "- UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.",
         "- opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.",
         "",
