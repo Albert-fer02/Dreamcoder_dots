@@ -98,3 +98,34 @@ switcher operates on live user configuration by design and is not part of the
 repository-owned sync surface; operators can alternatively point
 `HERDR_CONFIG_PATH` at any checked-in versioned variant for validation or
 temporary use.
+
+## Development workflow scripts
+
+Repository-owned helpers for a Herdr-based engineering flow. They operate on a
+running Herdr server (start one with `herdr`); they never touch live
+configuration.
+
+- `scripts/herdr-workspace-dev.sh [PROJECT_DIR] [LABEL]` — creates a workspace
+  for a project with three full-screen tabs: `pi` hosting the main agent, `git`
+  running `lazygit`, and a plain `shell`. Defaults to the current directory and
+  its basename. The root tab is renamed to `pi`, its shell is awaited before the
+  agent starts, then the `git` and `shell` tabs are created with
+  `herdr tab create` and awaited; `lazygit` runs only after the `git` tab's
+  shell is ready. No panes are split.
+- `scripts/herdr-review.sh [KIND] [TARGET] [PROJECT_DIR]` — splits the focused
+  pane, starts a `reviewer` agent of `KIND` (`pi` by default; any kind Herdr
+  supports, e.g. `codex`, `opencode`), prompts it to review the `TARGET` diff
+  (`HEAD` by default), waits for it to settle, and prints the review.
+
+Both scripts fail fast with a clear message when `herdr` or `jq` is missing or
+when the project directory does not exist. They parse CLI JSON responses with
+`jq` and capture pane, tab, and workspace IDs from the responses rather than
+predicting them. Shared helpers live in `scripts/herdr-lib.sh`;
+`herdr_wait_shell` polls a fresh pane until its shell renders the prompt
+(terminal title set) before any command is sent, and `herdr_start_agent` then
+starts the agent with a bounded retry, so a busy pane never leaves a lost
+`lazygit` launch, an orphaned agent, or a spurious
+`agent_pane_busy`/startup-timeout failure. Covered by
+`shell-tests/test_herdr_workspace.bats`
+and `shell-tests/test_herdr_review.bats`, which drive a fake `herdr` CLI
+(including a retry scenario); run them with `bats shell-tests/test_herdr_*.bats`.
