@@ -28,73 +28,74 @@ standard | night) ;;
   exit 1
   ;;
 esac
-    # Night is an orthogonal render profile on top of the base mode: while
-    # DREAMCODER_THEME_MODE stays "dark", DREAMCODER_THEME_PROFILE=night selects
-    # the generated *-night artifacts instead of the standard dark ones.
-    VARIANT="${MODE}"
-    [[ "${PROFILE}" == "night" ]] && VARIANT="night"
-    # Night always resolves the dark Anthracite Steel base (ADR-003): a light
-    # base with profile=night is a conflict, never a silent coercion.
-    if [[ "${PROFILE}" == "night" && "${MODE}" != "dark" ]]; then
-      printf 'Invalid combination: render profile night requires base mode dark (got %s)\n' "${MODE}" >&2
-      exit 1
-    fi
-    if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
+# Night is an orthogonal render profile on top of the base mode: while
+# DREAMCODER_THEME_MODE stays "dark", DREAMCODER_THEME_PROFILE=night selects
+# the generated *-night artifacts instead of the standard dark ones.
+VARIANT="${MODE}"
+[[ "${PROFILE}" == "night" ]] && VARIANT="night"
+# Night always resolves the dark Anthracite Steel base (ADR-003): a light
+# base with profile=night is a conflict, never a silent coercion.
+if [[ "${PROFILE}" == "night" && "${MODE}" != "dark" ]]; then
+  printf 'Invalid combination: render profile night requires base mode dark (got %s)\n' "${MODE}" >&2
+  exit 1
+fi
+if [[ -z "${WALLPAPER}" && -f "${ML4W_WALLPAPER}" ]]; then WALLPAPER="$(cat "${ML4W_WALLPAPER}")"; fi
 
 CURSOR_CLI_ENV="${CACHE_HOME:-${HOME}/.cache}/dreamcoder/cursor-cli.env"
 case "${MODE}" in
 light) CLI_COLORFGBG="0;15" ;;
 dark) CLI_COLORFGBG="15;0" ;;
 esac
-    mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
-    # Preparation gate: never mutate symlinks or system mode until the Night
-    # plan is ready. For profile=night every repo-generated *-night artifact
-    # referenced by the selectors below must already exist (Phase 3 generation
-    # plus the Python validation-first gate are the other halves); a missing
-    # artifact aborts with ZERO mutations.
-    if [[ "${PROFILE}" == "night" ]]; then
-      REQUIRED_NIGHT_ARTIFACTS=(
-        "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderPi/.pi/agent/themes/dreamcoder-night.json"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderZellij/.config/zellij/dreamcoder-night.kdl"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hyprland-night.conf"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.lua"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.conf"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/waybar-night.css"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/rofi-night.rasi"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig"
-        "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf"
-      )
-      for _artifact in "${REQUIRED_NIGHT_ARTIFACTS[@]}"; do
-        if [[ ! -f "${_artifact}" ]]; then
-          printf '✗ Night preparation failed: missing artifact %s\n' "${_artifact}" >&2
-          printf '  Run repository Night generation first (DREAMCODER_THEME_PROFILE=night sync).\n' >&2
-          exit 1
-        fi
-          done
-        fi
-        # Bounded preparation + settings persistence (control path). Runs only
-        # when this script is the entry point (theme-auto / manual). When
-        # invoked by the control transaction (DREAMCODER_SYNC_DONE=1),
-        # preparation, validation, and settings persistence already succeeded;
-        # this script is then purely the post-validation system/reload adapter
-        # (design §7/§8): system mode, symlink flips, and reloads run only
-        # after preparation and settings persistence succeed.
-        if [[ "${DREAMCODER_SYNC_DONE:-0}" != "1" ]]; then
-          _CONTROL_CHOICE="${MODE}"
-          [[ "${PROFILE}" == "night" ]] && _CONTROL_CHOICE="night"
-          DREAMCODER_SYNC_DONE=1 \
-          DREAMCODER_THEME_MODE="${MODE}" \
-          DREAMCODER_THEME_PROFILE="${PROFILE}" \
-          DREAMCODER_WALLPAPER="${WALLPAPER}" \
-            PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
-            python3 -m dreamcoder_theme.control theme apply "${_CONTROL_CHOICE}" --json >/dev/null
-        fi
-        printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport DREAMCODER_THEME_PROFILE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" "${PROFILE}" >"${CURSOR_CLI_ENV}"
+mkdir -p "$(dirname "${CURSOR_CLI_ENV}")"
+# Preparation gate: never mutate symlinks or system mode until the Night
+# plan is ready. For profile=night every repo-generated *-night artifact
+# referenced by the selectors below must already exist (Phase 3 generation
+# plus the Python validation-first gate are the other halves); a missing
+# artifact aborts with ZERO mutations.
+if [[ "${PROFILE}" == "night" ]]; then
+  REQUIRED_NIGHT_ARTIFACTS=(
+    "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/colors-dreamcoder-night.conf"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderKitty/.config/kitty/dreamcoder-ui-night.conf"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderGhostty/.config/ghostty/themes/dreamcoder-night"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderWarp/.local/share/warp-terminal/themes/Dreamcoder-Night.yaml"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderPi/.pi/agent/themes/dreamcoder-night.json"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderZellij/.config/zellij/dreamcoder-night.kdl"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hyprland-night.conf"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.lua"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/hypr-colors-night.conf"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/waybar-night.css"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/rofi-night.rasi"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/btop-dreamcoder-night.theme"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-night.gitconfig"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf"
+    "${DREAMCODER_DOTS_DIR}/DreamcoderLazygit/.config/lazygit/config.night.yml"
+  )
+  for _artifact in "${REQUIRED_NIGHT_ARTIFACTS[@]}"; do
+    if [[ ! -f "${_artifact}" ]]; then
+      printf '✗ Night preparation failed: missing artifact %s\n' "${_artifact}" >&2
+      printf '  Run repository Night generation first (DREAMCODER_THEME_PROFILE=night sync).\n' >&2
+      exit 1
+    fi
+  done
+fi
+# Bounded preparation + settings persistence (control path). Runs only
+# when this script is the entry point (theme-auto / manual). When
+# invoked by the control transaction (DREAMCODER_SYNC_DONE=1),
+# preparation, validation, and settings persistence already succeeded;
+# this script is then purely the post-validation system/reload adapter
+# (design §7/§8): system mode, symlink flips, and reloads run only
+# after preparation and settings persistence succeed.
+if [[ "${DREAMCODER_SYNC_DONE:-0}" != "1" ]]; then
+  _CONTROL_CHOICE="${MODE}"
+  [[ "${PROFILE}" == "night" ]] && _CONTROL_CHOICE="night"
+  DREAMCODER_SYNC_DONE=1 \
+    DREAMCODER_THEME_MODE="${MODE}" \
+    DREAMCODER_THEME_PROFILE="${PROFILE}" \
+    DREAMCODER_WALLPAPER="${WALLPAPER}" \
+    PYTHONPATH="${DREAMCODER_DOTS_DIR}/src${PYTHONPATH:+:${PYTHONPATH}}" \
+    python3 -m dreamcoder_theme.control theme apply "${_CONTROL_CHOICE}" --json >/dev/null
+fi
+printf 'export COLORFGBG="%s"\nexport DREAMCODER_THEME_MODE="%s"\nexport DREAMCODER_THEME_PROFILE="%s"\nexport COLORTERM="truecolor"\nexport FORCE_COLOR="3"\nexport CLICOLOR_FORCE="1"\nunset NO_COLOR\n' "${CLI_COLORFGBG}" "${MODE}" "${PROFILE}" >"${CURSOR_CLI_ENV}"
 
 "${DREAMCODER_DOTS_DIR}/scripts/apply-system-mode.sh" "${MODE}"
 if [[ -n "${WALLPAPER}" && -f "${WALLPAPER}" ]] && optional_command matugen; then
@@ -302,4 +303,15 @@ DELTA_LINK="${HOME}/.config/git/delta-dreamcoder.gitconfig"
 DELTA_VARIANT="${DOTS_DIR}/DreamcoderThemes/dreamcoder/delta-dreamcoder-${VARIANT}.gitconfig"
 if [[ -f "${DELTA_VARIANT}" ]]; then
   ln -sf "${DELTA_VARIANT}" "${DELTA_LINK}"
+fi
+
+# Lazygit: flip live config symlink to variant-specific artifact.
+# The live ~/.config/lazygit/config.yml must point at the current variant
+# (config.<variant>.yml) exactly like the Delta/btop selectors above; the
+# repo keeps the generated active config.yml (mode-tracking) for COPY-style
+# installs. ln -sf replaces the link atomically.
+LAZYGIT_LINK="${HOME}/.config/lazygit/config.yml"
+LAZYGIT_VARIANT="${DOTS_DIR}/DreamcoderLazygit/.config/lazygit/config.${VARIANT}.yml"
+if [[ -f "${LAZYGIT_VARIANT}" ]]; then
+  ln -sf "${LAZYGIT_VARIANT}" "${LAZYGIT_LINK}"
 fi

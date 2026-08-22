@@ -40,10 +40,16 @@ def test_night_names_never_equal_dark_names() -> None:
 
 
 def test_night_names_carry_a_night_marker() -> None:
-    """Every registry night name is visually distinct via -night/-Night."""
+    """Every registry night name is visually distinct via -night/-Night or .night.
+
+    Hyphen markers (``*-night``/``*-Night``) are the majority convention; the
+    dotted marker (``config.night.yml``) follows the established Herdr
+    ``config.night.toml`` naming for config files whose base name must stay
+    ``config`` (Lazygit consumes ``config.yml``).
+    """
     for base, names, _builder, _active in sync.VARIANT_REGISTRY:
         name = names["night"]
-        assert re.search(r"-night\b|-Night\b", name), f"{name} lacks a night marker"
+        assert re.search(r"-night\b|-Night\b|\.night\b", name), f"{name} lacks a night marker"
 
 
 def test_registry_coverage_rows_use_the_same_night_names() -> None:

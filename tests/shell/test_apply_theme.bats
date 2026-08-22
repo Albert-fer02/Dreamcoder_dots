@@ -60,6 +60,9 @@ teardown() {
     grep -q 'ln -sf "dreamcoder-${VARIANT}.theme"' "$script"
         grep -qF 'theme \"dreamcoder-${VARIANT}\"' "$script"
     grep -q 'delta-dreamcoder-${VARIANT}.gitconfig' "$script"
+    grep -q 'config.${VARIANT}.yml' "$script"
+    grep -q 'LAZYGIT_LINK=' "$script"
+    grep -q 'DreamcoderLazygit/.config/lazygit/config.night.yml' "$script"
     grep -q 'DREAMCODER_THEME_PROFILE="${PROFILE}"' "$script"
     grep -q 'REQUIRED_NIGHT_ARTIFACTS' "$script"
 }
@@ -67,4 +70,21 @@ teardown() {
 @test "apply-theme-mode.sh kanagawa bridge carries night-derived colors" {
     grep -q '@ukiyo-color-text "#beccd8"' scripts/apply-theme-mode.sh
     grep -q '@ukiyo-color-bg-pane "#07090f"' scripts/apply-theme-mode.sh
+}
+
+@test "apply-theme-mode.sh flips the live lazygit config to the current variant" {
+    # The live ~/.config/lazygit/config.yml must be pointed at the repo's
+    # generated config.<variant>.yml (same absolute-into-repo pattern as the
+    # existing delta selector), never at the static mode-tracking config.yml.
+    script="scripts/apply-theme-mode.sh"
+    grep -q 'LAZYGIT_LINK="${HOME}/.config/lazygit/config.yml"' "$script"
+    grep -q 'LAZYGIT_VARIANT="${DOTS_DIR}/DreamcoderLazygit/.config/lazygit/config.${VARIANT}.yml"' "$script"
+    grep -qF 'ln -sf "${LAZYGIT_VARIANT}" "${LAZYGIT_LINK}"' "$script"
+}
+
+@test "apply-theme-mode.sh night gate requires the generated lazygit night artifact" {
+    script="scripts/apply-theme-mode.sh"
+    grep -q 'DreamcoderLazygit/.config/lazygit/config.night.yml' "$script"
+    run bash -n "$script"
+    [ "$status" -eq 0 ]
 }

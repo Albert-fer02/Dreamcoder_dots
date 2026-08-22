@@ -13,15 +13,20 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import cast
 
 from dreamcoder_theme.palette_tokens import VARIANTS
 from dreamcoder_theme.renderer_contract import (
     SUPPORTED_CONTRACT_VERSION,
     ActiveStrategy,
     MutationStrategy,
+    OutputKind,
+    Renderer,
     RendererRegistration,
     RendererStrategy,
+    RenderMode,
     RepositoryStrategy,
+    SupportedContractVersion,
     SyncDefinition,
 )
 from dreamcoder_theme.renderer_registry import (
@@ -42,19 +47,19 @@ FROZEN_IDS = frozenset(
 
 def make_registration(
     consumer_id: str = "test_consumer",
-    renderer=kitty_content,
-    contract_version=SUPPORTED_CONTRACT_VERSION,
-    modes=frozenset({"dark", "light", "night"}),
+    renderer: object = kitty_content,
+    contract_version: int = SUPPORTED_CONTRACT_VERSION,
+    modes: frozenset[str] = frozenset({"dark", "light", "night"}),
     output_kind: str = "active",
     sync: SyncDefinition | None = None,
     summary_label: str = "Test consumer",
 ) -> RendererRegistration:
     return RendererRegistration(
         consumer_id=consumer_id,
-        renderer=renderer,
-        contract_version=contract_version,
-        modes=modes,
-        output_kind=output_kind,
+        renderer=cast(Renderer, renderer),
+        contract_version=cast(SupportedContractVersion, contract_version),
+        modes=cast(frozenset[RenderMode], modes),
+        output_kind=cast(OutputKind, output_kind),
         sync=sync
         or SyncDefinition(
             renderer=RendererStrategy.DIRECT_CONTENT,
@@ -67,13 +72,13 @@ def make_registration(
 
 
 class TestExpectedSet:
-    def test_expected_set_is_the_frozen_32(self) -> None:
-        assert len(EXPECTED_CONSUMER_IDS) == 32
+    def test_expected_set_is_the_frozen_33(self) -> None:
+        assert len(EXPECTED_CONSUMER_IDS) == 33
         assert EXPECTED_CONSUMER_IDS == FROZEN_IDS
 
     def test_registrations_are_an_exact_bijection(self) -> None:
         ids = [r.consumer_id for r in REGISTRATIONS]
-        assert len(ids) == 32
+        assert len(ids) == 33
         assert set(ids) == FROZEN_IDS
         assert len(set(ids)) == len(ids)
         assert validate_registry(REGISTRATIONS) == []

@@ -36,6 +36,7 @@ from .renderers import (
     hypr_content,
     kitty_content,
     kitty_ui_content,
+    lazygit_content,
     ls_colors_content,
     nvim_content,
     nvim_dispatcher_content,
@@ -99,7 +100,7 @@ class PreparedSync:
 
     ``prepare()`` produces this with ZERO filesystem writes: the validated
     active palette, the dark/light/night render-variant map, the frozen
-    32-consumer coverage declaration, and the in-memory render of every
+    33-consumer coverage declaration, and the in-memory render of every
     coverage consumer. The caller (``main()`` or the CLI activation
     transaction) owns the commit.
     """
@@ -137,6 +138,7 @@ def sync_active_targets(
         "pi_settings": ensure_pi_theme_settings(paths.pi_settings),
         "starship": write_if_changed(paths.starship, starship_content(active)),
         "tmux": write_if_changed(paths.tmux, tmux_content(active)),
+        "lazygit": write_if_changed(paths.lazygit, lazygit_content(active)),
         "zellij": update_zellij_config(paths.zellij_config, mode, profile),
         # New targets
         "nvim": write_if_changed(paths.nvim, nvim_dispatcher_content()),
@@ -172,7 +174,7 @@ def sync_active_targets(
 D = {"dark": "dark", "light": "light", "night": "night"}
 
 # ------------------------------------------------------------------
-# Exact 32-consumer Night coverage declaration (design §5 matrix).
+# Exact 33-consumer Night coverage declaration (design §5 matrix).
 # ------------------------------------------------------------------
 # ``night_artifact`` is the deterministic Night output path (relative to
 # ROOT, POSIX separators) for repo-generation rows. Active-only matugen
@@ -183,7 +185,7 @@ D = {"dark": "dark", "light": "light", "night": "night"}
 
 
 class CoverageRow(NamedTuple):
-    """One row of the 32-consumer Night coverage contract (design §5)."""
+    """One row of the 33-consumer Night coverage contract (design §5)."""
 
     consumer_id: str
     klass: str
@@ -280,6 +282,14 @@ COVERAGE: tuple[CoverageRow, ...] = (
         "write_variant_files + write_if_changed; tmux_content",
         "DreamcoderThemes/dreamcoder/tmux-dreamcoder-night.conf",
         "active file receives Night",
+        "registry",
+    ),
+    CoverageRow(
+        "lazygit",
+        "variant file + active-selected",
+        "write_variant_files + write_if_changed; lazygit_content",
+        "DreamcoderLazygit/.config/lazygit/config.night.yml",
+        "live ~/.config/lazygit/config.yml symlink selects Night",
         "registry",
     ),
     CoverageRow(
@@ -467,8 +477,8 @@ def validate_coverage_declaration(rows: tuple[CoverageRow, ...] = COVERAGE) -> l
     duplicates = sorted({cid for cid in ids if ids.count(cid) > 1})
     if duplicates:
         problems.append(f"duplicate coverage consumer ids: {duplicates}")
-    if len(rows) != 32:
-        problems.append(f"coverage declares {len(rows)} rows, expected exactly 32")
+    if len(rows) != 33:
+        problems.append(f"coverage declares {len(rows)} rows, expected exactly 33")
 
     registry_night = {
         (base / names["night"]).relative_to(ROOT).as_posix()
@@ -620,6 +630,12 @@ VARIANT_REGISTRY: list[tuple[Path, dict[str, str], Callable[..., str], Path | No
         ROOT / "DreamcoderThemes/dreamcoder",
         {k: f"tmux-dreamcoder-{v}.conf" for k, v in D.items()},
         tmux_content,
+        None,
+    ),
+    (
+        ROOT / "DreamcoderLazygit/.config/lazygit",
+        {k: f"config.{v}.yml" for k, v in D.items()},
+        lazygit_content,
         None,
     ),
 ]
@@ -798,6 +814,9 @@ def sync_repo_snippets(variants: dict[str, dict[str, str]], active: dict[str, st
         write_if_changed(ROOT / "DreamcoderThemes/hyprland.conf", hypr_content(active)),
         write_if_changed(ROOT / "DreamcoderThemes/waybar.css", waybar_content(active)),
         write_if_changed(ROOT / "DreamcoderThemes/rofi.rasi", rofi_content(active)),
+        write_if_changed(
+            ROOT / "DreamcoderLazygit/.config/lazygit/config.yml", lazygit_content(active)
+        ),
     ]
 
     # Zellij — the consumed palette artifact is generated here (design §5
@@ -855,6 +874,7 @@ def print_summary(
     print(f"PI CLI theme: {paths.pi_theme}")
     print(f"PI CLI settings: {paths.pi_settings}")
     print(f"Starship: {paths.starship}")
+    print(f"Lazygit: {paths.lazygit}")
     # New targets
     print(f"Neovim: {paths.nvim}")
     print(f"Zsh-syntax-highlighting: {paths.zsh_syntax}")
@@ -915,6 +935,7 @@ def render_coverage_plan(
         "pi_theme": pi_theme_content(active),
         "starship": starship_content(active),
         "tmux": tmux_content(active),
+        "lazygit": lazygit_content(active),
         "nvim": nvim_dispatcher_content(),
         "zsh_syntax": zsh_syntax_content(active),
         "ls_colors": ls_colors_content(active),
@@ -951,7 +972,7 @@ def prepare(base: str, profile: str) -> PreparedSync:
 
     Loads canonical variants/guardrails/profile parameters, resolves the
     base+profile pair, adapts, transforms (Night), validates the final palette
-    with the independent WCAG 2.2 + APCA dual gate, renders all 32 coverage
+    with the independent WCAG 2.2 + APCA dual gate, renders all 33 coverage
     consumers in memory, and asserts the coverage declaration — with ZERO
     filesystem writes. ``main()`` and the CLI activation transaction commit the
     returned immutable plan; a failed gate raises ``ThemeGateError`` before any
@@ -1020,7 +1041,7 @@ def main() -> None:
     base = "dark" if profile == "night" else theme_mode()
 
     # Validation-first preparation (R4, design §4): the final palette must pass
-    # the independent WCAG 2.2 + APCA dual gate and the 32-consumer coverage
+    # the independent WCAG 2.2 + APCA dual gate and the 33-consumer coverage
     # assertion BEFORE any writer or selector runs. A failed gate exits non-zero
     # with zero writes and no profile/settings mutation.
     try:

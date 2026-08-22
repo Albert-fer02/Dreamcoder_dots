@@ -1,4 +1,4 @@
-"""Exact 32-consumer registry bijection tests (hexagonal-architecture-v2 task 1.6).
+"""Exact 33-consumer registry bijection tests (hexagonal-architecture-v2 task 1.6).
 
 Proves the registered consumer-ID set equals the frozen expected set exactly —
 no additions, omissions, or duplicates — and that special consumers are
@@ -45,7 +45,7 @@ class TestExactBijection:
 
     def test_no_duplicate_ids(self) -> None:
         ids = [r.consumer_id for r in REGISTRATIONS]
-        assert len(ids) == len(set(ids)) == 32
+        assert len(ids) == len(set(ids)) == 33
 
     def test_missing_id_produces_diagnostic(self) -> None:
         subset = tuple(r for r in REGISTRATIONS if r.consumer_id != "kitty")

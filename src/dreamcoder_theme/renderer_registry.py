@@ -6,7 +6,7 @@ Hexagonal-architecture-v2 design §1-§2 / ADR-001 / ADR-002:
   ``REGISTRATIONS`` tuples; this module imports them through an explicit,
   reviewable tuple and sorts by ``consumer_id`` (no dynamic discovery, no
   decorator/import side effects, no unordered assembly);
-- ``EXPECTED_CONSUMER_IDS`` is the explicit frozen 32-ID set; its cardinality is
+- ``EXPECTED_CONSUMER_IDS`` is the explicit frozen 33-ID set; its cardinality is
   never used as policy — diagnostics compare registered vs expected sets;
 - ``validate_registry()`` implements the design §1 checks: unique non-empty
   IDs, contract version, closed mode set, output-ownership validity, port
@@ -51,6 +51,7 @@ from .renderers_ghostty_warp import REGISTRATIONS as GHOSTTY_WARP_REGISTRATIONS
 from .renderers_herdr import REGISTRATIONS as HERDR_REGISTRATIONS
 from .renderers_hypr_waybar_rofi import REGISTRATIONS as HYPR_WAYBAR_ROFI_REGISTRATIONS
 from .renderers_kitty import REGISTRATIONS as KITTY_REGISTRATIONS
+from .renderers_lazygit import REGISTRATIONS as LAZYGIT_REGISTRATIONS
 from .renderers_opencode import REGISTRATIONS as OPENCODE_REGISTRATIONS
 from .renderers_pi import REGISTRATIONS as PI_REGISTRATIONS
 from .renderers_starship import REGISTRATIONS as STARSHIP_REGISTRATIONS
@@ -70,6 +71,7 @@ _REGISTRATION_GROUPS: tuple[tuple[RendererRegistration, ...], ...] = (
     HERDR_REGISTRATIONS,
     HYPR_WAYBAR_ROFI_REGISTRATIONS,
     KITTY_REGISTRATIONS,
+    LAZYGIT_REGISTRATIONS,
     NOTIFY_REGISTRATIONS,
     NVIM_REGISTRATIONS,
     OBSIDIAN_REGISTRATIONS,
@@ -85,7 +87,7 @@ REGISTRATIONS: tuple[RendererRegistration, ...] = tuple(
     sorted((r for group in _REGISTRATION_GROUPS for r in group), key=lambda r: r.consumer_id)
 )
 
-# --- Explicit expected 32-consumer set (design §5.1, tasks 0.1/1.6) -----------
+# --- Explicit expected 33-consumer set (design §5.1, tasks 0.1/1.6) -----------
 EXPECTED_CONSUMER_IDS: frozenset[str] = frozenset(
     {
         "kitty",
@@ -99,6 +101,7 @@ EXPECTED_CONSUMER_IDS: frozenset[str] = frozenset(
         "pi_theme",
         "antigravity",
         "tmux",
+        "lazygit",
         "zsh_syntax",
         "ls_colors",
         "bat",

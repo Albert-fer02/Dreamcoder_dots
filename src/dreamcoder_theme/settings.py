@@ -25,6 +25,7 @@ class ThemePaths:
     ghostty_config: Path
     starship: Path
     tmux: Path
+    lazygit: Path
     zellij_config: Path
     warp: Path
     warp_settings: Path
@@ -154,6 +155,12 @@ def theme_paths() -> ThemePaths:
         ghostty_config=Path(os.environ.get("GHOSTTY_CONFIG", config_home / "ghostty/config")),
         starship=Path(os.environ.get("STARSHIP_CONFIG", config_home / "starship.toml")),
         tmux=Path(os.environ.get("TMUX_THEME", config_home / "tmux/tmux-dreamcoder.conf")),
+        lazygit=Path(
+            os.environ.get(
+                "DREAMCODER_LAZYGIT_THEME",
+                ROOT / "DreamcoderLazygit/.config/lazygit/config.yml",
+            )
+        ),
         zellij_config=Path(os.environ.get("ZELLIJ_CONFIG", config_home / "zellij/config.kdl")),
         herdr_repo_variants=ROOT / "DreamcoderHerdr/.config/herdr/dreamcoder",
         herdr_managed_root=config_home / "herdr/dreamcoder/0.7.3",

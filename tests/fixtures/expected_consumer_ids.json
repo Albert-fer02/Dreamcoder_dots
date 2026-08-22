@@ -1,6 +1,6 @@
 {
   "schema": "dreamcoder.renderer-consumers.v1",
-  "description": "Frozen set of the 32 active sync consumers extracted from src/dreamcoder_theme/sync.py COVERAGE (hexagonal-architecture-v2 task 0.1). Exactly the SDD 1 active sync inventory; selector-only, excluded, scheduler, maintenance, and unrelated-application rollout records are NOT renderers and are absent.",
+  "description": "Frozen set of the 33 active sync consumers extracted from src/dreamcoder_theme/sync.py COVERAGE (hexagonal-architecture-v2 task 0.1). Exactly the SDD 1 active sync inventory; selector-only, excluded, scheduler, maintenance, and unrelated-application rollout records are NOT renderers and are absent.",
   "expected_consumer_ids": [
     "kitty",
     "kitty_ui",
@@ -13,6 +13,7 @@
     "pi_theme",
     "antigravity",
     "tmux",
+    "lazygit",
     "zsh_syntax",
     "ls_colors",
     "bat",

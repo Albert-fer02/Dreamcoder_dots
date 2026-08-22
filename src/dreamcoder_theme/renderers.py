@@ -25,6 +25,7 @@ from .renderers_hypr_waybar_rofi import (
     waybar_matugen_content,
 )
 from .renderers_kitty import kitty_content, kitty_ui_content
+from .renderers_lazygit import lazygit_content
 from .renderers_opencode import opencode_content, opencode_tokens
 from .renderers_pi import pi_theme_content
 from .renderers_readme import readme_content
@@ -49,6 +50,7 @@ __all__ = [
     "hypr_content",
     "kitty_content",
     "kitty_ui_content",
+    "lazygit_content",
     "ls_colors_content",
     "nvim_content",
     "nvim_dispatcher_content",

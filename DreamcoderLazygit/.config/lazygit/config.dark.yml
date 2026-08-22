@@ -1,40 +1,40 @@
-# Dreamcoder Dark Black OLED Night — Lazygit theme
+# Dreamcoder Dark Black OLED — Lazygit theme
 # https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
 
 gui:
   theme:
     activeBorderColor:
-      - "#a4afee" # accent
+      - "#A5B4FC" # accent
       - "bold"
     inactiveBorderColor:
-      - "#6d7788" # border
+      - "#68788F" # border
     searchingActiveBorderColor:
-      - "#9f8ce9" # accent-2
+      - "#C4B5FD" # accent-2
       - "bold"
     optionsTextColor:
-      - "#62b9e2" # diagnostic
+      - "#7DD3FC" # diagnostic
     selectedLineBgColor:
-      - "#141418" # selection
+      - "#16161D" # selection
     inactiveViewSelectedLineBgColor:
-      - "#141418" # surface-2
+      - "#16161D" # surface-2
     cherryPickedCommitFgColor:
-      - "#62b9e2"
+      - "#7DD3FC"
     cherryPickedCommitBgColor:
-      - "#9f8ce9"
+      - "#C4B5FD"
     markedBaseCommitFgColor:
-      - "#62b9e2"
+      - "#7DD3FC"
     markedBaseCommitBgColor:
-      - "#a4afee"
+      - "#A5B4FC"
     unstagedChangesColor:
-      - "#e88484" # error
+      - "#FB8585" # error
     defaultFgColor:
-      - "#bcc7d5" # text
+      - "#E2E8F0" # text
   authorColors:
-        "#a4afee": "#000000"
-        "#9f8ce9": "#000000"
-        "#62b9e2": "#000000"
-        "#43b48b": "#000000"
-        "#b98beb": "#000000"
+        "#A5B4FC": "#000000"
+        "#C4B5FD": "#000000"
+        "#7DD3FC": "#000000"
+        "#34D399": "#000000"
+        "#D8B4FE": "#000000"
   showFileTree: true
   showRandomTip: false
   nerdFontsVersion: "3"
@@ -51,6 +51,6 @@ git:
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: true
-  branchLogCmd: "git log --graph --pretty=format:'%C(#a4afee)%h%Creset -%C(#9f8ce9)%d%Creset %s %C(#a69ba6)(%cr) %C(#62b9e2)<%an>%Creset' --date=relative"
+  branchLogCmd: "git log --graph --pretty=format:'%C(#A5B4FC)%h%Creset -%C(#C4B5FD)%d%Creset %s %C(#C0B5C0)(%cr) %C(#7DD3FC)<%an>%Creset' --date=relative"
 update:
   method: never

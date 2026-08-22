@@ -30,6 +30,7 @@ _REPO_PATH_ENV: tuple[tuple[str, str], ...] = (
     ("DREAMCODER_DELTA_THEME", "themes/delta.gitconfig"),
     ("DREAMCODER_FZF_THEME", "themes/fzf.sh"),
     ("DREAMCODER_BTOP_THEME", "themes/btop.theme"),
+    ("DREAMCODER_LAZYGIT_THEME", "lazygit/repo/config.yml"),
     ("DREAMCODER_DUNST_THEME", "themes/dunst.conf"),
     ("DREAMCODER_FIREFOX_THEME", "themes/firefox.css"),
     ("DREAMCODER_OBSIDIAN_THEME", "themes/obsidian.css"),
@@ -96,7 +97,7 @@ def test_night_activation_persists_profile_and_dark_base(theme_home: Path, capsy
     assert payload["requested"] == "night"
     assert payload["effective_base"] == "dark"
     assert payload["effective_profile"] == "night"
-    assert payload["coverage"] == "32/32"
+    assert payload["coverage"] == "33/33"
     assert payload["rollback_state"] == "none"
     assert payload["changed"]["kitty"] is True
     # The dark base + Night profile produce an active kitty output.
@@ -118,7 +119,7 @@ def test_light_from_night_persists_standard_and_regenerates_all_active(
     assert settings_get("terminal.default_mode") == "light"
     assert settings_get("theme.render_profile") == "standard"
     assert payload["effective_profile"] == "standard"
-    assert payload["coverage"] == "32/32"
+    assert payload["coverage"] == "33/33"
     assert payload["rollback_state"] == "none"
     light_kitty = theme_paths().kitty.read_bytes()
     assert light_kitty != night_kitty  # active outputs were regenerated
@@ -131,7 +132,7 @@ def test_dark_from_night_persists_standard(theme_home: Path, capsys) -> None:
     assert settings_get("terminal.default_mode") == "dark"
     assert settings_get("theme.render_profile") == "standard"
     assert payload["effective_profile"] == "standard"
-    assert payload["coverage"] == "32/32"
+    assert payload["coverage"] == "33/33"
 
 
 # ---------------------------------------------------------------------------
@@ -213,12 +214,60 @@ def test_night_light_dark_end_to_end_transitions(theme_home: Path, capsys) -> No
     for choice in ("night", "light", "dark"):
         rc, payload = _run(choice, capsys)
         assert rc == 0
-        assert payload["coverage"] == "32/32"
+        assert payload["coverage"] == "33/33"
         assert payload["rollback_state"] == "none"
         transitions.append(
             (settings_get("terminal.default_mode"), settings_get("theme.render_profile"))
         )
     assert transitions == [("dark", "night"), ("light", "standard"), ("dark", "standard")]
+
+
+# ---------------------------------------------------------------------------
+# Lazygit: token-driven active file + live symlink surface (R4/§8)
+# ---------------------------------------------------------------------------
+
+
+def test_dark_activation_writes_lazygit_active_and_leaves_live_link_to_python(
+    theme_home: Path, capsys
+) -> None:
+    """Dark activation writes the repo active config; the live symlink stays
+    owned by the shell adapter (apply-theme-mode.sh) and is only snapshotted.
+    """
+    paths = theme_paths()
+    live = theme_home / ".config/lazygit"
+    live.mkdir(parents=True)
+    (live / "config.dark.yml").write_text("# seeded variant\n")
+    os.symlink("config.dark.yml", live / "config.yml")
+
+    rc, payload = _run("dark", capsys)
+    assert rc == 0
+    assert payload["coverage"] == "33/33"
+    assert payload["changed"]["lazygit"] is True
+    assert paths.lazygit.exists()  # repo active file was written
+    assert os.readlink(live / "config.yml") == "config.dark.yml"  # untouched
+
+
+def test_reload_failure_restores_lazygit_active_and_live_symlink(theme_home: Path, capsys) -> None:
+    """A post-commit reload failure restores the Lazygit active file bytes and
+    the seeded live symlink target exactly (rollback of the adapter surface).
+    """
+    _run("light", capsys)
+    paths = theme_paths()
+    active_before = paths.lazygit.read_bytes()
+    live = theme_home / ".config/lazygit"
+    live.mkdir(parents=True, exist_ok=True)
+    (live / "config.dark.yml").write_text("# seeded variant\n")
+    (live / "config.yml").unlink(missing_ok=True)
+    os.symlink("config.dark.yml", live / "config.yml")
+    before = _tree_state(theme_home)
+
+    rc, payload = _run("night", capsys, reload_failure=True)
+    assert rc != 0
+    assert payload["rollback_state"] == "restored"
+    assert _tree_state(theme_home) == before
+    assert paths.lazygit.read_bytes() == active_before
+    assert os.readlink(live / "config.yml") == "config.dark.yml"
+    assert settings_get("terminal.default_mode") == "light"
 
 
 # ---------------------------------------------------------------------------

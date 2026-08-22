@@ -182,23 +182,33 @@ def require(condition, message):
         raise SystemExit(message)
 
 
+def _load_json(path: Path):
+    try:
+        return json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError) as error:
+        raise SystemExit(f"unable to load JSON from {path}: {error}") from error
+
+
 def is_valid_rgba(value: str) -> bool:
     """Validate RGBA format and component ranges."""
     match = RGBA.match(value)
     if not match:
         return False
-    r, g, b, a = (
-        int(match.group(1)),
-        int(match.group(2)),
-        int(match.group(3)),
-        float(match.group(4)),
-    )
+    try:
+        r, g, b, a = (
+            int(match.group(1)),
+            int(match.group(2)),
+            int(match.group(3)),
+            float(match.group(4)),
+        )
+    except (TypeError, ValueError):
+        return False
     return all(0 <= v <= 255 for v in (r, g, b)) and 0.0 <= a <= 1.0
 
 
 def check_rgba_tokens():
     """Validate all rgba and inactive_border fields in tokens.json."""
-    tokens = json.loads(TOKEN_FILE.read_text())
+    tokens = _load_json(TOKEN_FILE)
     rgba_keys = ["panel_rgba", "module_rgba", "active_rgba", "inactive_border"]
 
     for mode, palette in tokens["modes"].items():
@@ -233,7 +243,7 @@ def check_token_parity(tokens):
 
 
 def check_tokens():
-    tokens = json.loads(TOKEN_FILE.read_text())
+    tokens = _load_json(TOKEN_FILE)
     guardrails = tokens["guardrails"]
     apca_body_light = guardrails.get("minimum_apca_body", 75)
     apca_body_dark = guardrails.get("minimum_apca_body_dark", 60)
@@ -350,9 +360,12 @@ def check_dual_gate_candidates():
     tokens = load_tokens(TOKEN_FILE)
     # float() narrows the comprehension to dict[str, float] (mirrors
     # palette.load_guardrails), satisfying the dict-invariance typing.
-    guardrails = {
-        k: float(v) for k, v in tokens["guardrails"].items() if isinstance(v, int | float)
-    }
+    try:
+        guardrails = {
+            k: float(v) for k, v in tokens["guardrails"].items() if isinstance(v, int | float)
+        }
+    except (TypeError, ValueError) as error:
+        raise SystemExit(f"invalid numeric guardrail: {error}") from error
     night_params = tokens.get("render_profiles", {}).get("night")
     require(
         isinstance(night_params, dict),
@@ -370,12 +383,12 @@ def check_dual_gate_candidates():
 
 
 def check_night_coverage():
-    """Fail when the sync 32-consumer Night coverage declaration is missing,
-    duplicated, or not exactly the design matrix's 32 IDs."""
+    """Fail when the sync 33-consumer Night coverage declaration is missing,
+    duplicated, or not exactly the design matrix's 33 IDs."""
     from dreamcoder_theme.sync import COVERAGE
 
     ids = [row.consumer_id for row in COVERAGE]
-    require(len(ids) == 32, f"coverage: expected 32 consumer IDs, got {len(ids)}")
+    require(len(ids) == 33, f"coverage: expected 33 consumer IDs, got {len(ids)}")
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     require(not dupes, f"coverage: duplicate consumer IDs: {dupes}")
 
@@ -383,7 +396,7 @@ def check_night_coverage():
 def check_theme_file(file, mode=None):
     if not file.exists():
         return
-    theme = json.loads(file.read_text())["theme"]
+    theme = _load_json(file)["theme"]
     bg = theme["background"]
     # Dark mode intentionally uses pure OLED black (#000000) for contrast/battery.
     # Light/dusk must still avoid harsh pure black/white backgrounds.
@@ -506,6 +519,17 @@ def _health_findings():
                 for mode in ("dark", "light", "dusk")
                 if mode in tokens["modes"]
             }
+            guardrails = {
+                key: float(value)
+                for key, value in tokens["guardrails"].items()
+                if isinstance(value, int | float)
+            }
+            expected_by_mode["night"] = opencode_content(
+                night_palette(
+                    tokens["modes"]["dark"], tokens["render_profiles"]["night"], guardrails
+                ),
+                transparent_background=True,
+            )
             if actual not in set(expected_by_mode.values()):
                 findings.append(
                     "STALE_ARTIFACT: .opencode/themes/dreamcoder.json "

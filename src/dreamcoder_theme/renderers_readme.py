@@ -31,6 +31,7 @@ Hook these into your app configs after ML4W/Gentleman files:
 | **Codex CLI** | `DreamcoderCodexCLI/Dreamcoder-{Mode}.tmTheme` | `theme = "Dreamcoder"` in codex config |
 | **PI CLI** | `DreamcoderPi/.pi/agent/themes/dreamcoder-{mode}.json` | `theme: "dreamcoder"` in pi settings |
 | **Neovim** | `nvim-dreamcoder-{mode}.lua` | `require('dreamcoder')` in neovim config |
+| **Lazygit** | `DreamcoderLazygit/.config/lazygit/config.{mode}.yml` | `~/.config/lazygit/config.yml` symlink → `config.{mode}.yml` |
 | **Zsh-syntax-highlighting** | `zsh-syntax-highlighting-dreamcoder-{mode}.zsh` | `source` after zsh-syntax-highlighting plugin |
 | **LS_COLORS / eza** | `ls-colors-dreamcoder-{mode}.sh` | `source` in .zshrc or .bashrc |
 | **Bat** | `bat-dreamcoder-{mode}.sh` | Sets `BAT_THEME` env var; pair with Codex CLI tmTheme |

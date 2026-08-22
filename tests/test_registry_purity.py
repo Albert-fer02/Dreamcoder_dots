@@ -107,4 +107,4 @@ class TestPurity:
         # machinery does not rely on filesystem side effects beyond stdlib.
         mod = importlib.reload(renderer_registry)
         assert mod.REGISTRATIONS
-        assert len({r.consumer_id for r in mod.REGISTRATIONS}) == 32
+        assert len({r.consumer_id for r in mod.REGISTRATIONS}) == 33
