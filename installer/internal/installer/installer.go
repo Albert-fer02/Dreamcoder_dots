@@ -50,6 +50,7 @@ func (i *Installer) installComponent(component string) error {
 		"tmux":      "DreamcoderTmux",
 		"zellij":    "DreamcoderZellij",
 		"nvim":      "DreamcoderNvim",
+		"lazygit":   "DreamcoderLazygit",
 	}
 
 	module, ok := moduleMap[component]
