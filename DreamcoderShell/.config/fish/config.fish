@@ -61,3 +61,13 @@ alias sdd-status='~/.pi/gentle-ai/sdd-swap status'
 set -gx TMPDIR "$HOME/.tmp"
 set -gx BUN_TMPDIR "$HOME/.tmp"
 set -gx ENGRAM_URL http://127.0.0.1:7437
+
+# Enable OpenCode background subagents for new sessions.
+set -gx OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS true
+
+# pnpm
+set -gx PNPM_HOME "/home/dreamcoder08/.local/share/pnpm"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+# pnpm end

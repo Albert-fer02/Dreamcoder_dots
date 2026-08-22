@@ -1,5 +1,5 @@
 # ========================================================
-# Dreamcoder Anthracite Steel — Starship prompt
+# Dreamcoder Dark Black OLED — Starship prompt
 # ========================================================
 # Modern two-line layout with powerline segments.
 # Line 1: context (directory, git), fill, cmd_duration, time
@@ -27,28 +27,28 @@ $character"""
 right_format = ""
 
 [palettes.dreamcoder]
-bg = "#070A13"
-text = "#E6EDF3"
-muted = "#A8B5C2"
-prompt_bg = "#070A13"
-prompt_surface0 = "#0D121A"
-prompt_surface1 = "#151C25"
-prompt_surface2 = "#202A35"
-prompt_text = "#E6EDF3"
-prompt_muted = "#A8B5C2"
-prompt_accent = "#A5C7E8"
-prompt_accent_2 = "#8FAFCB"
-sage = "#55C080"
-success = "#76C7A1"
-diagnostic = "#4DAED6"
-info = "#7CB0E6"
-lavender = "#B6C5D4"
-mauve = "#B48EAD"
-error = "#E38989"
-warning = "#E1C16D"
-border = "#6A8497"
-focus = "#A5C7E8"
-link = "#A5C7E8"
+bg = "#000000"
+text = "#E2E8F0"
+muted = "#94A3B8"
+prompt_bg = "#000000"
+prompt_surface0 = "#060608"
+prompt_surface1 = "#0D0D11"
+prompt_surface2 = "#16161D"
+prompt_text = "#E2E8F0"
+prompt_muted = "#94A3B8"
+prompt_accent = "#A5B4FC"
+prompt_accent_2 = "#C4B5FD"
+sage = "#34D399"
+success = "#34D399"
+diagnostic = "#7DD3FC"
+info = "#7DD3FC"
+lavender = "#C4B5FD"
+mauve = "#D8B4FE"
+error = "#FB8585"
+warning = "#FBBF24"
+border = "#68788F"
+focus = "#3B82F6"
+link = "#A5B4FC"
 
 [username]
 show_always = true
