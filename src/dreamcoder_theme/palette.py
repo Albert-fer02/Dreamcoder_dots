@@ -55,7 +55,8 @@ def load_variants(
     merged = {key: value.copy() for key, value in defaults.items()}
     for key in ("dark", "light", "dusk"):
         if key in modes:
-            merged[key].update(modes[key])
+            merged[key].update(token for token in modes[key].items() if isinstance(token[1], str))
+
     for mode_key in ("dark", "light", "dusk"):
         if mode_key in modes and mode_key in defaults:
             for token_key in set(defaults[mode_key]) & set(modes[mode_key]):
@@ -379,8 +380,8 @@ def validate_palette(
 # ---------------------------------------------------------------------------
 # Canonical Night/Dim rendering profile (Phase 2; ADR-003).
 #
-# The transform is a deterministic brightness/saturation reduction of the dark
-# Anthracite Steel palette. All parameters come from the canonical token
+# The transform is a deterministic brightness/saturation reduction of the
+# Dreamcoder Dark palette. All parameters come from the canonical token
 # contract (render_profiles.night) — never policy literals — and the bounded
 # corrective pass restores a floor without weakening any threshold or
 # brightening background/surface roles. Failure after the bound is reported by
@@ -697,8 +698,8 @@ def night_palette(
     with deterministic integer-rounded RGB (lowercase hex), preserve ``rgba()``
     alpha exactly, re-establish input aliases, apply the bounded corrective
     pass to declared foreground tokens, and reject newly introduced pure
-    black/white when ``avoid_pure_black_white`` is set. Canonical OLED roles
-    explicitly authored as black remain black.
+    black/white on functional roles. Canonical canvas and on-color roles
+    explicitly authored as black remain black under Dark's surface policy.
 
     Parameters and guardrails are canonical (``load_render_profile`` /
     ``load_guardrails``); invalid values fail closed with ``ValueError`` and
@@ -706,13 +707,14 @@ def night_palette(
     """
     _validate_profile_parameters(profile_parameters)
     _require_guardrails(guardrails)
-    groups = _alias_groups(base)
+    palette_base = {key: value for key, value in base.items() if isinstance(value, str)}
+    groups = _alias_groups(palette_base)
 
-    out = dict(base)
-    out["name"] = f"{base.get('name', 'Dreamcoder Dark')} Night"
+    out = dict(palette_base)
+    out["name"] = f"{palette_base.get('name', 'Dreamcoder Dark')} Night"
     # details intentionally untouched: the transform keeps dark semantics.
 
-    for key, value in base.items():
+    for key, value in palette_base.items():
         if _HEX_RE.match(value):
             out[key] = _transform_hex(value, profile_parameters)
         elif _RGBA_RE.match(value):
@@ -729,14 +731,11 @@ def night_palette(
     effective_mode = detect_mode(out)
     _corrective_pass(out, guardrails, profile_parameters, effective_mode, groups)
 
-    if guardrails.get("avoid_pure_black_white"):
-        for key, value in out.items():
-            is_pure = _HEX_RE.match(value) and value.lower() in ("#000000", "#ffffff")
-            oled_black_roles = {"bg", "prompt_bg", "on_accent", "on_error", "on_focus"}
-            preserves_authored_extreme = key in oled_black_roles and base.get(key) == value
-            if is_pure and not preserves_authored_extreme:
-                raise ValueError(
-                    f"night transform produced pure {value} for {key} with "
-                    "avoid_pure_black_white enabled"
-                )
+    for key, value in out.items():
+        is_pure = _HEX_RE.match(value) and value.lower() in ("#000000", "#ffffff")
+        policy_black_roles = {"bg", "prompt_bg", "on_accent", "on_error", "on_focus"}
+        preserves_authored_extreme = key in policy_black_roles and palette_base.get(key) == value
+        if is_pure and not preserves_authored_extreme:
+            raise ValueError(f"night transform produced pure {value} for functional role {key}")
+
     return out

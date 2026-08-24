@@ -22,8 +22,9 @@ class TokenParityTest(unittest.TestCase):
             self.fail(f"unable to load token modes from {TOKENS}: {error}")
 
     def test_dark_and_light_share_semantic_keys(self):
-        dark_keys = {k for k in self.modes["dark"] if k not in {"name", "details"}}
-        light_keys = {k for k in self.modes["light"] if k not in {"name", "details"}}
+        metadata_keys = {"name", "details", "aliases", "effects", "typography", "surface_policy"}
+        dark_keys = {k for k in self.modes["dark"] if k not in metadata_keys}
+        light_keys = {k for k in self.modes["light"] if k not in metadata_keys}
         self.assertEqual(dark_keys, light_keys)
 
     def test_surface_ladder_increases_contrast_from_bg(self):

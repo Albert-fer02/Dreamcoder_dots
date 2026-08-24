@@ -30,7 +30,7 @@ class DreamcoderThemeQualityTest(unittest.TestCase):
 
     def test_dark_uses_black_oled_scale(self):
         dark = self.modes["dark"]
-        self.assertEqual(dark["name"], "Dreamcoder Dark Black OLED")
+        self.assertEqual(dark["name"], "Dreamcoder Dark")
         self.assertEqual(dark["bg"], "#000000")
         self.assertEqual(dark["surface0"], "#060608")
         self.assertEqual(dark["surface1"], "#0D0D11")

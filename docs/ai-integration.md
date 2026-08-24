@@ -111,4 +111,4 @@ Dreamcoder Workbench includes a `CLAUDE.md` with instructions for Claude Code on
 - [ ] Need to extract something? `extract project.tar.gz`
 - [ ] Switching tasks? `tm-session` → fzf session picker
 - [ ] Ending the day? `sysupdate` → updates everything
-- [ ] The systemd timer switches to Anthracite Steel automatically at 18:00
+- [ ] The systemd timer switches to Dreamcoder Dark automatically at 18:00

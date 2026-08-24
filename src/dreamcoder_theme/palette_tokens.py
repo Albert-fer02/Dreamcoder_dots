@@ -8,7 +8,7 @@ from __future__ import annotations
 
 VARIANTS = {
     "dark": {
-        "name": "Dreamcoder Dark Black OLED",
+        "name": "Dreamcoder Dark",
         "bg": "#000000",
         "bg_soft": "#060608",
         "surface0": "#060608",

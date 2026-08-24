@@ -119,9 +119,9 @@ def rgba_from_hex(hex_color: str, alpha: float) -> str:
     return f"rgba({round(r * 255)}, {round(g * 255)}, {round(b * 255)}, {alpha:.2f})"
 
 
-def enrich_mode(mode: dict[str, str]) -> dict[str, str]:
-    """Fill derived semantic tokens; preserve authored anchors."""
-    c = dict(mode)
+def enrich_mode(mode: dict[str, object]) -> dict[str, str]:
+    """Fill derived semantic tokens while excluding non-palette mode metadata."""
+    c = {key: value for key, value in mode.items() if isinstance(value, str)}
     is_dark = c.get("details") == "darker"
     bg = c["bg"]
     text = c["text"]

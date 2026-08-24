@@ -11,6 +11,8 @@ from typing import Any, Literal, cast
 import jsonschema
 from jsonschema.exceptions import SchemaError
 
+from .renderer_contract import ALL_RENDER_VARIANTS
+
 Classification = Literal["required", "optional", "excluded"]
 AUDITED_TARGET_IDS = (
     "antigravity",
@@ -131,8 +133,10 @@ def _validate_records(records: list[Any]) -> None:
             modes = set(render["modes"])
             if "dusk" in modes:
                 raise ManifestError(f"dusk is not a runtime render mode: {target_id}")
-            if modes != {"dark", "light", "night"}:
-                raise ManifestError(f"render modes must be dark, light and night: {target_id}")
+            if modes != set(ALL_RENDER_VARIANTS):
+                raise ManifestError(
+                    f"render variants must be dark, light and derived night: {target_id}"
+                )
             for output in render["repository_outputs"].values():
                 if output in outputs:
                     raise ManifestError(f"duplicate repository output: {output}")

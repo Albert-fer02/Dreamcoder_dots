@@ -6,7 +6,7 @@ Generated from `DreamcoderThemes/dreamcoder/tokens.json`.
 
 Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.
 
-Dreamcoder dark uses a **Dark Black OLED** identity: a pure-black canvas, scroll-safe near-black surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the OLED canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.
+**Dreamcoder Dark** uses an OLED-aware surface policy: a pure-black canvas, scroll-safe near-black functional surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.
 
 Semantic tokens are intentionally distinct:
 
@@ -16,7 +16,7 @@ Semantic tokens are intentionally distinct:
 - `on_accent`, `on_error`, and `selection_bg`/`selection_fg` are explicit pairs validated in CI.
 ## Palette
 
-### Dreamcoder Dark Black OLED
+### Dreamcoder Dark
 
 | Role | Color |
 | --- | --- |
@@ -126,7 +126,7 @@ Semantic tokens are intentionally distinct:
 
 ## Contrast audit
 
-### Dreamcoder Dark Black OLED contrast (WCAG 2)
+### Dreamcoder Dark contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
@@ -140,7 +140,7 @@ Semantic tokens are intentionally distinct:
 | `error` | 8.80:1 | AA |
 | `warning` | 12.58:1 | AA |
 
-### Dreamcoder Dark Black OLED APCA
+### Dreamcoder Dark APCA
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
@@ -156,7 +156,7 @@ Semantic tokens are intentionally distinct:
 | `border_ui` | 30.5 | ≥60 (FAIL) |
 | `focus` | 37.8 | ≥60 (FAIL) |
 
-### Dreamcoder Dark Black OLED UI affordance contrast
+### Dreamcoder Dark UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
@@ -240,7 +240,7 @@ Semantic tokens are intentionally distinct:
 | `border_hi` | 8.10:1 | PASS |
 | `focus` | 4.92:1 | PASS |
 
-### Night (derived from Dark Black OLED) contrast (WCAG 2)
+### Night (render profile derived from Dreamcoder Dark) contrast (WCAG 2)
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
@@ -254,7 +254,7 @@ Semantic tokens are intentionally distinct:
 | `error` | 8.06:1 | AA |
 | `warning` | 8.84:1 | AA |
 
-### Night (derived from Dark Black OLED) APCA
+### Night (render profile derived from Dreamcoder Dark) APCA
 
 | Token | Lc vs bg | Target |
 | --- | ---: | --- |
@@ -270,7 +270,7 @@ Semantic tokens are intentionally distinct:
 | `border_ui` | 30.3 | ≥60 (FAIL) |
 | `focus` | 31.3 | ≥60 (FAIL) |
 
-### Night (derived from Dark Black OLED) UI affordance contrast
+### Night (render profile derived from Dreamcoder Dark) UI affordance contrast
 
 | Token | Ratio vs bg | Target |
 | --- | ---: | --- |
@@ -292,6 +292,6 @@ Semantic tokens are intentionally distinct:
 
 - Dark mode uses a pure-black OLED canvas; light and dusk modes avoid pure black and pure white.
 - Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.
-- Cocoa/Lúcuma accents are identity colors in light; Dark Black OLED uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.
+- Cocoa/Lúcuma accents are identity colors in light; Dreamcoder Dark uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.
 - UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.
 - opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.

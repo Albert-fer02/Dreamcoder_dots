@@ -3,17 +3,26 @@ import importlib.util
 import json
 import plistlib
 import re
+import sys
 from pathlib import Path
 
 import jsonschema
 
-from dreamcoder_theme._math import apca_lc, contrast
-from dreamcoder_theme.design_system import evaluate_contract, load_contract, load_tokens
-from dreamcoder_theme.palette import ansi as terminal_ansi
-from dreamcoder_theme.palette import night_palette, validate_palette
-from dreamcoder_theme.renderers_opencode import opencode_content
-
 ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from dreamcoder_theme._math import apca_lc, contrast  # noqa: E402
+from dreamcoder_theme.design_system import (  # noqa: E402
+    evaluate_contract,
+    load_contract,
+    load_tokens,
+)
+from dreamcoder_theme.palette import ansi as terminal_ansi  # noqa: E402
+from dreamcoder_theme.palette import night_palette, validate_palette  # noqa: E402
+from dreamcoder_theme.renderers_opencode import opencode_content  # noqa: E402
+
 FILES = [
     ROOT / "DreamcoderCodexApp/Dreamcoder.codex-theme.json",
     ROOT / "DreamcoderCodexApp/Dreamcoder-Light.codex-theme.json",
@@ -234,8 +243,16 @@ def check_apca_require(mode, key, value, bg, threshold):
 def check_token_parity(tokens):
     dark = tokens["modes"]["dark"]
     light = tokens["modes"]["light"]
-    dark_keys = {k for k in dark if k not in {"name", "details"}}
-    light_keys = {k for k in light if k not in {"name", "details"}}
+    dark_keys = {
+        key
+        for key, value in dark.items()
+        if key not in {"name", "details"} and isinstance(value, str)
+    }
+    light_keys = {
+        key
+        for key, value in light.items()
+        if key not in {"name", "details"} and isinstance(value, str)
+    }
     require(dark_keys == light_keys, f"dark/light token key mismatch: {dark_keys ^ light_keys}")
     for key in TOKEN_PARITY_KEYS:
         require(key in dark, f"tokens:dark missing parity key {key}")

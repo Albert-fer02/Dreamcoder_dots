@@ -1,4 +1,4 @@
-# Dreamcoder Dark Black OLED Night — zsh-syntax-highlighting
+# Dreamcoder Dark Night — zsh-syntax-highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[default]='fg=#bcc7d5'; ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#e88484'; ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=#a4afee,bold'; ZSH_HIGHLIGHT_STYLES[alias]='fg=#9f8ce9'
 ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#9f8ce9'; ZSH_HIGHLIGHT_STYLES[builtin]='fg=#a4afee'; ZSH_HIGHLIGHT_STYLES[function]='fg=#9f8ce9'; ZSH_HIGHLIGHT_STYLES[command]='fg=#a4afee'

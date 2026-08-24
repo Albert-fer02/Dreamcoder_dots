@@ -2,15 +2,18 @@
 
 ## Token Schema
 
-Defined in `themes/dreamcoder/tokens.json` with validation schema at `tokens.schema.json`.
+Defined in `DreamcoderThemes/dreamcoder/tokens.json` with validation schema at `tokens.schema.json`.
 
 ## Modes
 
-| Mode    | Name            | BG        | Accent    | Use Case    |
-| ------- | --------------- | --------- | --------- | ----------- |
-| `dark`  | Anthracite Steel OLED | `#100f0d` | `#d99555` | 18:00-07:00 |
-| `light` | Cocoa/Lúcuma    | `#f3eadc` | `#824f16` | 07:00-16:00 |
-| `dusk`  | Transition      | `#ebe4d6` | `#8a5520` | 16:00-18:00 |
+| Mode    | Name             | BG        | Accent    | Use Case    |
+| ------- | ---------------- | --------- | --------- | ----------- |
+| `dark`  | Dreamcoder Dark  | `#000000` | `#A5B4FC` | 18:00-07:00 |
+| `light` | Dreamcoder Light | `#f3eadc` | `#824f16` | 07:00-16:00 |
+| `dusk`  | Dreamcoder Dusk  | `#ebe4d6` | `#8a5520` | 16:00-18:00 |
+
+These are the only canonical modes. `night` is a render profile derived from Dreamcoder Dark,
+not a schema mode. OLED behavior belongs to `modes.dark.surface_policy`.
 
 ## Token Categories
 
@@ -28,8 +31,7 @@ Defined in `themes/dreamcoder/tokens.json` with validation schema at `tokens.sch
   "minimum_text_contrast": 4.5,
   "preferred_main_text_contrast": 7.0,
   "minimum_apca_body": 75,
-  "minimum_apca_body_dark": 50,
-  "avoid_pure_black_white": true
+  "minimum_apca_body_dark": 50
 }
 ```
 

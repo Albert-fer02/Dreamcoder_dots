@@ -10,10 +10,22 @@ from __future__ import annotations
 import pytest
 
 from dreamcoder_theme.palette_tokens import VARIANTS
-from dreamcoder_theme.renderer_contract import Palette, Renderer
+from dreamcoder_theme.renderer_contract import (
+    ALL_RENDER_VARIANTS,
+    CANONICAL_MODES,
+    Palette,
+    Renderer,
+)
 from dreamcoder_theme.renderers_kitty import kitty_content
 
 DARK: Palette = dict(VARIANTS["dark"])
+
+
+def test_canonical_modes_are_distinct_from_derived_render_variants() -> None:
+    assert {"light", "dusk", "dark"} == CANONICAL_MODES
+    assert {"light", "dark", "night"} == ALL_RENDER_VARIANTS
+    assert "night" not in CANONICAL_MODES
+    assert "dusk" not in ALL_RENDER_VARIANTS
 
 
 class TestFunctionRendererConformance:

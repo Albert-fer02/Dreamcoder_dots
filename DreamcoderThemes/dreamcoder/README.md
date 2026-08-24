@@ -4,9 +4,9 @@ This directory contains the Dreamcoder visual contract and generated color-only 
 
 - `tokens.json`: canonical Dreamcoder Workbench design tokens and guardrails.
 - `tokens.schema.json`: machine-readable token contract.
-- `*-dark.*`: Dreamcoder Anthracite Steel mode with near-black bg, cool steel-blue accents, and muted slate surfaces.
+- `*-dark.*`: Dreamcoder Dark mode with near-black bg, cool steel-blue accents, and muted slate surfaces.
 - `*-light.*`: paper-like daytime mode with flat surface ladder and distinct semantic tokens.
-- `*-night.*`: Night/Dim rendering profile — deterministic brightness/saturation-reduced derivation of the dark Anthracite Steel palette (user-controlled display profile, no medical claims).
+- `*-night.*`: Night/Dim rendering profile — deterministic brightness/saturation-reduced derivation of Dreamcoder Dark (user-controlled display profile, no medical claims).
 ## Color-only Snippets (Hooks)
 
 Hook these into your app configs after ML4W/Gentleman files:

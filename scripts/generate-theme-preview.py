@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import json
+import sys
 from pathlib import Path
 
-from dreamcoder_theme._math import apca_lc
-from dreamcoder_theme.palette import night_palette
-
 ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from dreamcoder_theme._math import apca_lc  # noqa: E402
+from dreamcoder_theme.palette import night_palette  # noqa: E402
+
 TOKENS = ROOT / "DreamcoderThemes/dreamcoder/tokens.json"
 OUT = ROOT / "docs/generated/dreamcoder-theme-preview.md"
 TEXT_KEYS = [
@@ -151,7 +156,7 @@ def main():
         "",
         "Dreamcoder light themes follow a **cocoa/lúcuma** identity: warm parchment backgrounds, graphite-brown text, and restrained accents. Unlike generic light themes that jump from white to mid-gray surfaces, Dreamcoder uses a **flat surface ladder** (~10 luminance points between steps) so panels feel layered without looking muddy.",
         "",
-        "Dreamcoder dark uses a **Dark Black OLED** identity: a pure-black canvas, scroll-safe near-black surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the OLED canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.",
+        "**Dreamcoder Dark** uses an OLED-aware surface policy: a pure-black canvas, scroll-safe near-black functional surfaces, indigo brand accents, icy diagnostics, and pastel syntax colors. Surfaces ladder from the canvas to lighter panels and modal layers. The opencode theme keeps the main background as `none` so the terminal's semi-transparent background remains visible while panels and selections carry the layered surface system.",
         "",
         "Semantic tokens are intentionally distinct:",
         "",
@@ -174,11 +179,14 @@ def main():
         parts.append(ui_contrast_table(label, palette))
         parts.append("")
     night_params = tokens.get("render_profiles", {}).get("night", {})
-    guardrail_numbers: dict[str, float] = {
-        k: float(v) for k, v in guardrails.items() if isinstance(v, (int, float))
-    }
-    night = night_palette(tokens["modes"]["dark"], night_params, guardrail_numbers)
-    night_label = "Night (derived from Dark Black OLED)"
+    try:
+        guardrail_numbers: dict[str, float] = {
+            k: float(v) for k, v in guardrails.items() if isinstance(v, (int, float))
+        }
+        night = night_palette(tokens["modes"]["dark"], night_params, guardrail_numbers)
+    except (KeyError, TypeError, ValueError) as error:
+        raise SystemExit(f"unable to derive Night render profile: {error}") from error
+    night_label = "Night (render profile derived from Dreamcoder Dark)"
     parts.append(contrast_table(night_label, night))
     parts.append("")
     parts.append(apca_table(night_label, night, body_min, ui_min))
@@ -202,13 +210,17 @@ def main():
         "",
         "- Dark mode uses a pure-black OLED canvas; light and dusk modes avoid pure black and pure white.",
         "- Main text targets AAA (WCAG 2) and APCA Lc ≥ 75 for long coding sessions.",
-        "- Cocoa/Lúcuma accents are identity colors in light; Dark Black OLED uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.",
+        "- Cocoa/Lúcuma accents are identity colors in light; Dreamcoder Dark uses indigo, violet, icy blue, soft rose, and pale gold for dark-mode personality.",
         "- UI affordance tokens (`border_ui`, `border_hi`, `focus`) target at least 3:1 against the main background.",
         "- opencode uses one canonical theme: `dreamcoder`; its main `background` is generated as `none` for terminal transparency.",
         "",
     ]
-    OUT.write_text("\n".join(parts))
-    print(f"Generated {OUT}")
+    output = OUT.resolve()
+    expected_output = (ROOT / "docs/generated/dreamcoder-theme-preview.md").resolve()
+    if output != expected_output or ROOT not in output.parents:
+        raise SystemExit(f"refusing to write outside the repository preview path: {output}")
+    output.write_text("\n".join(parts), encoding="utf-8")
+    print(f"Generated {output}")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Dreamcoder Dark Black OLED Night — Bat theme; run 'bat cache --build' after installing the tmTheme.
+# Dreamcoder Dark Night — Bat theme; run 'bat cache --build' after installing the tmTheme.
 export BAT_THEME="Dreamcoder-Night"
 export BAT_STYLE="auto,changes,header,grid"
 export BAT_PAGER="less -RF"

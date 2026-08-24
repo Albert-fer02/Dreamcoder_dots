@@ -19,11 +19,11 @@ tokens.json → generate-palette-tokens.py → palette_tokens.py
 
 Single source of truth: [`DreamcoderThemes/dreamcoder/tokens.json`](../../DreamcoderThemes/dreamcoder/tokens.json)
 
-Dark (**Dark Black OLED**), light (**Cocoa/Lúcuma**), and the derived night
-variant share the same semantic key set. Dark uses pure black only for the root
-canvas; scrollable workspaces and editors use `surface0` (`#060608`) to reduce
-OLED smear, panels use `surface1`, cards use `surface2`, and modals use
-`surface3`.
+The canonical modes are exactly **Dreamcoder Dark**, **Dreamcoder Light**, and
+**Dreamcoder Dusk**. Night is a render profile derived from Dark, not a fourth
+mode. Dark's `surface_policy` permits pure black only for the canvas; functional
+and scrollable surfaces use the near-black ladder (`surface0`–`surface3`) to
+reduce OLED smear.
 
 | Layer       | Examples                                                       |
 | ----------- | -------------------------------------------------------------- |
@@ -65,6 +65,7 @@ python scripts/generate-dark-oled-css.py --check
 - **focus** = blue `#3B82F6`, kept distinct from brand and diagnostic colors
 - **border aliases** = `#12121A` (subtle) and `#1F1F2B` (medium); significant runtime borders remain brighter because the non-text contrast gate is not weakened
 - **generated CSS** = [`dark-black-oled.css`](../../DreamcoderThemes/dreamcoder/dark-black-oled.css), sourced only from `tokens.json`
+- **OLED compatibility name** = `dark-black-oled.css` and its `dark-black-oled` selector remain stable identifiers; OLED is a derived Dark surface policy, not a separate canonical mode
 - **adaptive/matugen** may tint surfaces but identity tokens win per `CLAUDE.md`
 
 ## Adding new targets

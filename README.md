@@ -1,7 +1,7 @@
 # Dreamcoder Workbench
 
 > A health-first, terminal-native engineering environment built on **Gentleman.Dots + ML4W**.
-> Cocoa/Lúcuma. Anthracite Steel. Healthy contrast. Identity.
+> Cocoa/Lúcuma. Dreamcoder Dark. Healthy contrast. Identity.
 
 Dreamcoder Workbench is a personal distribution layer for developers who live in the terminal: it adds token-governed themes (WCAG/APCA-validated), machine-specific ML4W keybinding profiles, AI-aware tooling, and a verification layer on top of Gentleman.Dots and ML4W — without replacing either upstream. It is built for people who want reproducible, health-conscious setups and are ready to keep configuration as code. The what/who/why is covered in the sections below; the docs index ([docs/README.md](docs/README.md)) is the entry point for everything else.
 
@@ -47,7 +47,7 @@ cd ~/Documents/PROYECTOS/Dreamcoder-Workbench
 ./scripts/dreamcoder install
 ```
 
-**Applies**: dark/light/night modes over the whole Gentleman + ML4W base
+**Applies**: Dreamcoder Dark and Light modes plus the derived Night render profile over the whole Gentleman + ML4W base
 
 **Adds**: Starship prompt with AI session state, 19 shell functions, modern aliases, auto-theme switching
 
@@ -69,7 +69,7 @@ Full binding contract, dispatcher tables, file layout, and testing commands: [do
 | Feature               | Gentleman.Dots      | ML4W         | **Dreamcoder Workbench**        |
 | --------------------- | ------------------- | ------------ | ------------------------------- |
 | **Theme Engine**      | — Catppuccin        | ✓ Matugen    | ✓ **Token-based + WCAG/APCA**   |
-| **Dark/Light/Night**  | —                   | ✓            | ✓ **+ night transition**        |
+| **Dark/Light + Night profile** | —            | ✓            | ✓ **+ derived Night profile**   |
 | **AI Session Prompt** | —                   | —            | ✓ **Session-aware prompt**      |
 | **Accessibility**     | —                   | —            | ✓ **WCAG 4.5:1 + APCA 75**      |
 | **Neovim**            | ✓ 29 plugins        | —            | ◐ Dreamcoder colorscheme        |
@@ -106,7 +106,7 @@ Dreamcoder Workbench is a **visual layer**, not a replacement. You keep everythi
 **Dreamcoder Workbench adds:**
 
 - Color tokens validated with WCAG 4.5:1 + APCA
-- 3 modes: Anthracite Steel (dark), Cocoa/Lúcuma (light), Night (low-light transition)
+- 3 canonical modes: Dreamcoder Dark, Dreamcoder Light, and Dreamcoder Dusk; Night is a derived render profile
 - Starship prompt with 17 modules and AI session state
 - 19 shell functions (extract, sysupdate, killport, dots, cheat, http, logs, tm-session, tm, tmux-kill-all, identity, id-dev, id-founder, id-personal, id-research, dev-dots, sdd-swap, tl)
 - Modern aliases with graceful fallback (eza, bat, fd, rg, zoxide)
@@ -120,7 +120,7 @@ Dreamcoder Workbench is a **visual layer**, not a replacement. You keep everythi
 ### CLI
 
 ```bash
-dreamcoder dark         # → Anthracite Steel OLED
+dreamcoder dark         # → Dreamcoder Dark
 dreamcoder light        # → Dreamcoder Light
 dreamcoder status       # → System status overview
 dreamcoder doctor       # → Health check
@@ -141,7 +141,7 @@ dreamcoder-theme doctor # Check health
 ```mermaid
 flowchart LR
     subgraph Tokens["Design Tokens"]
-        PT["tokens.json<br/>dark / light / night"]
+        PT["tokens.json<br/>dark / light / dusk<br/>Night render profile"]
     end
     subgraph Render["Renderers (23 modules)"]
         R["renderers.py<br/>hub → leaf modules"]
@@ -162,7 +162,7 @@ flowchart LR
 Dreamcoder Workbench is not a neon rice. It is a workbench:
 
 - **Health first**: no pure black/white, strong contrast, low brightness
-- **Daily comfort**: larger typography, calm prompt density, automatic day/night mode
+- **Daily comfort**: larger typography, calm prompt density, automatic day-to-night transitions
 - **Identity second**: Cocoa/Lúcuma warmth, diagnostic cyan, editorial colors
 
 ---
@@ -176,7 +176,7 @@ Dreamcoder Workbench builds on the upstream work of [Gentleman.Dots](https://git
 Work through the docs by task — pick what you want to do and start there. The full index lives in [docs/README.md](docs/README.md).
 
 | Your task | Start here |
-|-----------|------------|
+| ----------- | ------------ |
 | Understand the repo layout and upstream ownership | [Source Manifest](docs/sources.md) |
 | Install or migrate from ML4W / Gentleman.Dots | [Installation guides](docs/README.md) |
 | Configure a terminal, editor, shell, or multiplexer | [Configuration guides](docs/README.md) |

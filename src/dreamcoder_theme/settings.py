@@ -76,7 +76,7 @@ class ThemePaths:
 
 
 def theme_mode() -> str:
-    # Dark (Anthracite Steel) is the repo default; a clean env (CI, fresh
+    # Dreamcoder Dark is the repo default; a clean env (CI, fresh
     # shell) must not silently regenerate the legacy light palette.
     mode = os.environ.get("DREAMCODER_THEME_MODE", "dark").lower()
     if mode not in {"dark", "light"}:
@@ -122,7 +122,7 @@ def effective_base_mode(mode: str | None = None, profile: str | None = None) -> 
     """Resolve the base mode together with the render profile (ADR-003).
 
     Enforces ``profile == night -> mode == dark``: Night always derives from
-    the dark Anthracite Steel base. A conflicting invocation such as
+    the Dreamcoder Dark base. A conflicting invocation such as
     ``DREAMCODER_THEME_MODE=light`` + ``DREAMCODER_THEME_PROFILE=night`` fails
     with an actionable error instead of choosing Dusk or silently coercing
     output (design §3). ``theme_mode()`` remains the Light/Dark base authority
@@ -133,7 +133,7 @@ def effective_base_mode(mode: str | None = None, profile: str | None = None) -> 
     if resolved_profile == "night" and base != "dark":
         raise SystemExit(
             f"render profile 'night' requires base mode 'dark' (got '{base}'): "
-            "Night always derives from the dark Anthracite Steel base; "
+            "Night always derives from the Dreamcoder Dark base; "
             "set DREAMCODER_THEME_MODE=dark or run the 'night' activation."
         )
     return base

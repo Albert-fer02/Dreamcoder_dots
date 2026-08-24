@@ -172,7 +172,7 @@ end
 
 -- ── Editor UI ────────────────────────────────────────────────
 -- Normal background is opaque in light so dark terminal transparency cannot hide text.
--- Dark mode keeps transparent Normal for Anthracite Steel glass.
+-- Dreamcoder Dark keeps transparent Normal for the glass effect.
 """,
     ]
     group_args = (hl, c, fg, bg, sel_fg, sel_bg)

@@ -33,7 +33,7 @@ esac
 # the generated *-night artifacts instead of the standard dark ones.
 VARIANT="${MODE}"
 [[ "${PROFILE}" == "night" ]] && VARIANT="night"
-# Night always resolves the dark Anthracite Steel base (ADR-003): a light
+# Night always resolves the Dreamcoder Dark base (ADR-003): a light
 # base with profile=night is a conflict, never a silent coercion.
 if [[ "${PROFILE}" == "night" && "${MODE}" != "dark" ]]; then
   printf 'Invalid combination: render profile night requires base mode dark (got %s)\n' "${MODE}" >&2
@@ -196,7 +196,7 @@ if command -v tmux >/dev/null 2>&1; then
       ;;
     dark)
       KANAGAWA_VARIANT="dragon"
-      # Dreamcoder Anthracite Steel palette — source: tokens.json modes.dark.{text,accent,error,...}
+      # Dreamcoder Dark palette — source: tokens.json modes.dark.{text,accent,error,...}
       tmux set-option -g @ukiyo-color-text "#E6EDF3" 2>/dev/null || true
       tmux set-option -g @ukiyo-color-bg-bar "#0D121A" 2>/dev/null || true
       tmux set-option -g @ukiyo-color-bg-pane "#070A13" 2>/dev/null || true
@@ -215,7 +215,7 @@ if command -v tmux >/dev/null 2>&1; then
       ;;
     night)
       KANAGAWA_VARIANT="dragon"
-      # Dreamcoder Anthracite Steel Night — derived from tokens.json modes.dark
+      # Dreamcoder Night profile — derived from Dreamcoder Dark in tokens.json modes.dark
       # via the canonical night transform (brightness 0.86 / saturation 0.72).
       tmux set-option -g @ukiyo-color-text "#beccd8" 2>/dev/null || true
       tmux set-option -g @ukiyo-color-bg-bar "#0d1015" 2>/dev/null || true

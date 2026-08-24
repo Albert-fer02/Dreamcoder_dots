@@ -43,17 +43,20 @@ fish -n DreamcoderShell/.config/fish/config.fish
 
 Canonical palettes (see `DreamcoderThemes/dreamcoder/tokens.json`):
 
-**Dark — Anthracite Steel OLED**
+**Dark — Dreamcoder Dark**
 
 ```txt
-bg          #100f0d
-text        #e8dfd0
-accent      #d99555
-accent_2    #c96a45
-error       #ed8a7a
-focus       #5f8f8f
+bg          #000000
+text        #E2E8F0
+accent      #A5B4FC
+accent_2    #C4B5FD
+error       #FB8585
+focus       #3B82F6
 opacity     0.76
 ```
+
+Dark, Light, and Dusk are the only canonical modes. Night is a derived render
+profile of Dark, and OLED behavior is defined by `modes.dark.surface_policy`.
 
 **Light — Cocoa/Lúcuma**
 

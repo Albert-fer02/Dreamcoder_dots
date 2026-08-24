@@ -32,10 +32,37 @@ def test_contract_and_tokens_schemas_require_three_modes(contract, tokens):
     jsonschema.validate(contract, contract_schema)
     jsonschema.validate(tokens, token_schema)
 
+    assert set(tokens["modes"]) == {"light", "dusk", "dark"}
+    assert "dark_oled" not in tokens
+    assert "avoid_pure_black_white" not in tokens["guardrails"]
+
     incomplete = copy.deepcopy(tokens)
     del incomplete["modes"]["dusk"]
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate(incomplete, token_schema)
+
+    extra_mode = copy.deepcopy(tokens)
+    extra_mode["modes"]["night"] = copy.deepcopy(tokens["modes"]["dark"])
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(extra_mode, token_schema)
+
+    oled_light = copy.deepcopy(tokens)
+    oled_light["modes"]["light"]["surface_policy"] = copy.deepcopy(
+        tokens["modes"]["dark"]["surface_policy"]
+    )
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(oled_light, token_schema)
+
+
+def test_dark_metadata_is_owned_by_the_canonical_dark_mode(tokens):
+    dark = tokens["modes"]["dark"]
+    assert dark["name"] == "Dreamcoder Dark"
+    assert set(("aliases", "effects", "typography", "surface_policy")) <= set(dark)
+    assert dark["surface_policy"]["pure_black_policy"] == {
+        "canvas": True,
+        "functional_surfaces": False,
+        "scrollable_surfaces": False,
+    }
 
 
 def test_roles_are_traceable_to_canonical_tokens(contract, tokens):

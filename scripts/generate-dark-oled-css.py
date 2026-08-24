@@ -25,11 +25,11 @@ def load_tokens(path: Path = TOKENS_FILE) -> dict[str, Any]:
 def render_css(tokens: dict[str, Any]) -> str:
     """Render deterministic CSS from the canonical dark mode and OLED metadata."""
     dark = tokens["modes"]["dark"]
-    oled = tokens["dark_oled"]
-    aliases = oled["aliases"]
-    effects = oled["effects"]
-    typography = oled["typography"]
-    scroll_surface = oled["scroll_surface"]
+    aliases = dark["aliases"]
+    effects = dark["effects"]
+    typography = dark["typography"]
+    surface_policy = dark["surface_policy"]
+    scroll_surface = surface_policy["scroll_surface"]
 
     variables = (
         ("bg", dark["bg"]),
@@ -76,7 +76,7 @@ def render_css(tokens: dict[str, Any]) -> str:
         "/* AUTO-GENERATED from tokens.json. Run: python scripts/generate-dark-oled-css.py */",
         "/* Scrollable workspaces and editors use --dc-surface-scroll to avoid pure-black smear. */",
         "/* Typography: use body 400, emphasis 500, headings 600; reserve uppercase tracking for labels. */",
-        f"{oled['selector']} {{",
+        f"{surface_policy['selector']} {{",
     ]
     lines.extend(f"  --dc-{name}: {value};" for name, value in variables)
     lines.extend(("}", ""))

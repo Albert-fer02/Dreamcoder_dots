@@ -9,7 +9,7 @@ Dreamcoder Workbench is a personal developer-experience design system for Arch L
 Dreamcoder Workbench optimizes long coding sessions around three product principles:
 
 1. **Readability before decoration**: text, selections, borders, and diagnostics must survive real terminal/editor use.
-2. **Health-aware identity**: warm light mode, night transition, OLED-conscious Anthracite Steel dark mode, and no harsh pure black/white primary backgrounds.
+2. **Health-aware identity**: warm light mode, the derived Night render profile, OLED-conscious Dreamcoder Dark mode, and no harsh pure black/white primary backgrounds.
 3. **Operational resilience**: ML4W/Gentleman updates are expected; Dreamcoder Workbench must be repairable, auditable, and regenerable.
 
 The system competes as a **developer OS design system**, not as a web component library. Its peers are theme ecosystems and workstation shells; its inspiration for rigor is Material, Carbon, Spectrum, and Fluent.
@@ -21,7 +21,7 @@ The system competes as a **developer OS design system**, not as a web component 
 Required contract:
 
 - **Versioned token schema**: `DreamcoderThemes/dreamcoder/tokens.schema.json` defines the public token shape.
-- **Mode parity**: `light`, `night`, and `dark` must expose equivalent semantic roles.
+- **Mode parity**: `light`, `dusk`, and `dark` must expose equivalent semantic roles; the derived `night` render profile preserves those roles from Dreamcoder Dark.
 - **Semantic separation**: `accent`, `accent_2`, `diagnostic`, `warning`, `error`, `comment`, `subtle`, `focus`, `border_ui`, and `border_hi` must remain distinct.
 - **Generator ownership**: app-specific files are outputs; renderer modules own translation from tokens to target syntax.
 - **No silent drift**: regenerated artifacts must be checked into the repo or intentionally ignored.
@@ -70,7 +70,7 @@ See `DreamcoderThemes/dreamcoder/tokens.json` guardrails for current values. `sc
 
 OpenCode theme ownership is limited to `.opencode/themes/`. The health check requires exactly `dreamcoder.json` there. Application configuration under `DreamcoderOpenCode/.config/opencode/`, including `opencode.json`, is not a theme artifact and is intentionally excluded.
 
-`night` is the derived low-light mode of `dark` (reduced brightness and saturation via the canonical `render_profiles`). The health check validates it, and runtime activation is supported through `dreamcoder night`.
+`night` is the low-light render profile derived from Dreamcoder Dark (reduced brightness and saturation via the canonical `render_profiles`). The health check validates it, and runtime activation is supported through `dreamcoder night`.
 
 ## Governance
 

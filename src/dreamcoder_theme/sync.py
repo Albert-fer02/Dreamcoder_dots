@@ -985,7 +985,7 @@ def prepare(base: str, profile: str) -> PreparedSync:
     if profile == "night" and base != "dark":
         raise SystemExit(
             f"render profile 'night' requires base mode 'dark' (got '{base}'): "
-            "Night always derives from the dark Anthracite Steel base (ADR-003)."
+            "Night always derives from the Dreamcoder Dark base (ADR-003)."
         )
 
     paths = theme_paths()
@@ -1036,7 +1036,7 @@ def main() -> None:
         subprocess.run([sys.executable, str(gen)], check=True)
     paths = theme_paths()
     profile = _generation_profile()
-    # Night always resolves the dark Anthracite Steel base; otherwise the
+    # Night always resolves the Dreamcoder Dark base; otherwise the
     # Light/Dark base comes from theme_mode() (unchanged responsibility).
     base = "dark" if profile == "night" else theme_mode()
 

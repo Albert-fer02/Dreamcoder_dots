@@ -3,8 +3,9 @@
 Contract under test (design §2, ADR-003):
 
 - ``night_palette(base, profile_parameters, guardrails) -> dict[str, str]``
-  never mutates its input, preserves every token key, and returns lowercase hex.
-- The derived display name is "Dreamcoder Dark Black OLED Night" while
+  never mutates its input, preserves every palette token key (excluding canonical
+  mode metadata), and returns lowercase hex.
+- The derived display name is "Dreamcoder Dark Night" while
   ``details`` stays "darker".
 - HSL lightness/saturation are multiplied by the canonical factors with
   deterministic integer-rounded RGB; ``rgba()`` tokens preserve alpha exactly.
@@ -12,8 +13,8 @@ Contract under test (design §2, ADR-003):
 - A bounded corrective pass moves only declared foreground tokens toward the
   contrast-safe endpoint, never brightens background/surface roles, and never
   exceeds ``maximum_corrective_delta`` of lightness movement.
-- New pure ``#000000``/``#ffffff`` values are rejected when
-  ``avoid_pure_black_white``; explicitly authored OLED black roles are preserved.
+- New pure ``#000000``/``#ffffff`` values are rejected for functional roles;
+  explicitly authored policy-approved black canvas/on-color roles are preserved.
 - The transform never silently falls back to the standard dark palette.
 
 The HSL helpers below are test-side color plumbing (a generic conversion, not
@@ -120,7 +121,7 @@ def _hex_from_hsl(hue: float, sat: float, light: float) -> str:
 def test_night_preserves_token_keys():
     base = _dark_base()
     night = night_palette(base, CANONICAL_PARAMS, _guardrails())
-    assert set(night) == set(base)
+    assert set(night) == {key for key, value in base.items() if isinstance(value, str)}
 
 
 def test_night_never_mutates_input():
@@ -132,7 +133,7 @@ def test_night_never_mutates_input():
 
 def test_night_metadata_and_details():
     night = night_palette(_dark_base(), CANONICAL_PARAMS, _guardrails())
-    assert night["name"] == "Dreamcoder Dark Black OLED Night"
+    assert night["name"] == "Dreamcoder Dark Night"
     assert night["details"] == "darker"
 
 
@@ -201,7 +202,7 @@ def test_night_preserves_explicit_oled_black_roles():
 
 
 @pytest.mark.parametrize("token", ["#000000"])
-def test_night_rejects_pure_black_white_when_avoided(token):
+def test_night_rejects_pure_black_on_functional_roles(token):
     base = _dark_base()
     base["hover"] = token
     with pytest.raises(ValueError):

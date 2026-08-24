@@ -24,8 +24,15 @@ from typing import Literal, Protocol, runtime_checkable
 # leaf renderers and callers compatible; adapters may accept Mapping internally.
 Palette = dict[str, str]
 
-# Closed render-mode set for the current active inventory.
-RenderMode = Literal["dark", "light", "night"]
+# Canonical authored themes are distinct from runtime render variants. Night is
+# derived from Dark by a render profile; it is never a fourth canonical mode.
+CanonicalMode = Literal["light", "dusk", "dark"]
+CANONICAL_MODES: frozenset[CanonicalMode] = frozenset({"light", "dusk", "dark"})
+
+RenderVariant = Literal["dark", "light", "night"]
+# Backward-compatible registration type name: registrations describe generated
+# runtime variants, not the canonical token schema.
+RenderMode = RenderVariant
 
 # Declared renderer contract versions. Only version 1 exists today; validation
 # rejects any other value.
@@ -35,8 +42,9 @@ SUPPORTED_CONTRACT_VERSION: SupportedContractVersion = 1
 # Output ownership: where the consumer's rendered content is delivered.
 OutputKind = Literal["active", "repository", "active-and-repository"]
 
-# Closed set of render modes accepted by registrations.
-ALL_MODES: frozenset[RenderMode] = frozenset({"dark", "light", "night"})
+# Closed set of generated runtime variants accepted by registrations.
+ALL_RENDER_VARIANTS: frozenset[RenderVariant] = frozenset({"dark", "light", "night"})
+ALL_MODES = ALL_RENDER_VARIANTS
 
 
 @runtime_checkable
